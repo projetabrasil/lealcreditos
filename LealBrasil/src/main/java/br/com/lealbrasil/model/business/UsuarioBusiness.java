@@ -1,0 +1,61 @@
+package br.com.lealbrasil.model.business;
+
+import java.io.Serializable;
+
+import org.omnifaces.util.Messages;
+
+import br.com.lealbrasil.model.dao.UsuarioDAO;
+import br.com.lealbrasil.model.entities.Enum_Aux_Tipos_Mensagens;
+import br.com.lealbrasil.model.entities.Pessoa;
+import br.com.lealbrasil.model.entities.Usuario;
+
+@SuppressWarnings("serial")
+public class UsuarioBusiness implements Serializable {
+	private static void mensagensDisparar(String mensagem) {
+		Messages.addGlobalInfo(mensagem);
+	}
+	public static Usuario merge(Usuario usuario){		
+			Usuario us = usuario;
+			try {
+				UsuarioDAO usuarioDAO = new UsuarioDAO();
+				us = usuarioDAO.retornaUsuarioPelaPessoa(us.getPessoa());
+				if (us==null) us = usuario;
+				us.setAtivo(true);
+				
+				
+				us = (Usuario) usuarioDAO.merge(us);
+				if (us.getId() != null)
+					mensagensDisparar("Usuário: " + Enum_Aux_Tipos_Mensagens.ALTERACAO.getMensagem());
+				else
+					mensagensDisparar("Usuário: " + Enum_Aux_Tipos_Mensagens.INCLUSAO.getMensagem());
+
+			} catch (RuntimeException erro) {
+                 
+				if (us.getId() != null)
+					mensagensDisparar("Usuário - " + Enum_Aux_Tipos_Mensagens.ERRALTERACAO.getMensagem());
+				else
+					mensagensDisparar("Usuário - " + Enum_Aux_Tipos_Mensagens.ERRINCLUSAO.getMensagem());
+				us = null;
+				erro.printStackTrace();
+			}
+			return us;
+	}
+	
+	public static boolean confereSenha(Usuario usuario) {
+		boolean retorno = usuario.getSenhaSemCript().equals(usuario.getConfSenha());
+		if (!retorno)
+			mensagensDisparar(Enum_Aux_Tipos_Mensagens.ERRSENHADIFERENTE.getMensagem());
+		return retorno;
+	}
+	public static Usuario retornaUsuario(Usuario usuario, Pessoa pessoa){
+		UsuarioDAO usDAO = new UsuarioDAO();
+		usuario = usDAO.retornaUsuarioPelaPessoa(pessoa);
+		if (usuario == null)
+		usuario = new Usuario();
+		
+		return usuario;
+	}
+
+	
+
+}

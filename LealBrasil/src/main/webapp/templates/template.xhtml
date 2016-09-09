@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:composite="http://java.sun.com/jsf/composite"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:fn="http://java.sun.com/jstl/functions">
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+	<h:outputStylesheet library="css" name="estilosclientcare.css" />
+
+	<title>Client-Care</title>
+</h:head>
+
+
+<h:body style="overflow-x: hidden; overflow-y: hidden ">
+	<p:growl id="mensagens" autoUpdate="true" redisplay="true" />
+	<h:form style="background:#33CC00;">
+
+		<p:outputLabel
+			value="Login: #{autenticacaojsfController.perfilLogado.usLogado.pessoa.descricao} 
+				- Perfil : #{autenticacaojsfController.perfilLogado.perfilUsLogado}  "
+			style="color:blue;font-size:15px;font-weight:600;" />
+		<p:outputLabel
+			value="Associado: #{autenticacaojsfController.perfilLogado.assLogado.descricao}"
+			rendered="#{autenticacaojsfController.perfilLogado.renderizaAssociado}"
+			style="color:blue;font-size:15px;font-weight:900;" />
+	</h:form>
+
+	<div id="geral">
+		<div id="menus">
+			<h:form id="formMenu" style="width:100%">
+				<p:menubar>
+					<p:submenu label="Cadastros">
+						<p:submenu label="Pessoas">
+							<p:menuitem value="Administradores"
+								actionListener="#{paginas.mudaPaginaAtual}"
+								rendered="#{autenticacaojsfController.perfilLogado.temPermissoes(['ADMINISTRADORES'])}">
+								<f:attribute name="paginaAtual" value="PAGINAADMINISTRADORES" />
+								<p:ajax
+									listener="#{autenticacaojsfController.redirecionapaginaIndex()}" />
+							</p:menuitem>
+							<p:menuitem value="Supervisores"
+								actionListener="#{paginas.mudaPaginaAtual}"
+								rendered="#{autenticacaojsfController.perfilLogado.temPermissoes(['ADMINISTRADORES'])}">
+								<f:attribute name="paginaAtual" value="PAGINASUPERVISORES" />
+							</p:menuitem>
+							<p:menuitem value="Representantes"
+								actionListener="#{paginas.mudaPaginaAtual}"
+								rendered="#{autenticacaojsfController.perfilLogado.temPermissoes(['ADMINISTRADORES','SUPERVISORES'])}">
+								<f:attribute name="paginaAtual" value="PAGINAREPRESENTANTES" />
+							</p:menuitem>
+
+							<p:menuitem value="Assinantes"
+								actionListener="#{paginas.mudaPaginaAtual}"
+								rendered="#{autenticacaojsfController.perfilLogado.temPermissoes(['ADMINISTRADORES','SUPERVISORES','REPRESENTANTES'])}">
+								<f:attribute name="paginaAtual" value="PAGINAASSINANTES" />
+							</p:menuitem>
+
+							<p:menuitem value="Atendentes"
+								actionListener="#{paginas.mudaPaginaAtual}"
+								rendered="#{autenticacaojsfController.perfilLogado.temPermissoes(['ADMINISTRADORES','ASSINANTES'])}">
+								<f:attribute name="paginaAtual" value="PAGINAATENDENTES" />
+							</p:menuitem>
+
+							<p:menuitem value="Clientes"
+								actionListener="#{paginas.mudaPaginaAtual}"
+								rendered="#{autenticacaojsfController.perfilLogado.temPermissoes(['ADMINISTRADORES','ASSINANTES','ATENDENTES'])}">
+								<f:attribute name="paginaAtual" value="PAGINACLIENTES" />
+							</p:menuitem>
+							<p:menuitem value="Outros"
+								actionListener="#{paginas.mudaPaginaAtual}"
+								rendered="#{autenticacaojsfController.perfilLogado.temPermissoes(['ADMINISTRADORES'])}">
+								<f:attribute name="paginaAtual" value="PAGINAOUTROS" />
+							</p:menuitem>
+						</p:submenu>
+						<p:submenu label="Configuração de Pontuação">
+
+							<p:menuitem value="Configurar"
+								actionListener="#{paginas.mudaPaginaAtual}"
+								rendered="#{autenticacaojsfController.perfilLogado.temPermissoes(['ASSINANTES'])}">
+								<f:attribute name="paginaAtual" value="PAGINAPONTUACAOCONFIG" />
+							</p:menuitem>
+						</p:submenu>
+					</p:submenu>
+					<p:submenu label="Pontuações">
+						<p:menuitem value="Pontuar"
+							actionListener="#{paginas.mudaPaginaAtual}"
+							rendered="#{autenticacaojsfController.perfilLogado.temPermissoes2(['ADMINISTRADORES','ASSINANTES','ATENDENTES'])}" >
+							<f:attribute name="paginaAtual" value="PAGINAPONTUACAOC" />
+							<f:attribute name="tipoMovimento" value="C"  />
+						</p:menuitem>
+						<p:menuitem value="Utilizar Pontos"
+							actionListener="#{paginas.mudaPaginaAtual}"
+							rendered="#{autenticacaojsfController.perfilLogado.temPermissoes2(['ADMINISTRADORES','ASSINANTES','ATENDENTES'])}" >
+							<f:attribute name="paginaAtual" value="PAGINAPONTUACAOD" />
+							<f:attribute name="tipoMovimento" value="D" />
+						</p:menuitem>
+						<p:menuitem value="Estornar"
+							actionListener="#{paginas.mudaPaginaAtual}"
+							rendered="#{autenticacaojsfController.perfilLogado.temPermissoes2(['ADMINISTRADORES','ASSINANTES','ATENDENTES'])}" >
+							<f:attribute name="paginaAtual" value="PAGINAPONTUACAOE" />
+							<f:attribute name="tipoMovimento" value="E" />
+						</p:menuitem>
+					</p:submenu>
+					<p:submenu label="Sair"
+						actionListener="#{autenticacaojsfController.logout()}">
+						<p:menuitem value="Sair"
+							actionListener="#{autenticacaojsfController.logout()}">
+						</p:menuitem>
+					</p:submenu>
+				</p:menubar>
+
+
+			</h:form>
+		</div>
+
+		<!--  <div id="topo">
+			<h:graphicImage library="images" name="linha melhorada.png" />
+		</div> -->
+		<div id="corpo">
+			<h:form id="formTemplate">
+				<p:layout style="width:100%;">
+					<p:layoutUnit position="center" style="width:75%">
+						<ui:insert name="conteudo">
+						</ui:insert>
+					</p:layoutUnit>
+					<p:layoutUnit position="east" style="width:25%">
+						<h:graphicImage library="images" name="Margem.png"
+							styleClass="imagemDireita" />
+					</p:layoutUnit>
+				</p:layout>
+			</h:form>
+		</div>
+	</div>
+	<!--  <div id="rodape">
+		<h:graphicImage library="images" name="linha melhorada.png" />
+	</div> -->
+</h:body>
+
+
+</html>
