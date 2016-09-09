@@ -1,7 +1,6 @@
 package br.com.lealbrasil.model.dao;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import org.hibernate.Criteria;
@@ -39,8 +38,9 @@ public class Pontuacao_MovimentoDAO extends GenericDAO<Pontuacao_Movimento> {
 				crit.add(Restrictions.eq("id_pessoa_associado", perfilLogado.getAssLogado()));
 				
 				
-				Date dt = Utilidades.retornaCalendario().getTime();
-				
+				java.util.Date d = Utilidades.retornaCalendario().getTime();
+				java.sql.Date dt = new java.sql.Date (d.getTime());
+				System.out.println("validade:"+dt);
 				crit.add(Restrictions.ge("validade", dt ));
 				
 				
@@ -54,7 +54,7 @@ public class Pontuacao_MovimentoDAO extends GenericDAO<Pontuacao_Movimento> {
 
 			} else {
 				crit = sessao.createCriteria(Pontuacao_Movimento.class);
-				crit.add(Restrictions.eq("id", 0l));
+				crit.add(Restrictions.eq("id", 0));
 			}
 
 			pontuacoes = (ArrayList<Pontuacao_Movimento>) crit.list();
@@ -89,7 +89,11 @@ public class Pontuacao_MovimentoDAO extends GenericDAO<Pontuacao_Movimento> {
 
 				}
 				
-				Date dt = Utilidades.retornaCalendario().getTime() ;
+				java.util.Date d = Utilidades.retornaCalendario().getTime();
+				java.sql.Date dt = new java.sql.Date (d.getTime());
+				System.out.println("validade:"+dt);
+				crit.add(Restrictions.ge("validade", dt ));
+				
 				
 
 				crit.add(Restrictions.ge("validade", dt));
@@ -99,7 +103,7 @@ public class Pontuacao_MovimentoDAO extends GenericDAO<Pontuacao_Movimento> {
 
 			} else {
 				crit = sessao.createCriteria(Pontuacao_Movimento.class);
-				crit.add(Restrictions.eq("id", 0l));
+				crit.add(Restrictions.eq("id", 0));
 			}
 			crit.setProjection(Projections.sum("pontosAtingidos"));
             
