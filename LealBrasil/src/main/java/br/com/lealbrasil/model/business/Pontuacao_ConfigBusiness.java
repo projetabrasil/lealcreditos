@@ -15,9 +15,6 @@ public class Pontuacao_ConfigBusiness implements Serializable {
 	public static Pontuacao_Config pontuacaoExiste(Pessoa associado) {
 		Pontuacao_ConfigDAO pConfDAO = new Pontuacao_ConfigDAO();
 		return pConfDAO.retPontuacao(associado);
-			
-			
-		
 	}
 
 	public static Pontuacao_Config registroAtualdaLista(ActionEvent evento) {

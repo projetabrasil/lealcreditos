@@ -88,21 +88,28 @@
 					<p:submenu label="Pontuações">
 						<p:menuitem value="Pontuar"
 							actionListener="#{paginas.mudaPaginaAtual}"
-							rendered="#{autenticacaojsfController.perfilLogado.temPermissoes2(['ADMINISTRADORES','ASSINANTES','ATENDENTES'])}" >
+							rendered="#{autenticacaojsfController.perfilLogado.temPermissoes2(['ADMINISTRADORES','ASSINANTES','ATENDENTES'])}">
 							<f:attribute name="paginaAtual" value="PAGINAPONTUACAOC" />
-							<f:attribute name="tipoMovimento" value="C"  />
+							<f:attribute name="tipoMovimento" value="C" />
 						</p:menuitem>
 						<p:menuitem value="Utilizar Pontos"
 							actionListener="#{paginas.mudaPaginaAtual}"
-							rendered="#{autenticacaojsfController.perfilLogado.temPermissoes2(['ADMINISTRADORES','ASSINANTES','ATENDENTES'])}" >
+							rendered="#{autenticacaojsfController.perfilLogado.temPermissoes2(['ADMINISTRADORES','ASSINANTES','ATENDENTES'])}">
 							<f:attribute name="paginaAtual" value="PAGINAPONTUACAOD" />
 							<f:attribute name="tipoMovimento" value="D" />
 						</p:menuitem>
 						<p:menuitem value="Estornar"
 							actionListener="#{paginas.mudaPaginaAtual}"
-							rendered="#{autenticacaojsfController.perfilLogado.temPermissoes2(['ADMINISTRADORES','ASSINANTES','ATENDENTES'])}" >
+							rendered="#{autenticacaojsfController.perfilLogado.temPermissoes2(['ADMINISTRADORES','ASSINANTES','ATENDENTES'])}">
 							<f:attribute name="paginaAtual" value="PAGINAPONTUACAOE" />
 							<f:attribute name="tipoMovimento" value="E" />
+						</p:menuitem>
+					</p:submenu>
+					<p:submenu label="Itens de Movimento">
+						<p:menuitem value="Configurar"
+							actionListener="#{paginas.mudaPaginaAtual}"
+							rendered="#{autenticacaojsfController.perfilLogado.temPermissoes(['ASSINANTES'])}">
+							<f:attribute name="paginaAtual" value="PAGINAITENSMOVIMENTO" />
 						</p:menuitem>
 					</p:submenu>
 					<p:submenu label="Sair"

@@ -39,10 +39,6 @@ public class PaginasjsfController implements Serializable {
 		if (Enum_Perfil_Pagina_Atual.valueOf(paginaAtual) != null)
 			perfilLogado.setPaginaAtual(Enum_Perfil_Pagina_Atual.valueOf(paginaAtual));
 		paginaAtual = perfilLogado.getPaginaAtual().getUrl();
-		
-		
-		
-		
 		try {
 			Faces.redirect("./faces/pages/" + paginaAtual);
 		} catch (IOException error) {

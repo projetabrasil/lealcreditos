@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -12,6 +13,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 
 @SuppressWarnings("serial")
+@Entity
 public class Itens_Movimento extends GenericDomain implements Serializable {
 	@Id
 	@SequenceGenerator(name="pk_itens_movimento",sequenceName="messounds_itens_movimento", allocationSize=1 )

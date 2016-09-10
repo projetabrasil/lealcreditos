@@ -40,7 +40,7 @@ public class Pontuacao_MovimentoDAO extends GenericDAO<Pontuacao_Movimento> {
 				
 				java.util.Date d = Utilidades.retornaCalendario().getTime();
 				java.sql.Date dt = new java.sql.Date (d.getTime());
-				System.out.println("validade:"+dt);
+				
 				crit.add(Restrictions.ge("validade", dt ));
 				
 				

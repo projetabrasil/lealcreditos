@@ -33,7 +33,6 @@ public class Pontuacao_ConfigjsfController extends GenericController implements 
 	@PostConstruct
 	
 	public void listar() {
-		
 		if(perfilLogado==null || perfilLogado.getAssLogado()==null ||perfilLogado.getAssLogado().getId()<=0 ){
 			mensagensDisparar("Não existe associado logado");
 			Faces.navigate("/pages/index.xhtml");
