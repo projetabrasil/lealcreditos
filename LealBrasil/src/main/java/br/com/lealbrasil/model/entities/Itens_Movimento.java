@@ -26,13 +26,17 @@ public class Itens_Movimento extends GenericDomain implements Serializable {
 	private String descricao;
 	@Column(name="valordaUnidade", precision= 18, scale=4, nullable=false)
 	private double valordaUnidade;
+	@Column(name="referencia",length =20, nullable =false )
+	private String referencia;
 	@ManyToOne(cascade = {CascadeType.ALL})
 	@JoinColumn(name="id_Pessoa_Assinante", nullable = false)
 	private Pessoa id_Pessoa_Assinante;
+	 
 	@Override
 	public String toString() {
 		return "Itens_Movimento [id=" + id + ", id_Pessoa_Registro=" + id_Pessoa_Registro + ", descricao=" + descricao
-				+ ", valordaUnidade=" + valordaUnidade + ", id_Pessoa_Assinante=" + id_Pessoa_Assinante + "]";
+				+ ", valordaUnidade=" + valordaUnidade + ", referencia=" + referencia + ", id_Pessoa_Assinante="
+				+ id_Pessoa_Assinante + "]";
 	}
 	@Override
 	public int hashCode() {
@@ -42,6 +46,7 @@ public class Itens_Movimento extends GenericDomain implements Serializable {
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result + ((id_Pessoa_Assinante == null) ? 0 : id_Pessoa_Assinante.hashCode());
 		result = prime * result + ((id_Pessoa_Registro == null) ? 0 : id_Pessoa_Registro.hashCode());
+		result = prime * result + ((referencia == null) ? 0 : referencia.hashCode());
 		long temp;
 		temp = Double.doubleToLongBits(valordaUnidade);
 		result = prime * result + (int) (temp ^ (temp >>> 32));
@@ -76,6 +81,11 @@ public class Itens_Movimento extends GenericDomain implements Serializable {
 				return false;
 		} else if (!id_Pessoa_Registro.equals(other.id_Pessoa_Registro))
 			return false;
+		if (referencia == null) {
+			if (other.referencia != null)
+				return false;
+		} else if (!referencia.equals(other.referencia))
+			return false;
 		if (Double.doubleToLongBits(valordaUnidade) != Double.doubleToLongBits(other.valordaUnidade))
 			return false;
 		return true;
@@ -109,6 +119,12 @@ public class Itens_Movimento extends GenericDomain implements Serializable {
 	}
 	public void setId_Pessoa_Assinante(Pessoa id_Pessoa_Assinante) {
 		this.id_Pessoa_Assinante = id_Pessoa_Assinante;
+	}
+	public String getReferencia() {
+		return referencia;
+	}
+	public void setReferencia(String referencia) {
+		this.referencia = referencia;
 	}
 	
 

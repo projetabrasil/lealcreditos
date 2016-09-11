@@ -34,6 +34,7 @@ public class Itens_MovimentojsfController {
 		item = new Itens_Movimento();
 		item.setId_Empresa(1);
 		item.setDescricao("");
+		item.setReferencia("");
 		item.setId_Pessoa_Assinante(perfilLogado.getAssLogado());
 		item.setId_Pessoa_Registro(perfilLogado.getUsLogado().getPessoa());
 		item.setUltimaAtualizacao(Utilidades.retornaCalendario());
