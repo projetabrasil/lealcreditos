@@ -9,6 +9,8 @@
 	<lifecycle>
 		<phase-listener>br.com.lealbrasil.util.AutenticacaoListener</phase-listener>
 	</lifecycle>
+	
+	
 </faces-config>
 
 

@@ -75,6 +75,11 @@
 								rendered="#{autenticacaojsfController.perfilLogado.temPermissoes(['ADMINISTRADORES'])}">
 								<f:attribute name="paginaAtual" value="PAGINAOUTROS" />
 							</p:menuitem>
+							<p:menuitem value="Vendas"
+								actionListener="#{paginas.mudaPaginaAtual}"
+								rendered="#{autenticacaojsfController.perfilLogado.temPermissoes(['ADMINISTRADORES'])}">
+								<f:attribute name="paginaAtual" value="PAGINAVENDAS" />
+							</p:menuitem>
 						</p:submenu>
 						<p:submenu label="Configuração de Pontuação">
 
@@ -108,7 +113,7 @@
 					<p:submenu label="Itens de Movimento">
 						<p:menuitem value="Configurar"
 							actionListener="#{paginas.mudaPaginaAtual}"
-							rendered="#{autenticacaojsfController.perfilLogado.temPermissoes(['ASSINANTES'])}">
+							rendered="#{autenticacaojsfController.perfilLogado.temPermissoes(['VENDAS'])}">
 							<f:attribute name="paginaAtual" value="PAGINAITENSMOVIMENTO" />
 						</p:menuitem>
 					</p:submenu>

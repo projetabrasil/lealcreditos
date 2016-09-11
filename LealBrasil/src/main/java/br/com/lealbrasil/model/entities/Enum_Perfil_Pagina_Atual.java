@@ -7,12 +7,14 @@ public enum Enum_Perfil_Pagina_Atual {
 	PAGINACLIENTES("PAGINACLIENTES","PCLI",3,Enum_Aux_Perfil_Pessoa.CLIENTES,Enum_Aux_Perfil_Pessoa.ASSINANTES,true,true ,"pessoas.xhtml"),	
 	PAGINAATENDENTES("PAGINAATENDENTES","PATE",4,Enum_Aux_Perfil_Pessoa.ATENDENTES,Enum_Aux_Perfil_Pessoa.ASSINANTES,true,true,"pessoas.xhtml"),
 	PAGINAREPRESENTANTES("PAGINAREPRESENTANTES","PREP",5,Enum_Aux_Perfil_Pessoa.REPRESENTANTES,Enum_Aux_Perfil_Pessoa.SUPERVISORES,false,true,"pessoas.xhtml"),
-	PAGINAAUTENTICACAO("PAGINAAUTENTICACAO","PAUT",6,Enum_Aux_Perfil_Pessoa.OUTROS ,Enum_Aux_Perfil_Pessoa.OUTROS,false,false,"autenticacao.xhtml"),
-	PAGINAPONTUACAOCONFIG("PAGINAPONTUACAOCONFIG","PCONFPONT",7, Enum_Aux_Perfil_Pessoa.ASSINANTES,Enum_Aux_Perfil_Pessoa.ASSINANTES,true,false,"pontuacao_config.xhtml"),
+	PAGINAVENDAS("PAGINAVENDAS","PVEN",6,Enum_Aux_Perfil_Pessoa.VENDAS,Enum_Aux_Perfil_Pessoa.ADMINISTRADORES,false,true,"pessoas.xhtml"),
+	PAGINAAUTENTICACAO("PAGINAAUTENTICACAO","PAUT",7,Enum_Aux_Perfil_Pessoa.OUTROS ,Enum_Aux_Perfil_Pessoa.OUTROS,false,false,"autenticacao.xhtml"),
+	PAGINAPONTUACAOCONFIG("PAGINAPONTUACAOCONFIG","PCONFPONT",8, Enum_Aux_Perfil_Pessoa.ASSINANTES,Enum_Aux_Perfil_Pessoa.ASSINANTES,true,false,"pontuacao_config.xhtml"),
 	PAGINAPONTUACAOC("PAGINAPONTUACAOC","PMOVPONT",9, Enum_Aux_Perfil_Pessoa.ATENDENTES,Enum_Aux_Perfil_Pessoa.ASSINANTES,true,false,"pontuacao_movimento.xhtml"),
 	PAGINAPONTUACAOD("PAGINAPONTUACAOD","PMOVPONT",10, Enum_Aux_Perfil_Pessoa.ATENDENTES,Enum_Aux_Perfil_Pessoa.ASSINANTES,true,false,"pontuacao_movimento.xhtml"),
 	PAGINAPONTUACAOE("PAGINAPONTUACAOE","PMOVPONT",11, Enum_Aux_Perfil_Pessoa.ATENDENTES,Enum_Aux_Perfil_Pessoa.ASSINANTES,true,false,"pontuacao_movimento.xhtml"),
-	PAGINAITENSMOVIMENTO("PAGINAITENSMOVIMENTO","PITENSMOV",12,Enum_Aux_Perfil_Pessoa.ADMINISTRADORES,null ,false,false,""),
+	PAGINAITENSMOVIMENTO("PAGINAITENSMOVIMENTO","PITENSMOV",12,Enum_Aux_Perfil_Pessoa.ASSINANTES,null ,false,false,"itens_movimento.xhtml"),
+																																					
 	PAGINAOUTROS("PAGINAOUTROS","POUTROS",13,Enum_Aux_Perfil_Pessoa.OUTROS,null,false,true,"pessoas.xhtml"),
 	PAGINAINDEX("PAGINAINDEX","PINDEX",14,Enum_Aux_Perfil_Pessoa.OUTROS,null,false,false,"index.xhtml");
     private String descricao;    

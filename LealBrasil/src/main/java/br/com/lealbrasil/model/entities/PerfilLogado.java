@@ -70,9 +70,10 @@ public class PerfilLogado implements Serializable {
 
 		if (perfilUsLogado != null
 				&& (perfilUsLogado.equals(Enum_Aux_Perfil_Pessoa.ASSINANTES)
-						|| perfilUsLogado.equals(Enum_Aux_Perfil_Pessoa.ATENDENTES))
+						|| perfilUsLogado.equals(Enum_Aux_Perfil_Pessoa.ATENDENTES)
+						|| perfilUsLogado.equals(Enum_Aux_Perfil_Pessoa.VENDAS))
 				&& perfilUsLogado.isTemPerfilMestre() && assLogado.getId() == null) {
-			if (perfilUsLogado.equals(Enum_Aux_Perfil_Pessoa.ASSINANTES))
+			if (perfilUsLogado.equals(Enum_Aux_Perfil_Pessoa.ASSINANTES)||perfilUsLogado.equals(Enum_Aux_Perfil_Pessoa.VENDAS))
 				setAssLogado(usLogado.getPessoa());
 			else if (perfilUsLogado.equals(Enum_Aux_Perfil_Pessoa.ATENDENTES)) {
 				Pessoa_VinculoDAO pVincDAO = new Pessoa_VinculoDAO();

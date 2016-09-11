@@ -40,7 +40,7 @@
 		<property name="show_sql">true</property>
 
 		<!-- Cria as tabelas do banco de dados -->
-		<property name="hbm2ddl.auto">update</property>
+		<property name="hbm2ddl.auto">validate</property>
 		<property name="hibernate.temp.use_jdbc_metadata_defaults">false</property>
 
 		<!-- Mapeamento das entidades -->

@@ -8,7 +8,8 @@ public enum Enum_Aux_Perfil_Pessoa {
 	ATENDENTES("Atendentes",3,true,"ATE",true,true,false),
 	REPRESENTANTES("Representantes",4,true,"REP",true,true,true),
 	SUPERVISORES("Supervisores",5,true,"SUP",true,false,true),
-	OUTROS("Outros",6,true,"OUT",false,false,false);
+	OUTROS("Outros",6,true,"OUT",false,false,false),
+	VENDAS("Vendas",7,true,"VEN",true,false,false);
 	
 	
 	private String descricao;
