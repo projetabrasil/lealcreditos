@@ -1,6 +1,5 @@
 package br.com.lealbrasil.controller;
 
-import java.io.IOException;
 import java.io.Serializable;
 import java.util.List;
 
@@ -10,7 +9,6 @@ import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import javax.faces.event.ActionEvent;
 
-import org.omnifaces.util.Faces;
 import org.primefaces.context.RequestContext;
 
 import br.com.lealbrasil.controller.entitiesconfig.PessoaConfig;
@@ -20,10 +18,10 @@ import br.com.lealbrasil.model.business.PessoaGenericBusiness;
 import br.com.lealbrasil.model.business.UsuarioBusiness;
 import br.com.lealbrasil.model.dao.Pessoa_VinculoDAO;
 import br.com.lealbrasil.model.dao.UsuarioDAO;
+import br.com.lealbrasil.model.entities.Enum_Aux_Perfil_Pagina_Atual;
 import br.com.lealbrasil.model.entities.Enum_Aux_Perfil_Pessoa;
 import br.com.lealbrasil.model.entities.Enum_Aux_Tipo_Identificador;
 import br.com.lealbrasil.model.entities.Enum_Aux_Tipo_Pessoa;
-import br.com.lealbrasil.model.entities.Enum_Perfil_Pagina_Atual;
 import br.com.lealbrasil.model.entities.PerfilLogado;
 import br.com.lealbrasil.model.entities.Pessoa;
 import br.com.lealbrasil.model.entities.Pessoa_Vinculo;
@@ -43,6 +41,9 @@ public class PessoajsfController extends GenericController implements Serializab
 	@ManagedProperty(value = "#{autenticacaojsfController.perfilLogado}")
 	private PerfilLogado perfilLogado;
 	private PerfilLogado perfilLogadoTemp;
+	
+	@ManagedProperty(value = "#{autenticacaojsfController}")
+	private AutenticacaojsfController autenticacao;
 
 	@PostConstruct
 	public void listar() {
@@ -57,7 +58,7 @@ public class PessoajsfController extends GenericController implements Serializab
 		perfilLogadoTemp = perfilLogado;
 		pessoa = new Pessoa();
 		configurarPessoa();
-		if (perfilLogado.getPaginaAtual().equals(Enum_Perfil_Pagina_Atual.PAGINAASSINANTES))
+		if (perfilLogado.getPaginaAtual().equals(Enum_Aux_Perfil_Pagina_Atual.PAGINAASSINANTES))
 			pessoa = pessoaConfig.ConfiguraPessoa(Enum_Aux_Tipo_Identificador.CNPJ, perfilLogado.getUsLogado(), pessoa,
 					false);
 		else
@@ -86,7 +87,7 @@ public class PessoajsfController extends GenericController implements Serializab
 		}
 		configurarPessoa();
 
-		if (perfilLogado.getPaginaAtual().equals(Enum_Perfil_Pagina_Atual.PAGINAASSINANTES))
+		if (perfilLogado.getPaginaAtual().equals(Enum_Aux_Perfil_Pagina_Atual.PAGINAASSINANTES))
 			pessoa = pessoaConfig.ConfiguraPessoa(Enum_Aux_Tipo_Identificador.CNPJ, perfilLogado.getUsLogado(), pessoa,
 					true);
 		else
@@ -135,13 +136,10 @@ public class PessoajsfController extends GenericController implements Serializab
 		context.execute("PF('dialogoCadastro').hide();");
 
 		if (perfilLogado.getPerfilUsLogado().equals(Enum_Aux_Perfil_Pessoa.OUTROS)) {
-			try {
-				Faces.redirect("./faces/pages/alfapage.xhtml");
-				perfilLogado = new PerfilLogado();
-			} catch (IOException error) {
-				mensagensDisparar("erro ao tentar chamar a pagina alfapage");
-				error.printStackTrace();
-			}
+			perfilLogado = new PerfilLogado();
+			autenticacao.redirecionaPaginas("alfapage.xhtml", "Erro ao tentar chamar a pagina alfapage",true);			
+		    
+			
 		}
 	}
 
@@ -242,6 +240,14 @@ public class PessoajsfController extends GenericController implements Serializab
 
 	public void setPerfilLogado(PerfilLogado perfilLogado) {
 		this.perfilLogado = perfilLogado;
+	}
+
+	public AutenticacaojsfController getAutenticacao() {
+		return autenticacao;
+	}
+
+	public void setAutenticacao(AutenticacaojsfController autenticacao) {
+		this.autenticacao = autenticacao;
 	}
 
 }

@@ -9,8 +9,6 @@ import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import javax.faces.event.ActionEvent;
 
-import org.omnifaces.util.Faces;
-
 import br.com.lealbrasil.model.business.Pontuacao_ConfigBusiness;
 import br.com.lealbrasil.model.dao.Pontuacao_ConfigDAO;
 import br.com.lealbrasil.model.entities.Enum_Aux_Tipos_Mensagens;
@@ -24,9 +22,11 @@ import br.com.lealbrasil.util.Utilidades;
 public class Pontuacao_ConfigjsfController extends GenericController implements Serializable {
 	private Pontuacao_Config pontuacao_Config;
 	private List<Pontuacao_Config> pontuacoes_Config;
-	
 	@ManagedProperty(value = "#{autenticacaojsfController.perfilLogado}")
 	private PerfilLogado perfilLogado;
+	
+	@ManagedProperty(value = "#{autenticacaojsfController}")
+	private AutenticacaojsfController autenticacao;
 	
 	
 
@@ -35,7 +35,7 @@ public class Pontuacao_ConfigjsfController extends GenericController implements 
 	public void listar() {
 		if(perfilLogado==null || perfilLogado.getAssLogado()==null ||perfilLogado.getAssLogado().getId()<=0 ){
 			mensagensDisparar("Não existe associado logado");
-			Faces.navigate("/pages/index.xhtml");
+			autenticacao.redirecionaPaginas("index.xhtml", "erro no redirecionamento de página de autenticacao para alfapage!!!",false);
 			return;
 		}
 		try {
@@ -117,5 +117,11 @@ public class Pontuacao_ConfigjsfController extends GenericController implements 
 	}
 	public void setPerfilLogado(PerfilLogado perfilLogado) {
 		this.perfilLogado = perfilLogado;
+	}
+	public AutenticacaojsfController getAutenticacao() {
+		return autenticacao;
+	}
+	public void setAutenticacao(AutenticacaojsfController autenticacao) {
+		this.autenticacao = autenticacao;
 	}
 }

@@ -20,7 +20,7 @@ import br.com.lealbrasil.model.dao.Pontuacao_ConfigDAO;
 import br.com.lealbrasil.model.dao.Pontuacao_MovimentoDAO;
 import br.com.lealbrasil.model.entities.Enum_Aux_Tipo_Identificador;
 import br.com.lealbrasil.model.entities.Enum_Aux_Tipo_Mov_Pontuacao;
-import br.com.lealbrasil.model.entities.Enum_Perfil_Pagina_Atual;
+import br.com.lealbrasil.model.entities.Enum_Aux_Perfil_Pagina_Atual;
 import br.com.lealbrasil.model.entities.PerfilLogado;
 import br.com.lealbrasil.model.entities.Pessoa;
 import br.com.lealbrasil.model.entities.Pontuacao_Config;
@@ -52,9 +52,9 @@ public class Pontuacao_MovimentojsfController implements Serializable {
 
 	@PostConstruct
 	public void listar() {
-		if (!perfilLogado.getPaginaAtual().equals(Enum_Perfil_Pagina_Atual.PAGINAPONTUACAOC)
-				&& !perfilLogado.getPaginaAtual().equals(Enum_Perfil_Pagina_Atual.PAGINAPONTUACAOD)
-				&& !perfilLogado.getPaginaAtual().equals(Enum_Perfil_Pagina_Atual.PAGINAPONTUACAOE))
+		if (!perfilLogado.getPaginaAtual().equals(Enum_Aux_Perfil_Pagina_Atual.PAGINAPONTUACAOC)
+				&& !perfilLogado.getPaginaAtual().equals(Enum_Aux_Perfil_Pagina_Atual.PAGINAPONTUACAOD)
+				&& !perfilLogado.getPaginaAtual().equals(Enum_Aux_Perfil_Pagina_Atual.PAGINAPONTUACAOE))
 			return;
 		Pontuacao_MovimentoDAO pDAO = new Pontuacao_MovimentoDAO();
 		pontuacoes = pDAO.listar(perfilLogado, null, true);
@@ -140,11 +140,11 @@ public class Pontuacao_MovimentojsfController implements Serializable {
 			pontuacao.setValidade(Utilidades.retornaValidade(pontuacao.getDiasValidade()));
 			pontuacao.setValoraPontuar(0);
 
-			if (perfilLogado.getPaginaAtual().equals(Enum_Perfil_Pagina_Atual.PAGINAPONTUACAOC))
+			if (perfilLogado.getPaginaAtual().equals(Enum_Aux_Perfil_Pagina_Atual.PAGINAPONTUACAOC))
 				pontuacao.setCreditaDebita(Enum_Aux_Tipo_Mov_Pontuacao.C);
-			else if (perfilLogado.getPaginaAtual().equals(Enum_Perfil_Pagina_Atual.PAGINAPONTUACAOD))
+			else if (perfilLogado.getPaginaAtual().equals(Enum_Aux_Perfil_Pagina_Atual.PAGINAPONTUACAOD))
 				pontuacao.setCreditaDebita(Enum_Aux_Tipo_Mov_Pontuacao.D);
-			else if (perfilLogado.getPaginaAtual().equals(Enum_Perfil_Pagina_Atual.PAGINAPONTUACAOE))
+			else if (perfilLogado.getPaginaAtual().equals(Enum_Aux_Perfil_Pagina_Atual.PAGINAPONTUACAOE))
 				pontuacao.setCreditaDebita(Enum_Aux_Tipo_Mov_Pontuacao.E);
 		}
 

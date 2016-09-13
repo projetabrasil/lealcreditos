@@ -5,14 +5,53 @@
 	xmlns:f="http://xmlns.jcp.org/jsf/core"
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-	template="/templates/template.xhtml">
+	template="/templates/template.xhtml"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions">
 	<h:head>
 		<h:outputScript name="geral.js" />
 	</h:head>
-	
-	<ui:define name="conteudo">
-	
-	
-	
+    
+	<ui:define name="conteudo" update="formCarrosel" >
+	    
+		<h:form id="formCarrosel">
+			
+				
+				<p:carousel value="#{carroseljsfController.carrosseis}" rendered="#{carroseljsfController.renderizaCarrossel}"
+					headerText="Valchers ativos" var="registro"
+					itemStyle="text-align:center" responsive="true">
+					<p:panelGrid columns="2" style="width:100%;margin:10px 0px"
+						columnClasses="label,value" layout="grid"
+						styleClass="ui-panelgrid-blank">
+						<f:facet name="header">
+							<p:graphicImage name="#{registro.endImagem}" />
+						</f:facet>
+						
+
+						<h:outputText value="Fidelizador:" />
+						<h:outputText value="#{registro.empresa}" />
+
+						<h:outputText value="Valcher" />
+						<h:outputText value="R$ #{registro.valor}" />
+						<h:outputText value="Validade" />
+						<h:outputText value="#{registro.validade}">
+						<f:convertDateTime locale="pt_BR" dateStyle="long" type="date"
+								pattern="dd/MM/yyyy" />
+						</h:outputText>
+						
+						
+						
+						
+						<h:outputText value="Código" />
+						<h:outputText value="Vch #{registro.codigoPromocional}" />
+					</p:panelGrid>
+
+					<f:facet name="footer">
+                		n. de Valchers : #{fn:length(carroseljsfController.carrosseis)}.
+        			</f:facet>
+				</p:carousel>
+			
+		</h:form>
+
+
 	</ui:define>
 </ui:composition>

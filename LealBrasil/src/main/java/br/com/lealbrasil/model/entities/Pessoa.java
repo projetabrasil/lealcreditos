@@ -47,7 +47,7 @@ public class Pessoa extends GenericDomain implements Serializable{
 	@Column(name="rg_Insc", length=20)
 	private String rg_Insc;
 	@Enumerated(EnumType.STRING)
-	private Enum_Sexo sexo; 
+	private Enum_Aux_Sexo sexo; 
 	@Column(name="fone_1", length=20, nullable=true)
 	private String fone_1;
 	@Column(name="fone_2", length=20,nullable=true)
@@ -103,10 +103,10 @@ public class Pessoa extends GenericDomain implements Serializable{
 	public void setRg_Insc(String rg_Insc) {
 		this.rg_Insc = rg_Insc;
 	}
-	public Enum_Sexo getSexo() {
+	public Enum_Aux_Sexo getSexo() {
 		return sexo;
 	}
-	public void setSexo(Enum_Sexo sexo) {
+	public void setSexo(Enum_Aux_Sexo sexo) {
 		this.sexo = sexo;
 	}
 	public String getFone_1() {

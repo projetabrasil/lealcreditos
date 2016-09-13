@@ -8,7 +8,7 @@ import javax.faces.bean.ManagedProperty;
 
 import br.com.lealbrasil.model.entities.Enum_Aux_Tipo_Identificador;
 import br.com.lealbrasil.model.entities.Enum_Aux_Tipo_Pessoa;
-import br.com.lealbrasil.model.entities.Enum_Sexo;
+import br.com.lealbrasil.model.entities.Enum_Aux_Sexo;
 import br.com.lealbrasil.model.entities.PerfilLogado;
 import br.com.lealbrasil.model.entities.Pessoa;
 import br.com.lealbrasil.model.entities.Usuario;
@@ -64,7 +64,7 @@ public class PessoaConfig implements Serializable {
 	
 	private Pessoa pessoa;
 	private List<Enum_Aux_Tipo_Identificador> listaTipodeIdentificadores;
-	private List<Enum_Sexo > listaSexo;
+	private List<Enum_Aux_Sexo > listaSexo;
 	@ManagedProperty(value = "#{autenticacaojsfController.perfilLogado}")
 	private PerfilLogado perfilLogado;
 
@@ -187,10 +187,10 @@ public class PessoaConfig implements Serializable {
 		}
 	}
 	public void listarSexo(){		
-		Enum_Sexo[] sexos;
-		sexos = Enum_Sexo.values();
-		listaSexo  = new ArrayList<Enum_Sexo>();
-		for (Enum_Sexo sexo : sexos) {
+		Enum_Aux_Sexo[] sexos;
+		sexos = Enum_Aux_Sexo.values();
+		listaSexo  = new ArrayList<Enum_Aux_Sexo>();
+		for (Enum_Aux_Sexo sexo : sexos) {
 			if (sexo.isPessoa_Fisica())
 				listaSexo.add(sexo);
 		}
@@ -371,7 +371,7 @@ public class PessoaConfig implements Serializable {
 	/**
 	 * @return the listaSexo
 	 */
-	public List<Enum_Sexo> getListaSexo() {
+	public List<Enum_Aux_Sexo> getListaSexo() {
 		return listaSexo;
 	}
 

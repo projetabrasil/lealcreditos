@@ -5,7 +5,7 @@
 
 	<context-param>
 		<param-name>primefaces.THEME</param-name>
-		<param-value>south-street</param-value>
+		<param-value>excite-bike</param-value>
 	</context-param>
 
 
@@ -20,7 +20,10 @@
 		<param-name>javax.faces.PROJECT_STAGE</param-name>
 		<param-value>Development</param-value>
 	</context-param>
-	
+	<context-param>
+		<param-name>facelets.SKIP_COMMENTS</param-name>
+		<param-value>true</param-value>
+	</context-param>
 
 
 
@@ -71,14 +74,17 @@
 	</servlet-mapping>
 	<servlet-mapping>
 		<servlet-name>Faces Servlet</servlet-name>
-		<url-pattern>*.xhtml</url-pattern>
+		<url-pattern>*.xhtml</url-pattern>		
 	</servlet-mapping>
+	
+	
+	
+	
 
 	<!-- Página Principal -->
 	<welcome-file-list>
 		<welcome-file>pages/alfapage.xhtml</welcome-file>
 	</welcome-file-list>
-
 
 
 	<resource-ref>
@@ -87,6 +93,7 @@
 		<res-type>javax.sql.DataSource</res-type>
 		<res-auth>Container</res-auth>
 	</resource-ref>
+
 
 
 </web-app>

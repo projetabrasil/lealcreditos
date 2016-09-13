@@ -11,7 +11,7 @@ import org.hibernate.criterion.Restrictions;
 import org.hibernate.criterion.Subqueries;
 
 import br.com.lealbrasil.model.entities.Enum_Aux_Perfil_Pessoa;
-import br.com.lealbrasil.model.entities.Enum_Perfil_Pagina_Atual;
+import br.com.lealbrasil.model.entities.Enum_Aux_Perfil_Pagina_Atual;
 import br.com.lealbrasil.model.entities.PerfilLogado;
 import br.com.lealbrasil.model.entities.Pessoa;
 import br.com.lealbrasil.model.entities.Pessoa_Enum_Aux_Perfil_Pessoa;
@@ -29,7 +29,7 @@ public class PessoaDAO extends GenericDAO<Pessoa> {
 		try{	
 			
 			if (perfilLogado.getPerfilUsLogado().equals(Enum_Aux_Perfil_Pessoa.SUPERVISORES) && 
-				perfilLogado.getPaginaAtual().equals(Enum_Perfil_Pagina_Atual.PAGINAASSINANTES) ){
+				perfilLogado.getPaginaAtual().equals(Enum_Aux_Perfil_Pagina_Atual.PAGINAASSINANTES) ){
 				
 				subQuery1 = DetachedCriteria.forClass(Pessoa_Vinculo.class)
 					    .setProjection(Property.forName("id_pessoa_d"));			    

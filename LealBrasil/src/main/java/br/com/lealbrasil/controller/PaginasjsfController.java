@@ -1,6 +1,5 @@
 package br.com.lealbrasil.controller;
 
-import java.io.IOException;
 import java.io.Serializable;
 
 import javax.faces.bean.ManagedBean;
@@ -8,12 +7,8 @@ import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import javax.faces.event.ActionEvent;
 
-import org.omnifaces.util.Faces;
-import org.omnifaces.util.Messages;
-
+import br.com.lealbrasil.model.entities.Enum_Aux_Perfil_Pagina_Atual;
 import br.com.lealbrasil.model.entities.Enum_Aux_Tipo_Mov_Pontuacao;
-import br.com.lealbrasil.model.entities.Enum_Aux_Tipos_Mensagens;
-import br.com.lealbrasil.model.entities.Enum_Perfil_Pagina_Atual;
 import br.com.lealbrasil.model.entities.PerfilLogado;
 import br.com.lealbrasil.model.entities.Pontuacao_Movimento;
 
@@ -21,6 +16,8 @@ import br.com.lealbrasil.model.entities.Pontuacao_Movimento;
 @ManagedBean(name = "paginas")
 @ViewScoped
 public class PaginasjsfController implements Serializable {
+	@ManagedProperty(value = "#{autenticacaojsfController}")
+	private AutenticacaojsfController autenticacao;
 	@ManagedProperty(value = "#{autenticacaojsfController.perfilLogado}")
 	private PerfilLogado perfilLogado;
 	@ManagedProperty(value = "#{pontuacao.tipoMovimentacao}")
@@ -29,22 +26,15 @@ public class PaginasjsfController implements Serializable {
 	@ManagedProperty(value = "#{pontuacao.pontuacao}")
 	private Pontuacao_Movimento pontuacao;
 
-	private void mensagensDisparar(String mensagem) {
-		Messages.addGlobalInfo(mensagem);
-	}
+	
 
 	public void mudaPaginaAtual(ActionEvent event) {
 		// String paginaAtual
 		String paginaAtual = (String) event.getComponent().getAttributes().get("paginaAtual");
-		if (Enum_Perfil_Pagina_Atual.valueOf(paginaAtual) != null)
-			perfilLogado.setPaginaAtual(Enum_Perfil_Pagina_Atual.valueOf(paginaAtual));
+		if (Enum_Aux_Perfil_Pagina_Atual.valueOf(paginaAtual) != null)
+			perfilLogado.setPaginaAtual(Enum_Aux_Perfil_Pagina_Atual.valueOf(paginaAtual));
 		paginaAtual = perfilLogado.getPaginaAtual().getUrl();
-		try {
-			Faces.redirect("./faces/pages/" + paginaAtual);
-		} catch (IOException error) {
-			mensagensDisparar(Enum_Aux_Tipos_Mensagens.ERRACESSOPESSOAS.getMensagem());
-			error.printStackTrace();
-		}
+		autenticacao.redirecionaPaginas(paginaAtual, "",true);		
 		return;
 
 	}
@@ -84,6 +74,14 @@ public class PaginasjsfController implements Serializable {
 	 */
 	public void setPontuacao(Pontuacao_Movimento pontuacao) {
 		this.pontuacao = pontuacao;
+	}
+
+	public AutenticacaojsfController getAutenticacao() {
+		return autenticacao;
+	}
+
+	public void setAutenticacao(AutenticacaojsfController autenticacao) {
+		this.autenticacao = autenticacao;
 	}
 
 }

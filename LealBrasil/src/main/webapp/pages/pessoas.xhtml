@@ -9,7 +9,7 @@
 	xmlns:cc="http://java.sun.com/jsf/composite"
 	template="/templates/template.xhtml">
 	<h:head>
-		<h:outputStylesheet library="css" name="estilosclientcare.css" />
+		<h:outputStylesheet library="css" name="clubefidelidadee.css" />
 		<script src="http://code.jquery.com/jquery-2.1.1.min.js"></script>
 		<script type="text/javascript" src="./js/pessoas.js" />
 	</h:head>
@@ -18,7 +18,7 @@
 	    
 		<h:form id="formLista">
 
-			<p:panel header="Listagem de #{autenticacaojsfController.perfilLogado.paginaAtual.descricao}">
+			<p:panel header="Listagem de #{autenticacaojsfController.perfilLogado.paginaAtual.descricao2}">
 				<p:dataTable id="tabela" emptyMessage="" reflow="true"
 					value="#{pessoajsfController.pessoas}" paginator="true" rows="5"
 					var="registro" style="font-size:15px;">

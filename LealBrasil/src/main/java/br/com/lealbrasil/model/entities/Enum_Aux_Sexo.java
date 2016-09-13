@@ -1,6 +1,6 @@
 package br.com.lealbrasil.model.entities;
 
-public enum Enum_Sexo {
+public enum Enum_Aux_Sexo {
 MASCULINO("M",0,true),
 FEMININO("F",1,true),
 OUTROS("O",2,false);
@@ -9,7 +9,7 @@ private String abrev;
 private int id;
 private boolean pessoa_Fisica;
 
-Enum_Sexo( String abrev, int id,boolean pessoa_Fisica ){
+Enum_Aux_Sexo( String abrev, int id,boolean pessoa_Fisica ){
 	
 	this.id = id;
 	this.abrev = abrev;

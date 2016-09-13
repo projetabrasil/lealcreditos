@@ -24,13 +24,17 @@ public class AutenticacaoListener implements PhaseListener {
 				AutenticacaojsfController autenticacaojsfController = Faces
 						.getSessionAttribute("autenticacaojsfController");
 				if (autenticacaojsfController == null) {
-					Faces.navigate("/pages/autenticacao.xhtml");
-					return;
+					
+						Faces.navigate("pages/alfapage.xhtml");
+						return;
+										
 				}
 				Usuario usuario = autenticacaojsfController.getPerfilLogado().getUsLogado();
-				if (usuario == null || autenticacaojsfController.getPerfilLogado().getPaginaAtual()== null ) {
-					Faces.navigate("/pages/autenticacao.xhtml");
-					return;
+				if (usuario == null || autenticacaojsfController.getPerfilLogado().getPaginaAtual() == null) {
+					
+						Faces.navigate("pages/alfapage.xhtml");
+						return;
+					
 				}
 			}
 		}
@@ -43,7 +47,7 @@ public class AutenticacaoListener implements PhaseListener {
 
 	@Override
 	public PhaseId getPhaseId() {
-		// 
+		//
 		return PhaseId.RESTORE_VIEW;
 	}
 

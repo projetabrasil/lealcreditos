@@ -1,16 +1,14 @@
 package br.com.lealbrasil.model.entities;
 
-import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.faces.bean.ManagedProperty;
 
-import org.omnifaces.util.Faces;
-import org.omnifaces.util.Messages;
 import org.primefaces.context.RequestContext;
 
+import br.com.lealbrasil.controller.AutenticacaojsfController;
 import br.com.lealbrasil.model.dao.Pessoa_Enum_Aux_Perfil_PessoasDAO;
 import br.com.lealbrasil.model.dao.Pessoa_VinculoDAO;
 import br.com.lealbrasil.model.dao.Pontuacao_ConfigDAO;
@@ -20,7 +18,7 @@ public class PerfilLogado implements Serializable {
 
 	Usuario usLogado;
 	Pessoa assLogado;
-	Enum_Perfil_Pagina_Atual paginaAtual;
+	Enum_Aux_Perfil_Pagina_Atual paginaAtual;
 	Enum_Aux_Perfil_Pessoa perfilUsLogado;
 	private List<Enum_Aux_Perfil_Pessoa> listaPerfisdousLogado;
 	private String foco;
@@ -33,6 +31,8 @@ public class PerfilLogado implements Serializable {
 	private boolean renderizapessoaeditar;
 	@ManagedProperty(value = "#{pontuacao.listaPontuacoesConfig}")
 	private List<Pontuacao_Config> listaPontuacoesConfig;
+	@ManagedProperty(value = "#{AutenticacaojsfController}")
+	private AutenticacaojsfController autenticacao;
 
 	public boolean isRenderizapessoanovo() {
 		return renderizapessoanovo;
@@ -61,7 +61,7 @@ public class PerfilLogado implements Serializable {
 		senhaUsuario = "";
 		usLogado = new Usuario();
 		assLogado = new Pessoa();
-		setPaginaAtual(Enum_Perfil_Pagina_Atual.PAGINAAUTENTICACAO);
+		setPaginaAtual(Enum_Aux_Perfil_Pagina_Atual.PAGINAAUTENTICACAO);
 		setRenderizapessoaeditar(true);
 		setRenderizapessoanovo(true);
 	}
@@ -73,7 +73,8 @@ public class PerfilLogado implements Serializable {
 						|| perfilUsLogado.equals(Enum_Aux_Perfil_Pessoa.ATENDENTES)
 						|| perfilUsLogado.equals(Enum_Aux_Perfil_Pessoa.VENDAS))
 				&& perfilUsLogado.isTemPerfilMestre() && assLogado.getId() == null) {
-			if (perfilUsLogado.equals(Enum_Aux_Perfil_Pessoa.ASSINANTES)||perfilUsLogado.equals(Enum_Aux_Perfil_Pessoa.VENDAS))
+			if (perfilUsLogado.equals(Enum_Aux_Perfil_Pessoa.ASSINANTES)
+					|| perfilUsLogado.equals(Enum_Aux_Perfil_Pessoa.VENDAS))
 				setAssLogado(usLogado.getPessoa());
 			else if (perfilUsLogado.equals(Enum_Aux_Perfil_Pessoa.ATENDENTES)) {
 				Pessoa_VinculoDAO pVincDAO = new Pessoa_VinculoDAO();
@@ -88,13 +89,8 @@ public class PerfilLogado implements Serializable {
 			if (assLogado != null && assLogado.getIdentificador() != null && identificadorAssociado != null
 					&& identificadorAssociado.length() > 0
 					&& !assLogado.getIdentificador().equals(identificadorAssociado)) {
-				try {
-
-					Faces.redirect("./faces/pages/alfapage.xhtml");
-				} catch (IOException error) {
-					mensagensDisparar("erro ao tentar chamar a pagina alfa");
-					error.printStackTrace();
-				}
+				autenticacao.redirecionaPaginas("alfapage.xhtml",
+						"erro no redirecionamento para página alfapage!!!",true);
 			}
 
 		} else {
@@ -165,9 +161,7 @@ public class PerfilLogado implements Serializable {
 		setListaPerfisdousLogado(perfis);
 	}
 
-	private void mensagensDisparar(String mensagem) {
-		Messages.addGlobalInfo(mensagem);
-	}
+	
 
 	public Usuario getUsLogado() {
 		return usLogado;
@@ -177,11 +171,11 @@ public class PerfilLogado implements Serializable {
 		this.usLogado = usLogado;
 	}
 
-	public Enum_Perfil_Pagina_Atual getPaginaAtual() {
+	public Enum_Aux_Perfil_Pagina_Atual getPaginaAtual() {
 		return paginaAtual;
 	}
 
-	public void setPaginaAtual(Enum_Perfil_Pagina_Atual paginaAtual) {
+	public void setPaginaAtual(Enum_Aux_Perfil_Pagina_Atual paginaAtual) {
 		this.paginaAtual = paginaAtual;
 	}
 
@@ -309,6 +303,14 @@ public class PerfilLogado implements Serializable {
 
 	public void setListaPontuacoesConfig(List<Pontuacao_Config> listaPontuacoesConfig) {
 		this.listaPontuacoesConfig = listaPontuacoesConfig;
+	}
+
+	public AutenticacaojsfController getAutenticacao() {
+		return autenticacao;
+	}
+
+	public void setAutenticacao(AutenticacaojsfController autenticacao) {
+		this.autenticacao = autenticacao;
 	}
 
 }

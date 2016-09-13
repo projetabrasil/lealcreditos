@@ -8,18 +8,18 @@
 	xmlns:cc="http://java.sun.com/jsf/composite"
 	template="/templates/template.xhtml">
 	<h:head>
-		<h:outputStylesheet library="css" name="estilosclientcare.css" />
+		<h:outputStylesheet library="css" name="clubefidelidade.css" />
 	</h:head>
 
 	<ui:define name="conteudo">
 		<h:form id="formlista" style="width:100%;">
-			<p:panel header="Lista de pontuações configuradas"
+			<p:panel header="Listagem de #{autenticacaojsfController.perfilLogado.paginaAtual.descricao2}"
 				style="width:100%;">
 				<!-- reflow e  ou priority - dá à tabela um formato responsívo -->
 				<p:dataTable id="tabela" emptyMessage="Sem Registros"
 					paginator="true" reflow="true" rows="6"
 					value="#{pontuacao_ConfigjsfController.pontuacoes_Config}"
-					var="registro" style="font-size:15px;">
+					var="registro" style="font-size:12px;">
 
 					<f:facet name="header">
 						<p:commandButton value="Novo"

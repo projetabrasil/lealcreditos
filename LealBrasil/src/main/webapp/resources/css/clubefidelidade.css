@@ -1,0 +1,18 @@
+.ui-panel-my-titlebar {
+  background: #FF9900;
+ }
+ 
+ .ui-panel-my-titlebar2 {
+  background: #6699FF  ;
+ }
+ #one {
+    width: 100%;
+    height: auto;
+}
+
+#two {
+    width: 100px;
+    height: 100px;
+    position: relative;
+    float: left;
+}

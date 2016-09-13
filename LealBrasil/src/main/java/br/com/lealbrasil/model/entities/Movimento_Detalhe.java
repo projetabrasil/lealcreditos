@@ -5,6 +5,8 @@ import java.io.Serializable;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -37,6 +39,9 @@ public class Movimento_Detalhe extends GenericDomain implements Serializable {
 	@ManyToOne(cascade = { CascadeType.ALL })
 	@JoinColumn(name = "id_Itens_Movimento", nullable = false)
 	private Itens_Movimento id_Itens_Movimento;
+	@Enumerated(EnumType.STRING)
+	@Column(name="cD", length=10,nullable=false )
+	private Enum_Aux_Credita_Debita cD;
 
 	@ManyToOne(cascade = { CascadeType.ALL })
 	@JoinColumn(name = "id_ComboMestre")
@@ -60,16 +65,17 @@ public class Movimento_Detalhe extends GenericDomain implements Serializable {
 	public String toString() {
 		return "Movimento_Detalhe [id=" + id + ", id_Pessoa_Registro=" + id_Pessoa_Registro + ", id_Pessoa_Assinante="
 				+ id_Pessoa_Assinante + ", id_Combo_Mestre=" + id_Combo_Mestre + ", id_Combo_Detalhe="
-				+ id_Combo_Detalhe + ", id_Itens_Movimento=" + id_Itens_Movimento + ", id_ComboMestre=" + id_ComboMestre
-				+ ", referencia=" + referencia + ", descricao=" + descricao + ", valorUnidade=" + valorUnidade
-				+ ", qtde=" + qtde + ", total=" + total + ", desconto=" + desconto + ", totalLiquido=" + totalLiquido
-				+ "]";
+				+ id_Combo_Detalhe + ", id_Itens_Movimento=" + id_Itens_Movimento + ", cD=" + cD + ", id_ComboMestre="
+				+ id_ComboMestre + ", referencia=" + referencia + ", descricao=" + descricao + ", valorUnidade="
+				+ valorUnidade + ", qtde=" + qtde + ", total=" + total + ", desconto=" + desconto + ", totalLiquido="
+				+ totalLiquido + "]";
 	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = super.hashCode();
+		result = prime * result + ((cD == null) ? 0 : cD.hashCode());
 		long temp;
 		temp = Double.doubleToLongBits(desconto);
 		result = prime * result + (int) (temp ^ (temp >>> 32));
@@ -102,6 +108,8 @@ public class Movimento_Detalhe extends GenericDomain implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		Movimento_Detalhe other = (Movimento_Detalhe) obj;
+		if (cD != other.cD)
+			return false;
 		if (Double.doubleToLongBits(desconto) != Double.doubleToLongBits(other.desconto))
 			return false;
 		if (descricao == null) {
@@ -270,6 +278,14 @@ public class Movimento_Detalhe extends GenericDomain implements Serializable {
 
 	public void setTotalLiquido(double totalLiquido) {
 		this.totalLiquido = totalLiquido;
+	}
+
+	public Enum_Aux_Credita_Debita getcD() {
+		return cD;
+	}
+
+	public void setcD(Enum_Aux_Credita_Debita cD) {
+		this.cD = cD;
 	}
 
 }

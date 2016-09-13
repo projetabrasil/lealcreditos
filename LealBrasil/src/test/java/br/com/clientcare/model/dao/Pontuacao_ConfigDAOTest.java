@@ -11,7 +11,7 @@ import br.com.lealbrasil.model.dao.Pessoa_Enum_Aux_Perfil_PessoasDAO;
 import br.com.lealbrasil.model.dao.UsuarioDAO;
 import br.com.lealbrasil.model.entities.Enum_Aux_Perfil_Pessoa;
 import br.com.lealbrasil.model.entities.Enum_Aux_Tipo_Identificador;
-import br.com.lealbrasil.model.entities.Enum_Sexo;
+import br.com.lealbrasil.model.entities.Enum_Aux_Sexo;
 import br.com.lealbrasil.model.entities.Pessoa;
 import br.com.lealbrasil.model.entities.Pessoa_Enum_Aux_Perfil_Pessoa;
 import br.com.lealbrasil.model.entities.Usuario;
@@ -46,7 +46,7 @@ public class Pontuacao_ConfigDAOTest {
 			p.setFone_3("");
 			p.setIdentificador("89230906115");
 			p.setRg_Insc("3739787");
-			p.setSexo(Enum_Sexo.MASCULINO);
+			p.setSexo(Enum_Aux_Sexo.MASCULINO);
 			p.setUltimaAtualizacao(Utilidades.retornaCalendario());
 			p.setId_Pessoa_Registro(null);
 			p.setId_Empresa(1);
