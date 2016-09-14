@@ -6,12 +6,11 @@ import java.util.List;
 
 import javax.faces.bean.ManagedProperty;
 
-import org.primefaces.context.RequestContext;
-
 import br.com.lealbrasil.controller.AutenticacaojsfController;
 import br.com.lealbrasil.model.dao.Pessoa_Enum_Aux_Perfil_PessoasDAO;
 import br.com.lealbrasil.model.dao.Pessoa_VinculoDAO;
 import br.com.lealbrasil.model.dao.Pontuacao_ConfigDAO;
+import br.com.lealbrasil.util.Utilidades;
 
 @SuppressWarnings("serial")
 public class PerfilLogado implements Serializable {
@@ -99,11 +98,10 @@ public class PerfilLogado implements Serializable {
 
 	}
 
-	public void escondeDialogoAltenticacacao(boolean escolherPerfil) {
-		RequestContext requestContext = RequestContext.getCurrentInstance();
-		requestContext.execute("PF('dialogoAutenticacao').hide();");
-		if (escolherPerfil)
-			requestContext.execute("PF('dialogoPerfil').show();");
+	public void escondeDialogoAltenticacacao(boolean escolherPerfil) {				
+		Utilidades.abrirfecharDialogos("dialogoAutenticacao",false);
+		if (escolherPerfil)			
+		Utilidades.abrirfecharDialogos("dialogoPerfil",true);
 	}
 
 	public boolean temPermissoes(List<String> permissoes) {

@@ -5,8 +5,6 @@ import java.io.Serializable;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -14,28 +12,33 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 
+
 @SuppressWarnings("serial")
 @Entity
-public class Itens_Movimento extends GenericDomain implements Serializable {
+public class Brinde extends GenericDomain implements Serializable {
 	@Id
-	@SequenceGenerator(name="pk_itens_movimento",sequenceName="messounds_itens_movimento", allocationSize=1 )
-	@GeneratedValue(strategy=GenerationType.SEQUENCE,generator="pk_itens_movimento")
+	@SequenceGenerator(name="pk_brinde", sequenceName="mess_sounds_brinde",allocationSize =1)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "pk_brinde")
 	private Long id;
 	@ManyToOne(cascade = {CascadeType.ALL})
-	@JoinColumn(name="id_Pessoa_Registro", nullable=false)
+	@JoinColumn(name="id_Pessoa_Registro",nullable=false)
 	private Pessoa id_Pessoa_Registro;
-	@Column(name="descricao", length = 90, nullable = false)
-	private String descricao;
-	@Column(name="valordaUnidade", precision= 18, scale=4, nullable=false)
-	private double valordaUnidade;
-	@Column(name="referencia",length =20, nullable =false )
-	private String referencia;
+	
 	@ManyToOne(cascade = {CascadeType.ALL})
-	@JoinColumn(name="id_Pessoa_Assinante", nullable = false)
+	@JoinColumn(name="id_Pessoa_Assiante", nullable =false)
 	private Pessoa id_Pessoa_Assinante;
-	@Enumerated(EnumType.STRING)
-	@Column(name="precoUnico")
-	private Enum_Aux_Sim_ou_Nao isPrecoUnico;
+	@Column(name="nome_Imagem", length=90, nullable=false)
+	private String nome_Imagem;
+	@Column(name="descricao",length=90, nullable=false)
+	private String descricao;
+	@Column(name="pontos")
+	int pontos;
+	@Override
+	public String toString() {
+		return "Brinde [id=" + id + ", id_Pessoa_Registro=" + id_Pessoa_Registro + ", id_Pessoa_Assinante="
+				+ id_Pessoa_Assinante + ", nome_Imagem=" + nome_Imagem + ", descricao=" + descricao + ", pontos="
+				+ pontos + "]";
+	}
 	public Long getId() {
 		return id;
 	}
@@ -48,35 +51,29 @@ public class Itens_Movimento extends GenericDomain implements Serializable {
 	public void setId_Pessoa_Registro(Pessoa id_Pessoa_Registro) {
 		this.id_Pessoa_Registro = id_Pessoa_Registro;
 	}
-	public String getDescricao() {
-		return descricao;
-	}
-	public void setDescricao(String descricao) {
-		this.descricao = descricao;
-	}
-	public double getValordaUnidade() {
-		return valordaUnidade;
-	}
-	public void setValordaUnidade(double valordaUnidade) {
-		this.valordaUnidade = valordaUnidade;
-	}
-	public String getReferencia() {
-		return referencia;
-	}
-	public void setReferencia(String referencia) {
-		this.referencia = referencia;
-	}
 	public Pessoa getId_Pessoa_Assinante() {
 		return id_Pessoa_Assinante;
 	}
 	public void setId_Pessoa_Assinante(Pessoa id_Pessoa_Assinante) {
 		this.id_Pessoa_Assinante = id_Pessoa_Assinante;
 	}
-	public Enum_Aux_Sim_ou_Nao getIsPrecoUnico() {
-		return isPrecoUnico;
+	public String getNome_Imagem() {
+		return nome_Imagem;
 	}
-	public void setIsPrecoUnico(Enum_Aux_Sim_ou_Nao isPrecoUnico) {
-		this.isPrecoUnico = isPrecoUnico;
+	public void setNome_Imagem(String nome_Imagem) {
+		this.nome_Imagem = nome_Imagem;
+	}
+	public String getDescricao() {
+		return descricao;
+	}
+	public void setDescricao(String descricao) {
+		this.descricao = descricao;
+	}
+	public int getPontos() {
+		return pontos;
+	}
+	public void setPontos(int pontos) {
+		this.pontos = pontos;
 	}
 	@Override
 	public int hashCode() {
@@ -86,11 +83,8 @@ public class Itens_Movimento extends GenericDomain implements Serializable {
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result + ((id_Pessoa_Assinante == null) ? 0 : id_Pessoa_Assinante.hashCode());
 		result = prime * result + ((id_Pessoa_Registro == null) ? 0 : id_Pessoa_Registro.hashCode());
-		result = prime * result + ((isPrecoUnico == null) ? 0 : isPrecoUnico.hashCode());
-		result = prime * result + ((referencia == null) ? 0 : referencia.hashCode());
-		long temp;
-		temp = Double.doubleToLongBits(valordaUnidade);
-		result = prime * result + (int) (temp ^ (temp >>> 32));
+		result = prime * result + ((nome_Imagem == null) ? 0 : nome_Imagem.hashCode());
+		result = prime * result + pontos;
 		return result;
 	}
 	@Override
@@ -101,7 +95,7 @@ public class Itens_Movimento extends GenericDomain implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Itens_Movimento other = (Itens_Movimento) obj;
+		Brinde other = (Brinde) obj;
 		if (descricao == null) {
 			if (other.descricao != null)
 				return false;
@@ -122,22 +116,18 @@ public class Itens_Movimento extends GenericDomain implements Serializable {
 				return false;
 		} else if (!id_Pessoa_Registro.equals(other.id_Pessoa_Registro))
 			return false;
-		if (isPrecoUnico != other.isPrecoUnico)
-			return false;
-		if (referencia == null) {
-			if (other.referencia != null)
+		if (nome_Imagem == null) {
+			if (other.nome_Imagem != null)
 				return false;
-		} else if (!referencia.equals(other.referencia))
+		} else if (!nome_Imagem.equals(other.nome_Imagem))
 			return false;
-		if (Double.doubleToLongBits(valordaUnidade) != Double.doubleToLongBits(other.valordaUnidade))
+		if (pontos != other.pontos)
 			return false;
 		return true;
 	}
-	@Override
-	public String toString() {
-		return "Itens_Movimento [id=" + id + ", id_Pessoa_Registro=" + id_Pessoa_Registro + ", descricao=" + descricao
-				+ ", valordaUnidade=" + valordaUnidade + ", referencia=" + referencia + ", id_Pessoa_Assinante="
-				+ id_Pessoa_Assinante + ", isPrecoUnico=" + isPrecoUnico + "]";
-	}
-	 
-	}
+	
+	
+	
+	
+
+}

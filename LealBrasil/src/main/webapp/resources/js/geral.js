@@ -1,4 +1,4 @@
-function consultaCep() {
+function consultaCep(cep) {
          var cep_code = $('#cep').val();
          if (cep_code.length <= 0)
                return;
@@ -32,3 +32,17 @@ function consultaCep() {
                } ]);
          });
   }
+
+function setfocus(id){
+	document.getElementById(id).focus()
+	}
+
+function log(msg) {
+    setTimeout(function() {
+        throw new Error(msg);
+    }, 0);
+}
+
+$(document).ready(function() {
+    $(":input:visible:enabled:first").focus()
+});

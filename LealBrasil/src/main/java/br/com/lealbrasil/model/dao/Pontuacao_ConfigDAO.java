@@ -25,7 +25,7 @@ public class Pontuacao_ConfigDAO extends GenericDAO<Pontuacao_Config>{
 			lista =  (List<Pontuacao_Config>)  crit.list();
 			return lista;
 		}catch(RuntimeException erro){
-			System.out.println("ocorreu um erro bem na hora de listar");
+			
 			erro.printStackTrace();
 			
 			throw erro;

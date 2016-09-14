@@ -9,115 +9,38 @@
 	xmlns:fn="http://java.sun.com/jstl/functions">
 <h:head>
 	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
-	<h:outputStylesheet library="css" name="estilosclientcare.css" />
-	<h:outputScript library="js" name="pessoas.js"  /> 
+	<h:outputStylesheet library="css" name="clubefidelidade.css" />
+	<h:outputScript library="js" name="pessoas.js" />
 
-	<title>Club Fiel</title>
+	<title>Clube Fidelidade</title>
 </h:head>
 
 
 <h:body style="overflow-x: hidden; overflow-y: hidden "
 	styleClass="Bimage">
 	<p:growl id="mensagens" autoUpdate="true" redisplay="true" />
-	<div>
-		<div id="topo">
-			<h:graphicImage library="images" name="linha melhorada.png" />
-			<h:graphicImage library="images" name="barra leal brasil.png" />
-			<h:graphicImage library="images" name="linha melhorada.png" />
-		</div>
-		<div id="corpo">
-			<h:form style="min-width:100%;min-height:100%;">
-				<p:layout style="min-width:400px;min-height:550px;" >
-					<p:layoutUnit position="west" resizable="true"
-						style="min-width:20%;">
-						<p:outputLabel value="Canais de Acesso" />
-						<p:dock position="botton" maxWidth="30">
-						
-							<p:menuitem  value="Acesso ao sistema"
-								icon="/resources/images/manager.png"								
-								actionListener ="#{autenticacaojsfController.renderizar(false)}">								
-							</p:menuitem>
-							
-							<p:menuitem  value="Clientes"							
-								icon="/resources/images/associados.png"
-								actionListener= "#{autenticacaojsfController.cadastroAutomatico()}" >
-							</p:menuitem>						
-						</p:dock>
-						
-					</p:layoutUnit>
-					<p:layoutUnit position="center" resizable="true">
-						<p:layout style="min-width:100%;min-height:100%;">
-							<p:layoutUnit position="west" size="25%" resizable="true">
-								<span style="font-weight: bold; color: #008000;">Módulo 1
-									- Fidelize seu cliente</span>
-								<h:graphicImage library="images" name="fidelize.jpg"
-									style="float:center;" />
-								<p:outputLabel style="text-align: justify;">
-							Através do nosso sistema de fidelização<br />
-							de clientes você controla sua pontuação <br />
-							e gera benefícios, que os incentivam  a <br />
-							sempre pensar no seu estabelecimento <br />
-							antes de procurar outro do mesmo <br />
-							seguimento.  
-							  </p:outputLabel>
-							</p:layoutUnit>
+	<div style=""></div>
 
-							<p:layoutUnit position="center" size="30%" resizable="true">
+	<h:form>
+		<p:panel header="Clube Fidelidade" styleClass="ui-panel-my-titlebar">
+		</p:panel>		
+	</h:form>
+	<div id="one" >		
+		<h:form>
+		<p:dock position="top">
 
-								<span style="font-weight: bold; color: #008000;">Módulo 2
-									- Crie seu canal e promova</span>
-								<h:graphicImage library="images"
-									name="comunique-se e promova.jpg" style="float:center;" />
+			<p:menuitem value="Administrativo"
+				icon="/resources/images/manager.png"
+				actionListener="#{autenticacaojsfController.renderizar(false)}">
+			</p:menuitem>
 
-								<p:outputLabel style="text-align:justify;">
-									<br />
-									<br />Através do nosso app mobile instalado <br />
-							junto ao celular cliente, ele pode <br />
-							acompanhar suas pontuações, em todos <br />
-							os estabelecimentos, onde ele compra <br />
-							e cujo estabelecimento é um de nossos <br />
-							associados.<br />
-							Dessa maneira sua empresa através do <br />
-							nosso sistema web, mantem um canal de <br />
-							comunicação com seu cliente através do <br />
-							app mobile intalado em seu celular. <br />
-							Assim você poderá se comunicar e <br />
-							enviar promoções direto no celular dele.
-							 
-							 
-							  
-							  </p:outputLabel>
-
-							</p:layoutUnit>
-
-							<p:layoutUnit position="east" size="40%" resizable="true">
-								<span style="font-weight: bold; color: #008000;">Módulo 3
-									- Aqui você pode ter sua loja virtual</span>
-
-								<h:graphicImage library="images" name="venda.jpg"
-									style="float:center;" />
-								<p:outputLabel style="text-align: justify;">
-							
-							Aumente suas vendas, com<br /> 
-							em poucos clicks.<br />
-							Utilize nosso ecommerce-mobile.<br /> 
-							Você configura a venda de seus<br />
-							produtos ou serviços no nosso <br />
-							sistema web e o cliente já terá<br />
-							em mãos a sua loja mobile.<br />
-								</p:outputLabel>
-							</p:layoutUnit>
-						</p:layout>
-					</p:layoutUnit>
-				</p:layout>
-			</h:form>
-			
-		</div>
-		<div id="rodape">
-			<h:graphicImage library="images" name="linha melhorada.png" />
-		</div>
-
-
+			<p:menuitem value="Clientes" icon="/resources/images/associados.png"
+				actionListener= "#{autenticacaojsfController.cadastroAutomatico()}">
+			</p:menuitem>
+		</p:dock>
+		</h:form>
+		
+		
 	</div>
 
 </h:body>

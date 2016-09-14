@@ -15,14 +15,14 @@
 		<property name="hibernate.dialect">org.hibernate.dialect.PostgreSQLDialect</property>
 		<property name="hibernate.connection.driver_class">org.postgresql.Driver</property>
 		
-	 <!--  		<property name="hibernate.connection.url">jdbc:postgresql://localhost:5432/LealBrasil</property> 
+	 		<property name="hibernate.connection.url">jdbc:postgresql://localhost:5432/LealBrasil</property> 
 			<property name="hibernate.connection.username">postgres</property> <property 
-			name="hibernate.connection.password">p2a3u0l9</property>   -->    
+			name="hibernate.connection.password">p2a3u0l9</property>       
 	 
 	  	
-	  <property name="hibernate.connection.url">jdbc:postgresql://node105227-lealbrasil.jelasticlw.com.br/LealBrasil</property>
+	 <!--   <property name="hibernate.connection.url">jdbc:postgresql://node105227-lealbrasil.jelasticlw.com.br/LealBrasil</property>
 		<property name="hibernate.connection.username">webadmin</property>
-		<property name="hibernate.connection.password">ZLBefa41538</property>  
+		<property name="hibernate.connection.password">ZLBefa41538</property> -->  
 		
 
 

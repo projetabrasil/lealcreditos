@@ -11,6 +11,7 @@ import javax.faces.bean.ViewScoped;
 import javax.faces.event.ActionEvent;
 
 import br.com.lealbrasil.model.dao.Itens_MovimentoDAO;
+import br.com.lealbrasil.model.entities.Enum_Aux_Sim_ou_Nao;
 import br.com.lealbrasil.model.entities.Itens_Movimento;
 import br.com.lealbrasil.model.entities.PerfilLogado;
 import br.com.lealbrasil.util.Utilidades;
@@ -22,14 +23,18 @@ public class Itens_MovimentojsfController {
 	private Itens_Movimento item;
 	@ManagedProperty(value="#{autenticacaojsfController.perfilLogado}")
 	PerfilLogado perfilLogado;
+	private List<Enum_Aux_Sim_ou_Nao> listaSN;
+	
 	@PostConstruct 
 	public void listar(){
 		Itens_MovimentoDAO iMovDAO = new Itens_MovimentoDAO();
 		itens = iMovDAO.listar(perfilLogado.getAssLogado());
+		setListaSN(Utilidades.listaSN());
 	}
 	public void novo(){
 		configItens();
 	}
+	
 	public void configItens(){
 		item = new Itens_Movimento();
 		item.setId_Empresa(1);
@@ -66,6 +71,12 @@ public class Itens_MovimentojsfController {
 	}
 	public void setPerfilLogado(PerfilLogado perfilLogado) {
 		this.perfilLogado = perfilLogado;
+	}
+	public List<Enum_Aux_Sim_ou_Nao> getListaSN() {
+		return listaSN;
+	}
+	public void setListaSN(List<Enum_Aux_Sim_ou_Nao> listaSN) {
+		this.listaSN = listaSN;
 	}
 
 }

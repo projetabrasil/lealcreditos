@@ -55,7 +55,7 @@ public class GenericDomain implements Serializable {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + id_Empresa;
-		result = prime * result + ((ultimaAtualizacao == null) ? 0 : ultimaAtualizacao.hashCode());
+		
 		return result;
 	}
 	@Override
@@ -69,11 +69,7 @@ public class GenericDomain implements Serializable {
 		GenericDomain other = (GenericDomain) obj;
 		if (id_Empresa != other.id_Empresa)
 			return false;
-		if (ultimaAtualizacao == null) {
-			if (other.ultimaAtualizacao != null)
-				return false;
-		} else if (!ultimaAtualizacao.equals(other.ultimaAtualizacao))
-			return false;
+		
 		return true;
 	}
 	

@@ -1,15 +1,25 @@
 package br.com.lealbrasil.util;
 
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.Serializable;
+import java.net.URL;
+import java.net.URLConnection;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.TimeZone;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.primefaces.context.RequestContext;
+
 import antlr.StringUtils;
+import br.com.lealbrasil.model.entities.Enum_Aux_Sim_ou_Nao;
 
 
 @SuppressWarnings("serial")
@@ -36,6 +46,7 @@ public class Utilidades implements Serializable {
 		return c;
 		
 	}
+	
 	public static Calendar retornaData(){		
 		Calendar c = Calendar.getInstance();
 		return c;
@@ -105,6 +116,47 @@ public class Utilidades implements Serializable {
 	        Pattern pattern = Pattern.compile(emailPattern, Pattern.CASE_INSENSITIVE);
 	        Matcher matcher = pattern.matcher(email);
 	        return matcher.matches();
+	    }
+	   
+	   public static void abrirfecharDialogos(String dialogo,boolean abrir){
+		 RequestContext context = RequestContext.getCurrentInstance();
+		 String finalidade;
+		 if(abrir)
+			 finalidade = "show";
+		 else
+			 finalidade = "hide";
+		 context.execute("PF('"+dialogo+"')."+finalidade+"();");		 
+		}
+	   public static List<Enum_Aux_Sim_ou_Nao> listaSN(){
+		   List<Enum_Aux_Sim_ou_Nao> lista = new ArrayList<Enum_Aux_Sim_ou_Nao>();
+		   Enum_Aux_Sim_ou_Nao[] lSN;
+			lSN = Enum_Aux_Sim_ou_Nao.values();
+			 
+			for (Enum_Aux_Sim_ou_Nao l : lSN) {				
+				 lista.add(l);
+			}
+			return lista;
+	   }
+	   public static String buscarCep(String cep) {
+	        String json;
+
+	        try {
+	            URL url = new URL("http://viacep.com.br/ws/"+ cep +"/json");
+	            URLConnection urlConnection = url.openConnection();
+	            InputStream is = urlConnection.getInputStream();
+	            BufferedReader br = new BufferedReader(new InputStreamReader(is));
+
+	            StringBuilder jsonSb = new StringBuilder();
+
+	            br.lines().forEach(l -> jsonSb.append(l.trim()));
+
+	            json = jsonSb.toString();
+
+	        } catch (Exception e) {
+	            throw new RuntimeException(e);
+	        }
+
+	        return json;
 	    }
 
 }

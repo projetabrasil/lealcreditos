@@ -3,22 +3,59 @@ package br.com.clientcare.model.dao;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
+import javax.faces.context.FacesContext;
+
+import org.junit.Ignore;
 import org.junit.Test;
 
 import br.com.lealbrasil.model.dao.PessoaDAO;
 import br.com.lealbrasil.model.dao.Pessoa_Enum_Aux_Perfil_PessoasDAO;
 import br.com.lealbrasil.model.dao.UsuarioDAO;
 import br.com.lealbrasil.model.entities.Enum_Aux_Perfil_Pessoa;
-import br.com.lealbrasil.model.entities.Enum_Aux_Tipo_Identificador;
 import br.com.lealbrasil.model.entities.Enum_Aux_Sexo;
+import br.com.lealbrasil.model.entities.Enum_Aux_Tipo_Identificador;
 import br.com.lealbrasil.model.entities.Pessoa;
 import br.com.lealbrasil.model.entities.Pessoa_Enum_Aux_Perfil_Pessoa;
 import br.com.lealbrasil.model.entities.Usuario;
 import br.com.lealbrasil.util.Utilidades;
 
 public class Pontuacao_ConfigDAOTest {
-
+	@Test
+	public void criarDiretorio(){
+		String caminho = FacesContext.getCurrentInstance().getExternalContext().getRealPath("") + "/resources/relatorios/";
+		
+		System.out.print(caminho);
+	}
+	@Ignore
+	@Test 
+	public void buscacep(){
+		String json =Utilidades.buscarCep("78400000");
+        System.out.println("olá: " +json);
+        Map<String,String> mapa = new HashMap<>();
+        Matcher matcher = Pattern.compile("\"\\D.*?\": \".*?\"").matcher(json);
+        while (matcher.find()) {
+            String[] group = matcher.group().split(":");
+            mapa.put(group[0].replaceAll("\"", "").trim(), group[1].replaceAll("\"", "").trim());
+        }
+        System.out.println("Uf: " +mapa.get("uf"));
+        System.out.println("Complemento: " +mapa.get("complemento"));
+        System.out.println("Logradouro: " +mapa.get("logradouro"));
+        System.out.println("Bairro: " +mapa.get("bairro"));
+        System.out.println("Cidade: " +mapa.get("localidade"));
+        System.out.println("Ibge: " +mapa.get("ibge"));
+        System.out.println("Unidade: " +mapa.get("unidade"));
+        System.out.println("Gia: " +mapa.get("gia"));
+        System.out.println("Cep: " +mapa.get("cep"));
+        
+        System.out.println(mapa);
+	    
+	}
+    @Ignore
 	@Test
 	public void listar() {
 
@@ -31,7 +68,7 @@ public class Pontuacao_ConfigDAOTest {
 			Date date = new Date();
 			try {
 				date = formatter.parse(data);
-				System.out.println(date);
+				
 			} catch (ParseException e) {
 				e.printStackTrace();
 			}

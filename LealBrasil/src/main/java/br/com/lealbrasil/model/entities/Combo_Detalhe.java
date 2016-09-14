@@ -14,45 +14,51 @@ import javax.persistence.SequenceGenerator;
 
 @SuppressWarnings("serial")
 @Entity
-public class Combo_Detalhe extends GenericDomain implements Serializable {
-	@Id 
-	@SequenceGenerator(name="pk_combo_detalhe", sequenceName="mess_sounds_combo_detalhe", allocationSize=1)
-	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="pk_combo_detalhe")
+public class Combo_Detalhe extends GenericDomain implements Serializable, Comparable<Combo_Detalhe> {
+	@Id
+	@SequenceGenerator(name = "pk_combo_detalhe", sequenceName = "mess_sounds_combo_detalhe", allocationSize = 1)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "pk_combo_detalhe")
 	private Long id;
-	@ManyToOne(cascade={CascadeType.ALL})
-	@JoinColumn(name="id_Pessoa_Registro")
+	@ManyToOne(cascade = { CascadeType.ALL })
+	@JoinColumn(name = "id_Pessoa_Registro")
 	private Pessoa id_Pessoa_Registro;
-	@ManyToOne(cascade ={CascadeType.ALL})
-	@JoinColumn(name="id_Pessoa_Assinante", nullable=false)
+	@ManyToOne(cascade = { CascadeType.ALL })
+	@JoinColumn(name = "id_Pessoa_Assinante", nullable = false)
 	private Pessoa id_Pessoa_Assinante;
-	@ManyToOne(cascade={CascadeType.ALL})
-	@JoinColumn(name="id_ComboMestre", nullable=false)
+	@ManyToOne(cascade = { CascadeType.ALL })
+	@JoinColumn(name = "id_ComboMestre", nullable = false)
 	private Combo_Mestre id_ComboMestre;
-	@ManyToOne(cascade={CascadeType.ALL})
-	@JoinColumn(name="id_Itens_Movimento",nullable=false)
+	@ManyToOne(cascade = { CascadeType.ALL })
+	@JoinColumn(name = "id_Itens_Movimento", nullable = false)
 	private Itens_Movimento id_Itens_Movimento;
-	@Column(name="referencia", length=20, nullable=false)
+	@Column(name = "referencia", length = 20, nullable = false)
 	private String referencia;
-	@Column(name="descricao",length=90,nullable=false)
+	@Column(name = "descricao", length = 90, nullable = false)
 	private String descricao;
-	@Column(name="valorUnidade", precision=18, scale=4, nullable=false)
+	@Column(name = "valorUnidade", precision = 18, scale = 4, nullable = false)
 	private double valorUnidade;
-	@Column(name="qtde", precision=18, scale=4, nullable=false)
+	@Column(name = "qtde", precision = 18, scale = 4, nullable = false)
 	private double qtde;
-	@Column(name="total", precision=18, scale=4, nullable=false)
+	@Column(name = "total", precision = 18, scale = 4, nullable = false)
 	private double total;
-	@Column(name="desconto", precision=18, scale=4, nullable=false)
+	@Column(name = "desconto", precision = 18, scale = 4, nullable = false)
 	private double desconto;
-	@Column(name="totalLiquido", precision=18, scale=4, nullable=false)
+	@Column(name = "percDesc", precision = 18, scale = 4, nullable = false)
+	private double percDesc;
+	@Column(name = "totalLiquido", precision = 18, scale = 4, nullable = false)
 	private double totalLiquido;
+	@Column(name = "nMeses", nullable = false)
+	private short nMeses;
+
 	@Override
 	public String toString() {
-		return "ComboDetalhe [id=" + id + ", id_Pessoa_Registro=" + id_Pessoa_Registro + ", id_Pessoa_Assinante="
+		return "Combo_Detalhe [id=" + id + ", id_Pessoa_Registro=" + id_Pessoa_Registro + ", id_Pessoa_Assinante="
 				+ id_Pessoa_Assinante + ", id_ComboMestre=" + id_ComboMestre + ", id_Itens_Movimento="
 				+ id_Itens_Movimento + ", referencia=" + referencia + ", descricao=" + descricao + ", valorUnidade="
-				+ valorUnidade + ", qtde=" + qtde + ", total=" + total + ", desconto=" + desconto + ", totalLiquido="
-				+ totalLiquido + "]";
+				+ valorUnidade + ", qtde=" + qtde + ", total=" + total + ", desconto=" + desconto + ", percDesc="
+				+ percDesc + ", totalLiquido=" + totalLiquido + ", nMeses=" + nMeses + "]";
 	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -66,6 +72,9 @@ public class Combo_Detalhe extends GenericDomain implements Serializable {
 		result = prime * result + ((id_Itens_Movimento == null) ? 0 : id_Itens_Movimento.hashCode());
 		result = prime * result + ((id_Pessoa_Assinante == null) ? 0 : id_Pessoa_Assinante.hashCode());
 		result = prime * result + ((id_Pessoa_Registro == null) ? 0 : id_Pessoa_Registro.hashCode());
+		result = prime * result + nMeses;
+		temp = Double.doubleToLongBits(percDesc);
+		result = prime * result + (int) (temp ^ (temp >>> 32));
 		temp = Double.doubleToLongBits(qtde);
 		result = prime * result + (int) (temp ^ (temp >>> 32));
 		result = prime * result + ((referencia == null) ? 0 : referencia.hashCode());
@@ -77,6 +86,7 @@ public class Combo_Detalhe extends GenericDomain implements Serializable {
 		result = prime * result + (int) (temp ^ (temp >>> 32));
 		return result;
 	}
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -86,23 +96,6 @@ public class Combo_Detalhe extends GenericDomain implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		Combo_Detalhe other = (Combo_Detalhe) obj;
-		if (Double.doubleToLongBits(desconto) != Double.doubleToLongBits(other.desconto))
-			return false;
-		if (descricao == null) {
-			if (other.descricao != null)
-				return false;
-		} else if (!descricao.equals(other.descricao))
-			return false;
-		if (id == null) {
-			if (other.id != null)
-				return false;
-		} else if (!id.equals(other.id))
-			return false;
-		if (id_ComboMestre == null) {
-			if (other.id_ComboMestre != null)
-				return false;
-		} else if (!id_ComboMestre.equals(other.id_ComboMestre))
-			return false;
 		if (id_Itens_Movimento == null) {
 			if (other.id_Itens_Movimento != null)
 				return false;
@@ -118,94 +111,131 @@ public class Combo_Detalhe extends GenericDomain implements Serializable {
 				return false;
 		} else if (!id_Pessoa_Registro.equals(other.id_Pessoa_Registro))
 			return false;
-		if (Double.doubleToLongBits(qtde) != Double.doubleToLongBits(other.qtde))
-			return false;
-		if (referencia == null) {
-			if (other.referencia != null)
-				return false;
-		} else if (!referencia.equals(other.referencia))
-			return false;
-		if (Double.doubleToLongBits(total) != Double.doubleToLongBits(other.total))
-			return false;
-		if (Double.doubleToLongBits(totalLiquido) != Double.doubleToLongBits(other.totalLiquido))
-			return false;
-		if (Double.doubleToLongBits(valorUnidade) != Double.doubleToLongBits(other.valorUnidade))
-			return false;
 		return true;
 	}
+
 	public Long getId() {
 		return id;
 	}
+
 	public void setId(Long id) {
 		this.id = id;
 	}
+
 	public Pessoa getId_Pessoa_Registro() {
 		return id_Pessoa_Registro;
 	}
+
 	public void setId_Pessoa_Registro(Pessoa id_Pessoa_Registro) {
 		this.id_Pessoa_Registro = id_Pessoa_Registro;
 	}
+
 	public Pessoa getId_Pessoa_Assinante() {
 		return id_Pessoa_Assinante;
 	}
+
 	public void setId_Pessoa_Assinante(Pessoa id_Pessoa_Assinante) {
 		this.id_Pessoa_Assinante = id_Pessoa_Assinante;
 	}
+
 	public Combo_Mestre getId_ComboMestre() {
 		return id_ComboMestre;
 	}
+
 	public void setId_ComboMestre(Combo_Mestre id_ComboMestre) {
 		this.id_ComboMestre = id_ComboMestre;
 	}
+
 	public Itens_Movimento getId_Itens_Movimento() {
 		return id_Itens_Movimento;
 	}
+
 	public void setId_Itens_Movimento(Itens_Movimento id_Itens_Movimento) {
 		this.id_Itens_Movimento = id_Itens_Movimento;
 	}
+
 	public String getReferencia() {
 		return referencia;
 	}
+
 	public void setReferencia(String referencia) {
 		this.referencia = referencia;
 	}
+
 	public String getDescricao() {
 		return descricao;
 	}
+
 	public void setDescricao(String descricao) {
 		this.descricao = descricao;
 	}
+
 	public double getValorUnidade() {
 		return valorUnidade;
 	}
+
 	public void setValorUnidade(double valorUnidade) {
 		this.valorUnidade = valorUnidade;
 	}
+
 	public double getQtde() {
 		return qtde;
 	}
+
 	public void setQtde(double qtde) {
 		this.qtde = qtde;
 	}
+
 	public double getTotal() {
 		return total;
 	}
+
 	public void setTotal(double total) {
 		this.total = total;
 	}
+
 	public double getDesconto() {
 		return desconto;
 	}
+
 	public void setDesconto(double desconto) {
 		this.desconto = desconto;
 	}
+
 	public double getTotalLiquido() {
 		return totalLiquido;
 	}
+
 	public void setTotalLiquido(double totalLiquido) {
 		this.totalLiquido = totalLiquido;
 	}
-	
-	
+
+	public double getPercDesc() {
+		return percDesc;
+	}
+
+	public void setPercDesc(double percdesc) {
+		this.percDesc = percdesc;
+	}
+
+	public short getnMeses() {
+		return nMeses;
+	}
+
+	public void setnMeses(short nMeses) {
+		this.nMeses = nMeses;
+	}
+
+	@Override
+	public int compareTo(Combo_Detalhe o) {
+		Combo_Detalhe cD = (Combo_Detalhe) o;
+
+		if (getId_Itens_Movimento().getId() > cD.getId_Itens_Movimento().getId())
+			return 1;
+		else if (getId_Itens_Movimento().getId() < cD.getId_Itens_Movimento().getId())
+			return -1;
+		else
+			return 0;
+	}
 
 }

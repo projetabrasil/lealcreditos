@@ -9,8 +9,6 @@ import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import javax.faces.event.ActionEvent;
 
-import org.primefaces.context.RequestContext;
-
 import br.com.lealbrasil.controller.entitiesconfig.PessoaConfig;
 import br.com.lealbrasil.model.business.PessoaBusiness;
 import br.com.lealbrasil.model.business.PessoaBusiness2;
@@ -67,9 +65,7 @@ public class PessoajsfController extends GenericController implements Serializab
 		usuario = new Usuario();
 		pessoa.setId_Pessoa_Registro(perfilLogado.getUsLogado().getPessoa());
 		usuario.setPessoa(pessoa);
-
-		RequestContext context = RequestContext.getCurrentInstance();
-		context.execute("PF('dialogoIdentidade').show();");
+		Utilidades.abrirfecharDialogos("dialogoIdentidade",true);
 	}
 
 	public void editar(ActionEvent event) {
@@ -77,8 +73,8 @@ public class PessoajsfController extends GenericController implements Serializab
 		Pessoa p = (Pessoa) event.getComponent().getAttributes().get("registroAtual");
 		pessoa = new Pessoa();
 		pessoa = p;
-		System.out.println("pessoa para edição para edição: " + p);
-		System.out.println("perfil logado para edição: " + perfilLogado.getUsLogado());
+		
+		
 		if (perfilLogado.getPaginaAtual().isRenderizaCadastrodeUsuarios()) {
 			UsuarioDAO usuarioDAO = new UsuarioDAO();
 			usuario = usuarioDAO.retornaUsuarioPelaPessoa(pessoa);
@@ -97,8 +93,7 @@ public class PessoajsfController extends GenericController implements Serializab
 
 		usuario.setPessoa(pessoa);
 		mudaLabel();
-		RequestContext context = RequestContext.getCurrentInstance();
-		context.execute("PF('dialogoCadastro').show();");
+		Utilidades.abrirfecharDialogos("dialogoCadastro",true);
 	}
 
 	public void merge() {
@@ -131,9 +126,8 @@ public class PessoajsfController extends GenericController implements Serializab
 
 	}
 
-	public void cancela() {
-		RequestContext context = RequestContext.getCurrentInstance();
-		context.execute("PF('dialogoCadastro').hide();");
+	public void cancela() {		
+		Utilidades.abrirfecharDialogos("dialogoCadastro",false);
 
 		if (perfilLogado.getPerfilUsLogado().equals(Enum_Aux_Perfil_Pessoa.OUTROS)) {
 			perfilLogado = new PerfilLogado();

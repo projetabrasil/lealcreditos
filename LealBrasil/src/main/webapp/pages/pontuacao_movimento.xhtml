@@ -327,6 +327,8 @@
 						<p:ajax process="@form" listener="#{pontuacao.configPontuacao()}"
 							update="valPontuacao soma valaPontuar
 						 pessoa_cliente validade" />
+						 <p:ajax event="change"  process="@this"
+							oncomplete="$(function(){PrimeFaces.focus('formTemplate:formPontuar:valPontuacao');});" />
 
 					</p:selectOneMenu>
 
@@ -352,14 +354,14 @@
 					<p:outputLabel
 						value="Pontos a #{pontuacao.pontuacao.creditaDebita.acao.toLowerCase()}"
 						rendered="#{pontuacao.pontuacao.creditaDebita.visualizadebito}" />
-					<p:inputMask id="pontosAtingidos" symbol="Leal " symbolPosition="p"
+					<p:inputNumber  decimalPlaces="0" id="pontosAtingidos" symbol="Leal " symbolPosition="p"
 						emptyValue="0" size="30" maxlength="20"
 						value="#{pontuacao.pontuacao.pontosAtingidos}" required="true"
 						requiredMessage="É preciso informar pontuação!!!"
 						rendered="#{pontuacao.pontuacao.creditaDebita.visualizadebito}"
-						mask="9?9999">
+						>
 
-					</p:inputMask>
+					</p:inputNumber>
 					<p:outputLabel id="pessoa_cliente"
 						value="Cliente: #{pontuacao.pessoaPontuada.descricao}"
 						style="color:blue;font-size:15px;font-weight:900;" />

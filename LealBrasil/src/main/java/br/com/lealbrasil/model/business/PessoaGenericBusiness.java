@@ -2,8 +2,6 @@ package br.com.lealbrasil.model.business;
 
 import java.io.Serializable;
 
-import org.primefaces.context.RequestContext;
-
 import br.com.lealbrasil.model.entities.Enum_Aux_Perfil_Pessoa;
 import br.com.lealbrasil.model.entities.PerfilLogado;
 import br.com.lealbrasil.model.entities.Pessoa;
@@ -84,10 +82,9 @@ public class PessoaGenericBusiness implements Serializable {
 		 
 		 return pessoa;
 	}
-	public static void chamaDialogoCastro(){
-		RequestContext context = RequestContext.getCurrentInstance();
-		context.execute("PF('dialogoIdentidade').hide();");
-		context.execute("PF('dialogoCadastro').show();");
+	public static void chamaDialogoCastro(){		
+		Utilidades.abrirfecharDialogos("dialogoIdentidade",false);		
+		Utilidades.abrirfecharDialogos("dialogoCadastro",true);
 	}
 	
 }

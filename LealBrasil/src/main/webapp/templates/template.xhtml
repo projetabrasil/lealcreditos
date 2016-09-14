@@ -10,6 +10,7 @@
 <h:head>
 	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
 	<h:outputStylesheet library="css" name="clubefidelidade.css" />
+	<h:outputScript library="js" name="geral.js" />
 
 	<title>Club Fidelidade</title>
 </h:head>
@@ -21,19 +22,31 @@
 	<h:form style="background:#33CC00;">
 		<p:panel header="Clube Fidelidade" styleClass="ui-panel-my-titlebar">
 			<p:outputLabel
-				value="Login: #{autenticacaojsfController.perfilLogado.usLogado.pessoa.descricao} 
-				- Perfil : #{autenticacaojsfController.perfilLogado.perfilUsLogado}  "
+				value="Login: #{autenticacaojsfController.perfilLogado.usLogado.pessoa.descricao}"
 				style="color:blue;font-size:15px;font-weight:600;" />
 			<p:outputLabel
-				value="Associado: #{autenticacaojsfController.perfilLogado.assLogado.descricao}"
+				value=" - #{autenticacaojsfController.perfilLogado.assLogado.descricao}"
 				rendered="#{autenticacaojsfController.perfilLogado.renderizaAssociado}"
 				style="color:blue;font-size:15px;font-weight:900;" />
+
+
 		</p:panel>
 	</h:form>
 	<div id="geral">
 		<div id="topo">
 			<h:form id="formMenu" style="width:100%">
-				<p:menubar>
+				<p:selectOneRadio id="perf1" label="perfil: " style="font-size:15px;"
+					value="#{autenticacaojsfController.perfilLogado.perfilUsLogado}"
+					columns="10" converter="omnifaces.SelectItemsConverter">
+					<f:selectItems
+						value="#{autenticacaojsfController.perfilLogado.listaPerfisdousLogado}"
+						var="c" itemLabel="#{c.descricao}" itemValue="#{c}" />
+					<p:ajax
+						listener="#{autenticacaojsfController.redirecionapaginaIndex(false)}" />
+				</p:selectOneRadio>
+
+				<p:menubar style="font-size:15px;">
+				
 					<p:submenu label="Cadastros">
 						<p:submenu label="Pessoas">
 							<p:menuitem value="Administradores"
@@ -111,11 +124,16 @@
 							<f:attribute name="tipoMovimento" value="E" />
 						</p:menuitem>
 					</p:submenu>
-					<p:submenu label="Itens de Movimento">
-						<p:menuitem value="Configurar"
+					<p:submenu label="Movimento">
+						<p:menuitem value="Itens de Movimento"
 							actionListener="#{paginas.mudaPaginaAtual}"
 							rendered="#{autenticacaojsfController.perfilLogado.temPermissoes(['VENDAS'])}">
 							<f:attribute name="paginaAtual" value="PAGINAITENSMOVIMENTO" />
+						</p:menuitem>
+						<p:menuitem value="Combos"
+							actionListener="#{paginas.mudaPaginaAtual}"
+							rendered="#{autenticacaojsfController.perfilLogado.temPermissoes(['VENDAS'])}">
+							<f:attribute name="paginaAtual" value="PAGINACOMBOS" />
 						</p:menuitem>
 					</p:submenu>
 					<p:submenu label="Sair"

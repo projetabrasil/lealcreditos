@@ -1,5 +1,7 @@
 package br.com.lealbrasil.util;
 
+import java.io.IOException;
+
 import javax.faces.event.PhaseEvent;
 import javax.faces.event.PhaseId;
 import javax.faces.event.PhaseListener;
@@ -24,16 +26,28 @@ public class AutenticacaoListener implements PhaseListener {
 				AutenticacaojsfController autenticacaojsfController = Faces
 						.getSessionAttribute("autenticacaojsfController");
 				if (autenticacaojsfController == null) {
-					
-						Faces.navigate("pages/alfapage.xhtml");
-						return;
+					    try{
+					    	Faces.redirect("pages/alfapage.xhtml");
+							return;	
+					    }catch(IOException error){
+					    	
+					    	error.printStackTrace();
+					    }
+					    
+						
 										
 				}
 				Usuario usuario = autenticacaojsfController.getPerfilLogado().getUsLogado();
 				if (usuario == null || autenticacaojsfController.getPerfilLogado().getPaginaAtual() == null) {
 					
-						Faces.navigate("pages/alfapage.xhtml");
-						return;
+					try{
+				    	Faces.redirect("pages/alfapage.xhtml");
+						return;	
+				    }catch(IOException error){
+				    	
+				    	error.printStackTrace();
+				    }
+				    
 					
 				}
 			}

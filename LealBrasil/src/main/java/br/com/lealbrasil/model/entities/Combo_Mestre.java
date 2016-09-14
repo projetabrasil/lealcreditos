@@ -32,16 +32,21 @@ public class Combo_Mestre extends GenericDomain implements Serializable {
 	@Column(name="desconto", precision=18, scale=4, nullable=false)
 	private double desconto;
 	@Column(name="percDesc", precision=18, scale=4, nullable=false)
-	private double percdesc;
+	private double percDesc;
 	@Column(name="totalLiquido", precision=18,scale=4, nullable=false)
 	private double totalLiquido;
 	@Column(name="referencia", length=20, nullable=false )
 	private String referencia;
+	@Column (name="nMeses",nullable=false)
+	private short nMeses;
+	
+	
 	@Override
 	public String toString() {
-		return "ComboMestre [id=" + id + ", id_Pessoa_Registro=" + id_Pessoa_Registro + ", id_Pessoa_Assinante="
+		return "Combo_Mestre [id=" + id + ", id_Pessoa_Registro=" + id_Pessoa_Registro + ", id_Pessoa_Assinante="
 				+ id_Pessoa_Assinante + ", descricao=" + descricao + ", total=" + total + ", desconto=" + desconto
-				+ ", percdesc=" + percdesc + ", totalLiquido=" + totalLiquido + ", referencia=" + referencia + "]";
+				+ ", percDesc=" + percDesc + ", totalLiquido=" + totalLiquido + ", referencia=" + referencia
+				+ ", nMeses=" + nMeses + "]";
 	}
 	@Override
 	public int hashCode() {
@@ -54,7 +59,8 @@ public class Combo_Mestre extends GenericDomain implements Serializable {
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result + ((id_Pessoa_Assinante == null) ? 0 : id_Pessoa_Assinante.hashCode());
 		result = prime * result + ((id_Pessoa_Registro == null) ? 0 : id_Pessoa_Registro.hashCode());
-		temp = Double.doubleToLongBits(percdesc);
+		result = prime * result + nMeses;
+		temp = Double.doubleToLongBits(percDesc);
 		result = prime * result + (int) (temp ^ (temp >>> 32));
 		result = prime * result + ((referencia == null) ? 0 : referencia.hashCode());
 		temp = Double.doubleToLongBits(total);
@@ -94,7 +100,9 @@ public class Combo_Mestre extends GenericDomain implements Serializable {
 				return false;
 		} else if (!id_Pessoa_Registro.equals(other.id_Pessoa_Registro))
 			return false;
-		if (Double.doubleToLongBits(percdesc) != Double.doubleToLongBits(other.percdesc))
+		if (nMeses != other.nMeses)
+			return false;
+		if (Double.doubleToLongBits(percDesc) != Double.doubleToLongBits(other.percDesc))
 			return false;
 		if (referencia == null) {
 			if (other.referencia != null)
@@ -143,11 +151,11 @@ public class Combo_Mestre extends GenericDomain implements Serializable {
 	public void setDesconto(double desconto) {
 		this.desconto = desconto;
 	}
-	public double getPercdesc() {
-		return percdesc;
+	public double getPercDesc() {
+		return percDesc;
 	}
-	public void setPercdesc(double percdesc) {
-		this.percdesc = percdesc;
+	public void setPercDesc(double percDesc) {
+		this.percDesc = percDesc;
 	}
 	public double getTotalLiquido() {
 		return totalLiquido;
@@ -161,5 +169,12 @@ public class Combo_Mestre extends GenericDomain implements Serializable {
 	public void setReferencia(String referencia) {
 		this.referencia = referencia;
 	}
+	public short getnMeses() {
+		return nMeses;
+	}
+	public void setnMeses(short nMeses) {
+		this.nMeses = nMeses;
+	}
+	
 
 }

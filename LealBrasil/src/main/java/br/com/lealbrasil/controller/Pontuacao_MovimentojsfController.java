@@ -10,7 +10,6 @@ import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 
 import org.omnifaces.util.Messages;
-import org.primefaces.context.RequestContext;
 
 import br.com.lealbrasil.controller.entitiesconfig.PessoaConfig;
 import br.com.lealbrasil.model.business.PessoaBusiness2;
@@ -18,9 +17,9 @@ import br.com.lealbrasil.model.business.PessoaGenericBusiness;
 import br.com.lealbrasil.model.dao.PessoaDAO;
 import br.com.lealbrasil.model.dao.Pontuacao_ConfigDAO;
 import br.com.lealbrasil.model.dao.Pontuacao_MovimentoDAO;
+import br.com.lealbrasil.model.entities.Enum_Aux_Perfil_Pagina_Atual;
 import br.com.lealbrasil.model.entities.Enum_Aux_Tipo_Identificador;
 import br.com.lealbrasil.model.entities.Enum_Aux_Tipo_Mov_Pontuacao;
-import br.com.lealbrasil.model.entities.Enum_Aux_Perfil_Pagina_Atual;
 import br.com.lealbrasil.model.entities.PerfilLogado;
 import br.com.lealbrasil.model.entities.Pessoa;
 import br.com.lealbrasil.model.entities.Pontuacao_Config;
@@ -72,10 +71,8 @@ public class Pontuacao_MovimentojsfController implements Serializable {
 
 		Pontuacao_MovimentoDAO pDAO = new Pontuacao_MovimentoDAO();
 		historico = pDAO.listar(perfilLogado, cliente, true);
-		retornasomaPontuacao(cliente);
-
-		RequestContext contexto = RequestContext.getCurrentInstance();
-		contexto.execute("PF('dialogoHistorico').show();");
+		retornasomaPontuacao(cliente);				
+		Utilidades.abrirfecharDialogos("dialogoHistorico",true);
 	}
 
 	public void retornasomaPontuacao(Pessoa cliente) {
@@ -106,9 +103,8 @@ public class Pontuacao_MovimentojsfController implements Serializable {
 		pontuacaoSoma = 0d;
 		pontuacaoSomaCredito = 0d;
 		pontuacaoSomaDebitoUtilizacao = 0d;
-		pontuacaoSomaDebitoEstorno = 0d;
-		RequestContext contexto = RequestContext.getCurrentInstance();
-		contexto.execute("PF('dialogoPontuar').show();");
+		pontuacaoSomaDebitoEstorno = 0d;		
+		Utilidades.abrirfecharDialogos("dialogoPontuar",true);
 	}
 
 	public void configurarPessoa() {
@@ -187,10 +183,7 @@ public class Pontuacao_MovimentojsfController implements Serializable {
 			pessoaPontuada = pessoaDAO.retornaPelaIdentificacao(pessoaPontuada.getCpf_Cnpj());
 			if (pessoaPontuada == null) {
 				configPessoaNova(cpf_Cnpj);
-				
-				
-				RequestContext context = RequestContext.getCurrentInstance();
-				context.execute("PF('dialogoCadastro').show();");
+				Utilidades.abrirfecharDialogos("dialogoCadastro",true);
 			} else {
 				retornasomaPontuacao(pessoaPontuada);
 			}
@@ -206,9 +199,8 @@ public class Pontuacao_MovimentojsfController implements Serializable {
 		usuario.setPessoa(pessoaPontuada);
 
 		if (!PessoaBusiness2.validaDados(usuario, perfilLogado, validarEmail, validarSenha, true))
-			return;
-		RequestContext context = RequestContext.getCurrentInstance();
-		context.execute("PF('dialogoCadastro').hide();");
+			return;		
+		Utilidades.abrirfecharDialogos("dialogoCadastro",false);
 		pessoaPontuada = PessoaGenericBusiness.merge(pessoaPontuada, perfilLogado.getUsLogado(), perfilLogado, false);
 	}
 

@@ -8,13 +8,13 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 
 import org.omnifaces.util.Faces;
-import org.primefaces.context.RequestContext;
 
 import br.com.lealbrasil.model.dao.UsuarioDAO;
 import br.com.lealbrasil.model.entities.Enum_Aux_Perfil_Pagina_Atual;
 import br.com.lealbrasil.model.entities.Enum_Aux_Perfil_Pessoa;
 import br.com.lealbrasil.model.entities.Enum_Aux_Tipos_Mensagens;
 import br.com.lealbrasil.model.entities.PerfilLogado;
+import br.com.lealbrasil.util.Utilidades;
 
 @SuppressWarnings("serial")
 @SessionScoped()
@@ -110,8 +110,8 @@ public class AutenticacaojsfController extends GenericController implements Seri
 
 	public void redirecionapaginaIndex(boolean cadastroAutomatico) {
 		perfilLogado.verificaAssinante();
-		RequestContext requestContext = RequestContext.getCurrentInstance();
-		requestContext.execute("PF('dialogoPerfil').hide();");
+		Utilidades.abrirfecharDialogos("dialogoPerfil",false);
+		
 		if (!cadastroAutomatico)
 			redirecionaPaginas("index.xhtml", "Erro ao tentar chamar a pagina index.!!!",true);
 		else
