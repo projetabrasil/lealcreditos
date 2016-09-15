@@ -35,7 +35,8 @@
 	<div id="geral">
 		<div id="topo">
 			<h:form id="formMenu" style="width:100%">
-				<p:selectOneRadio id="perf1" label="perfil: " style="font-size:15px;"
+				<p:selectOneRadio id="perf1" label="perfil: "
+					style="font-size:15px;"
 					value="#{autenticacaojsfController.perfilLogado.perfilUsLogado}"
 					columns="10" converter="omnifaces.SelectItemsConverter">
 					<f:selectItems
@@ -46,7 +47,7 @@
 				</p:selectOneRadio>
 
 				<p:menubar style="font-size:15px;">
-				
+
 					<p:submenu label="Cadastros">
 						<p:submenu label="Pessoas">
 							<p:menuitem value="Administradores"
@@ -95,16 +96,9 @@
 								<f:attribute name="paginaAtual" value="PAGINAVENDAS" />
 							</p:menuitem>
 						</p:submenu>
-						<p:submenu label="Configuração de Pontuação">
 
-							<p:menuitem value="Configurar"
-								actionListener="#{paginas.mudaPaginaAtual}"
-								rendered="#{autenticacaojsfController.perfilLogado.temPermissoes(['ASSINANTES'])}">
-								<f:attribute name="paginaAtual" value="PAGINAPONTUACAOCONFIG" />
-							</p:menuitem>
-						</p:submenu>
 					</p:submenu>
-					<p:submenu label="Pontuações">
+					<p:submenu label="Pontos">
 						<p:menuitem value="Pontuar"
 							actionListener="#{paginas.mudaPaginaAtual}"
 							rendered="#{autenticacaojsfController.perfilLogado.temPermissoes2(['ADMINISTRADORES','ASSINANTES','ATENDENTES'])}">
@@ -123,6 +117,16 @@
 							<f:attribute name="paginaAtual" value="PAGINAPONTUACAOE" />
 							<f:attribute name="tipoMovimento" value="E" />
 						</p:menuitem>
+						<p:menuitem value="Configuração de pontuação"
+							actionListener="#{paginas.mudaPaginaAtual}"
+							rendered="#{autenticacaojsfController.perfilLogado.temPermissoes(['ASSINANTES'])}">
+							<f:attribute name="paginaAtual" value="PAGINAPONTUACAOCONFIG" />
+						</p:menuitem>
+						<p:menuitem value="Configuração de brindes"
+							actionListener="#{paginas.mudaPaginaAtual}"
+							rendered="#{autenticacaojsfController.perfilLogado.temPermissoes(['ASSINANTES'])}">
+							<f:attribute name="paginaAtual" value="PAGINABRINDE" />
+						</p:menuitem>
 					</p:submenu>
 					<p:submenu label="Movimento">
 						<p:menuitem value="Itens de Movimento"
@@ -130,10 +134,10 @@
 							rendered="#{autenticacaojsfController.perfilLogado.temPermissoes(['VENDAS'])}">
 							<f:attribute name="paginaAtual" value="PAGINAITENSMOVIMENTO" />
 						</p:menuitem>
-						<p:menuitem value="Combos"
+						<p:menuitem value="Combo"
 							actionListener="#{paginas.mudaPaginaAtual}"
 							rendered="#{autenticacaojsfController.perfilLogado.temPermissoes(['VENDAS'])}">
-							<f:attribute name="paginaAtual" value="PAGINACOMBOS" />
+							<f:attribute name="paginaAtual" value="PAGINACOMBO" />
 						</p:menuitem>
 					</p:submenu>
 					<p:submenu label="Sair"

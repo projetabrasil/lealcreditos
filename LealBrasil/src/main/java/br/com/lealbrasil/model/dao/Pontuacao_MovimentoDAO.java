@@ -122,5 +122,60 @@ public class Pontuacao_MovimentoDAO extends GenericDAO<Pontuacao_Movimento> {
 			sessao.close();
 		}
 	}
+	
+	public Double somadePontos(Pessoa associado, Pessoa cliente, boolean pesqAss,
+			Enum_Aux_Tipo_Mov_Pontuacao tipoSoma) {
+		Session sessao = HibernateUtil.getFabricaDeSessoes().openSession();
+		Long valorRetorno;
+
+		DetachedCriteria subQuery1 = null;
+		Criteria crit;
+
+		try {
+			if (associado != null &&associado.getId() != null) {
+				subQuery1 = DetachedCriteria.forClass(Pessoa.class).setProjection(Property.forName("id"));
+
+				crit = sessao.createCriteria(Pontuacao_Movimento.class)
+						.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
+						.add(Restrictions.and(Subqueries.propertyIn("id_pessoa_associado", subQuery1)));
+				crit.add(Restrictions.eq("id_pessoa_associado", associado));
+				if (tipoSoma != null) {
+					crit.add(Restrictions.eq("creditaDebita", tipoSoma));
+
+				}
+				
+				java.util.Date d = Utilidades.retornaCalendario().getTime();
+				java.sql.Date dt = new java.sql.Date (d.getTime());
+				
+				crit.add(Restrictions.ge("validade", dt ));
+				
+				
+
+				crit.add(Restrictions.ge("validade", dt));
+				if (cliente != null && cliente.getId() != null) {
+					crit.add(Restrictions.eq("id_pessoa_cliente", cliente));
+				}
+
+			} else {
+				crit = sessao.createCriteria(Pontuacao_Movimento.class);
+				crit.add(Restrictions.eq("id", 0));
+			}
+			crit.setProjection(Projections.sum("pontosAtingidos"));
+            
+			if (crit.uniqueResult() != null) {				
+				valorRetorno =  new Long((long) crit.uniqueResult());
+
+			} else				
+				valorRetorno =  new Long(0l);
+			
+			
+			return valorRetorno.doubleValue();
+		} catch (RuntimeException error) {
+			error.printStackTrace();
+			throw error;
+		} finally {
+			sessao.close();
+		}
+	}
 
 }

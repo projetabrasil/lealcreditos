@@ -10,47 +10,134 @@
 	<h:head>
 		<h:outputScript name="geral.js" />
 	</h:head>
-    
-	<ui:define name="conteudo" update="formCarrosel" >
-	    
+
+	<ui:define name="conteudo" update="formCarrosel">
+
 		<h:form id="formCarrosel">
-			
-				
-				<p:carousel value="#{carroseljsfController.carrosseis}" rendered="#{carroseljsfController.renderizaCarrossel}"
-					headerText="Valchers ativos" var="registro"
-					itemStyle="text-align:center" responsive="true">
-					<p:panelGrid columns="2" style="width:100%;margin:10px 0px"
-						columnClasses="label,value" layout="grid"
-						styleClass="ui-panelgrid-blank">
-						<f:facet name="header">
-							<p:graphicImage name="#{registro.endImagem}" />
-						</f:facet>
-						
 
-						<h:outputText value="Fidelizador:" />
-						<h:outputText value="#{registro.empresa}" />
 
-						<h:outputText value="Valcher" />
-						<h:outputText value="R$ #{registro.valor}" />
-						<h:outputText value="Validade" />
-						<h:outputText value="#{registro.validade}">
+			<p:carousel value="#{carroseljsfController.carrosseis}"
+				rendered="#{carroseljsfController.renderizaCarrossel}"
+				headerText="Vouchers ativos" var="registro"
+				itemStyle="text-align:center" responsive="true">
+				<f:facet name="header">
+					<p:commandButton value="pontuações"
+						actionListener="#{carroseljsfController.pontuacao()}"
+						update=":formTemplate:formListaPontos">
+					</p:commandButton>
+				</f:facet>
+				<p:panelGrid columns="2" style="width:100%;margin:10px 0px"
+					columnClasses="label,value" layout="grid"
+					styleClass="ui-panelgrid-blank">
+					<f:facet name="header">
+						<p:graphicImage name="#{registro.endImagem}" />
+					</f:facet>
+
+
+					<h:outputText value="Fidelizador:" />
+					<h:outputText value="#{registro.empresa}" />
+
+					<h:outputText value="Vaucher" />
+					<h:outputText value="R$ #{registro.valor}" />
+					<h:outputText value="Validade" />
+					<h:outputText value="#{registro.validade}">
 						<f:convertDateTime locale="pt_BR" dateStyle="long" type="date"
-								pattern="dd/MM/yyyy" />
-						</h:outputText>
-						
-						
-						
-						
-						<h:outputText value="Código" />
-						<h:outputText value="Vch #{registro.codigoPromocional}" />
-					</p:panelGrid>
+							pattern="dd/MM/yyyy" />
+					</h:outputText>
 
-					<f:facet name="footer">
+
+
+
+					<h:outputText value="Código" />
+					<h:outputText value="Vch #{registro.codigoPromocional}" />
+				</p:panelGrid>
+
+				<f:facet name="footer">
                 		n. de Valchers : #{fn:length(carroseljsfController.carrosseis)}.
         			</f:facet>
-				</p:carousel>
-			
+			</p:carousel>
 		</h:form>
+
+		<p:dialog widgetVar="dialogoPontuacao" closable="false"
+			resizable="false" modal="true" appendTo="@(body)" width="30%">
+			<h:form id="formListaPontos">
+
+				<p:panel header="Estabelecimentos Pontuados">
+					<p:dataTable id="tabela" emptyMessage="" reflow="true"
+						value="#{carroseljsfController.pHClientes}" paginator="true"
+						rows="5" var="registro" style="font-size:12px;">
+
+						<p:column headerText="Estabelecimento" sortBy="descricao"
+							filterBy="descricao" style="width:20%;">
+							<h:outputText value="#{registro.id_Assinante.descricao}" />
+						</p:column>
+						<p:column headerText="Pontuação" style="width:10%;">
+							<p:outputLabel id="pontos" size="30" maxlength="15"
+								value="#{registro.pontos}" />
+
+						</p:column>
+						<p:column headerText="Alcances" style="width:10%;">
+							<p:commandButton icon="fa-gift" process="@this"
+								actionListener="#{carroseljsfController.mostradialogBrinde}"
+								update=":formTemplate:formListaBrinde">
+								<f:attribute name="registroAtual" value="#{registro}" />
+							</p:commandButton>
+						</p:column>
+
+
+
+
+					</p:dataTable>
+					<p:commandButton value="sair"
+						actionListener="#{carroseljsfController.canceladialogPontuacao()}"
+						process="@this">
+					</p:commandButton>
+				</p:panel>
+			</h:form>
+		</p:dialog>
+
+		<p:dialog widgetVar="dialogoBrinde" closable="false" resizable="false"
+			modal="true" appendTo="@(body)" width="50%">
+			<h:form id="formListaBrinde">
+
+				<p:dataTable id="tabela" emptyMessage="Sem Registros"
+					paginator="true" reflow="true" rows="6"
+					value="#{carroseljsfController.brindes}" var="registro2"
+					style="font-size:12px;">
+					<f:facet name="header3">
+						<p:outputLabel
+							value="Sua pontuação: #{carroseljsfController.pHCliente.pontos}"
+							style="color:blue;font-size:15px;font-weight:600;" />
+					</f:facet>
+
+
+					<p:column headerText="Descrição" style="width:40%">
+						<h:outputText value="#{registro2.descricao}" />
+					</p:column>
+
+					<p:column headerText="Custo">
+						<h:outputText value="#{registro2.pontos} Leal(is)"
+							style="width:10%" />
+					</p:column>
+					<p:column headerText="Foto">
+						<p:graphicImage id="foto" value="#{fotos.foto}">
+							<f:param name="caminho" value="#{registro2.caminhodaImagem}" />
+						</p:graphicImage>
+					</p:column>
+
+					<p:column headerText="Alvo">					   
+						<p:graphicImage id="foto2" value="#{fotos.foto2}">							
+						</p:graphicImage>
+					</p:column>
+				</p:dataTable>
+				<p:commandButton value="sair"
+					actionListener="#{carroseljsfController.canceladialogBrinde()}"
+					process="@this">
+				</p:commandButton>
+
+			</h:form>
+		</p:dialog>
+
 
 
 	</ui:define>

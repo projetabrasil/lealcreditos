@@ -16,7 +16,8 @@ public enum Enum_Aux_Perfil_Pagina_Atual {
 	PAGINAITENSMOVIMENTO("PAGINAITENSMOVIMENTO","PITENSMOV",12,Enum_Aux_Perfil_Pessoa.VENDAS,Enum_Aux_Perfil_Pessoa.VENDAS ,false,false,"itens_movimento.xhtml","itens de movimento"),																																					
 	PAGINAOUTROS("PAGINAOUTROS","POUTROS",13,Enum_Aux_Perfil_Pessoa.OUTROS,null,false,true,"pessoas.xhtml","outros"),
 	PAGINAINDEX("PAGINAINDEX","PINDEX",14,Enum_Aux_Perfil_Pessoa.OUTROS,null,false,false,"index.xhtml", "página principal"),
-	PAGINACOMBOS("PAGINACOMBOS","PCOMBOS",5,Enum_Aux_Perfil_Pessoa.VENDAS,Enum_Aux_Perfil_Pessoa.VENDAS ,false,false,"combos.xhtml","combos");
+	PAGINACOMBO("PAGINACOMBO","PCOMBO",15,Enum_Aux_Perfil_Pessoa.VENDAS,Enum_Aux_Perfil_Pessoa.VENDAS ,false,false,"combos.xhtml","combo"),
+	PAGINABRINDE("PAGINABRINDE","PBRINDE",16,Enum_Aux_Perfil_Pessoa.ASSINANTES,Enum_Aux_Perfil_Pessoa.ASSINANTES ,true,false,"brinde.xhtml","brindes");
 	
     private String descricao;    
 	private String sigla;

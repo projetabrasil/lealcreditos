@@ -55,6 +55,7 @@
 		<mapping class="br.com.lealbrasil.model.entities.Itens_Movimento"/>
 		<mapping class="br.com.lealbrasil.model.entities.Movimento_Mestre"/>
 		<mapping class="br.com.lealbrasil.model.entities.Movimento_Detalhe"/>
+		<mapping class="br.com.lealbrasil.model.entities.Brinde"/>
 	</session-factory>
 
 </hibernate-configuration>

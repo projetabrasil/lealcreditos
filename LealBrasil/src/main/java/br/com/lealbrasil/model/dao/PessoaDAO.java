@@ -10,12 +10,13 @@ import org.hibernate.criterion.Property;
 import org.hibernate.criterion.Restrictions;
 import org.hibernate.criterion.Subqueries;
 
-import br.com.lealbrasil.model.entities.Enum_Aux_Perfil_Pessoa;
 import br.com.lealbrasil.model.entities.Enum_Aux_Perfil_Pagina_Atual;
+import br.com.lealbrasil.model.entities.Enum_Aux_Perfil_Pessoa;
 import br.com.lealbrasil.model.entities.PerfilLogado;
 import br.com.lealbrasil.model.entities.Pessoa;
 import br.com.lealbrasil.model.entities.Pessoa_Enum_Aux_Perfil_Pessoa;
 import br.com.lealbrasil.model.entities.Pessoa_Vinculo;
+import br.com.lealbrasil.model.entities.Pontuacao_Movimento;
 import br.com.lealbrasil.util.HibernateUtil;
 
 public class PessoaDAO extends GenericDAO<Pessoa> {
@@ -93,6 +94,26 @@ public class PessoaDAO extends GenericDAO<Pessoa> {
 		finally{
 			sessao.close();
 		}		
+	}
+	@SuppressWarnings("unchecked")
+	public List<Pessoa> listaEstabelecimentosPontuados(Pessoa id_Pessoa_Cliente){
+		Session sessao = HibernateUtil.getFabricaDeSessoes().openSession();
+		DetachedCriteria subQuery1 = null;		
+		Criteria crit = null;
+		
+		subQuery1 = DetachedCriteria.forClass(Pontuacao_Movimento.class).setProjection(Property.forName("id_pessoa_associado"));		    
+		subQuery1.add(Restrictions.eq("id_pessoa_cliente",id_Pessoa_Cliente));
+			    
+		
+		crit = sessao.createCriteria(Pessoa.class)
+			    .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
+			    .add(Restrictions.and(
+			      Subqueries.propertyIn("id", subQuery1)));
+		List<Pessoa> l = crit.list();
+		return l;
+		
+		
+		
 	}
 	public Pessoa retornaPelaIdentificacao(String identificador){
 		Session sessao = HibernateUtil.getFabricaDeSessoes().openSession();

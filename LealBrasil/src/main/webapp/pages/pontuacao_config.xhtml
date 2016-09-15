@@ -86,7 +86,7 @@
 				</p:confirmDialog>
 			</p:panel>
 		</h:form>
-		<p:dialog header="Formulário de Configuração de pontuações"
+		<p:dialog header="Formulário de Configuração de #{brinde.perfilLogado.paginaAtual.descricao2}"
 			widgetVar="dialogoCadastro" resizable="false" modal="true"
 			closable="false" appendTo="@(body)">
 			<h:form id="formCadastro">
@@ -95,7 +95,7 @@
 					<p:inputText
 						value="#{pontuacao_ConfigjsfController.pontuacao_Config.descricao}"
 						id="descricao" size="67" required="true"
-						requiredMessage="Informa a descrição">
+						requiredMessage="Informe a descrição">
 					</p:inputText>
 
 
