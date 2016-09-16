@@ -30,7 +30,7 @@ public class Combo_Detalhe extends GenericDomain implements Serializable, Compar
 	private Combo_Mestre id_ComboMestre;
 	@ManyToOne(cascade = { CascadeType.ALL })
 	@JoinColumn(name = "id_Itens_Movimento", nullable = false)
-	private Itens_Movimento id_Itens_Movimento;
+	private Item_de_Movimento id_Itens_Movimento;
 	@Column(name = "referencia", length = 20, nullable = false)
 	private String referencia;
 	@Column(name = "descricao", length = 90, nullable = false)
@@ -146,11 +146,11 @@ public class Combo_Detalhe extends GenericDomain implements Serializable, Compar
 		this.id_ComboMestre = id_ComboMestre;
 	}
 
-	public Itens_Movimento getId_Itens_Movimento() {
+	public Item_de_Movimento getId_Itens_Movimento() {
 		return id_Itens_Movimento;
 	}
 
-	public void setId_Itens_Movimento(Itens_Movimento id_Itens_Movimento) {
+	public void setId_Itens_Movimento(Item_de_Movimento id_Itens_Movimento) {
 		this.id_Itens_Movimento = id_Itens_Movimento;
 	}
 

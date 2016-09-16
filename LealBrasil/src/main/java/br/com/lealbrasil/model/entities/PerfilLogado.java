@@ -9,7 +9,7 @@ import javax.faces.bean.ManagedProperty;
 import br.com.lealbrasil.controller.AutenticacaojsfController;
 import br.com.lealbrasil.model.dao.Pessoa_Enum_Aux_Perfil_PessoasDAO;
 import br.com.lealbrasil.model.dao.Pessoa_VinculoDAO;
-import br.com.lealbrasil.model.dao.Pontuacao_ConfigDAO;
+import br.com.lealbrasil.model.dao.PontoDAO;
 import br.com.lealbrasil.util.Utilidades;
 
 @SuppressWarnings("serial")
@@ -29,7 +29,7 @@ public class PerfilLogado implements Serializable {
 	private boolean renderizapessoanovo;
 	private boolean renderizapessoaeditar;
 	@ManagedProperty(value = "#{pontuacao.listaPontuacoesConfig}")
-	private List<Pontuacao_Config> listaPontuacoesConfig;
+	private List<Ponto> listaPontuacoesConfig;
 	@ManagedProperty(value = "#{AutenticacaojsfController}")
 	private AutenticacaojsfController autenticacao;
 
@@ -130,8 +130,8 @@ public class PerfilLogado implements Serializable {
 				retorno = true;
 		}
 
-		Pontuacao_ConfigDAO pConfigDAO = new Pontuacao_ConfigDAO();
-		List<Pontuacao_Config> listPConfig;
+		PontoDAO pConfigDAO = new PontoDAO();
+		List<Ponto> listPConfig;
 		if (assLogado != null && assLogado.getId() != null)
 			listPConfig = pConfigDAO.retornarListaPontuacaoConfig(assLogado);
 		else
@@ -295,11 +295,11 @@ public class PerfilLogado implements Serializable {
 		this.renderizaPontuacao = renderizaPontuacao;
 	}
 
-	public List<Pontuacao_Config> getListaPontuacoesConfig() {
+	public List<Ponto> getListaPontuacoesConfig() {
 		return listaPontuacoesConfig;
 	}
 
-	public void setListaPontuacoesConfig(List<Pontuacao_Config> listaPontuacoesConfig) {
+	public void setListaPontuacoesConfig(List<Ponto> listaPontuacoesConfig) {
 		this.listaPontuacoesConfig = listaPontuacoesConfig;
 	}
 

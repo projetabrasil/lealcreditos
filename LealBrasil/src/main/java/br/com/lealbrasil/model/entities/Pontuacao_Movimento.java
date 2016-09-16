@@ -41,7 +41,7 @@ public class Pontuacao_Movimento extends GenericDomain implements Serializable {
 	
 	@ManyToOne
 	@JoinColumn(name="id_pontuacao_config", nullable =false)
-	private Pontuacao_Config id_pontuacao_config;
+	private Ponto id_pontuacao_config;
 	@Column(name="pontuacaoMinima", nullable=false)	
 	private int pontuacaoMinima;
 	@Column(name="unidadeporPonto", nullable=false)	
@@ -111,14 +111,14 @@ public class Pontuacao_Movimento extends GenericDomain implements Serializable {
 	/**
 	 * @return the id_pontuacao_config
 	 */
-	public Pontuacao_Config getId_pontuacao_config() {
+	public Ponto getId_pontuacao_config() {
 		return id_pontuacao_config;
 	}
 
 	/**
 	 * @param id_pontuacao_config the id_pontuacao_config to set
 	 */
-	public void setId_pontuacao_config(Pontuacao_Config id_pontuacao_config) {
+	public void setId_pontuacao_config(Ponto id_pontuacao_config) {
 		this.id_pontuacao_config = id_pontuacao_config;
 	}
 

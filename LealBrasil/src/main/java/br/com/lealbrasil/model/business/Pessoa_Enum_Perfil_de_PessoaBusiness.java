@@ -3,7 +3,7 @@ package br.com.lealbrasil.model.business;
 import org.omnifaces.util.Messages;
 
 import br.com.lealbrasil.model.dao.Pessoa_Enum_Aux_Perfil_PessoasDAO;
-import br.com.lealbrasil.model.entities.Enum_Aux_Tipos_Mensagens;
+import br.com.lealbrasil.model.entities.Enum_Aux_Tipo_Mensagem;
 import br.com.lealbrasil.model.entities.Pessoa_Enum_Aux_Perfil_Pessoa;
 
 public class Pessoa_Enum_Perfil_de_PessoaBusiness {
@@ -25,15 +25,15 @@ public class Pessoa_Enum_Perfil_de_PessoaBusiness {
 			
 			pPerfil = perfilDAO.merge(pPerfil);
 			if (pPerfil.getId()==null)
-  		    mensagensDisparar("Perfil  - "+ pPerfil.getEnum_Aux_Perfil_Pessoa().getDescricao()+", " +Enum_Aux_Tipos_Mensagens.INCLUSAO.getMensagem());
+  		    mensagensDisparar("Perfil  - "+ pPerfil.getEnum_Aux_Perfil_Pessoa().getDescricao()+", " +Enum_Aux_Tipo_Mensagem.INCLUSAO.getMensagem());
 			else
-			mensagensDisparar("Perfil  "+ pPerfil.getEnum_Aux_Perfil_Pessoa().getDescricao()+", "+Enum_Aux_Tipos_Mensagens.ALTERACAO.getMensagem());
+			mensagensDisparar("Perfil  "+ pPerfil.getEnum_Aux_Perfil_Pessoa().getDescricao()+", "+Enum_Aux_Tipo_Mensagem.ALTERACAO.getMensagem());
 			
 		} catch (RuntimeException erro) {
 			if (pPerfil.getId()==null)
-	  		    mensagensDisparar("Perfil  - "+ pPerfil.getEnum_Aux_Perfil_Pessoa().getDescricao()+", " +Enum_Aux_Tipos_Mensagens.ERRINCLUSAO.getMensagem());
+	  		    mensagensDisparar("Perfil  - "+ pPerfil.getEnum_Aux_Perfil_Pessoa().getDescricao()+", " +Enum_Aux_Tipo_Mensagem.ERRINCLUSAO.getMensagem());
 				else
-				mensagensDisparar("Perfil  "+ pPerfil.getEnum_Aux_Perfil_Pessoa().getDescricao()+", "+Enum_Aux_Tipos_Mensagens.ERRINCLUSAO.getMensagem());
+				mensagensDisparar("Perfil  "+ pPerfil.getEnum_Aux_Perfil_Pessoa().getDescricao()+", "+Enum_Aux_Tipo_Mensagem.ERRINCLUSAO.getMensagem());
             pPerfil = null; 			
 
 			erro.printStackTrace();

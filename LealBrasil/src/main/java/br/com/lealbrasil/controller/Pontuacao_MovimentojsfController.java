@@ -15,14 +15,14 @@ import br.com.lealbrasil.controller.entitiesconfig.PessoaConfig;
 import br.com.lealbrasil.model.business.PessoaBusiness2;
 import br.com.lealbrasil.model.business.PessoaGenericBusiness;
 import br.com.lealbrasil.model.dao.PessoaDAO;
-import br.com.lealbrasil.model.dao.Pontuacao_ConfigDAO;
+import br.com.lealbrasil.model.dao.PontoDAO;
 import br.com.lealbrasil.model.dao.Pontuacao_MovimentoDAO;
 import br.com.lealbrasil.model.entities.Enum_Aux_Perfil_Pagina_Atual;
 import br.com.lealbrasil.model.entities.Enum_Aux_Tipo_Identificador;
 import br.com.lealbrasil.model.entities.Enum_Aux_Tipo_Mov_Pontuacao;
 import br.com.lealbrasil.model.entities.PerfilLogado;
 import br.com.lealbrasil.model.entities.Pessoa;
-import br.com.lealbrasil.model.entities.Pontuacao_Config;
+import br.com.lealbrasil.model.entities.Ponto;
 import br.com.lealbrasil.model.entities.Pontuacao_Movimento;
 import br.com.lealbrasil.model.entities.Usuario;
 import br.com.lealbrasil.util.Utilidades;
@@ -39,8 +39,8 @@ public class Pontuacao_MovimentojsfController implements Serializable {
 	private Enum_Aux_Tipo_Identificador tipoIdentificador;
 	private List<Enum_Aux_Tipo_Identificador> listaTipodeIdentificadores;
 	private Pessoa pessoaPontuada = new Pessoa();
-	private Pontuacao_Config pontuacaoConfig;
-	private List<Pontuacao_Config> listaPontuacoesConfig;
+	private Ponto pontuacaoConfig;
+	private List<Ponto> listaPontuacoesConfig;
 	private Enum_Aux_Tipo_Mov_Pontuacao tipoMovimentacao;
 	private PessoaConfig pessoaConfig;
 	private Pessoa clienteHistorico;
@@ -116,7 +116,7 @@ public class Pontuacao_MovimentojsfController implements Serializable {
 	}
 
 	public void litarPontuacoesConfig() {
-		Pontuacao_ConfigDAO pConfigDAO = new Pontuacao_ConfigDAO();
+		PontoDAO pConfigDAO = new PontoDAO();
 		setListaPontuacoesConfig(pConfigDAO.retornarListaPontuacaoConfig(perfilLogado.getAssLogado()));
 	}
 
@@ -416,11 +416,11 @@ public class Pontuacao_MovimentojsfController implements Serializable {
 		this.pessoaPontuada = pessoaPontuada;
 	}
 
-	public Pontuacao_Config getPontuacaoConfigurada() {
+	public Ponto getPontuacaoConfigurada() {
 		return pontuacaoConfig;
 	}
 
-	public void setPontuacaoConfigurada(Pontuacao_Config pontuacaoConfigurada) {
+	public void setPontuacaoConfigurada(Ponto pontuacaoConfigurada) {
 		this.pontuacaoConfig = pontuacaoConfigurada;
 		
 	}
@@ -531,20 +531,20 @@ public class Pontuacao_MovimentojsfController implements Serializable {
 		this.pontuacaoSomaDebitoEstorno = pontuacaoSomaDebitoEstorno;
 	}
 
-	public Pontuacao_Config getPontuacaoConfig() {
+	public Ponto getPontuacaoConfig() {
 		return pontuacaoConfig;
 	}
 
-	public void setPontuacaoConfig(Pontuacao_Config pontuacaoConfig) {
+	public void setPontuacaoConfig(Ponto pontuacaoConfig) {
 		this.pontuacaoConfig = pontuacaoConfig;
 		configPontuacao();
 	}
 
-	public List<Pontuacao_Config> getListaPontuacoesConfig() {
+	public List<Ponto> getListaPontuacoesConfig() {
 		return listaPontuacoesConfig;
 	}
 
-	public void setListaPontuacoesConfig(List<Pontuacao_Config> listaPontuacoesConfig) {
+	public void setListaPontuacoesConfig(List<Ponto> listaPontuacoesConfig) {
 		this.listaPontuacoesConfig = listaPontuacoesConfig;
 	}
 

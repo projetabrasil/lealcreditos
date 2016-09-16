@@ -38,7 +38,7 @@ public class Movimento_Detalhe extends GenericDomain implements Serializable {
 	private Combo_Detalhe id_Combo_Detalhe;
 	@ManyToOne(cascade = { CascadeType.ALL })
 	@JoinColumn(name = "id_Itens_Movimento", nullable = false)
-	private Itens_Movimento id_Itens_Movimento;
+	private Item_de_Movimento id_Itens_Movimento;
 	@Enumerated(EnumType.STRING)
 	@Column(name="cD", length=10,nullable=false )
 	private Enum_Aux_Credita_Debita cD;
@@ -208,11 +208,11 @@ public class Movimento_Detalhe extends GenericDomain implements Serializable {
 		this.id_Combo_Detalhe = id_Combo_Detalhe;
 	}
 
-	public Itens_Movimento getId_Itens_Movimento() {
+	public Item_de_Movimento getId_Itens_Movimento() {
 		return id_Itens_Movimento;
 	}
 
-	public void setId_Itens_Movimento(Itens_Movimento id_Itens_Movimento) {
+	public void setId_Itens_Movimento(Item_de_Movimento id_Itens_Movimento) {
 		this.id_Itens_Movimento = id_Itens_Movimento;
 	}
 

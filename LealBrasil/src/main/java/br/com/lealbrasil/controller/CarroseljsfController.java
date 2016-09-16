@@ -19,15 +19,16 @@ import javax.faces.event.ActionEvent;
 import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.StreamedContent;
 
-import br.com.lealbrasil.model.dao.BrindeDAO;
 import br.com.lealbrasil.model.dao.PessoaDAO;
+import br.com.lealbrasil.model.dao.PontoDAO;
 import br.com.lealbrasil.model.dao.Pontuacao_MovimentoDAO;
-import br.com.lealbrasil.model.entities.Brinde;
 import br.com.lealbrasil.model.entities.Carrossel;
 import br.com.lealbrasil.model.entities.Enum_Aux_Perfil_Pessoa;
 import br.com.lealbrasil.model.entities.Enum_Aux_Tipo_Mov_Pontuacao;
+import br.com.lealbrasil.model.entities.Item_de_Movimento;
 import br.com.lealbrasil.model.entities.PerfilLogado;
 import br.com.lealbrasil.model.entities.Pessoa;
+import br.com.lealbrasil.model.entities.Ponto;
 import br.com.lealbrasil.model.joins.Pontuacao_Historico_Cliente;
 import br.com.lealbrasil.util.Utilidades;
 
@@ -42,7 +43,7 @@ public class CarroseljsfController extends GenericController implements Serializ
 	private PerfilLogado perfilLogado;
 	private List<Pessoa> estabelecimentosPontuados;
 	private List<Pontuacao_Historico_Cliente> pHClientes;
-	private List<Brinde> brindes;
+	private List<Item_de_Movimento> itens;
 	private Pontuacao_Historico_Cliente pHCliente;
 	private StreamedContent fotoRetornada;
 	
@@ -109,21 +110,30 @@ public class CarroseljsfController extends GenericController implements Serializ
 
 	}
 
-	public void listarBrindes(Pessoa id_Associado) {
-		BrindeDAO bDAO = new BrindeDAO();		
-		brindes = bDAO.listar(id_Associado);	
-		for (Brinde brinde : brindes) {		
+	public void listarPontos(Pessoa id_Assinante) {
+		PontoDAO pDAO = new PontoDAO();	
+		List<Ponto> pontos = new ArrayList<Ponto>();
+		
+		/*pontos = pDAO.listar(id_Assinante);
+		int i =0;
+		for (Ponto ponto : pontos) {		
 			try{
-			if (brinde.getPontos() > pHCliente.getPontos())
-				
-				brinde.setFoto2(retornafoto("/imagens/naoatingido.png"));
+			if (ponto.getPonto() > pHCliente.getPontos()){
+				ponto.setCaminhodaImagem2("/images/naoatingido.png");
+				ponto.setFoto2(retornafoto(ponto.getCaminhodaImagem2()));
+				}
 			else
-				brinde.setFoto2(retornafoto("/imagens/atingido.png"));
+				ponto.setCaminhodaImagem2("/images/atingido.png");
+			ponto.setFoto2(retornafoto(ponto.getCaminhodaImagem2()));
+			pontos.set(i,ponto);
+			i++;
+			
 			}catch(IOException error){
 				error.printStackTrace();
 				mensagensDisparar("erro ao tentar converter foto 2");
 			}
 		}
+		itens = pontos;*/
 	}
 	
 	public StreamedContent retornafoto(String caminhodaImagem) throws IOException {
@@ -159,7 +169,7 @@ public class CarroseljsfController extends GenericController implements Serializ
 
 	public void mostradialogBrinde(ActionEvent event) {
 		pHCliente = (Pontuacao_Historico_Cliente) event.getComponent().getAttributes().get("registroAtual");
-		listarBrindes(pHCliente.getId_Assinante());
+		//listarBrindes(pHCliente.getId_Assinante());
 		Utilidades.abrirfecharDialogos("dialogoBrinde", true);
 	}
 
@@ -185,42 +195,6 @@ public class CarroseljsfController extends GenericController implements Serializ
 
 	public void setCarrossel(Carrossel carrossel) {
 		this.carrossel = carrossel;
-	}
-
-	@Override
-	public String toString() {
-		return "CarroseljsfController [carrosseis=" + carrosseis + ", carrossel=" + carrossel + "]";
-	}
-
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((carrosseis == null) ? 0 : carrosseis.hashCode());
-		result = prime * result + ((carrossel == null) ? 0 : carrossel.hashCode());
-		return result;
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		CarroseljsfController other = (CarroseljsfController) obj;
-		if (carrosseis == null) {
-			if (other.carrosseis != null)
-				return false;
-		} else if (!carrosseis.equals(other.carrosseis))
-			return false;
-		if (carrossel == null) {
-			if (other.carrossel != null)
-				return false;
-		} else if (!carrossel.equals(other.carrossel))
-			return false;
-		return true;
 	}
 
 	public boolean isRenderizaCarrossel() {
@@ -255,12 +229,12 @@ public class CarroseljsfController extends GenericController implements Serializ
 		this.pHClientes = pHClientes;
 	}
 
-	public List<Brinde> getBrindes() {
-		return brindes;
+	public List<Item_de_Movimento> getItens() {
+		return itens;
 	}
 
-	public void setBrindes(List<Brinde> brindes) {
-		this.brindes = brindes;
+	public void setItens(List<Item_de_Movimento> itens) {
+		this.itens = itens;
 	}
 
 	public Pontuacao_Historico_Cliente getpHCliente() {
@@ -278,8 +252,4 @@ public class CarroseljsfController extends GenericController implements Serializ
 	public void setFotoRetornada(StreamedContent fotoRetornada) {
 		this.fotoRetornada = fotoRetornada;
 	}
-
-	
-
-
 }

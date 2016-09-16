@@ -13,11 +13,11 @@ import javax.faces.event.ActionEvent;
 import org.primefaces.context.RequestContext;
 
 import br.com.lealbrasil.model.dao.Combo_MestreDAO;
-import br.com.lealbrasil.model.dao.Itens_MovimentoDAO;
+import br.com.lealbrasil.model.dao.Item_de_MovimentoDAO;
 import br.com.lealbrasil.model.entities.Combo_Detalhe;
 import br.com.lealbrasil.model.entities.Combo_Mestre;
 import br.com.lealbrasil.model.entities.Enum_Aux_Sim_ou_Nao;
-import br.com.lealbrasil.model.entities.Itens_Movimento;
+import br.com.lealbrasil.model.entities.Item_de_Movimento;
 import br.com.lealbrasil.model.entities.PerfilLogado;
 import br.com.lealbrasil.util.Utilidades;
 
@@ -31,8 +31,8 @@ public class CombojsfController extends GenericController implements Serializabl
 	private List<Combo_Detalhe> combosDTemp;
 	private Combo_Detalhe comboD;
 	private Combo_Detalhe comboDTemp;
-	private List<Itens_Movimento> itens_Mov;
-	private Itens_Movimento item_Mov;
+	private List<Item_de_Movimento> itens_Mov;
+	private Item_de_Movimento item_Mov;
 	@ManagedProperty(value = "#{autenticacaojsfController.perfilLogado}")
 	private PerfilLogado perfilLogado;
 	private double qtdeAnt;
@@ -58,7 +58,7 @@ public class CombojsfController extends GenericController implements Serializabl
 	}
 
 	public void listaItens() {
-		Itens_MovimentoDAO iMDAO = new Itens_MovimentoDAO();
+		Item_de_MovimentoDAO iMDAO = new Item_de_MovimentoDAO();
 		itens_Mov = iMDAO.listar(perfilLogado.getAssLogado());
 	}
 
@@ -283,19 +283,19 @@ public class CombojsfController extends GenericController implements Serializabl
 		this.comboD = comboD;
 	}
 
-	public List<Itens_Movimento> getItens_Mov() {
+	public List<Item_de_Movimento> getItens_Mov() {
 		return itens_Mov;
 	}
 
-	public void setItens_Mov(List<Itens_Movimento> itens_Mov) {
+	public void setItens_Mov(List<Item_de_Movimento> itens_Mov) {
 		this.itens_Mov = itens_Mov;
 	}
 
-	public Itens_Movimento getItem_Mov() {
+	public Item_de_Movimento getItem_Mov() {
 		return item_Mov;
 	}
 
-	public void setItem_Mov(Itens_Movimento item_Mov) {
+	public void setItem_Mov(Item_de_Movimento item_Mov) {
 		this.item_Mov = item_Mov;
 	}
 

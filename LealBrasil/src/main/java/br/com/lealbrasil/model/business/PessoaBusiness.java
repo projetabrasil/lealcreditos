@@ -12,7 +12,7 @@ import org.omnifaces.util.Messages;
 
 import br.com.lealbrasil.model.dao.PessoaDAO;
 import br.com.lealbrasil.model.entities.Enum_Aux_Tipo_Identificador;
-import br.com.lealbrasil.model.entities.Enum_Aux_Tipos_Mensagens;
+import br.com.lealbrasil.model.entities.Enum_Aux_Tipo_Mensagem;
 import br.com.lealbrasil.model.entities.PerfilLogado;
 import br.com.lealbrasil.model.entities.Pessoa;
 import br.com.lealbrasil.util.HibernateUtil;
@@ -43,7 +43,7 @@ public class PessoaBusiness implements Serializable {
 	public static Pessoa merge(Pessoa pessoa) {
 		
 		if (pessoa.getId() != null) {
-			mensagensDisparar(Enum_Aux_Tipos_Mensagens.EXISTENTE.getMensagem() + "\n"
+			mensagensDisparar(Enum_Aux_Tipo_Mensagem.EXISTENTE.getMensagem() + "\n"
 					+ pessoa.getEnum_Aux_Tipo_Identificador().getDescricao() + ": " + pessoa.getIdentificador() + " - "
 					+ pessoa.getDescricao());
 		}
@@ -51,14 +51,14 @@ public class PessoaBusiness implements Serializable {
 			PessoaDAO pessoaDAO = new PessoaDAO();
 			pessoa = (Pessoa) pessoaDAO.merge(pessoa);
 			if (pessoa.getId() != null)
-				mensagensDisparar(Enum_Aux_Tipos_Mensagens.ALTERACAO.getMensagem());
+				mensagensDisparar(Enum_Aux_Tipo_Mensagem.ALTERACAO.getMensagem());
 			else
-				mensagensDisparar(Enum_Aux_Tipos_Mensagens.INCLUSAO.getMensagem());
+				mensagensDisparar(Enum_Aux_Tipo_Mensagem.INCLUSAO.getMensagem());
 		} catch (RuntimeException erro) {
 			if (pessoa.getId() != null)
-				mensagensDisparar(Enum_Aux_Tipos_Mensagens.ERRALTERACAO.getMensagem());
+				mensagensDisparar(Enum_Aux_Tipo_Mensagem.ERRALTERACAO.getMensagem());
 			else
-				mensagensDisparar(Enum_Aux_Tipos_Mensagens.ERRINCLUSAO.getMensagem());
+				mensagensDisparar(Enum_Aux_Tipo_Mensagem.ERRINCLUSAO.getMensagem());
 
 			erro.printStackTrace();
 		}
@@ -74,9 +74,9 @@ public class PessoaBusiness implements Serializable {
 			try {
 				PessoaDAO pessoaDAO = new PessoaDAO();
 				pessoaDAO.excluir(pessoa);
-				mensagensDisparar(Enum_Aux_Tipos_Mensagens.EXCLUSAO.getMensagem());
+				mensagensDisparar(Enum_Aux_Tipo_Mensagem.EXCLUSAO.getMensagem());
 			} catch (RuntimeException erro) {
-				mensagensDisparar(Enum_Aux_Tipos_Mensagens.ERREXCLUSAO.getMensagem());
+				mensagensDisparar(Enum_Aux_Tipo_Mensagem.ERREXCLUSAO.getMensagem());
 			}
 		}
 	}

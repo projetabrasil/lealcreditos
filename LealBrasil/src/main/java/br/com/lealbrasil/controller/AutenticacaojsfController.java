@@ -12,7 +12,7 @@ import org.omnifaces.util.Faces;
 import br.com.lealbrasil.model.dao.UsuarioDAO;
 import br.com.lealbrasil.model.entities.Enum_Aux_Perfil_Pagina_Atual;
 import br.com.lealbrasil.model.entities.Enum_Aux_Perfil_Pessoa;
-import br.com.lealbrasil.model.entities.Enum_Aux_Tipos_Mensagens;
+import br.com.lealbrasil.model.entities.Enum_Aux_Tipo_Mensagem;
 import br.com.lealbrasil.model.entities.PerfilLogado;
 import br.com.lealbrasil.util.Utilidades;
 
@@ -58,7 +58,7 @@ public class AutenticacaojsfController extends GenericController implements Seri
 		perfilLogado.setUsLogado(
 				usuarioDAO.autenticar(perfilLogado.getIdentificadorUsuario(), perfilLogado.getSenhaUsuario()));
 		if (perfilLogado.getUsLogado() == null) {
-			mensagensDisparar(Enum_Aux_Tipos_Mensagens.ERRAUTENTICACAO.getMensagem());
+			mensagensDisparar(Enum_Aux_Tipo_Mensagem.ERRAUTENTICACAO.getMensagem());
 			return;
 		}
 

@@ -1,0 +1,31 @@
+package br.com.lealbrasil.model.business;
+
+import java.io.Serializable;
+
+import javax.faces.event.ActionEvent;
+
+import br.com.lealbrasil.model.dao.PontoDAO;
+import br.com.lealbrasil.model.entities.Pessoa;
+import br.com.lealbrasil.model.entities.Ponto;
+
+@SuppressWarnings("serial")
+public class PontoBusiness implements Serializable {
+	private static Ponto ponto_Existente;
+
+	public static Ponto pontuacaoExiste(Pessoa assinante) {
+		PontoDAO pConfDAO = new PontoDAO();
+		return pConfDAO.retornarPonto(assinante);
+	}
+
+	public static Ponto registroAtualdaLista(ActionEvent evento) {
+		return (Ponto) evento.getComponent().getAttributes().get("registroAtual");
+	}
+
+	public static Ponto getPonto_Existente() {
+		return ponto_Existente;
+	}
+
+	public static void setPonto_Existente(Ponto ponto_Existente) {
+		PontoBusiness.ponto_Existente = ponto_Existente;
+	}
+}
