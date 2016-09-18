@@ -29,7 +29,7 @@ public class PerfilLogado implements Serializable {
 	private boolean renderizapessoanovo;
 	private boolean renderizapessoaeditar;
 	@ManagedProperty(value = "#{pontuacao.listaPontuacoesConfig}")
-	private List<Ponto> listaPontuacoesConfig;
+	private List<Ponto> pontos;
 	@ManagedProperty(value = "#{AutenticacaojsfController}")
 	private AutenticacaojsfController autenticacao;
 
@@ -130,16 +130,16 @@ public class PerfilLogado implements Serializable {
 				retorno = true;
 		}
 
-		PontoDAO pConfigDAO = new PontoDAO();
-		List<Ponto> listPConfig;
+		PontoDAO pDAO = new PontoDAO();
+		List<Ponto> pontos;
 		if (assLogado != null && assLogado.getId() != null)
-			listPConfig = pConfigDAO.retornarListaPontuacaoConfig(assLogado);
+			pontos = pDAO.retornarListaPontoConfig(assLogado, Enum_Aux_Tipo_Item_de_Movimento.PONTO );
 		else
-			listPConfig = pConfigDAO.retornarListaPontuacaoConfig(usLogado.getPessoa());
+			pontos = pDAO.retornarListaPontoConfig(usLogado.getPessoa(), Enum_Aux_Tipo_Item_de_Movimento.PONTO);
 
-		setListaPontuacoesConfig(listPConfig);
+		setPontos(pontos);
 		if (retorno)
-			if (listaPontuacoesConfig == null || listaPontuacoesConfig.isEmpty())
+			if (pontos == null || pontos.isEmpty())
 				retorno = false;
 
 		return retorno;
@@ -295,13 +295,7 @@ public class PerfilLogado implements Serializable {
 		this.renderizaPontuacao = renderizaPontuacao;
 	}
 
-	public List<Ponto> getListaPontuacoesConfig() {
-		return listaPontuacoesConfig;
-	}
-
-	public void setListaPontuacoesConfig(List<Ponto> listaPontuacoesConfig) {
-		this.listaPontuacoesConfig = listaPontuacoesConfig;
-	}
+	
 
 	public AutenticacaojsfController getAutenticacao() {
 		return autenticacao;
@@ -309,6 +303,14 @@ public class PerfilLogado implements Serializable {
 
 	public void setAutenticacao(AutenticacaojsfController autenticacao) {
 		this.autenticacao = autenticacao;
+	}
+
+	public List<Ponto> getPontos() {
+		return pontos;
+	}
+
+	public void setPontos(List<Ponto> pontos) {
+		this.pontos = pontos;
 	}
 
 }

@@ -12,19 +12,19 @@ import org.hibernate.criterion.Property;
 import org.hibernate.criterion.Restrictions;
 import org.hibernate.criterion.Subqueries;
 
-import br.com.lealbrasil.model.entities.Enum_Aux_Tipo_Mov_Pontuacao;
+import br.com.lealbrasil.model.entities.Enum_Aux_Tipo_Mov_Ponto;
 import br.com.lealbrasil.model.entities.PerfilLogado;
 import br.com.lealbrasil.model.entities.Pessoa;
-import br.com.lealbrasil.model.entities.Pontuacao_Movimento;
+import br.com.lealbrasil.model.entities.Ponto_Movimento;
 import br.com.lealbrasil.util.HibernateUtil;
 import br.com.lealbrasil.util.Utilidades;
 
-public class Pontuacao_MovimentoDAO extends GenericDAO<Pontuacao_Movimento> {
+public class Ponto_MovimentoDAO extends GenericDAO<Ponto_Movimento> {
 
 	@SuppressWarnings("unchecked")
-	public List<Pontuacao_Movimento> listar(PerfilLogado perfilLogado, Pessoa cliente, boolean pesqAss) {
+	public List<Ponto_Movimento> listar(PerfilLogado perfilLogado, Pessoa cliente, boolean pesqAss) {
 		Session sessao = HibernateUtil.getFabricaDeSessoes().openSession();
-		List<Pontuacao_Movimento> pontuacoes = new ArrayList<Pontuacao_Movimento>();
+		List<Ponto_Movimento> pontuacoes = new ArrayList<Ponto_Movimento>();
 		DetachedCriteria subQuery1 = null;
 		Criteria crit;
 
@@ -32,7 +32,7 @@ public class Pontuacao_MovimentoDAO extends GenericDAO<Pontuacao_Movimento> {
 			if (perfilLogado.getAssLogado() != null && perfilLogado.getAssLogado().getId() != null) {
 				subQuery1 = DetachedCriteria.forClass(Pessoa.class).setProjection(Property.forName("id"));
 
-				crit = sessao.createCriteria(Pontuacao_Movimento.class)
+				crit = sessao.createCriteria(Ponto_Movimento.class)
 						.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)						
 						.add(Restrictions.and(Subqueries.propertyIn("id_pessoa_associado", subQuery1)));
 				crit.add(Restrictions.eq("id_pessoa_associado", perfilLogado.getAssLogado()));
@@ -53,11 +53,11 @@ public class Pontuacao_MovimentoDAO extends GenericDAO<Pontuacao_Movimento> {
 				}
 
 			} else {
-				crit = sessao.createCriteria(Pontuacao_Movimento.class);
+				crit = sessao.createCriteria(Ponto_Movimento.class);
 				crit.add(Restrictions.eq("id", 0));
 			}
 
-			pontuacoes = (ArrayList<Pontuacao_Movimento>) crit.list();
+			pontuacoes = new ArrayList<Ponto_Movimento>(crit.list());      
 
 			return pontuacoes;
 		} catch (RuntimeException error) {
@@ -69,7 +69,7 @@ public class Pontuacao_MovimentoDAO extends GenericDAO<Pontuacao_Movimento> {
 	}
 
 	public Double somadePontos(PerfilLogado perfilLogado, Pessoa cliente, boolean pesqAss,
-			Enum_Aux_Tipo_Mov_Pontuacao tipoSoma) {
+			Enum_Aux_Tipo_Mov_Ponto tipoSoma) {
 		Session sessao = HibernateUtil.getFabricaDeSessoes().openSession();
 		Long valorRetorno;
 
@@ -80,7 +80,7 @@ public class Pontuacao_MovimentoDAO extends GenericDAO<Pontuacao_Movimento> {
 			if (perfilLogado.getAssLogado() != null && perfilLogado.getAssLogado().getId() != null) {
 				subQuery1 = DetachedCriteria.forClass(Pessoa.class).setProjection(Property.forName("id"));
 
-				crit = sessao.createCriteria(Pontuacao_Movimento.class)
+				crit = sessao.createCriteria(Ponto_Movimento.class)
 						.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
 						.add(Restrictions.and(Subqueries.propertyIn("id_pessoa_associado", subQuery1)));
 				crit.add(Restrictions.eq("id_pessoa_associado", perfilLogado.getAssLogado()));
@@ -102,7 +102,7 @@ public class Pontuacao_MovimentoDAO extends GenericDAO<Pontuacao_Movimento> {
 				}
 
 			} else {
-				crit = sessao.createCriteria(Pontuacao_Movimento.class);
+				crit = sessao.createCriteria(Ponto_Movimento.class);
 				crit.add(Restrictions.eq("id", 0));
 			}
 			crit.setProjection(Projections.sum("pontosAtingidos"));
@@ -124,7 +124,7 @@ public class Pontuacao_MovimentoDAO extends GenericDAO<Pontuacao_Movimento> {
 	}
 	
 	public Double somadePontos(Pessoa associado, Pessoa cliente, boolean pesqAss,
-			Enum_Aux_Tipo_Mov_Pontuacao tipoSoma) {
+			Enum_Aux_Tipo_Mov_Ponto tipoSoma) {
 		Session sessao = HibernateUtil.getFabricaDeSessoes().openSession();
 		Long valorRetorno;
 
@@ -135,7 +135,7 @@ public class Pontuacao_MovimentoDAO extends GenericDAO<Pontuacao_Movimento> {
 			if (associado != null &&associado.getId() != null) {
 				subQuery1 = DetachedCriteria.forClass(Pessoa.class).setProjection(Property.forName("id"));
 
-				crit = sessao.createCriteria(Pontuacao_Movimento.class)
+				crit = sessao.createCriteria(Ponto_Movimento.class)
 						.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
 						.add(Restrictions.and(Subqueries.propertyIn("id_pessoa_associado", subQuery1)));
 				crit.add(Restrictions.eq("id_pessoa_associado", associado));
@@ -157,7 +157,7 @@ public class Pontuacao_MovimentoDAO extends GenericDAO<Pontuacao_Movimento> {
 				}
 
 			} else {
-				crit = sessao.createCriteria(Pontuacao_Movimento.class);
+				crit = sessao.createCriteria(Ponto_Movimento.class);
 				crit.add(Restrictions.eq("id", 0));
 			}
 			crit.setProjection(Projections.sum("pontosAtingidos"));

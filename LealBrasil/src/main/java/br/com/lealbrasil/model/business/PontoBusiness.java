@@ -18,7 +18,8 @@ public class PontoBusiness implements Serializable {
 	}
 
 	public static Ponto registroAtualdaLista(ActionEvent evento) {
-		return (Ponto) evento.getComponent().getAttributes().get("registroAtual");
+		Ponto p =  (Ponto) evento.getComponent().getAttributes().get("registroAtual");
+		return p;
 	}
 
 	public static Ponto getPonto_Existente() {

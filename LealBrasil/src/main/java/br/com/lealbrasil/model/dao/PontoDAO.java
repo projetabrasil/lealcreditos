@@ -9,6 +9,7 @@ import org.hibernate.criterion.Property;
 import org.hibernate.criterion.Restrictions;
 import org.hibernate.criterion.Subqueries;
 
+import br.com.lealbrasil.model.entities.Enum_Aux_Tipo_Item_de_Movimento;
 import br.com.lealbrasil.model.entities.Pessoa;
 import br.com.lealbrasil.model.entities.Ponto;
 import br.com.lealbrasil.util.HibernateUtil;
@@ -16,12 +17,13 @@ import br.com.lealbrasil.util.HibernateUtil;
 public class PontoDAO extends GenericDAO<Ponto>{
 	List<Ponto> lista;
 	@SuppressWarnings("unchecked")
-	public List<Ponto> retornarListaPontuacaoConfig(Pessoa usuarioLogado){
+	public List<Ponto> retornarListaPontoConfig(Pessoa usuarioLogado,Enum_Aux_Tipo_Item_de_Movimento tipo){
 		Session sessao = HibernateUtil.getFabricaDeSessoes().openSession();
 		try{
 			Criteria crit = sessao.createCriteria(Ponto.class)
 					.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
 			        crit.add(Restrictions.eq("id_Pessoa_Assinante", usuarioLogado));
+			        crit.add(Restrictions.eq("enum_Aux_Tipo_Item_de_Movimento", tipo));
 			lista =  (List<Ponto>)  crit.list();
 			return lista;
 		}catch(RuntimeException erro){
@@ -34,12 +36,13 @@ public class PontoDAO extends GenericDAO<Ponto>{
 	}
 	
 	@SuppressWarnings("unchecked")
-	public List<Ponto> retornarListaPontos(Pessoa usuarioLogado){
+	public List<Ponto> retornarListaPontos(Pessoa usuarioLogado, Enum_Aux_Tipo_Item_de_Movimento enum_Aux_Tipo_Item_de_Movimento){
 		Session sessao = HibernateUtil.getFabricaDeSessoes().openSession();
 		try{
 			Criteria crit = sessao.createCriteria(Ponto.class)
 					.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
 			        crit.add(Restrictions.eq("id_Pessoa_Assinante", usuarioLogado));
+			        crit.add(Restrictions.eq("enum_Aux_Tipo_Item_de_Movimento", enum_Aux_Tipo_Item_de_Movimento));
 			lista =  (List<Ponto>)  crit.list();
 			return lista;
 		}catch(RuntimeException erro){

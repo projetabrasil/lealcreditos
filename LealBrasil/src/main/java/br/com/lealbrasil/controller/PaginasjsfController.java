@@ -8,9 +8,9 @@ import javax.faces.bean.ViewScoped;
 import javax.faces.event.ActionEvent;
 
 import br.com.lealbrasil.model.entities.Enum_Aux_Perfil_Pagina_Atual;
-import br.com.lealbrasil.model.entities.Enum_Aux_Tipo_Mov_Pontuacao;
+import br.com.lealbrasil.model.entities.Enum_Aux_Tipo_Mov_Ponto;
 import br.com.lealbrasil.model.entities.PerfilLogado;
-import br.com.lealbrasil.model.entities.Pontuacao_Movimento;
+import br.com.lealbrasil.model.entities.Ponto_Movimento;
 
 @SuppressWarnings("serial")
 @ManagedBean(name = "paginas")
@@ -21,10 +21,10 @@ public class PaginasjsfController implements Serializable {
 	@ManagedProperty(value = "#{autenticacaojsfController.perfilLogado}")
 	private PerfilLogado perfilLogado;
 	@ManagedProperty(value = "#{pontuacao.tipoMovimentacao}")
-	private Enum_Aux_Tipo_Mov_Pontuacao tipoMovimentacao;
+	private Enum_Aux_Tipo_Mov_Ponto tipoMovimentacao;
 	
 	@ManagedProperty(value = "#{pontuacao.pontuacao}")
-	private Pontuacao_Movimento pontuacao;
+	private Ponto_Movimento pontuacao;
 
 	
 
@@ -51,28 +51,28 @@ public class PaginasjsfController implements Serializable {
 	/**
 	 * @return the tipoMovimentacao
 	 */
-	public Enum_Aux_Tipo_Mov_Pontuacao getTipoMovimentacao() {
+	public Enum_Aux_Tipo_Mov_Ponto getTipoMovimentacao() {
 		return tipoMovimentacao;
 	}
 
 	/**
 	 * @param tipoMovimentacao the tipoMovimentacao to set
 	 */
-	public void setTipoMovimentacao(Enum_Aux_Tipo_Mov_Pontuacao tipoMovimentacao) {
+	public void setTipoMovimentacao(Enum_Aux_Tipo_Mov_Ponto tipoMovimentacao) {
 		this.tipoMovimentacao = tipoMovimentacao;
 	}
 
 	/**
 	 * @return the pontuacao
 	 */
-	public Pontuacao_Movimento getPontuacao() {
+	public Ponto_Movimento getPontuacao() {
 		return pontuacao;
 	}
 
 	/**
 	 * @param pontuacao the pontuacao to set
 	 */
-	public void setPontuacao(Pontuacao_Movimento pontuacao) {
+	public void setPontuacao(Ponto_Movimento pontuacao) {
 		this.pontuacao = pontuacao;
 	}
 

@@ -19,8 +19,8 @@ import javax.persistence.TemporalType;
 
 @SuppressWarnings("serial")
 @Entity
-@Table(name="Pontuacao_Movimento")
-public class Pontuacao_Movimento extends GenericDomain implements Serializable {
+@Table(name="Ponto_Movimento")
+public class Ponto_Movimento extends GenericDomain implements Serializable {
 
 	@Id
 	@SequenceGenerator(name="pk_pontuacao_Movimento",sequenceName="messsounds_pontuacao_Movimento", allocationSize=1)
@@ -40,8 +40,8 @@ public class Pontuacao_Movimento extends GenericDomain implements Serializable {
 	private Pessoa id_Pessoa_Registro;
 	
 	@ManyToOne
-	@JoinColumn(name="id_pontuacao_config", nullable =false)
-	private Ponto id_pontuacao_config;
+	@JoinColumn(name="id_ponto", nullable =false)
+	private Ponto id_ponto;
 	@Column(name="pontuacaoMinima", nullable=false)	
 	private int pontuacaoMinima;
 	@Column(name="unidadeporPonto", nullable=false)	
@@ -61,225 +61,142 @@ public class Pontuacao_Movimento extends GenericDomain implements Serializable {
 	private int pontosAtingidos;	
 	@Enumerated(EnumType.STRING)
 	@Column(name="creditaDebita", nullable=false)
-	private Enum_Aux_Tipo_Mov_Pontuacao creditaDebita;
+	private Enum_Aux_Tipo_Mov_Ponto creditaDebita;
 	
 	@Temporal(TemporalType.DATE)
 	private Date validade;
 
-	/**
-	 * @return the id
-	 */
 	public Long getId() {
 		return id;
 	}
 
-	/**
-	 * @param id the id to set
-	 */
 	public void setId(Long id) {
 		this.id = id;
 	}
 
-	/**
-	 * @return the id_pessoa_associado
-	 */
 	public Pessoa getId_pessoa_associado() {
 		return id_pessoa_associado;
 	}
 
-	/**
-	 * @param id_pessoa_associado the id_pessoa_associado to set
-	 */
 	public void setId_pessoa_associado(Pessoa id_pessoa_associado) {
 		this.id_pessoa_associado = id_pessoa_associado;
 	}
 
-	/**
-	 * @return the id_pessoa_cliente
-	 */
 	public Pessoa getId_pessoa_cliente() {
 		return id_pessoa_cliente;
 	}
 
-	/**
-	 * @param id_pessoa_cliente the id_pessoa_cliente to set
-	 */
 	public void setId_pessoa_cliente(Pessoa id_pessoa_cliente) {
 		this.id_pessoa_cliente = id_pessoa_cliente;
 	}
 
-	/**
-	 * @return the id_pontuacao_config
-	 */
-	public Ponto getId_pontuacao_config() {
-		return id_pontuacao_config;
+	public Pessoa getId_Pessoa_Registro() {
+		return id_Pessoa_Registro;
 	}
 
-	/**
-	 * @param id_pontuacao_config the id_pontuacao_config to set
-	 */
-	public void setId_pontuacao_config(Ponto id_pontuacao_config) {
-		this.id_pontuacao_config = id_pontuacao_config;
+	public void setId_Pessoa_Registro(Pessoa id_Pessoa_Registro) {
+		this.id_Pessoa_Registro = id_Pessoa_Registro;
 	}
 
-	/**
-	 * @return the pontuacaoMinima
-	 */
+	public Ponto getId_ponto() {
+		return id_ponto;
+	}
+
+	public void setId_ponto(Ponto id_ponto) {
+		this.id_ponto = id_ponto;
+	}
+
 	public int getPontuacaoMinima() {
 		return pontuacaoMinima;
 	}
 
-	/**
-	 * @param pontuacaoMinima the pontuacaoMinima to set
-	 */
 	public void setPontuacaoMinima(int pontuacaoMinima) {
 		this.pontuacaoMinima = pontuacaoMinima;
 	}
 
-	/**
-	 * @return the unidadeporPonto
-	 */
 	public int getUnidadeporPonto() {
 		return unidadeporPonto;
 	}
 
-	/**
-	 * @param unidadeporPonto the unidadeporPonto to set
-	 */
 	public void setUnidadeporPonto(int unidadeporPonto) {
 		this.unidadeporPonto = unidadeporPonto;
 	}
 
-	/**
-	 * @return the diasValidade
-	 */
 	public int getDiasValidade() {
 		return diasValidade;
 	}
 
-	/**
-	 * @param diasValidade the diasValidade to set
-	 */
 	public void setDiasValidade(int diasValidade) {
 		this.diasValidade = diasValidade;
 	}
 
-	/**
-	 * @return the valordaUnidade
-	 */
 	public double getValordaUnidade() {
 		return valordaUnidade;
 	}
 
-	/**
-	 * @param valordaUnidade the valordaUnidade to set
-	 */
 	public void setValordaUnidade(double valordaUnidade) {
 		this.valordaUnidade = valordaUnidade;
 	}
 
-	/**
-	 * @return the valorUnidadeTroca
-	 */
 	public double getValorUnidadeTroca() {
 		return valorUnidadeTroca;
 	}
 
-	/**
-	 * @param valorUnidadeTroca the valorUnidadeTroca to set
-	 */
 	public void setValorUnidadeTroca(double valorUnidadeTroca) {
 		this.valorUnidadeTroca = valorUnidadeTroca;
 	}
 
-	/**
-	 * @return the valorUnidadeDevolucao
-	 */
 	public double getValorUnidadeDevolucao() {
 		return valorUnidadeDevolucao;
 	}
 
-	/**
-	 * @param valorUnidadeDevolucao the valorUnidadeDevolucao to set
-	 */
 	public void setValorUnidadeDevolucao(double valorUnidadeDevolucao) {
 		this.valorUnidadeDevolucao = valorUnidadeDevolucao;
 	}
 
-	/**
-	 * @return the valoraPontuar
-	 */
 	public double getValoraPontuar() {
 		return valoraPontuar;
 	}
 
-	/**
-	 * @param valoraPontuar the valoraPontuar to set
-	 */
 	public void setValoraPontuar(double valoraPontuar) {
 		this.valoraPontuar = valoraPontuar;
 	}
 
-	/**
-	 * @return the pontosAtingidos
-	 */
 	public int getPontosAtingidos() {
 		return pontosAtingidos;
 	}
 
-	/**
-	 * @param pontosAtingidos the pontosAtingidos to set
-	 */
 	public void setPontosAtingidos(int pontosAtingidos) {
 		this.pontosAtingidos = pontosAtingidos;
 	}
 
-	/**
-	 * @return the creditaDebita
-	 */
-	public Enum_Aux_Tipo_Mov_Pontuacao getCreditaDebita() {
+	public Enum_Aux_Tipo_Mov_Ponto getCreditaDebita() {
 		return creditaDebita;
 	}
 
-	/**
-	 * @param creditaDebita the creditaDebita to set
-	 */
-	public void setCreditaDebita(Enum_Aux_Tipo_Mov_Pontuacao creditaDebita) {
-		
+	public void setCreditaDebita(Enum_Aux_Tipo_Mov_Ponto creditaDebita) {
 		this.creditaDebita = creditaDebita;
 	}
 
-	/**
-	 * @return the validade
-	 */
 	public Date getValidade() {
 		return validade;
 	}
 
-	/**
-	 * @param validade the validade to set
-	 */
 	public void setValidade(Date validade) {
 		this.validade = validade;
 	}
 
-	/* (non-Javadoc)
-	 * @see java.lang.Object#toString()
-	 */
 	@Override
 	public String toString() {
-		return "Pontuacao_Movimento [id=" + id + ", id_pessoa_associado=" + id_pessoa_associado + ", id_pessoa_cliente="
-				+ id_pessoa_cliente + ", id_Pessoa_Registro=" + id_Pessoa_Registro + ", id_pontuacao_config="
-				+ id_pontuacao_config + ", pontuacaoMinima=" + pontuacaoMinima + ", unidadeporPonto=" + unidadeporPonto
-				+ ", diasValidade=" + diasValidade + ", valordaUnidade=" + valordaUnidade + ", valorUnidadeTroca="
-				+ valorUnidadeTroca + ", valorUnidadeDevolucao=" + valorUnidadeDevolucao + ", valoraPontuar="
-				+ valoraPontuar + ", pontosAtingidos=" + pontosAtingidos + ", creditaDebita=" + creditaDebita
-				+ ", validade=" + validade + "]";
+		return "Ponto_Movimento [id=" + id + ", id_pessoa_associado=" + id_pessoa_associado + ", id_pessoa_cliente="
+				+ id_pessoa_cliente + ", id_Pessoa_Registro=" + id_Pessoa_Registro + ", id_ponto=" + id_ponto
+				+ ", pontuacaoMinima=" + pontuacaoMinima + ", unidadeporPonto=" + unidadeporPonto + ", diasValidade="
+				+ diasValidade + ", valordaUnidade=" + valordaUnidade + ", valorUnidadeTroca=" + valorUnidadeTroca
+				+ ", valorUnidadeDevolucao=" + valorUnidadeDevolucao + ", valoraPontuar=" + valoraPontuar
+				+ ", pontosAtingidos=" + pontosAtingidos + ", creditaDebita=" + creditaDebita + ", validade=" + validade
+				+ "]";
 	}
 
-	/* (non-Javadoc)
-	 * @see java.lang.Object#hashCode()
-	 */
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -290,7 +207,7 @@ public class Pontuacao_Movimento extends GenericDomain implements Serializable {
 		result = prime * result + ((id_Pessoa_Registro == null) ? 0 : id_Pessoa_Registro.hashCode());
 		result = prime * result + ((id_pessoa_associado == null) ? 0 : id_pessoa_associado.hashCode());
 		result = prime * result + ((id_pessoa_cliente == null) ? 0 : id_pessoa_cliente.hashCode());
-		result = prime * result + ((id_pontuacao_config == null) ? 0 : id_pontuacao_config.hashCode());
+		result = prime * result + ((id_ponto == null) ? 0 : id_ponto.hashCode());
 		result = prime * result + pontosAtingidos;
 		result = prime * result + pontuacaoMinima;
 		result = prime * result + unidadeporPonto;
@@ -307,9 +224,6 @@ public class Pontuacao_Movimento extends GenericDomain implements Serializable {
 		return result;
 	}
 
-	/* (non-Javadoc)
-	 * @see java.lang.Object#equals(java.lang.Object)
-	 */
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -318,7 +232,7 @@ public class Pontuacao_Movimento extends GenericDomain implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Pontuacao_Movimento other = (Pontuacao_Movimento) obj;
+		Ponto_Movimento other = (Ponto_Movimento) obj;
 		if (creditaDebita != other.creditaDebita)
 			return false;
 		if (diasValidade != other.diasValidade)
@@ -343,10 +257,10 @@ public class Pontuacao_Movimento extends GenericDomain implements Serializable {
 				return false;
 		} else if (!id_pessoa_cliente.equals(other.id_pessoa_cliente))
 			return false;
-		if (id_pontuacao_config == null) {
-			if (other.id_pontuacao_config != null)
+		if (id_ponto == null) {
+			if (other.id_ponto != null)
 				return false;
-		} else if (!id_pontuacao_config.equals(other.id_pontuacao_config))
+		} else if (!id_ponto.equals(other.id_ponto))
 			return false;
 		if (pontosAtingidos != other.pontosAtingidos)
 			return false;
@@ -370,22 +284,6 @@ public class Pontuacao_Movimento extends GenericDomain implements Serializable {
 		return true;
 	}
 
-	/**
-	 * @return the id_Pessoa_Registro
-	 */
-	public Pessoa getId_Pessoa_Registro() {
-		return id_Pessoa_Registro;
-	}
-
-	/**
-	 * @param id_Pessoa_Registro the id_Pessoa_Registro to set
-	 */
-	public void setId_Pessoa_Registro(Pessoa id_Pessoa_Registro) {
-		this.id_Pessoa_Registro = id_Pessoa_Registro;
-	}
-	
-	
-	
-	
+		
 
 }

@@ -1,6 +1,7 @@
 package br.com.lealbrasil.model.entities;
 
 import java.io.Serializable;
+import java.text.DecimalFormat;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -16,6 +17,9 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Transient;
 
 import org.primefaces.model.StreamedContent;
+
+import br.com.lealbrasil.model.dao.Item_de_MovimentoDAO;
+import br.com.lealbrasil.util.Utilidades;
 
 @SuppressWarnings("serial")
 @Entity
@@ -36,15 +40,19 @@ public class Item_de_Movimento extends GenericDomain implements Serializable {
 	private double valordaUnidade;
 	@Column(name="referencia",length =20, nullable =false )
 	private String referencia;
+	@Enumerated(EnumType.STRING)
+	@Column(name="Enum_Aux_Tipo_Item_de_Movimento")
+	private Enum_Aux_Tipo_Item_de_Movimento enum_Aux_Tipo_Item_de_Movimento;
 	
 	@Enumerated(EnumType.STRING)
 	@Column(name="precoUnico")
 	private Enum_Aux_Sim_ou_Nao isPrecoUnico;
-	@Enumerated(EnumType.STRING)
-	@Column(name="enum_Aux_Tipo_Item_Movimento")
-	private Enum_Aux_Tipo_Item_de_Movimento enum_Aux_Tipo_Item_Movimento;
+	
+	
 	@Column(name = "ponto", precision=18, scale=4 )
 	double ponto;
+	@Column(name= "ultimaReferencia")
+	int ultimaReferencia;
 	@Transient
 	@Column(name = "caminhodaImagem")	
 	 private String caminhodaImagem;
@@ -59,6 +67,43 @@ public class Item_de_Movimento extends GenericDomain implements Serializable {
 	@Transient
 	@Column(name = "foto2")	
 	 private StreamedContent foto2;
+	
+	@Transient
+	@Column(name = "tipodeImagem")	
+	 private String tipodeImagem;
+	@Transient
+	@Column(name = "caminhoTemp")	
+	 private String caminhoTemp;
+	public Item_de_Movimento(){
+		
+	}
+	 
+	public Item_de_Movimento(Pessoa id_Pessoa_Registro, Pessoa id_Pessoa_Assinante, Enum_Aux_Sim_ou_Nao isPrecoUnico, 
+			 Enum_Aux_Tipo_Item_de_Movimento enum_Aux_Tipo_Item_de_Movimento ){
+		 
+		 this.id_Pessoa_Registro= id_Pessoa_Registro;
+		 this.id_Pessoa_Assinante = id_Pessoa_Assinante;
+		 this.isPrecoUnico = isPrecoUnico;
+		 this.enum_Aux_Tipo_Item_de_Movimento = enum_Aux_Tipo_Item_de_Movimento;
+		 setId_Empresa(1);
+		 setDescricao("");
+		 setReferencia(enum_Aux_Tipo_Item_de_Movimento.getReferencia());		 
+		 setUltimaAtualizacao(Utilidades.retornaCalendario());
+		 setValordaUnidade(0);
+		 setPonto(0d);
+		 setCaminhodaImagem("");
+		 setCaminhodaImagem2("");
+		 setCaminhoTemp("");
+		 Item_de_MovimentoDAO iDao = new Item_de_MovimentoDAO();
+		 setUltimaReferencia(iDao.retornaUltimaReferencia(id_Pessoa_Assinante,enum_Aux_Tipo_Item_de_Movimento));
+		 DecimalFormat df = new DecimalFormat("0000");
+		 setReferencia(enum_Aux_Tipo_Item_de_Movimento.getReferencia()+df.format(ultimaReferencia));
+		 setTipodeImagem(".png");
+		 
+	     
+		 
+	 }
+	
 	
 	
 	public Long getId() {
@@ -103,25 +148,12 @@ public class Item_de_Movimento extends GenericDomain implements Serializable {
 	public void setIsPrecoUnico(Enum_Aux_Sim_ou_Nao isPrecoUnico) {
 		this.isPrecoUnico = isPrecoUnico;
 	}
-	@Override
-	public String toString() {
-		return "Item_de_Movimento [id=" + id + ", id_Pessoa_Registro=" + id_Pessoa_Registro + ", id_Pessoa_Assinante="
-				+ id_Pessoa_Assinante + ", descricao=" + descricao + ", valordaUnidade=" + valordaUnidade
-				+ ", referencia=" + referencia + ", isPrecoUnico=" + isPrecoUnico + ", enum_Aux_Tipo_Item_Movimento="
-				+ enum_Aux_Tipo_Item_Movimento + ", ponto=" + ponto + ", caminhodaImagem=" + caminhodaImagem
-				+ ", caminhodaImagem2=" + caminhodaImagem2 + ", foto=" + foto + ", foto2=" + foto2 + "]";
-	}
+	
 	public double getPonto() {
 		return ponto;
 	}
 	public void setPonto(double ponto) {
 		this.ponto = ponto;
-	}
-	public Enum_Aux_Tipo_Item_de_Movimento getEnum_Aux_Tipo_Item_Movimento() {
-		return enum_Aux_Tipo_Item_Movimento;
-	}
-	public void setEnum_Aux_Tipo_Item_Movimento(Enum_Aux_Tipo_Item_de_Movimento enum_Aux_Tipo_Item_Movimento) {
-		this.enum_Aux_Tipo_Item_Movimento = enum_Aux_Tipo_Item_Movimento;
 	}
 	public String getCaminhodaImagem() {
 		return caminhodaImagem;
@@ -148,12 +180,20 @@ public class Item_de_Movimento extends GenericDomain implements Serializable {
 		this.foto2 = foto2;
 	}
 	@Override
+	public String toString() {
+		return "Item_de_Movimento [id=" + id + ", id_Pessoa_Registro=" + id_Pessoa_Registro + ", id_Pessoa_Assinante="
+				+ id_Pessoa_Assinante + ", descricao=" + descricao + ", valordaUnidade=" + valordaUnidade
+				+ ", referencia=" + referencia + ", enum_Aux_Tipo_Item_de_Movimento=" + enum_Aux_Tipo_Item_de_Movimento
+				+ ", isPrecoUnico=" + isPrecoUnico + ", ponto=" + ponto + ", ultimaReferencia=" + ultimaReferencia
+				+ "]";
+	}
+	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = super.hashCode();
 		result = prime * result + ((descricao == null) ? 0 : descricao.hashCode());
 		result = prime * result
-				+ ((enum_Aux_Tipo_Item_Movimento == null) ? 0 : enum_Aux_Tipo_Item_Movimento.hashCode());
+				+ ((enum_Aux_Tipo_Item_de_Movimento == null) ? 0 : enum_Aux_Tipo_Item_de_Movimento.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result + ((id_Pessoa_Assinante == null) ? 0 : id_Pessoa_Assinante.hashCode());
 		result = prime * result + ((id_Pessoa_Registro == null) ? 0 : id_Pessoa_Registro.hashCode());
@@ -162,6 +202,7 @@ public class Item_de_Movimento extends GenericDomain implements Serializable {
 		temp = Double.doubleToLongBits(ponto);
 		result = prime * result + (int) (temp ^ (temp >>> 32));
 		result = prime * result + ((referencia == null) ? 0 : referencia.hashCode());
+		result = prime * result + ultimaReferencia;
 		temp = Double.doubleToLongBits(valordaUnidade);
 		result = prime * result + (int) (temp ^ (temp >>> 32));
 		return result;
@@ -180,7 +221,7 @@ public class Item_de_Movimento extends GenericDomain implements Serializable {
 				return false;
 		} else if (!descricao.equals(other.descricao))
 			return false;
-		if (enum_Aux_Tipo_Item_Movimento != other.enum_Aux_Tipo_Item_Movimento)
+		if (enum_Aux_Tipo_Item_de_Movimento != other.enum_Aux_Tipo_Item_de_Movimento)
 			return false;
 		if (id == null) {
 			if (other.id != null)
@@ -206,9 +247,45 @@ public class Item_de_Movimento extends GenericDomain implements Serializable {
 				return false;
 		} else if (!referencia.equals(other.referencia))
 			return false;
+		if (ultimaReferencia != other.ultimaReferencia)
+			return false;
 		if (Double.doubleToLongBits(valordaUnidade) != Double.doubleToLongBits(other.valordaUnidade))
 			return false;
 		return true;
+	}
+	public Enum_Aux_Tipo_Item_de_Movimento getEnum_Aux_Tipo_Item_de_Movimento() {
+		return enum_Aux_Tipo_Item_de_Movimento;
+	}
+	public void setEnum_Aux_Tipo_Item_de_Movimento(Enum_Aux_Tipo_Item_de_Movimento enum_Aux_Tipo_Item_de_Movimento) {
+		this.enum_Aux_Tipo_Item_de_Movimento = enum_Aux_Tipo_Item_de_Movimento;
+	}
+
+
+
+	public int getUltimaReferencia() {
+		return ultimaReferencia;
+	}
+
+
+
+	public void setUltimaReferencia(int ultimaReferencia) {
+		this.ultimaReferencia = ultimaReferencia;
+	}
+
+	public String getTipodeImagem() {
+		return tipodeImagem;
+	}
+
+	public void setTipodeImagem(String tipodeImagem) {
+		this.tipodeImagem = tipodeImagem;
+	}
+
+	public String getCaminhoTemp() {
+		return caminhoTemp;
+	}
+
+	public void setCaminhoTemp(String caminhoTemp) {
+		this.caminhoTemp = caminhoTemp;
 	}
 		 
 	}

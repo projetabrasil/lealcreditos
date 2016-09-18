@@ -46,3 +46,10 @@ function log(msg) {
 $(document).ready(function() {
     $(":input:visible:enabled:first").focus()
 });
+
+function centerAndShowDialog(dialog)
+{
+    $(dialog).css("top",Math.max(0,(($(window).height() - $(dialog).outerHeight()) / 2) + $(window).scrollTop()) + "px");
+    $(dialog).css("left",Math.max(0, (($(window).width() - $(dialog).outerWidth()) / 2) + $(window).scrollLeft()) + "px");
+    
+}

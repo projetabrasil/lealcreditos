@@ -11,6 +11,7 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
 	<h:outputStylesheet library="css" name="clubefidelidade.css" />
 	<h:outputScript library="js" name="geral.js" />
+	<h:outputScript library="primefaces" name="jquery/jquery.js" />
 
 	<title>Club Fidelidade</title>
 </h:head>
@@ -120,7 +121,7 @@
 						<p:menuitem value="Configuração de pontuação"
 							actionListener="#{paginas.mudaPaginaAtual}"
 							rendered="#{autenticacaojsfController.perfilLogado.temPermissoes(['ASSINANTES'])}">
-							<f:attribute name="paginaAtual" value="PAGINAPONTUACAOCONFIG" />
+							<f:attribute name="paginaAtual" value="PAGINAPONTO" />
 						</p:menuitem>
 						<p:menuitem value="Configuração de brindes"
 							actionListener="#{paginas.mudaPaginaAtual}"
@@ -132,7 +133,7 @@
 						<p:menuitem value="Itens de Movimento"
 							actionListener="#{paginas.mudaPaginaAtual}"
 							rendered="#{autenticacaojsfController.perfilLogado.temPermissoes(['VENDAS'])}">
-							<f:attribute name="paginaAtual" value="PAGINAITENSMOVIMENTO" />
+							<f:attribute name="paginaAtual" value="PAGINAITEMDEMOVIMENTO" />
 						</p:menuitem>
 						<p:menuitem value="Combo"
 							actionListener="#{paginas.mudaPaginaAtual}"

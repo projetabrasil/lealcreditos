@@ -18,7 +18,7 @@ import br.com.lealbrasil.model.entities.Ponto;
 import br.com.lealbrasil.util.Utilidades;
 
 @SuppressWarnings("serial")
-@ManagedBean
+@ManagedBean(name="ponto")
 @ViewScoped
 public class PontojsfController extends GenericController implements Serializable {
 	private Ponto ponto;
@@ -40,35 +40,20 @@ public class PontojsfController extends GenericController implements Serializabl
 			return;
 		}
 		try {
-			PontoDAO pontuacao_ConfigDAO = new PontoDAO();
-			pontos = pontuacao_ConfigDAO.retornarListaPontuacaoConfig(perfilLogado.getAssLogado());
+			PontoDAO pDAO = new PontoDAO();
+			pontos = pDAO.retornarListaPontoConfig(perfilLogado.getAssLogado(),Enum_Aux_Tipo_Item_de_Movimento.PONTO);
 		} catch (RuntimeException erro) {
 			erro.printStackTrace();
 		}
 	}	
 	public void novo() {
-
-		ponto = new Ponto();
-		if (ponto==null){
-			ponto = new Ponto();
-			ponto.setDescricao("");
-			ponto.setDiasValidade(30);			
-			ponto.setUnidadeporPonto(1);
-			ponto.setId_Pessoa_Assinante(perfilLogado.getAssLogado());
-			ponto.setId_Pessoa_Registro(perfilLogado.getUsLogado().getPessoa());
-			ponto.setId_Empresa(1);
-			ponto.setEnum_Aux_Tipo_Item_de_Movimento(Enum_Aux_Tipo_Item_de_Movimento.PONTO);
-		}
-		ponto.setUltimaAtualizacao(Utilidades.retornaCalendario());
+		ponto = new Ponto(perfilLogado.getUsLogado().getPessoa(),perfilLogado.getAssLogado(),
+				Enum_Aux_Tipo_Item_de_Movimento.PONTO);
 	}
 	public void merge() {
 		try {
-		PontoDAO pConfig = new PontoDAO();
-		ponto.setId_Pessoa_Assinante(perfilLogado.getAssLogado());
-		ponto.setId_Pessoa_Registro(perfilLogado.getUsLogado().getPessoa());
-		ponto.setId_Empresa(1);
-		ponto.setUltimaAtualizacao(Utilidades.retornaCalendario());
-		ponto.setEnum_Aux_Tipo_Item_de_Movimento(Enum_Aux_Tipo_Item_de_Movimento.PONTO);
+		PontoDAO pConfig = new PontoDAO();			
+		ponto.setUltimaAtualizacao(Utilidades.retornaCalendario());		
 		pConfig.merge(ponto);
 		
 		if (ponto.getId()!=null)

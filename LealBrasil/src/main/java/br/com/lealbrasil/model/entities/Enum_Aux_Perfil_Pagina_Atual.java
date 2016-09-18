@@ -9,14 +9,14 @@ public enum Enum_Aux_Perfil_Pagina_Atual {
 	PAGINAREPRESENTANTES("PAGINAREPRESENTANTES","PREP",5,Enum_Aux_Perfil_Pessoa.REPRESENTANTES,Enum_Aux_Perfil_Pessoa.SUPERVISORES,false,true,"pessoas.xhtml", "representantes"),
 	PAGINAVENDAS("PAGINAVENDAS","PVEN",6,Enum_Aux_Perfil_Pessoa.VENDAS,Enum_Aux_Perfil_Pessoa.ADMINISTRADORES,false,true,"pessoas.xhtml", "vendas"),
 	PAGINAAUTENTICACAO("PAGINAAUTENTICACAO","PAUT",7,Enum_Aux_Perfil_Pessoa.OUTROS ,Enum_Aux_Perfil_Pessoa.OUTROS,false,false,"autenticacao.xhtml", "autenticacao"),
-	PAGINAPONTUACAOCONFIG("PAGINAPONTUACAOCONFIG","PCONFPONT",8, Enum_Aux_Perfil_Pessoa.ASSINANTES,Enum_Aux_Perfil_Pessoa.ASSINANTES,true,false,"pontuacao_config.xhtml", "configuração de pontuação"),
-	PAGINAPONTUACAOC("PAGINAPONTUACAOC","PMOVPONT",9, Enum_Aux_Perfil_Pessoa.ATENDENTES,Enum_Aux_Perfil_Pessoa.ASSINANTES,true,false,"pontuacao_movimento.xhtml", "de pontuações de fidelizados - Creditar"),
-	PAGINAPONTUACAOD("PAGINAPONTUACAOD","PMOVPONT",10, Enum_Aux_Perfil_Pessoa.ATENDENTES,Enum_Aux_Perfil_Pessoa.ASSINANTES,true,false,"pontuacao_movimento.xhtml","de pontuações de fidelizados - Debitar"),
-	PAGINAPONTUACAOE("PAGINAPONTUACAOE","PMOVPONT",11, Enum_Aux_Perfil_Pessoa.ATENDENTES,Enum_Aux_Perfil_Pessoa.ASSINANTES,true,false,"pontuacao_movimento.xhtml","de pontuações de fidelizados - Estornar"),
-	PAGINAITENSMOVIMENTO("PAGINAITENSMOVIMENTO","PITENSMOV",12,Enum_Aux_Perfil_Pessoa.VENDAS,Enum_Aux_Perfil_Pessoa.VENDAS ,false,false,"itens_movimento.xhtml","itens de movimento"),																																					
+	PAGINAPONTO("PAGINAPONTO","PPONTO",8, Enum_Aux_Perfil_Pessoa.ASSINANTES,Enum_Aux_Perfil_Pessoa.ASSINANTES,true,false,"ponto.xhtml", "Configuração de pontos"),
+	PAGINAPONTUACAOC("PAGINAPONTUACAOC","PMOVPONT",9, Enum_Aux_Perfil_Pessoa.ATENDENTES,Enum_Aux_Perfil_Pessoa.ASSINANTES,true,false,"ponto_movimento.xhtml", "de pontuações de fidelizados - Creditar"),
+	PAGINAPONTUACAOD("PAGINAPONTUACAOD","PMOVPONT",10, Enum_Aux_Perfil_Pessoa.ATENDENTES,Enum_Aux_Perfil_Pessoa.ASSINANTES,true,false,"ponto_movimento.xhtml","de pontuações de fidelizados - Debitar"),
+	PAGINAPONTUACAOE("PAGINAPONTUACAOE","PMOVPONT",11, Enum_Aux_Perfil_Pessoa.ATENDENTES,Enum_Aux_Perfil_Pessoa.ASSINANTES,true,false,"ponto_movimento.xhtml","de pontuações de fidelizados - Estornar"),
+	PAGINAITEMDEMOVIMENTO("PAGINAITEMDEMOVIMENTO","PITEMDEMOV",12,Enum_Aux_Perfil_Pessoa.VENDAS,Enum_Aux_Perfil_Pessoa.VENDAS ,false,false,"item_de_movimento.xhtml","itens de movimento"),																																					
 	PAGINAOUTROS("PAGINAOUTROS","POUTROS",13,Enum_Aux_Perfil_Pessoa.OUTROS,null,false,true,"pessoas.xhtml","outros"),
 	PAGINAINDEX("PAGINAINDEX","PINDEX",14,Enum_Aux_Perfil_Pessoa.OUTROS,null,false,false,"index.xhtml", "página principal"),
-	PAGINACOMBO("PAGINACOMBO","PCOMBO",15,Enum_Aux_Perfil_Pessoa.VENDAS,Enum_Aux_Perfil_Pessoa.VENDAS ,false,false,"combos.xhtml","combo"),
+	PAGINACOMBO("PAGINACOMBO","PCOMBO",15,Enum_Aux_Perfil_Pessoa.VENDAS,Enum_Aux_Perfil_Pessoa.VENDAS ,false,false,"combo.xhtml","combo"),
 	PAGINABRINDE("PAGINABRINDE","PBRINDE",16,Enum_Aux_Perfil_Pessoa.ASSINANTES,Enum_Aux_Perfil_Pessoa.ASSINANTES ,true,false,"brinde.xhtml","brindes");
 	
     private String descricao;    

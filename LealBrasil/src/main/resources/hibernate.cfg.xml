@@ -48,14 +48,14 @@
 		<mapping class="br.com.lealbrasil.model.entities.Pessoa_Enum_Aux_Perfil_Pessoa" />
 		<mapping class="br.com.lealbrasil.model.entities.Pessoa" />
 		<mapping class="br.com.lealbrasil.model.entities.Pessoa_Vinculo" />
-		<mapping class="br.com.lealbrasil.model.entities.Pontuacao_Movimento" />
+		<mapping class="br.com.lealbrasil.model.entities.Ponto_Movimento" />
 		<mapping class="br.com.lealbrasil.model.entities.Usuario" />
 		<mapping class="br.com.lealbrasil.model.entities.Combo_Detalhe"/>
 		<mapping class="br.com.lealbrasil.model.entities.Combo_Mestre"/>
 		<mapping class="br.com.lealbrasil.model.entities.Item_de_Movimento"/>
 		<mapping class="br.com.lealbrasil.model.entities.Movimento_Mestre"/>
 		<mapping class="br.com.lealbrasil.model.entities.Movimento_Detalhe"/>
-		<mapping class="br.com.lealbrasil.model.entities.Beneficio"/>
+		
 	</session-factory>
 
 </hibernate-configuration>

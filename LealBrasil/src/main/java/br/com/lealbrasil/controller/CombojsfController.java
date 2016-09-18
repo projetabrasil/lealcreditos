@@ -12,17 +12,19 @@ import javax.faces.event.ActionEvent;
 
 import org.primefaces.context.RequestContext;
 
+import br.com.lealbrasil.model.dao.Combo_DetalheDAO;
 import br.com.lealbrasil.model.dao.Combo_MestreDAO;
 import br.com.lealbrasil.model.dao.Item_de_MovimentoDAO;
 import br.com.lealbrasil.model.entities.Combo_Detalhe;
 import br.com.lealbrasil.model.entities.Combo_Mestre;
 import br.com.lealbrasil.model.entities.Enum_Aux_Sim_ou_Nao;
+import br.com.lealbrasil.model.entities.Enum_Aux_Tipo_Item_de_Movimento;
 import br.com.lealbrasil.model.entities.Item_de_Movimento;
 import br.com.lealbrasil.model.entities.PerfilLogado;
 import br.com.lealbrasil.util.Utilidades;
 
 @SuppressWarnings("serial")
-@ManagedBean(name = "combos")
+@ManagedBean(name = "combo")
 @ViewScoped
 public class CombojsfController extends GenericController implements Serializable {
 	private List<Combo_Mestre> combosM;
@@ -59,7 +61,7 @@ public class CombojsfController extends GenericController implements Serializabl
 
 	public void listaItens() {
 		Item_de_MovimentoDAO iMDAO = new Item_de_MovimentoDAO();
-		itens_Mov = iMDAO.listar(perfilLogado.getAssLogado());
+		itens_Mov = iMDAO.listar(perfilLogado.getAssLogado(),Enum_Aux_Tipo_Item_de_Movimento.ITEMDESERVICO);
 	}
 
 	public void configuraComboM() {
@@ -83,7 +85,7 @@ public class CombojsfController extends GenericController implements Serializabl
 
 	public void configuraComboD() {
 		comboD.setDescricao("");
-		comboD.setId_ComboMestre(comboM);
+		comboD.setId_Combo_Mestre(comboM);
 		comboD.setId_Empresa(1);
 
 		comboD.setId_Pessoa_Assinante(perfilLogado.getAssLogado());
@@ -125,6 +127,7 @@ public class CombojsfController extends GenericController implements Serializabl
 				return;
 			}
 		comboDTemp.setId_Itens_Movimento(item_Mov);
+		i = -1;
 		i = combosDTemp.indexOf(comboDTemp);
 		boolean precoUnico = item_Mov.getIsPrecoUnico().equals(Enum_Aux_Sim_ou_Nao.SIM);
 		if (i >= 0 && precoUnico) {
@@ -139,30 +142,7 @@ public class CombojsfController extends GenericController implements Serializabl
 		comboD = comboDTemp;
 		setDadosComboDImultaveis();
 		setDadosComboDMultaveis();
-		double totalAnt;
-		double qtde;
-
-		qtde = comboD.getQtde();
-
-		if (item_Mov.getIsPrecoUnico().equals(Enum_Aux_Sim_ou_Nao.SIM))
-			totalAnt = qtde * comboD.getValorUnidade();
-		else
-			totalAnt = qtde * comboD.getValorUnidade() * comboM.getnMeses();
-		comboD.setTotal(totalAnt);
-
-		if (qtdeAnt < 0) {
-			if (i >= 0)
-				qtde = combosDTemp.get(i).getQtde();
-			else
-				qtde = 0;
-			comboD.setQtde(comboD.getQtde() + qtde);
-
-		} else {
-			setDifQtde(comboD.getQtde() - getQtdeAnt());
-		}
-
 		double total;
-
 		if (item_Mov.getIsPrecoUnico().equals(Enum_Aux_Sim_ou_Nao.SIM))
 			total = comboD.getQtde() * comboD.getValorUnidade();
 		else
@@ -176,21 +156,22 @@ public class CombojsfController extends GenericController implements Serializabl
 			combosDTemp.set(i, comboD);
 		else
 			combosDTemp.add(comboD);
-		if (getDifQtde() != 0) {
+		
 
-			if (item_Mov.getIsPrecoUnico().equals(Enum_Aux_Sim_ou_Nao.SIM))
-				totalAnt = getDifQtde() * comboD.getValorUnidade();
-			else
-				totalAnt = getDifQtde() * comboD.getValorUnidade() * comboM.getnMeses();
+		total = 0;
+		
+		for (Combo_Detalhe cD : combosDTemp) {
+			total += cD.getTotal();
+			
 		}
-
-		total = comboM.getTotal() + totalAnt;
+		
 		realizaTotalizacaoFinal(total);
-
+        if(i==-1)
 		novoD();
 	}
 
 	public void realizaTotalizacaoFinal(double total) {
+		
 		comboM.setTotal(total);
 		comboM.setDesconto(comboM.getTotal() * comboM.getPercDesc() / 100);
 		comboM.setTotalLiquido(comboM.getTotal() - comboM.getDesconto());
@@ -198,7 +179,7 @@ public class CombojsfController extends GenericController implements Serializabl
 	}
 
 	public void setDadosComboDImultaveis() {
-		comboD.setId_ComboMestre(comboM);
+		comboD.setId_Combo_Mestre(comboM);
 		comboD.setId_Empresa(1);
 		comboD.setId_Itens_Movimento(item_Mov);
 		comboD.setId_Pessoa_Assinante(perfilLogado.getAssLogado());
@@ -218,15 +199,23 @@ public class CombojsfController extends GenericController implements Serializabl
 		comboD.setDesconto(comboD.getTotal() * comboD.getPercDesc() / 100);
 		comboD.setTotalLiquido(comboD.getTotal() - comboD.getDesconto());
 	}
-
 	public void editarM(ActionEvent event) {
-		setComboM((Combo_Mestre) event.getComponent().getAttributes().get("RegistroAtual"));
+		setComboM((Combo_Mestre) event.getComponent().getAttributes().get("registroAtual"));
+		
+		Combo_DetalheDAO cDDAO = new Combo_DetalheDAO(); 
+		combosDTemp = cDDAO.listar(perfilLogado.getAssLogado(),getComboM());
+		
+		
+		Utilidades.abrirfecharDialogos("dialogoCombos",true);
+		
 
 	}
 
 	public void editarD(ActionEvent event) {
 		setComboD((Combo_Detalhe) event.getComponent().getAttributes().get("registroAtual2"));
 		comboDTemp = comboD;
+		
+		
 		setQtdeAnt(comboD.getQtde());
 		setAlteracao(true);
 		item_Mov = comboDTemp.getId_Itens_Movimento();
@@ -235,15 +224,30 @@ public class CombojsfController extends GenericController implements Serializabl
 
 	public void excluirD(ActionEvent event) {
 		setComboD((Combo_Detalhe) event.getComponent().getAttributes().get("registroAtual2"));
-		int i = combosDTemp.indexOf(comboD);
+		int i = combosDTemp.indexOf(comboD);		
+		if (comboD!=null && comboD.getId()!=null){
+			Combo_DetalheDAO cDDAO = new Combo_DetalheDAO();
+			cDDAO.excluir(comboD);
+		}
 		combosDTemp.remove(i);
 		realizaTotalizacaoFinal(comboM.getTotal() - comboD.getTotal());
 	}
 
 	public void merge() {
 		Combo_MestreDAO cMDAO = new Combo_MestreDAO();
-		cMDAO.merge(comboM);
+		comboM = cMDAO.merge(comboM);
+		Combo_DetalheDAO cDDAO = new Combo_DetalheDAO();
+		int i = 0;
+		for (Combo_Detalhe cD : combosDTemp) {
+			cD.setId_Combo_Mestre(comboM);
+			comboD = cD;
+			comboD = cDDAO.merge(comboD);
+			
+			
+			combosDTemp.set(i,comboD);
+		}
 		listar();
+		Utilidades.abrirfecharDialogos("dialogoCombos",false);
 	}
 	
 	public void executarJS(){

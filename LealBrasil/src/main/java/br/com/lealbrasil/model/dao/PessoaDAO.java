@@ -16,7 +16,7 @@ import br.com.lealbrasil.model.entities.PerfilLogado;
 import br.com.lealbrasil.model.entities.Pessoa;
 import br.com.lealbrasil.model.entities.Pessoa_Enum_Aux_Perfil_Pessoa;
 import br.com.lealbrasil.model.entities.Pessoa_Vinculo;
-import br.com.lealbrasil.model.entities.Pontuacao_Movimento;
+import br.com.lealbrasil.model.entities.Ponto_Movimento;
 import br.com.lealbrasil.util.HibernateUtil;
 
 public class PessoaDAO extends GenericDAO<Pessoa> {
@@ -101,7 +101,7 @@ public class PessoaDAO extends GenericDAO<Pessoa> {
 		DetachedCriteria subQuery1 = null;		
 		Criteria crit = null;
 		
-		subQuery1 = DetachedCriteria.forClass(Pontuacao_Movimento.class).setProjection(Property.forName("id_pessoa_associado"));		    
+		subQuery1 = DetachedCriteria.forClass(Ponto_Movimento.class).setProjection(Property.forName("id_pessoa_associado"));		    
 		subQuery1.add(Restrictions.eq("id_pessoa_cliente",id_Pessoa_Cliente));
 			    
 		

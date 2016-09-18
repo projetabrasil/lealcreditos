@@ -4,31 +4,46 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.Table;
 
 @SuppressWarnings("serial")
 @Entity
 @Table(name="Ponto")
 public class Ponto extends Item_de_Movimento implements Serializable{
-	@Column(name="pontuacaoMinima", nullable=false)	
+	@Column(name="pontuacaoMinima")	
 	private int pontuacaoMinima;
-	@Column(name="unidadeporPonto", nullable=false)	
+	@Column(name="unidadeporPonto")	
 	private int unidadeporPonto;	
-	@Column(name="diasValidade",nullable=false)	
+	@Column(name="diasValidade")	
 	private int diasValidade;
 	
-	@Column(name="valordaUnidade",precision=18,scale=4,nullable=false)
-	private double valordaUnidade;	
-	@Column(name="valorUnidadeTroca",precision=18,scale=4,nullable=false)
+		
+	@Column(name="valorUnidadeTroca",precision=18,scale=4)
 	private double valorUnidadeTroca;
-	@Column(name="valorUnidadeDevolucao",precision=18,scale=4,nullable=false)
+	@Column(name="valorUnidadeDevolucao",precision=18,scale=4)
 	private double valorUnidadeDevolucao;
-	@Enumerated(EnumType.STRING)
-	@Column(name="enum_Aux_Tipo_Item_de_Movimento")
-	private 
-	Enum_Aux_Tipo_Item_de_Movimento enum_Aux_Tipo_Item_de_Movimento;
+	
+	public Ponto(){
+		super();
+	}
+	
+	public Ponto(Pessoa id_Pessoa_Registro, Pessoa id_Pessoa_Assinante, 
+			 Enum_Aux_Tipo_Item_de_Movimento enum_Aux_Tipo_Item_de_Movimento){
+		
+		       super(id_Pessoa_Registro, id_Pessoa_Assinante, 
+				Enum_Aux_Sim_ou_Nao.SIM,enum_Aux_Tipo_Item_de_Movimento);
+		
+				this.diasValidade =30;
+				this.pontuacaoMinima =  1;
+				this.unidadeporPonto = 1;
+				this.valorUnidadeDevolucao =0d;
+				this.valorUnidadeTroca =0d;
+				
+				
+				
+				
+				
+	}
 	
 	
 	public int getPontuacaoMinima() {
@@ -49,12 +64,7 @@ public class Ponto extends Item_de_Movimento implements Serializable{
 	public void setDiasValidade(int diasValidade) {
 		this.diasValidade = diasValidade;
 	}
-	public double getValordaUnidade() {
-		return valordaUnidade;
-	}
-	public void setValordaUnidade(double valordaUnidade) {
-		this.valordaUnidade = valordaUnidade;
-	}
+	
 	public double getValorUnidadeTroca() {
 		return valorUnidadeTroca;
 	}
@@ -70,25 +80,20 @@ public class Ponto extends Item_de_Movimento implements Serializable{
 	@Override
 	public String toString() {
 		return "Ponto [pontuacaoMinima=" + pontuacaoMinima + ", unidadeporPonto=" + unidadeporPonto + ", diasValidade="
-				+ diasValidade + ", valordaUnidade=" + valordaUnidade + ", valorUnidadeTroca=" + valorUnidadeTroca
-				+ ", valorUnidadeDevolucao=" + valorUnidadeDevolucao + ", enum_Aux_Tipo_Item_de_Movimento="
-				+ enum_Aux_Tipo_Item_de_Movimento + "]";
+				+ diasValidade + ", valorUnidadeTroca=" + valorUnidadeTroca + ", valorUnidadeDevolucao="
+				+ valorUnidadeDevolucao + "]";
 	}
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = super.hashCode();
 		result = prime * result + diasValidade;
-		result = prime * result
-				+ ((enum_Aux_Tipo_Item_de_Movimento == null) ? 0 : enum_Aux_Tipo_Item_de_Movimento.hashCode());
 		result = prime * result + pontuacaoMinima;
 		result = prime * result + unidadeporPonto;
 		long temp;
 		temp = Double.doubleToLongBits(valorUnidadeDevolucao);
 		result = prime * result + (int) (temp ^ (temp >>> 32));
 		temp = Double.doubleToLongBits(valorUnidadeTroca);
-		result = prime * result + (int) (temp ^ (temp >>> 32));
-		temp = Double.doubleToLongBits(valordaUnidade);
 		result = prime * result + (int) (temp ^ (temp >>> 32));
 		return result;
 	}
@@ -103,8 +108,6 @@ public class Ponto extends Item_de_Movimento implements Serializable{
 		Ponto other = (Ponto) obj;
 		if (diasValidade != other.diasValidade)
 			return false;
-		if (enum_Aux_Tipo_Item_de_Movimento != other.enum_Aux_Tipo_Item_de_Movimento)
-			return false;
 		if (pontuacaoMinima != other.pontuacaoMinima)
 			return false;
 		if (unidadeporPonto != other.unidadeporPonto)
@@ -113,17 +116,9 @@ public class Ponto extends Item_de_Movimento implements Serializable{
 			return false;
 		if (Double.doubleToLongBits(valorUnidadeTroca) != Double.doubleToLongBits(other.valorUnidadeTroca))
 			return false;
-		if (Double.doubleToLongBits(valordaUnidade) != Double.doubleToLongBits(other.valordaUnidade))
-			return false;
 		return true;
 	}
-	public Enum_Aux_Tipo_Item_de_Movimento getEnum_Aux_Tipo_Item_de_Movimento() {
-		return enum_Aux_Tipo_Item_de_Movimento;
-	}
-	public void setEnum_Aux_Tipo_Item_de_Movimento(Enum_Aux_Tipo_Item_de_Movimento enum_Aux_Tipo_Item_de_Movimento) {
-		this.enum_Aux_Tipo_Item_de_Movimento = enum_Aux_Tipo_Item_de_Movimento;
-	}
-		
+			
 			
 }
 	

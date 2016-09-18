@@ -21,6 +21,7 @@ public class Combo_MestreDAO extends GenericDAO<Combo_Mestre> {
 			crit = sessao.createCriteria(Combo_Mestre.class)
 					.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
 					.add(Restrictions.eq("id_Pessoa_Assinante",id_Pessoa_Assinante));
+			
 			lista = crit.list();
 		}catch(RuntimeException error){
 	      error.printStackTrace();

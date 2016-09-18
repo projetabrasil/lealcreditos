@@ -21,19 +21,19 @@ public class Movimento_Detalhe extends GenericDomain implements Serializable {
 	@SequenceGenerator(name = "pk_combo_detalhe", sequenceName = "mess_sounds_combo_detalhe", allocationSize = 1)
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "pk_combo_detalhe")
 	private Long id;
-	@ManyToOne(cascade = { CascadeType.ALL })
+	@ManyToOne
 	@JoinColumn(name = "id_Pessoa_Registro")
 	private Pessoa id_Pessoa_Registro;
 	
-	@ManyToOne(cascade = { CascadeType.ALL })
+	@ManyToOne
 	@JoinColumn(name = "id_Pessoa_Assinante", nullable = false)
 	private Pessoa id_Pessoa_Assinante;
 	
-	@ManyToOne(cascade = { CascadeType.ALL })
+	@ManyToOne
 	@JoinColumn(name = "id_Combo_Mestre")
 	private Combo_Mestre id_Combo_Mestre;
 	
-	@ManyToOne(cascade = { CascadeType.ALL })
+	@ManyToOne
 	@JoinColumn(name = "id_Combo_Detalhe")
 	private Combo_Detalhe id_Combo_Detalhe;
 	@ManyToOne(cascade = { CascadeType.ALL })
@@ -43,7 +43,7 @@ public class Movimento_Detalhe extends GenericDomain implements Serializable {
 	@Column(name="cD", length=10,nullable=false )
 	private Enum_Aux_Credita_Debita cD;
 
-	@ManyToOne(cascade = { CascadeType.ALL })
+	@ManyToOne
 	@JoinColumn(name = "id_ComboMestre")
 	private Combo_Mestre id_ComboMestre;
 	@Column(name = "referencia", length = 20, nullable = false)

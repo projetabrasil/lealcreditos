@@ -10,21 +10,17 @@
 	xmlns:pe="http://primefaces.org/ui/extensions"
 	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
 	xmlns:c="http://java.sun.com/jsp/jstl/core">
-
-	
-
 	<ui:define name="conteudo">
-		
 		<h:form id="formlista" style="width:100%;">
 			<p:panel
 				header="Listagem de #{autenticacaojsfController.perfilLogado.paginaAtual.descricao2}"
 				style="width:100%;">
 				<p:dataTable id="tabela" emptyMessage="" reflow="true"
-					value="#{combos.combosM}" paginator="true" rows="5" var="registro"
+					value="#{combo.combosM}" paginator="true" rows="5" var="registro"
 					style="font-size:12px;">
 					<f:facet name="header">
 						<p:commandButton id="buttonpontuar" value="Nova Combo"
-							process="@this" actionListener="#{combos.novoM()}"
+							process="@this" actionListener="#{combo.novoM()}"
 							update="
 							:formTemplate:formCombos 
 							:formTemplate:formCombos:p1
@@ -32,61 +28,66 @@
 							:formTemplate:formCombos:p3">
 						</p:commandButton>
 					</f:facet>
-
-
-					<p:column headerText="descricao" style="width:10%">
-						<c:set var="descr1" value="#{registro.descricao}" />
+					<p:column headerText="descricao" style="width:15%">
+						
 						<p:commandLink id="descricao" outcome="#"
-							value="#{fn:substringBefore(descri1,' ')}">
+							value="#{registro.descricao}">
 							<f:param name="comboM" value="registro" />
 						</p:commandLink>
 
 					</p:column>
 
-					<p:column headerText="Total" style="width:5%">
+					<p:column headerText="Total" style="width:10%">
 						<h:outputText id="total" value="R$ #{registro.total}">
 						</h:outputText>
 					</p:column>
-					<p:column headerText="Perc Desc" style="width:5%">
+					<p:column headerText="Perc Desc" style="width:10%">
 						<h:outputText id="percDesc" value="#{registro.percDesc}%">
 						</h:outputText>
 					</p:column>
-					<p:column headerText="Desconto" style="width:5%">
+					<p:column headerText="Desconto" style="width:10%">
 						<h:outputText id="desconto" value="R$ #{registro.desconto}">
 						</h:outputText>
 					</p:column>
-					<p:column headerText="Liquido" style="width:5%">
+					<p:column headerText="Liquido" style="width:10%">
 						<h:outputText id="liquido" value="R$ #{registro.totalLiquido}">
 						</h:outputText>
 					</p:column>
 
-					<p:column headerText="Atualização" style="width:5%">
+					<p:column headerText="Atualização" style="width:10%">
 						<h:outputText value="#{registro.ultimaAtualizacao.time}">
 							<f:convertDateTime locale="pt_BR" dateStyle="long" type="both"
 								pattern="dd/MM/yyyy HH:mm:ss" />
 						</h:outputText>
 					</p:column>
 
-					<p:column headerText="Responsavel" style="width:5%">
+					<p:column headerText="Responsavel" style="width:10%">
 						<c:set var="resp" value="#{registro.id_Pessoa_Registro.descricao}" />
 						<h:outputText value="#{fn:substringBefore(resp,' ')}"
 							style="width:5%">
 						</h:outputText>
 					</p:column>
-
+					<p:column headerText="Editar">
+						<p:commandButton icon="icon-edit"
+							actionListener="#{combo.editarM}"
+							
+							update=":formTemplate:formCombos 
+							:formTemplate:formCombos:p1
+							:formTemplate:formCombos:p2 
+							:formTemplate:formCombos:p3">
+							<p:confirm header="Confirmação"
+								message="Deseja realmente alterar este registro?"
+								icon="ui-icon-alert" />
+							<f:attribute name="registroAtual" value="#{registro}" />
+						</p:commandButton>
+					</p:column>
 				</p:dataTable>
-
-
 			</p:panel>
 		</h:form>
-		
-
-
 
 		<p:dialog widgetVar="dialogoCombos" closable="false" resizable="false"
 			modal="true" appendTo="@(body)" width="80%" height="80%">
 			<h:form id="formCombos" style="width:100%;">
-
 				<p:focus for="des" />
 				<h:panelGrid id="p1" columns="7">
 					<p:outputLabel value="descrição" />
@@ -97,70 +98,61 @@
 					<p:outputLabel value="Desconto" />
 					<p:outputLabel value="Líquido" />
 
-					<p:inputText value="#{combos.comboM.descricao}" id="des" size="40"
+					<p:inputText value="#{combo.comboM.descricao}" id="des" size="40"
 						required="true" requiredMessage="Informe a descrição !!!">
 					</p:inputText>
-					<p:inputText value="#{combos.comboM.referencia}" id="ref" size="10"
+					<p:inputText value="#{combo.comboM.referencia}" id="ref" size="10"
 						required="true" requiredMessage="Informe a referencia !!!">
 					</p:inputText>
-					<p:inputNumber value="#{combos.comboM.percDesc}"
-						id="valordaUnidade" minValue="0" maxVAlue="100" emptyValue="0"
-						symbol=" %" symbolPosition="s" size="6"
+					<p:inputNumber value="#{combo.comboM.percDesc}" id="valordaUnidade"
+						minValue="0" maxVAlue="100" emptyValue="0" symbol=" %"
+						symbolPosition="s" size="6"
 						validatorMessage="O Valor Mínimo é '0'">
 						<f:validateLongRange />
 					</p:inputNumber>
-					<p:inputNumber value="#{combos.comboM.nMeses}" id="nMeses"
+					<p:inputNumber value="#{combo.comboM.nMeses}" id="nMeses"
 						minValue="1" maxVAlue="100" emptyValue="1" symbol=" meses"
 						symbolPosition="s" size="6"
 						validatorMessage="O Valor Mínimo é '1'" decimalPlaces="0">
 						<f:validateLongRange />
-
 					</p:inputNumber>
-
-
-					<p:outputLabel value="#{combos.comboM.total}" />
-					<p:outputLabel value="#{combos.comboM.desconto}" />
-					<p:outputLabel value="#{combos.comboM.totalLiquido}" />
-
+					<p:outputLabel value="#{combo.comboM.total}" />
+					<p:outputLabel value="#{combo.comboM.desconto}" />
+					<p:outputLabel value="#{combo.comboM.totalLiquido}" />
 				</h:panelGrid>
-
-
-
 				<h:panelGrid id="p2" columns="2">
 					<h:panelGrid id="p21" columns="2">
 						<p:outputLabel value="Itens do combo" />
 						<p:outputLabel value="Qtde" />
-						<p:selectOneMenu id="itens" value="#{combos.item_Mov}"
-							converter="omnifaces.SelectItemsConverter"  >
-							<f:selectItems value="#{combos.itens_Mov}" var="d"
+						<p:selectOneMenu id="itens" value="#{combo.item_Mov}"
+							converter="omnifaces.SelectItemsConverter">
+							<f:selectItems value="#{combo.itens_Mov}" var="d"
 								itemValue="#{d}"
 								itemLabel="#{d.referencia} - #{d.descricao} - R$ #{d.valordaUnidade}" />
-							
 						</p:selectOneMenu>
-						<p:inputNumber id="qtde" value="#{combos.comboDTemp.qtde}"
+						<p:inputNumber id="qtde" value="#{combo.comboDTemp.qtde}"
 							minValue="0" maxVAlue="100" emptyValue="1" size="4"
 							validatorMessage="O Valor Mínimo é '1'" decimalPlaces="0">
 							<f:validateLongRange />
 						</p:inputNumber>
 					</h:panelGrid>
 					<h:panelGrid id="p22" columns="3">
-
 						<p:commandButton value="confirma" process="@form"
 							update=":formTemplate:formCombos 
 							:formTemplate:formCombos:p1
 							:formTemplate:formCombos:p2 
 							:formTemplate:formCombos:p3"
-							actionListener="#{combos.adicionalistaComboDTemp()}"
+							actionListener="#{combo.adicionalistaComboDTemp()}"
 							style="border: 2px solid #6495ED;margin-top: 25px;margin-left: 0px; float: left; ">
-							
-								<p:ajax event="click" process="@form"
+
+							<p:ajax event="click" process="@form"
 								oncomplete="$(function(){PrimeFaces.focus('formTemplate:formCombos:p2:p21:itens');});" />
 						</p:commandButton>
-						<p:commandButton value="Confirma nova combo" process="@this"
-							
+						<p:commandButton value="Confirma combo" process="@form"
 							style="border: 2px solid #6495ED;margin-top: 25px;float: left;"
-							onclick="setfocus(qtde);" update="mensagens">
-							
+							actionListener="#{combo.merge()}" 
+							update="mensagens">
+
 						</p:commandButton>
 						<p:commandButton value="cancela" process="@this"
 							oncomplete="PF('dialogoCombos').hide();"
@@ -175,27 +167,27 @@
 
 
 					<p:dataTable id="tabelaCombos" emptyMessage="" reflow="true"
-						value="#{combos.combosDTemp}" paginator="true" rows="5"
-						var="registro2" style="font-size:15px;">
+						value="#{combo.combosDTemp}" paginator="true" rows="5"
+						var="registro2" style="font-size:12px;" width="60%">
 
 						<p:column headerText="Ref">
 							<h:outputText value="#{registro2.referencia }" style="width:5%" />
 						</p:column>
 
-						<p:column headerText="descrição" style="width:15%">
-							<c:set var="descr" value="#{registro2.desconto}" />
+						<p:column headerText="descrição" style="width:8%">
+							<c:set var="descr" value="#{registro2.descricao}" />
 							<h:outputText id="descr" update=":formTemplate:formHistorico"
-								value="#{fn:substring(descrPont,0,20)}" style="width:5%">
+								value="#{fn:substring(descr,0,20)}" style="width:12%">
 							</h:outputText>
 						</p:column>
 						<p:column headerText="Unidade">
 							<h:outputText value="#{registro2.valorUnidade}" style="width:10%" />
 						</p:column>
 						<p:column headerText="Qtde">
-							<h:outputText value="#{registro2.qtde}" style="width:10%" />
+							<h:outputText value="#{registro2.qtde}" style="width:3%" />
 						</p:column>
 						<p:column headerText="N. Meses">
-							<h:outputText value="#{registro2.nMeses}" style="width:10%" />
+							<h:outputText value="#{registro2.nMeses}" style="width:12%" />
 						</p:column>
 						<p:column headerText="Total">
 							<h:outputText value="#{registro2.total}" style="width:10%" />
@@ -206,36 +198,35 @@
 						<p:column headerText="Liquido">
 							<h:outputText value="#{registro2.totalLiquido}" style="width:10%" />
 						</p:column>
-						<p:column headerText="alteração" style="width:20%">
+						<p:column headerText="alteração" style="width:15%">
 							<h:outputText value="#{registro2.ultimaAtualizacao.time}">
 								<f:convertDateTime locale="pt_BR" type="both" timeOnlye="true"
 									pattern="dd/MM/yyyy HH:mm:ss" />
 							</h:outputText>
 						</p:column>
-						
+
 						<p:column headerText="Responsavel">
-							<c:set var="resp2" value="#{registro2.id_Pessoa_Registro}" />
+							<c:set var="resp2"
+								value="#{registro2.id_Pessoa_Registro.descricao}" />
 							<h:outputText value="#{fn:substringBefore(resp2,' ')}"
 								style="width:3%">
 
 							</h:outputText>
 						</p:column>
 						<p:column headerText="Editar" style="width:5%">
-							<p:commandButton icon="ui-icon-pencil" 
-							 actionListener="#{combos.editarD}"
-							    process="@form"
+							<p:commandButton icon="ui-icon-pencil"
+								actionListener="#{combo.editarD}" process="@this"
 								update=":formTemplate:formQtde">
 								<p:confirm header="Confirmação"
 									message="Deseja realmente alterar este registro?"
 									icon="ui-icon-alert" />
-								<f:attribute name="registroAtual2" value="#{registro2}" />							
+								<f:attribute name="registroAtual2" value="#{registro2}" />
 							</p:commandButton>
 						</p:column>
-						
+
 						<p:column headerText="Excluir" style="width:5%">
-							<p:commandButton icon="ui-icon-trash" 
-							 actionListener="#{combos.excluirD}"
-							    process="@form"
+							<p:commandButton icon="ui-icon-trash"
+								actionListener="#{combo.excluirD}" process="@form"
 								update="formTemplate:formCombos:tabelaCombos :formTemplate:formCombos:p1
 							:formTemplate:formCombos:p2 :formTemplate:formCombos:p3">
 								<p:confirm header="Confirmação"
@@ -243,7 +234,7 @@
 									icon="ui-icon-alert" />
 								<f:attribute name="registroAtual2" value="#{registro2}" />
 								<p:ajax event="click" process="@form"
-								oncomplete="$(function(){PrimeFaces.focus('formTemplate:formCombos:p2:p21:itens');});" />							
+									oncomplete="$(function(){PrimeFaces.focus('formTemplate:formCombos:p2:p21:itens');});" />
 							</p:commandButton>
 						</p:column>
 					</p:dataTable>
@@ -257,33 +248,31 @@
 			</h:form>
 		</p:dialog>
 		<p:dialog widgetVar="dialogoQtde" closable="false" resizable="false"
-			modal="true" appendTo="@(body)" width="80%" height="80%">
+			modal="true" appendTo="@(body)" width="30%" height="30%">
 			<h:form id="formQtde" style="width:100%;">
 				<p:focus for="mudaQtde" />
 
 				<h:panelGrid id="pQtde" columns="2">
 					<h:panelGrid id="pQtde1" columns="2">
 						<p:outputLabel value="Qtde" />
-						<p:inputNumber id="mudaQtde" value="#{combos.comboDTemp.qtde}"
+						<p:inputNumber id="mudaQtde" value="#{combo.comboDTemp.qtde}"
 							minValue="0" maxVAlue="100" emptyValue="1" size="4"
 							validatorMessage="O Valor Mínimo é '1'" decimalPlaces="0">
 							<f:validateLongRange />
 						</p:inputNumber>
 					</h:panelGrid>
 					<h:panelGrid id="pQtde2" columns="3">
-
-						<p:commandButton value="confirma" 
-							
+						<p:commandButton value="confirma"
 							style="border: 2px solid #6495ED;margin-top: 25px;margin-left: 0px; float: left; "
 							oncomplete="PF('dialogoQtde').hide();">
-							<p:ajax process="@form" listener="#{combos.adicionalistaComboDTemp()}"
-							update=":formTemplate:formCombos:tabelaCombos :formTemplate:formCombos:p1
-							:formTemplate:formCombos:p2 :formTemplate:formCombos:p3"  
-							/>
+							<p:ajax process="@form"
+								listener="#{combo.adicionalistaComboDTemp()}"
+								update=":formTemplate:formCombos:tabelaCombos :formTemplate:formCombos:p1
+							:formTemplate:formCombos:p2 :formTemplate:formCombos:p3" />
 							<p:ajax event="click" process="@form"
 								oncomplete="$(function(){PrimeFaces.focus('formTemplate:formCombos:p2:p21:itens');});" />
-							
-							
+
+
 						</p:commandButton>
 
 						<p:commandButton value="cancela" process="@this"
@@ -297,6 +286,6 @@
 				</h:panelGrid>
 			</h:form>
 		</p:dialog>
-		
+
 	</ui:define>
 </ui:composition>

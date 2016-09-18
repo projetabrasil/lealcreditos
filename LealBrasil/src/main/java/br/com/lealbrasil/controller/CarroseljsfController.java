@@ -19,16 +19,16 @@ import javax.faces.event.ActionEvent;
 import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.StreamedContent;
 
+import br.com.lealbrasil.model.dao.Item_de_MovimentoDAO;
 import br.com.lealbrasil.model.dao.PessoaDAO;
-import br.com.lealbrasil.model.dao.PontoDAO;
-import br.com.lealbrasil.model.dao.Pontuacao_MovimentoDAO;
+import br.com.lealbrasil.model.dao.Ponto_MovimentoDAO;
 import br.com.lealbrasil.model.entities.Carrossel;
 import br.com.lealbrasil.model.entities.Enum_Aux_Perfil_Pessoa;
-import br.com.lealbrasil.model.entities.Enum_Aux_Tipo_Mov_Pontuacao;
+import br.com.lealbrasil.model.entities.Enum_Aux_Tipo_Item_de_Movimento;
+import br.com.lealbrasil.model.entities.Enum_Aux_Tipo_Mov_Ponto;
 import br.com.lealbrasil.model.entities.Item_de_Movimento;
 import br.com.lealbrasil.model.entities.PerfilLogado;
 import br.com.lealbrasil.model.entities.Pessoa;
-import br.com.lealbrasil.model.entities.Ponto;
 import br.com.lealbrasil.model.joins.Pontuacao_Historico_Cliente;
 import br.com.lealbrasil.util.Utilidades;
 
@@ -43,11 +43,9 @@ public class CarroseljsfController extends GenericController implements Serializ
 	private PerfilLogado perfilLogado;
 	private List<Pessoa> estabelecimentosPontuados;
 	private List<Pontuacao_Historico_Cliente> pHClientes;
-	private List<Item_de_Movimento> itens;
+	private List<Item_de_Movimento> brindes;
 	private Pontuacao_Historico_Cliente pHCliente;
 	private StreamedContent fotoRetornada;
-	
-	
 
 	@PostConstruct
 	public void listar() {
@@ -80,7 +78,7 @@ public class CarroseljsfController extends GenericController implements Serializ
 
 	public void pontuacaoHistorico() {
 		pHClientes = new ArrayList<Pontuacao_Historico_Cliente>();
-		Pontuacao_MovimentoDAO pMovDAO = new Pontuacao_MovimentoDAO();
+		Ponto_MovimentoDAO pMovDAO = new Ponto_MovimentoDAO();
 		Pontuacao_Historico_Cliente pHCliente;
 		double pontos;
 		double credito;
@@ -88,17 +86,15 @@ public class CarroseljsfController extends GenericController implements Serializ
 		int i = 0;
 
 		for (Pessoa estabPont : estabelecimentosPontuados) {
-			/*
-			 * somadePontos(PerfilLogado perfilLogado, Pessoa cliente, boolean
-			 * pesqAss, Enum_Aux_Tipo_Mov_Pontuacao tipoSoma)
-			 */
+			
 			credito = pMovDAO.somadePontos(estabPont, perfilLogado.getUsLogado().getPessoa(), true,
-					Enum_Aux_Tipo_Mov_Pontuacao.C);
+					Enum_Aux_Tipo_Mov_Ponto.C);
 			debito = pMovDAO.somadePontos(estabPont, perfilLogado.getUsLogado().getPessoa(), true,
-					Enum_Aux_Tipo_Mov_Pontuacao.D);
+					Enum_Aux_Tipo_Mov_Ponto.D);
+			
 
-			debito = pMovDAO.somadePontos(estabPont, perfilLogado.getUsLogado().getPessoa(), true,
-					Enum_Aux_Tipo_Mov_Pontuacao.E);
+			debito += pMovDAO.somadePontos(estabPont, perfilLogado.getUsLogado().getPessoa(), true,
+					Enum_Aux_Tipo_Mov_Ponto.E);
 			pontos = credito - debito;
 			pHCliente = new Pontuacao_Historico_Cliente();
 			pHCliente.setId_Assinante(estabPont);
@@ -110,22 +106,28 @@ public class CarroseljsfController extends GenericController implements Serializ
 
 	}
 
-	public void listarPontos(Pessoa id_Assinante) {
-		PontoDAO pDAO = new PontoDAO();	
-		List<Ponto> pontos = new ArrayList<Ponto>();
+	
+	public void listarBrindes(Pessoa id_Cliente,Enum_Aux_Tipo_Item_de_Movimento enum_Aux_Tipo_Item_de_Movimento) {
+	Item_de_MovimentoDAO pDAO = new Item_de_MovimentoDAO();	
+		List<Item_de_Movimento> brindes = new ArrayList<Item_de_Movimento>();
 		
-		/*pontos = pDAO.listar(id_Assinante);
+		brindes = pDAO.listar(id_Cliente, enum_Aux_Tipo_Item_de_Movimento);
 		int i =0;
-		for (Ponto ponto : pontos) {		
+		for (Item_de_Movimento brinde : brindes) {		
 			try{
-			if (ponto.getPonto() > pHCliente.getPontos()){
-				ponto.setCaminhodaImagem2("/images/naoatingido.png");
-				ponto.setFoto2(retornafoto(ponto.getCaminhodaImagem2()));
+				
+				brinde.setCaminhodaImagem(Utilidades.caminho("Brindes"));
+				brinde.setTipodeImagem(Utilidades.tipodeImagem());
+				brinde.setCaminhodaImagem(brinde.getCaminhodaImagem() + brinde.getId() + ".png");		
+				
+			if (brinde. getPonto() > pHCliente.getPontos()){
+				brinde.setCaminhodaImagem2("/images/naoatingido.png");				
 				}
 			else
-				ponto.setCaminhodaImagem2("/images/atingido.png");
-			ponto.setFoto2(retornafoto(ponto.getCaminhodaImagem2()));
-			pontos.set(i,ponto);
+				brinde.setCaminhodaImagem2("/images/atingido.png");
+			brinde.setFoto(retornafoto(brinde.getCaminhodaImagem()));
+			brinde.setFoto2(retornafoto(brinde.getCaminhodaImagem2()));
+			brindes.set(i,brinde);
 			i++;
 			
 			}catch(IOException error){
@@ -133,7 +135,7 @@ public class CarroseljsfController extends GenericController implements Serializ
 				mensagensDisparar("erro ao tentar converter foto 2");
 			}
 		}
-		itens = pontos;*/
+		this.brindes =  brindes;
 	}
 	
 	public StreamedContent retornafoto(String caminhodaImagem) throws IOException {
@@ -169,7 +171,7 @@ public class CarroseljsfController extends GenericController implements Serializ
 
 	public void mostradialogBrinde(ActionEvent event) {
 		pHCliente = (Pontuacao_Historico_Cliente) event.getComponent().getAttributes().get("registroAtual");
-		//listarBrindes(pHCliente.getId_Assinante());
+		listarBrindes(pHCliente.getId_Assinante(),Enum_Aux_Tipo_Item_de_Movimento.BRINDE);
 		Utilidades.abrirfecharDialogos("dialogoBrinde", true);
 	}
 
@@ -229,13 +231,7 @@ public class CarroseljsfController extends GenericController implements Serializ
 		this.pHClientes = pHClientes;
 	}
 
-	public List<Item_de_Movimento> getItens() {
-		return itens;
-	}
-
-	public void setItens(List<Item_de_Movimento> itens) {
-		this.itens = itens;
-	}
+	
 
 	public Pontuacao_Historico_Cliente getpHCliente() {
 		return pHCliente;
@@ -252,4 +248,14 @@ public class CarroseljsfController extends GenericController implements Serializ
 	public void setFotoRetornada(StreamedContent fotoRetornada) {
 		this.fotoRetornada = fotoRetornada;
 	}
+
+	public List<Item_de_Movimento> getBrindes() {
+		return brindes;
+	}
+
+	public void setBrindes(List<Item_de_Movimento> brindes) {
+		this.brindes = brindes;
+	}
+
+	
 }

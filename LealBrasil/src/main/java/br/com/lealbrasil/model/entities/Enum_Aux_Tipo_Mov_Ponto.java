@@ -1,9 +1,9 @@
 package br.com.lealbrasil.model.entities;
 
-public enum Enum_Aux_Tipo_Mov_Pontuacao {
+public enum Enum_Aux_Tipo_Mov_Ponto {
 	C("CREDITO",0, "C","C","Green",true,"Pontuar",false),
 	D("DEBITO",1, "D","D","Red",false,"Utilizar",true),
-	E("ESTORNO",2, "E","D","yellow",false,"Estornar",true);
+	E("ESTORNO",2, "E","D","black",false,"Estornar",true);
 	
 	private String descricao;
 	private int id;
@@ -14,7 +14,7 @@ public enum Enum_Aux_Tipo_Mov_Pontuacao {
 	private String acao;
 	private boolean visualizadebito;
 	
-	Enum_Aux_Tipo_Mov_Pontuacao(String descricao, int id, String abrev, String debitaCredita,
+	Enum_Aux_Tipo_Mov_Ponto(String descricao, int id, String abrev, String debitaCredita,
 			String cor, boolean visualizaValidade,String acao,boolean visualizadebito){
 		this.descricao = descricao;
 		this.id = id;

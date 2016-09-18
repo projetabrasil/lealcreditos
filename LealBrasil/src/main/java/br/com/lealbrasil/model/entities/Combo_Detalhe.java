@@ -2,7 +2,6 @@ package br.com.lealbrasil.model.entities;
 
 import java.io.Serializable;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -19,16 +18,16 @@ public class Combo_Detalhe extends GenericDomain implements Serializable, Compar
 	@SequenceGenerator(name = "pk_combo_detalhe", sequenceName = "mess_sounds_combo_detalhe", allocationSize = 1)
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "pk_combo_detalhe")
 	private Long id;
-	@ManyToOne(cascade = { CascadeType.ALL })
+	@ManyToOne
 	@JoinColumn(name = "id_Pessoa_Registro")
 	private Pessoa id_Pessoa_Registro;
-	@ManyToOne(cascade = { CascadeType.ALL })
+	@ManyToOne
 	@JoinColumn(name = "id_Pessoa_Assinante", nullable = false)
 	private Pessoa id_Pessoa_Assinante;
-	@ManyToOne(cascade = { CascadeType.ALL })
-	@JoinColumn(name = "id_ComboMestre", nullable = false)
-	private Combo_Mestre id_ComboMestre;
-	@ManyToOne(cascade = { CascadeType.ALL })
+	@ManyToOne
+	@JoinColumn(name = "id_Combo_Mestre", nullable = false)
+	private Combo_Mestre id_Combo_Mestre;
+	@ManyToOne
 	@JoinColumn(name = "id_Itens_Movimento", nullable = false)
 	private Item_de_Movimento id_Itens_Movimento;
 	@Column(name = "referencia", length = 20, nullable = false)
@@ -49,16 +48,98 @@ public class Combo_Detalhe extends GenericDomain implements Serializable, Compar
 	private double totalLiquido;
 	@Column(name = "nMeses", nullable = false)
 	private short nMeses;
-
 	@Override
 	public String toString() {
 		return "Combo_Detalhe [id=" + id + ", id_Pessoa_Registro=" + id_Pessoa_Registro + ", id_Pessoa_Assinante="
-				+ id_Pessoa_Assinante + ", id_ComboMestre=" + id_ComboMestre + ", id_Itens_Movimento="
+				+ id_Pessoa_Assinante + ", id_Combo_Mestre=" + id_Combo_Mestre + ", id_Itens_Movimento="
 				+ id_Itens_Movimento + ", referencia=" + referencia + ", descricao=" + descricao + ", valorUnidade="
 				+ valorUnidade + ", qtde=" + qtde + ", total=" + total + ", desconto=" + desconto + ", percDesc="
 				+ percDesc + ", totalLiquido=" + totalLiquido + ", nMeses=" + nMeses + "]";
 	}
-
+	public Long getId() {
+		return id;
+	}
+	public void setId(Long id) {
+		this.id = id;
+	}
+	public Pessoa getId_Pessoa_Registro() {
+		return id_Pessoa_Registro;
+	}
+	public void setId_Pessoa_Registro(Pessoa id_Pessoa_Registro) {
+		this.id_Pessoa_Registro = id_Pessoa_Registro;
+	}
+	public Pessoa getId_Pessoa_Assinante() {
+		return id_Pessoa_Assinante;
+	}
+	public void setId_Pessoa_Assinante(Pessoa id_Pessoa_Assinante) {
+		this.id_Pessoa_Assinante = id_Pessoa_Assinante;
+	}
+	public Combo_Mestre getId_Combo_Mestre() {
+		return id_Combo_Mestre;
+	}
+	public void setId_Combo_Mestre(Combo_Mestre id_Combo_Mestre) {
+		this.id_Combo_Mestre = id_Combo_Mestre;
+	}
+	public Item_de_Movimento getId_Itens_Movimento() {
+		return id_Itens_Movimento;
+	}
+	public void setId_Itens_Movimento(Item_de_Movimento id_Itens_Movimento) {
+		this.id_Itens_Movimento = id_Itens_Movimento;
+	}
+	public String getReferencia() {
+		return referencia;
+	}
+	public void setReferencia(String referencia) {
+		this.referencia = referencia;
+	}
+	public String getDescricao() {
+		return descricao;
+	}
+	public void setDescricao(String descricao) {
+		this.descricao = descricao;
+	}
+	public double getValorUnidade() {
+		return valorUnidade;
+	}
+	public void setValorUnidade(double valorUnidade) {
+		this.valorUnidade = valorUnidade;
+	}
+	public double getQtde() {
+		return qtde;
+	}
+	public void setQtde(double qtde) {
+		this.qtde = qtde;
+	}
+	public double getTotal() {
+		return total;
+	}
+	public void setTotal(double total) {
+		this.total = total;
+	}
+	public double getDesconto() {
+		return desconto;
+	}
+	public void setDesconto(double desconto) {
+		this.desconto = desconto;
+	}
+	public double getPercDesc() {
+		return percDesc;
+	}
+	public void setPercDesc(double percDesc) {
+		this.percDesc = percDesc;
+	}
+	public double getTotalLiquido() {
+		return totalLiquido;
+	}
+	public void setTotalLiquido(double totalLiquido) {
+		this.totalLiquido = totalLiquido;
+	}
+	public short getnMeses() {
+		return nMeses;
+	}
+	public void setnMeses(short nMeses) {
+		this.nMeses = nMeses;
+	}
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -68,7 +149,7 @@ public class Combo_Detalhe extends GenericDomain implements Serializable, Compar
 		result = prime * result + (int) (temp ^ (temp >>> 32));
 		result = prime * result + ((descricao == null) ? 0 : descricao.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
-		result = prime * result + ((id_ComboMestre == null) ? 0 : id_ComboMestre.hashCode());
+		result = prime * result + ((id_Combo_Mestre == null) ? 0 : id_Combo_Mestre.hashCode());
 		result = prime * result + ((id_Itens_Movimento == null) ? 0 : id_Itens_Movimento.hashCode());
 		result = prime * result + ((id_Pessoa_Assinante == null) ? 0 : id_Pessoa_Assinante.hashCode());
 		result = prime * result + ((id_Pessoa_Registro == null) ? 0 : id_Pessoa_Registro.hashCode());
@@ -86,7 +167,6 @@ public class Combo_Detalhe extends GenericDomain implements Serializable, Compar
 		result = prime * result + (int) (temp ^ (temp >>> 32));
 		return result;
 	}
-
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -113,119 +193,6 @@ public class Combo_Detalhe extends GenericDomain implements Serializable, Compar
 			return false;
 		return true;
 	}
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	public Pessoa getId_Pessoa_Registro() {
-		return id_Pessoa_Registro;
-	}
-
-	public void setId_Pessoa_Registro(Pessoa id_Pessoa_Registro) {
-		this.id_Pessoa_Registro = id_Pessoa_Registro;
-	}
-
-	public Pessoa getId_Pessoa_Assinante() {
-		return id_Pessoa_Assinante;
-	}
-
-	public void setId_Pessoa_Assinante(Pessoa id_Pessoa_Assinante) {
-		this.id_Pessoa_Assinante = id_Pessoa_Assinante;
-	}
-
-	public Combo_Mestre getId_ComboMestre() {
-		return id_ComboMestre;
-	}
-
-	public void setId_ComboMestre(Combo_Mestre id_ComboMestre) {
-		this.id_ComboMestre = id_ComboMestre;
-	}
-
-	public Item_de_Movimento getId_Itens_Movimento() {
-		return id_Itens_Movimento;
-	}
-
-	public void setId_Itens_Movimento(Item_de_Movimento id_Itens_Movimento) {
-		this.id_Itens_Movimento = id_Itens_Movimento;
-	}
-
-	public String getReferencia() {
-		return referencia;
-	}
-
-	public void setReferencia(String referencia) {
-		this.referencia = referencia;
-	}
-
-	public String getDescricao() {
-		return descricao;
-	}
-
-	public void setDescricao(String descricao) {
-		this.descricao = descricao;
-	}
-
-	public double getValorUnidade() {
-		return valorUnidade;
-	}
-
-	public void setValorUnidade(double valorUnidade) {
-		this.valorUnidade = valorUnidade;
-	}
-
-	public double getQtde() {
-		return qtde;
-	}
-
-	public void setQtde(double qtde) {
-		this.qtde = qtde;
-	}
-
-	public double getTotal() {
-		return total;
-	}
-
-	public void setTotal(double total) {
-		this.total = total;
-	}
-
-	public double getDesconto() {
-		return desconto;
-	}
-
-	public void setDesconto(double desconto) {
-		this.desconto = desconto;
-	}
-
-	public double getTotalLiquido() {
-		return totalLiquido;
-	}
-
-	public void setTotalLiquido(double totalLiquido) {
-		this.totalLiquido = totalLiquido;
-	}
-
-	public double getPercDesc() {
-		return percDesc;
-	}
-
-	public void setPercDesc(double percdesc) {
-		this.percDesc = percdesc;
-	}
-
-	public short getnMeses() {
-		return nMeses;
-	}
-
-	public void setnMeses(short nMeses) {
-		this.nMeses = nMeses;
-	}
-
 	@Override
 	public int compareTo(Combo_Detalhe o) {
 		Combo_Detalhe cD = (Combo_Detalhe) o;
@@ -237,5 +204,6 @@ public class Combo_Detalhe extends GenericDomain implements Serializable, Compar
 		else
 			return 0;
 	}
+
 
 }

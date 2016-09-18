@@ -26,6 +26,7 @@ import org.primefaces.context.RequestContext;
 
 import antlr.StringUtils;
 import br.com.lealbrasil.model.entities.Enum_Aux_Sim_ou_Nao;
+import br.com.lealbrasil.model.entities.Enum_Aux_Tipo_Item_de_Movimento;
 
 @SuppressWarnings("serial")
 public class Utilidades implements Serializable {
@@ -173,6 +174,16 @@ public class Utilidades implements Serializable {
 		lSN = Enum_Aux_Sim_ou_Nao.values();
 
 		for (Enum_Aux_Sim_ou_Nao l : lSN) {
+			lista.add(l);
+		}
+		return lista;
+	}
+	public static List<Enum_Aux_Tipo_Item_de_Movimento> listaTipoItemdeMovimento() {
+		List<Enum_Aux_Tipo_Item_de_Movimento> lista = new ArrayList<Enum_Aux_Tipo_Item_de_Movimento>();
+		Enum_Aux_Tipo_Item_de_Movimento[] lSN;
+		lSN = Enum_Aux_Tipo_Item_de_Movimento.values();
+
+		for (Enum_Aux_Tipo_Item_de_Movimento l : lSN) {
 			lista.add(l);
 		}
 		return lista;
