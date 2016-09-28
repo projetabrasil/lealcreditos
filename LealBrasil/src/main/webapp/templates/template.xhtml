@@ -18,147 +18,174 @@
 
 
 <h:body style="overflow-x: hidden; overflow-y: hidden ">
-	<p:growl id="mensagens" autoUpdate="true" redisplay="true" />
+	<div class="ui-grid ui-grid-responsive">
+		<p:growl id="mensagens" autoUpdate="true" redisplay="true" />
 
-	<h:form style="background:#33CC00;">
-		<p:panel header="Clube Fidelidade" styleClass="ui-panel-my-titlebar">
-			<p:outputLabel
-				value="Login: #{autenticacaojsfController.perfilLogado.usLogado.pessoa.descricao}"
-				style="color:blue;font-size:15px;font-weight:600;" />
-			<p:outputLabel
-				value=" - #{autenticacaojsfController.perfilLogado.assLogado.descricao}"
-				rendered="#{autenticacaojsfController.perfilLogado.renderizaAssociado}"
-				style="color:blue;font-size:15px;font-weight:900;" />
+		<h:form style="background:#33CC00;">
+			<p:panel header="Clube Fidelidade" styleClass="ui-panel-my-titlebar">
+				<p:outputLabel
+					value="Login: #{autenticacaojsfController.perfilLogado.usLogado.pessoa.descricao}"
+					style="color:blue;font-size:15px;font-weight:600;" />
+				<p:outputLabel
+					value=" - #{autenticacaojsfController.perfilLogado.assLogado.descricao}"
+					rendered="#{autenticacaojsfController.perfilLogado.renderizaAssociado}"
+					style="color:blue;font-size:15px;font-weight:900;" />
 
 
-		</p:panel>
-	</h:form>
-	<div id="geral">
-		<div id="topo">
-			<h:form id="formMenu" style="width:100%">
-				<p:selectOneRadio id="perf1" label="perfil: "
-					style="font-size:15px;"
-					value="#{autenticacaojsfController.perfilLogado.perfilUsLogado}"
-					columns="10" converter="omnifaces.SelectItemsConverter">
-					<f:selectItems
-						value="#{autenticacaojsfController.perfilLogado.listaPerfisdousLogado}"
-						var="c" itemLabel="#{c.descricao}" itemValue="#{c}" />
-					<p:ajax
-						listener="#{autenticacaojsfController.redirecionapaginaIndex(false)}" />
-				</p:selectOneRadio>
+			</p:panel>
+		</h:form>
+		<div id="geral">
+			<div id="topo">
+				<h:form id="formMenu" style="width:100%">
+					<p:selectOneRadio id="perf1" label="perfil: "
+						style="font-size:15px;"
+						value="#{autenticacaojsfController.perfilLogado.perfilUsLogado}"
+						columns="10" converter="omnifaces.SelectItemsConverter">
+						<f:selectItems
+							value="#{autenticacaojsfController.perfilLogado.listaPerfisdousLogado}"
+							var="c" itemLabel="#{c.descricao}" itemValue="#{c}" />
+						<p:ajax
+							listener="#{autenticacaojsfController.redirecionapaginaIndex(false)}" />
+					</p:selectOneRadio>
 
-				<p:menubar style="font-size:15px;">
+					<p:menubar style="font-size:15px;">
+						<p:submenu label="Cadastros">
+							<p:submenu label="Pessoas">
+								<p:menuitem value="Administradores"
+									actionListener="#{paginas.mudaPaginaAtual}"
+									rendered="#{autenticacaojsfController.perfilLogado.temPermissoes(['ADMINISTRADORES'])}">
+									<f:attribute name="paginaAtual" value="PAGINAADMINISTRADORES" />
+									<p:ajax
+										listener="#{autenticacaojsfController.redirecionapaginaIndex()}" />
+								</p:menuitem>
+								<p:menuitem value="Supervisores"
+									actionListener="#{paginas.mudaPaginaAtual}"
+									rendered="#{autenticacaojsfController.perfilLogado.temPermissoes(['ADMINISTRADORES'])}">
+									<f:attribute name="paginaAtual" value="PAGINASUPERVISORES" />
+								</p:menuitem>
+								<p:menuitem value="Representantes"
+									actionListener="#{paginas.mudaPaginaAtual}"
+									rendered="#{autenticacaojsfController.perfilLogado.temPermissoes(['ADMINISTRADORES','SUPERVISORES'])}">
+									<f:attribute name="paginaAtual" value="PAGINAREPRESENTANTES" />
+								</p:menuitem>
 
-					<p:submenu label="Cadastros">
-						<p:submenu label="Pessoas">
-							<p:menuitem value="Administradores"
+								<p:menuitem value="Assinantes"
+									actionListener="#{paginas.mudaPaginaAtual}"
+									rendered="#{autenticacaojsfController.perfilLogado.temPermissoes(['ADMINISTRADORES','SUPERVISORES','REPRESENTANTES'])}">
+									<f:attribute name="paginaAtual" value="PAGINAASSINANTES" />
+								</p:menuitem>
+
+								<p:menuitem value="Atendentes"
+									actionListener="#{paginas.mudaPaginaAtual}"
+									rendered="#{autenticacaojsfController.perfilLogado.temPermissoes(['ADMINISTRADORES','ASSINANTES'])}">
+									<f:attribute name="paginaAtual" value="PAGINAATENDENTES" />
+								</p:menuitem>
+
+								<p:menuitem value="Clientes"
+									actionListener="#{paginas.mudaPaginaAtual}"
+									rendered="#{autenticacaojsfController.perfilLogado.temPermissoes(['ADMINISTRADORES','ASSINANTES','ATENDENTES'])}">
+									<f:attribute name="paginaAtual" value="PAGINACLIENTES" />
+								</p:menuitem>
+								<p:menuitem value="Outros"
+									actionListener="#{paginas.mudaPaginaAtual}"
+									rendered="#{autenticacaojsfController.perfilLogado.temPermissoes(['ADMINISTRADORES'])}">
+									<f:attribute name="paginaAtual" value="PAGINAOUTROS" />
+								</p:menuitem>
+								<p:menuitem value="Vendas"
+									actionListener="#{paginas.mudaPaginaAtual}"
+									rendered="#{autenticacaojsfController.perfilLogado.temPermissoes(['ADMINISTRADORES'])}">
+									<f:attribute name="paginaAtual" value="PAGINAVENDAS" />
+								</p:menuitem>
+							</p:submenu>
+						</p:submenu>
+						<p:submenu label="Pontos">
+							<p:menuitem value="Pontuar"
 								actionListener="#{paginas.mudaPaginaAtual}"
-								rendered="#{autenticacaojsfController.perfilLogado.temPermissoes(['ADMINISTRADORES'])}">
-								<f:attribute name="paginaAtual" value="PAGINAADMINISTRADORES" />
-								<p:ajax
-									listener="#{autenticacaojsfController.redirecionapaginaIndex()}" />
+								rendered="#{autenticacaojsfController.perfilLogado.temPermissoes2(['ADMINISTRADORES','ASSINANTES','ATENDENTES'])}">
+								<f:attribute name="paginaAtual" value="PAGINAPONTUACAOC" />
+								<f:attribute name="tipoMovimento" value="C" />
 							</p:menuitem>
-							<p:menuitem value="Supervisores"
+							<p:menuitem value="Utilizar Pontos"
 								actionListener="#{paginas.mudaPaginaAtual}"
-								rendered="#{autenticacaojsfController.perfilLogado.temPermissoes(['ADMINISTRADORES'])}">
-								<f:attribute name="paginaAtual" value="PAGINASUPERVISORES" />
+								rendered="#{autenticacaojsfController.perfilLogado.temPermissoes2(['ADMINISTRADORES','ASSINANTES','ATENDENTES'])}">
+								<f:attribute name="paginaAtual" value="PAGINAPONTUACAOD" />
+								<f:attribute name="tipoMovimento" value="D" />
 							</p:menuitem>
-							<p:menuitem value="Representantes"
+							<p:menuitem value="Estornar"
 								actionListener="#{paginas.mudaPaginaAtual}"
-								rendered="#{autenticacaojsfController.perfilLogado.temPermissoes(['ADMINISTRADORES','SUPERVISORES'])}">
-								<f:attribute name="paginaAtual" value="PAGINAREPRESENTANTES" />
+								rendered="#{autenticacaojsfController.perfilLogado.temPermissoes2(['ADMINISTRADORES','ASSINANTES','ATENDENTES'])}">
+								<f:attribute name="paginaAtual" value="PAGINAPONTUACAOE" />
+								<f:attribute name="tipoMovimento" value="E" />
+							</p:menuitem>
+							<p:menuitem value="Configuração de pontuação"
+								actionListener="#{paginas.mudaPaginaAtual}"
+								rendered="#{autenticacaojsfController.perfilLogado.temPermissoes(['ASSINANTES'])}">
+								<f:attribute name="paginaAtual" value="PAGINAPONTO" />
+							</p:menuitem>
+							<p:menuitem value="Configuração de brindes"
+								actionListener="#{paginas.mudaPaginaAtual}"
+								rendered="#{autenticacaojsfController.perfilLogado.temPermissoes(['ASSINANTES'])}">
+								<f:attribute name="paginaAtual" value="PAGINABRINDE" />
+							</p:menuitem>
+						</p:submenu>
+						<p:submenu label="Movimento">
+							<p:menuitem value="Agendamentos"
+								actionListener="#{paginas.mudaPaginaAtual}"
+								rendered="#{autenticacaojsfController.perfilLogado.temPermissoes(['ASSINANTES'])}">
+								<f:attribute name="paginaAtual" value="PAGINAAGENDAMENTO" />
+							</p:menuitem>
+							<p:menuitem value="Itens de Serviço"
+								actionListener="#{paginas.mudaPaginaAtual}"
+								rendered="#{autenticacaojsfController.perfilLogado.temPermissoes(['VENDAS'])}">
+								<f:attribute name="paginaAtual" value="PAGINAITEMDESERVICO" />
+							</p:menuitem>
+							<p:menuitem value="Itens de Promoção"
+								actionListener="#{paginas.mudaPaginaAtual}"
+								rendered="#{autenticacaojsfController.perfilLogado.temPermissoes(['VENDAS'])}">
+								<f:attribute name="paginaAtual" value="PAGINAITEMDEPROMOCAO" />
+							</p:menuitem>
+							<p:menuitem value="Combo"
+								actionListener="#{paginas.mudaPaginaAtual}"
+								rendered="#{autenticacaojsfController.perfilLogado.temPermissoes(['VENDAS'])}">
+								<f:attribute name="paginaAtual" value="PAGINACOMBO" />
+							</p:menuitem>
+							<p:menuitem value="Vouchers"
+								actionListener="#{paginas.mudaPaginaAtual}"
+								rendered="#{autenticacaojsfController.perfilLogado.temPermissoes(['ASSINANTES'])}">
+								<f:attribute name="paginaAtual" value="PAGINAVOUCHER" />
 							</p:menuitem>
 
-							<p:menuitem value="Assinantes"
+
+						</p:submenu>
+						<p:submenu label="Contratos">
+							<p:menuitem value="Contrato"
 								actionListener="#{paginas.mudaPaginaAtual}"
 								rendered="#{autenticacaojsfController.perfilLogado.temPermissoes(['ADMINISTRADORES','SUPERVISORES','REPRESENTANTES'])}">
-								<f:attribute name="paginaAtual" value="PAGINAASSINANTES" />
-							</p:menuitem>
-
-							<p:menuitem value="Atendentes"
-								actionListener="#{paginas.mudaPaginaAtual}"
-								rendered="#{autenticacaojsfController.perfilLogado.temPermissoes(['ADMINISTRADORES','ASSINANTES'])}">
-								<f:attribute name="paginaAtual" value="PAGINAATENDENTES" />
-							</p:menuitem>
-
-							<p:menuitem value="Clientes"
-								actionListener="#{paginas.mudaPaginaAtual}"
-								rendered="#{autenticacaojsfController.perfilLogado.temPermissoes(['ADMINISTRADORES','ASSINANTES','ATENDENTES'])}">
-								<f:attribute name="paginaAtual" value="PAGINACLIENTES" />
-							</p:menuitem>
-							<p:menuitem value="Outros"
-								actionListener="#{paginas.mudaPaginaAtual}"
-								rendered="#{autenticacaojsfController.perfilLogado.temPermissoes(['ADMINISTRADORES'])}">
-								<f:attribute name="paginaAtual" value="PAGINAOUTROS" />
-							</p:menuitem>
-							<p:menuitem value="Vendas"
-								actionListener="#{paginas.mudaPaginaAtual}"
-								rendered="#{autenticacaojsfController.perfilLogado.temPermissoes(['ADMINISTRADORES'])}">
-								<f:attribute name="paginaAtual" value="PAGINAVENDAS" />
+								<f:attribute name="paginaAtual" value="PAGINAMOVIMENTO" />
 							</p:menuitem>
 						</p:submenu>
 
-					</p:submenu>
-					<p:submenu label="Pontos">
-						<p:menuitem value="Pontuar"
-							actionListener="#{paginas.mudaPaginaAtual}"
-							rendered="#{autenticacaojsfController.perfilLogado.temPermissoes2(['ADMINISTRADORES','ASSINANTES','ATENDENTES'])}">
-							<f:attribute name="paginaAtual" value="PAGINAPONTUACAOC" />
-							<f:attribute name="tipoMovimento" value="C" />
-						</p:menuitem>
-						<p:menuitem value="Utilizar Pontos"
-							actionListener="#{paginas.mudaPaginaAtual}"
-							rendered="#{autenticacaojsfController.perfilLogado.temPermissoes2(['ADMINISTRADORES','ASSINANTES','ATENDENTES'])}">
-							<f:attribute name="paginaAtual" value="PAGINAPONTUACAOD" />
-							<f:attribute name="tipoMovimento" value="D" />
-						</p:menuitem>
-						<p:menuitem value="Estornar"
-							actionListener="#{paginas.mudaPaginaAtual}"
-							rendered="#{autenticacaojsfController.perfilLogado.temPermissoes2(['ADMINISTRADORES','ASSINANTES','ATENDENTES'])}">
-							<f:attribute name="paginaAtual" value="PAGINAPONTUACAOE" />
-							<f:attribute name="tipoMovimento" value="E" />
-						</p:menuitem>
-						<p:menuitem value="Configuração de pontuação"
-							actionListener="#{paginas.mudaPaginaAtual}"
-							rendered="#{autenticacaojsfController.perfilLogado.temPermissoes(['ASSINANTES'])}">
-							<f:attribute name="paginaAtual" value="PAGINAPONTO" />
-						</p:menuitem>
-						<p:menuitem value="Configuração de brindes"
-							actionListener="#{paginas.mudaPaginaAtual}"
-							rendered="#{autenticacaojsfController.perfilLogado.temPermissoes(['ASSINANTES'])}">
-							<f:attribute name="paginaAtual" value="PAGINABRINDE" />
-						</p:menuitem>
-					</p:submenu>
-					<p:submenu label="Movimento">
-						<p:menuitem value="Itens de Movimento"
-							actionListener="#{paginas.mudaPaginaAtual}"
-							rendered="#{autenticacaojsfController.perfilLogado.temPermissoes(['VENDAS'])}">
-							<f:attribute name="paginaAtual" value="PAGINAITEMDEMOVIMENTO" />
-						</p:menuitem>
-						<p:menuitem value="Combo"
-							actionListener="#{paginas.mudaPaginaAtual}"
-							rendered="#{autenticacaojsfController.perfilLogado.temPermissoes(['VENDAS'])}">
-							<f:attribute name="paginaAtual" value="PAGINACOMBO" />
-						</p:menuitem>
-					</p:submenu>
-					<p:submenu label="Sair"
-						actionListener="#{autenticacaojsfController.logout()}">
-						<p:menuitem value="Sair"
+
+
+						<p:submenu label="Sair"
 							actionListener="#{autenticacaojsfController.logout()}">
-						</p:menuitem>
-					</p:submenu>
-				</p:menubar>
-			</h:form>
-		</div>
+							<p:menuitem value="Sair"
+								actionListener="#{autenticacaojsfController.logout()}">
+							</p:menuitem>
+						</p:submenu>
+					</p:menubar>
+				</h:form>
+			</div>
 
 
 
-		<div id="corpo">
-			<h:form id="formTemplate">
-				<ui:insert name="conteudo">
-				</ui:insert>
+			<div id="corpo">
+				<h:form id="formTemplate">
+					<ui:insert name="conteudo">
+					</ui:insert>
 
-			</h:form>
+				</h:form>
+			</div>
 		</div>
 	</div>
 </h:body>

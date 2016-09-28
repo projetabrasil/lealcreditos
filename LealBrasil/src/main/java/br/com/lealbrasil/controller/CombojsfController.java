@@ -40,6 +40,7 @@ public class CombojsfController extends GenericController implements Serializabl
 	private double qtdeAnt;
 	private double difQtde;
 	private boolean alteracao;
+	private List<Enum_Aux_Tipo_Item_de_Movimento> foraListaItemMovimento;
 
 	@PostConstruct
 	public void listar() {
@@ -61,7 +62,14 @@ public class CombojsfController extends GenericController implements Serializabl
 
 	public void listaItens() {
 		Item_de_MovimentoDAO iMDAO = new Item_de_MovimentoDAO();
-		itens_Mov = iMDAO.listar(perfilLogado.getAssLogado(),Enum_Aux_Tipo_Item_de_Movimento.ITEMDESERVICO);
+		
+		foraListaItemMovimento = new ArrayList<Enum_Aux_Tipo_Item_de_Movimento>();
+		foraListaItemMovimento.add(Enum_Aux_Tipo_Item_de_Movimento.BRINDE);
+		foraListaItemMovimento.add(Enum_Aux_Tipo_Item_de_Movimento.FORMAPAGAMENTO);
+		foraListaItemMovimento.add(Enum_Aux_Tipo_Item_de_Movimento.PONTO);
+		
+		
+		itens_Mov = iMDAO.listar(perfilLogado.getAssLogado(),null,foraListaItemMovimento );
 	}
 
 	public void configuraComboM() {
@@ -145,8 +153,13 @@ public class CombojsfController extends GenericController implements Serializabl
 		double total;
 		if (item_Mov.getIsPrecoUnico().equals(Enum_Aux_Sim_ou_Nao.SIM))
 			total = comboD.getQtde() * comboD.getValorUnidade();
-		else
-			total = comboD.getQtde() * comboD.getValorUnidade() * comboM.getnMeses();
+		else {
+			if (item_Mov.getIsAnual().equals(Enum_Aux_Sim_ou_Nao.SIM) )
+				total = comboD.getQtde() * comboD.getValorUnidade() * comboM.getnMeses();
+			else
+				total = comboD.getQtde() * comboD.getValorUnidade();
+		}
+
 		comboD.setTotal(total);
 		comboD.setPercDesc(comboM.getPercDesc());
 		comboD.setDesconto(comboD.getTotal() * comboD.getPercDesc() / 100);
@@ -156,22 +169,21 @@ public class CombojsfController extends GenericController implements Serializabl
 			combosDTemp.set(i, comboD);
 		else
 			combosDTemp.add(comboD);
-		
 
 		total = 0;
-		
+
 		for (Combo_Detalhe cD : combosDTemp) {
 			total += cD.getTotal();
-			
+
 		}
-		
+
 		realizaTotalizacaoFinal(total);
-        if(i==-1)
-		novoD();
+		if (i == -1)
+			novoD();
 	}
 
 	public void realizaTotalizacaoFinal(double total) {
-		
+
 		comboM.setTotal(total);
 		comboM.setDesconto(comboM.getTotal() * comboM.getPercDesc() / 100);
 		comboM.setTotalLiquido(comboM.getTotal() - comboM.getDesconto());
@@ -199,23 +211,21 @@ public class CombojsfController extends GenericController implements Serializabl
 		comboD.setDesconto(comboD.getTotal() * comboD.getPercDesc() / 100);
 		comboD.setTotalLiquido(comboD.getTotal() - comboD.getDesconto());
 	}
+
 	public void editarM(ActionEvent event) {
 		setComboM((Combo_Mestre) event.getComponent().getAttributes().get("registroAtual"));
-		
-		Combo_DetalheDAO cDDAO = new Combo_DetalheDAO(); 
-		combosDTemp = cDDAO.listar(perfilLogado.getAssLogado(),getComboM());
-		
-		
-		Utilidades.abrirfecharDialogos("dialogoCombos",true);
-		
+
+		Combo_DetalheDAO cDDAO = new Combo_DetalheDAO();
+		combosDTemp = cDDAO.listar(perfilLogado.getAssLogado(), getComboM());
+
+		Utilidades.abrirfecharDialogos("dialogoCombos", true);
 
 	}
 
 	public void editarD(ActionEvent event) {
 		setComboD((Combo_Detalhe) event.getComponent().getAttributes().get("registroAtual2"));
 		comboDTemp = comboD;
-		
-		
+
 		setQtdeAnt(comboD.getQtde());
 		setAlteracao(true);
 		item_Mov = comboDTemp.getId_Itens_Movimento();
@@ -224,8 +234,8 @@ public class CombojsfController extends GenericController implements Serializabl
 
 	public void excluirD(ActionEvent event) {
 		setComboD((Combo_Detalhe) event.getComponent().getAttributes().get("registroAtual2"));
-		int i = combosDTemp.indexOf(comboD);		
-		if (comboD!=null && comboD.getId()!=null){
+		int i = combosDTemp.indexOf(comboD);
+		if (comboD != null && comboD.getId() != null) {
 			Combo_DetalheDAO cDDAO = new Combo_DetalheDAO();
 			cDDAO.excluir(comboD);
 		}
@@ -242,18 +252,17 @@ public class CombojsfController extends GenericController implements Serializabl
 			cD.setId_Combo_Mestre(comboM);
 			comboD = cD;
 			comboD = cDDAO.merge(comboD);
-			
-			
-			combosDTemp.set(i,comboD);
+
+			combosDTemp.set(i, comboD);
 		}
 		listar();
-		Utilidades.abrirfecharDialogos("dialogoCombos",false);
+		Utilidades.abrirfecharDialogos("dialogoCombos", false);
 	}
-	
-	public void executarJS(){
-   
-        RequestContext.getCurrentInstance().execute("funcao(10)");
-    }
+
+	public void executarJS() {
+
+		RequestContext.getCurrentInstance().execute("funcao(10)");
+	}
 
 	public List<Combo_Mestre> getCombosM() {
 		return combosM;

@@ -1,32 +1,47 @@
 package br.com.lealbrasil.util;
 
 import java.io.BufferedReader;
+import java.io.ByteArrayInputStream;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.io.Serializable;
 import java.net.URL;
 import java.net.URLConnection;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
+import java.text.DateFormat;
+import java.text.Normalizer;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Random;
 import java.util.TimeZone;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.primefaces.context.RequestContext;
+import org.primefaces.model.DefaultStreamedContent;
+import org.primefaces.model.StreamedContent;
+
+import com.itextpdf.text.Document;
+import com.itextpdf.text.Image;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.pdf.PdfWriter;
+import com.itextpdf.tool.xml.XMLWorkerHelper;
 
 import antlr.StringUtils;
+import br.com.lealbrasil.model.entities.Agendamento;
 import br.com.lealbrasil.model.entities.Enum_Aux_Sim_ou_Nao;
 import br.com.lealbrasil.model.entities.Enum_Aux_Tipo_Item_de_Movimento;
+import br.com.lealbrasil.model.entities.Movimento_Detalhe_A;
 
 @SuppressWarnings("serial")
 public class Utilidades implements Serializable {
@@ -34,36 +49,8 @@ public class Utilidades implements Serializable {
 	private static final int[] pesoCNPJ = { 6, 5, 4, 3, 2, 9, 8, 7, 6, 5, 4, 3, 2 };
 	private static final String caminhoFotoBrinde = "c:/imagens/brindes/";
 	private static final String caminhoFotoVouchers = "c:/imagens/vouchers/";
-	private static final String caminhobase = "c:/imagens/";
-	private static final String tipoImagem = ".png";
-
-	public static String caminho(String tipo) {
-		String caminho;
-		if (tipo.toUpperCase().equals("BRINDES"))
-			caminho = getCaminhofotobrinde();
-		else
-			caminho = getCaminhofotovouchers();		
-		File diretorio = new File(caminho);
-		if (!diretorio.exists())
-		diretorio.mkdirs();
-		
-		Path origem = Paths.get(caminhobase+"branco"+tipoImagem);
-		Path destino = Paths.get(caminho+"branco"+tipoImagem);
-		File f1 = new File (caminhobase+"branco"+tipoImagem);
-		File f2 = new File (caminho+"branco"+tipoImagem);
-		if(!f2. exists() ){
-			if (f1.exists()){				
-				try {
-					Files.copy(origem, destino, StandardCopyOption.REPLACE_EXISTING);
-				} catch (IOException error) {					
-					error.printStackTrace();
-				}
-				
-			}
-		}
-
-		return caminho;
-	}
+	private static String caminhobase = "/images/";
+	private static String tipoImagem = ".png";
 
 	public static String tipodeImagem() {
 		return getTipoimagem();
@@ -85,6 +72,24 @@ public class Utilidades implements Serializable {
 
 	}
 
+	public static Date retornaCalendario2() {
+		TimeZone tz = TimeZone.getDefault();
+		Calendar c = Calendar.getInstance(tz);
+		SimpleDateFormat sd = new SimpleDateFormat("dd/MM/yyyy");
+		String sData = sd.format(c.getTime());
+
+		try {
+			c.setTime(sd.parse(sData));
+			c.clear(Calendar.ZONE_OFFSET);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		Date data = new Date();
+		data = c.getTime();
+		return data;
+
+	}
+
 	public static Calendar retornaData() {
 		Calendar c = Calendar.getInstance();
 		return c;
@@ -95,6 +100,19 @@ public class Utilidades implements Serializable {
 		c.add(Calendar.DATE, +diasValidade);
 
 		return c.getTime();
+	}
+
+	public static Date retornaHora(String hora) {
+		Date d = new Date();
+		try {
+			SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
+
+			d = sdf.parse(hora);
+
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		return d;
 	}
 
 	public static String retiraCaracteres(String texto) {
@@ -117,6 +135,10 @@ public class Utilidades implements Serializable {
 		texto = StringUtils.stripBack(texto, " \t");
 		texto = StringUtils.stripFront(texto, " \t");
 		return texto.length() <= 0;
+	}
+
+	public static String removerAcentos(String str) {
+		return Normalizer.normalize(str, Normalizer.Form.NFD).replaceAll("[^\\p{ASCII}]", "");
 	}
 
 	private static int calcularDigito(String str, int[] peso) {
@@ -178,6 +200,7 @@ public class Utilidades implements Serializable {
 		}
 		return lista;
 	}
+
 	public static List<Enum_Aux_Tipo_Item_de_Movimento> listaTipoItemdeMovimento() {
 		List<Enum_Aux_Tipo_Item_de_Movimento> lista = new ArrayList<Enum_Aux_Tipo_Item_de_Movimento>();
 		Enum_Aux_Tipo_Item_de_Movimento[] lSN;
@@ -197,17 +220,12 @@ public class Utilidades implements Serializable {
 			URLConnection urlConnection = url.openConnection();
 			InputStream is = urlConnection.getInputStream();
 			BufferedReader br = new BufferedReader(new InputStreamReader(is));
-
 			StringBuilder jsonSb = new StringBuilder();
-
 			br.lines().forEach(l -> jsonSb.append(l.trim()));
-
 			json = jsonSb.toString();
-
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
-
 		return json;
 	}
 
@@ -222,5 +240,117 @@ public class Utilidades implements Serializable {
 	private static String getTipoimagem() {
 		return tipoImagem;
 	}
+
+	public static StreamedContent retornaFoto(String caminhodoArquivo) throws IOException {
+		String branco;
+		StreamedContent foto = null;
+		if (caminhodoArquivo == null || caminhodoArquivo.isEmpty()) {
+			branco = "/imagens/branco.png"; // Utilidades.caminho("Brindes")+"branco"
+											// + Utilidades.tipodeImagem();
+			Path path = Paths.get(branco);
+
+			if (Files.exists(path)) {
+				InputStream stream = Files.newInputStream(path);
+				foto = new DefaultStreamedContent(stream);
+			}
+
+		} else {
+			Path path = Paths.get(caminhodoArquivo);
+			if (Files.exists(path.getFileName())) {
+				InputStream stream = Files.newInputStream(path);
+				foto = new DefaultStreamedContent(stream);
+			} else {
+				branco = "/imagens/branco.png";
+				path = Paths.get(branco);
+
+				if (Files.exists(path.getFileName())) {
+					InputStream stream = Files.newInputStream(path);
+					foto = new DefaultStreamedContent(stream);
+				}
+			}
+		}
+		return foto;
+	}
+
+	public static String caminho(String tipo) {
+		String caminho;
+		if (tipo.toUpperCase().equals("BRINDES"))
+			caminho = getCaminhofotobrinde();
+		else
+			caminho = getCaminhofotovouchers();
+		return caminho;
+	}
+
+	public static String getCaminhobase() {
+		return caminhobase;
+	}
+
+	public static void setCaminhobase(String caminhobase) {
+		Utilidades.caminhobase = caminhobase;
+	}
+
+	public static void setTipoimagem(String tipoimagem) {
+		tipoImagem = tipoimagem;
+	}
+
+	public static String randon(String param) {
+
+		String letras = "ABCDEFGHIJKLMNOPQRSTUVYWXZ";
+
+		Random random = new Random();
+
+		String armazenaChaves = "";
+		Long valor;
+		String novoValor;
+		int index = -1;
+
+		for (int i = 0; i < 4; i++) {
+			index = random.nextInt(letras.length());
+			armazenaChaves += letras.substring(index, index + 1);
+			valor = random.nextInt(10) * Long.valueOf(param);
+
+			novoValor = "" + valor;
+			armazenaChaves += novoValor.substring(1, 2);
+			if (i % 2 == 0)
+				armazenaChaves += "-";
+		}
+
+		String invertida = new StringBuilder(armazenaChaves).reverse().toString();
+		return invertida;
+	}
+
+	public static void pdf(String caminho, Movimento_Detalhe_A mDA, Agendamento ag) {
+		Document document = new Document();
+		try {
+			// String k = "<html><body> This is my Project </body></html>";
+			OutputStream file = new FileOutputStream(new File(caminho));
+
+			PdfWriter writer = PdfWriter.getInstance(document, file);
+			document.open();
+			Image img = Image.getInstance(mDA.getCaminhoDaImagem());
+			String dados = "Nome          :"+ag.getId_Pessoa_Cliente().getDescricao() +"\n"+
+					       "Codigo        : "+mDA.getCodigo()+"\n"+
+					       "Telefone      : "+ag.getId_Pessoa_Cliente().getFone_1()+"\n"+
+					       "Agendado para : "+getDataPorExtenso(ag.getDataAgendamento().getTime())+"\n";		
+			
+			document.add(img);
+			document.add(new Paragraph(dados));
+			InputStream is = new ByteArrayInputStream(mDA.getRegulamento().getBytes());
+			XMLWorkerHelper.getInstance().parseXHtml(writer, document, is);
+			document.close();
+			file.close();
+
+			java.awt.Desktop desktop = java.awt.Desktop.getDesktop();
+			desktop.open(new File(caminho));
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+	}
+	public static String getDataPorExtenso(Date data){
+        DateFormat dfmt = new SimpleDateFormat("d 'de' MMMM 'de' yyyy");
+        return dfmt.format(data);
+   }
 
 }

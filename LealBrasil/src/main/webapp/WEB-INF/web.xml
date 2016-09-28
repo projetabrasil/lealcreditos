@@ -26,6 +26,49 @@
 	</context-param>
 
 
+	<context-param>
+		<param-name>posturl</param-name>
+		<param-value>https://www.sandbox.paypal.com/cgi-bin/webscr</param-value>
+	</context-param>
+
+	<context-param>
+		<param-name>cmd</param-name>
+		<param-value>_cart</param-value>
+	</context-param>
+
+	<context-param>
+		<param-name>business</param-name>
+		<param-value>paulo.logicabrasil-facilitator_api1.gmail.com</param-value>
+	</context-param>
+	<context-param>
+		<param-name>upload</param-name>
+		<param-value>1</param-value>
+	</context-param>
+
+	<context-param>
+		<param-name>password</param-name>
+		<param-value>PMRWSUCVDFCV5TH</param-value>
+	</context-param>
+
+	<context-param>
+		<param-name>signature</param-name>
+		<param-value>AFcWxV21C7fd0v3bYYYRCpSSRl31A4AUtfcDtd5tHi4R0dzq--0Umm1F</param-value>
+	</context-param>
+
+	<context-param>
+		<param-name>returnurl</param-name>
+		<param-value>http://localhost:8080/LealBrasil/pages/success.xhtml</param-value>
+	</context-param>
+
+	<context-param>
+		<param-name>cancelurl</param-name>
+		<param-value>http://localhost:8080/LealBrasil/pages/cancel.xhtml</param-value>
+	</context-param>
+
+
+
+
+
 
 	<!-- Definição do Mecanismo de Upload -->
 	<context-param>
@@ -74,12 +117,12 @@
 	</servlet-mapping>
 	<servlet-mapping>
 		<servlet-name>Faces Servlet</servlet-name>
-		<url-pattern>*.xhtml</url-pattern>		
+		<url-pattern>*.xhtml</url-pattern>
 	</servlet-mapping>
-	
-	
-	
-	
+
+
+
+
 
 	<!-- Página Principal -->
 	<welcome-file-list>

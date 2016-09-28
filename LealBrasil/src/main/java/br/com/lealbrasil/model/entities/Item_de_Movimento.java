@@ -47,6 +47,9 @@ public class Item_de_Movimento extends GenericDomain implements Serializable {
 	@Enumerated(EnumType.STRING)
 	@Column(name="precoUnico")
 	private Enum_Aux_Sim_ou_Nao isPrecoUnico;
+	@Enumerated(EnumType.STRING)
+	@Column(name="eAnual")
+	private Enum_Aux_Sim_ou_Nao isAnual;
 	
 	
 	@Column(name = "ponto", precision=18, scale=4 )
@@ -184,8 +187,10 @@ public class Item_de_Movimento extends GenericDomain implements Serializable {
 		return "Item_de_Movimento [id=" + id + ", id_Pessoa_Registro=" + id_Pessoa_Registro + ", id_Pessoa_Assinante="
 				+ id_Pessoa_Assinante + ", descricao=" + descricao + ", valordaUnidade=" + valordaUnidade
 				+ ", referencia=" + referencia + ", enum_Aux_Tipo_Item_de_Movimento=" + enum_Aux_Tipo_Item_de_Movimento
-				+ ", isPrecoUnico=" + isPrecoUnico + ", ponto=" + ponto + ", ultimaReferencia=" + ultimaReferencia
-				+ "]";
+				+ ", isPrecoUnico=" + isPrecoUnico + ", isAnual=" + isAnual + ", ponto=" + ponto + ", ultimaReferencia="
+				+ ultimaReferencia + ", caminhodaImagem=" + caminhodaImagem + ", caminhodaImagem2=" + caminhodaImagem2
+				+ ", foto=" + foto + ", foto2=" + foto2 + ", tipodeImagem=" + tipodeImagem + ", caminhoTemp="
+				+ caminhoTemp + "]";
 	}
 	@Override
 	public int hashCode() {
@@ -286,6 +291,14 @@ public class Item_de_Movimento extends GenericDomain implements Serializable {
 
 	public void setCaminhoTemp(String caminhoTemp) {
 		this.caminhoTemp = caminhoTemp;
+	}
+
+	public Enum_Aux_Sim_ou_Nao getIsAnual() {
+		return isAnual;
+	}
+
+	public void setIsAnual(Enum_Aux_Sim_ou_Nao isAnual) {
+		this.isAnual = isAnual;
 	}
 		 
 	}

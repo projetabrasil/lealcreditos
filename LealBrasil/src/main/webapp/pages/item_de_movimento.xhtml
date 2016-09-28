@@ -25,7 +25,8 @@
 						oncomplete="PF('dialogoCadastro').show();"
 						update=":mensagens 
 				:formTemplate:formLista:tabela :formTemplate:formCadastro:painelCadastro
-				:formTemplate:formCadastro:painelCadastro_1" />
+				:formTemplate:formCadastro:painelCadastro_1
+				:formTemplate:formCadastro:painelCadastro_2" />
 				</f:facet>
 				<p:column headerText="Referencia" style="width:10%">
 					
@@ -43,7 +44,10 @@
 				<p:column headerText="Preço Unico"  style="width:10%">
 					<h:outputText value="#{registro.isPrecoUnico}" />
 				</p:column>
-				<p:column headerText="Atualização" style="width:20%">
+				<p:column headerText="Anual"  style="width:10%">
+					<h:outputText value="#{registro.isAnual}" />
+				</p:column>
+				<p:column headerText="Atualização" style="width:13%">
 					<h:outputText value="#{registro.ultimaAtualizacao.time}">
 						<f:convertDateTime locale="pt_BR" dateStyle="long" type="both"
 							pattern="dd/MM/yyyy HH:mm:ss" />
@@ -53,13 +57,15 @@
 					<c:set var="resp" value="#{registro.id_Pessoa_Registro.descricao}" />
 					<h:outputText value="#{fn:substring(resp,0,20)}" />
 				</p:column>
-				<p:column headerText="Editar">
+				<p:column headerText="Editar" style="width:5%">
 					<p:commandButton icon="icon-edit" actionListener="#{item.editar}"
 						oncomplete="PF('dialogoCadastro').show();"
-						update=":formTemplate:formCadastro:painelCadastro :formTemplate:formCadastro:painelCadastro_1">
+						update=":formTemplate:formCadastro:painelCadastro 
+						:formTemplate:formCadastro:painelCadastro_1
+						:formTemplate:formCadastro:painelCadastro_2" style="width:80%">
 						<p:confirm header="Confirmação"
 							message="Deseja realmente alterar este registro?"
-							icon="ui-icon-alert" />
+							icon="ui-icon-alert" style="width:5%"/>
 						<f:attribute name="registroAtual" value="#{registro}" />
 					</p:commandButton>
 				</p:column>
@@ -73,7 +79,8 @@
 			</p:confirmDialog>
 		</h:form>
 		<p:dialog header="Itens de Movimento" widgetVar="dialogoCadastro"
-			resizable="false" modal="true" closesable="false" appendTo="@(body)">
+			resizable="false" modal="true" closesable="false" appendTo="@(body)"
+			position="60,10">
 			<h:form id="formCadastro">
 				<p:focus for="des" />
 				<h:panelGrid id="painelCadastro">
@@ -83,33 +90,42 @@
 						requiredMessage="Informe a descrição !!!">
 					</p:inputText>
 				</h:panelGrid>
-				<h:panelGrid id="painelCadastro_1" columns="3">
+				<h:panelGrid id="painelCadastro_1" columns="2">
 				    <p:outputLabel value="Valor da Unidade" />
 				    <p:outputLabel value="Referencia" />
-				    <p:outputLabel value="Preço Único" />
+				    
 					<p:inputNumber value="#{item.item.valordaUnidade}"
 						id="valordaUnidade" minValue="0" maxVAlue="5000" emptyValue="0"
-						symbol=" R$" symbolPosition="p" size="10"
+						symbol=" R$" symbolPosition="p" size="15"
 						title="Valor Mensal de cada Unidade" required="true"
 						requiredMessage="Informe o valor da Unidade"
-						validatorMessage="O Valor Mínimo é '0'">
+						validatorMessage="O Valor Mínimo é '0'"  >
 						<f:validateLongRange />
 					</p:inputNumber>
 					<p:inputText value="#{item.item.referencia}" id="ref"
 						size="10" required="true"
 						requiredMessage="Informe a referencia !!!" readonly="true">
-					</p:inputText>
+					</p:inputText>					
 					
-					<p:selectOneRadio id="precoUnico"
+				</h:panelGrid>
+				
+				<h:panelGrid id="painelCadastro_2" columns="2">
+				   
+				    <p:outputLabel value="Preço Único" size="20" />
+				    <p:outputLabel value="É Anual" />					
+					<p:selectOneRadio id="unico"
 						value="#{item.item.isPrecoUnico}" columns="5"
 						converter="omnifaces.SelectItemsConverter">
 						<f:selectItems value="#{item.listaSN}"
 							var="c" itemLabel="#{c.abrev}" itemValue="#{c}" />
 					</p:selectOneRadio>
 					
-					
-					
-					
+					<p:selectOneRadio id="anual"
+						value="#{item.item.isAnual}" columns="5"
+						converter="omnifaces.SelectItemsConverter">
+						<f:selectItems value="#{item.listaSN}"
+							var="c" itemLabel="#{c.abrev}" itemValue="#{c}" />
+					</p:selectOneRadio>
 				</h:panelGrid>
 				<h:panelGrid columns="2" >
 					<p:commandButton value="salvar" process="@form"

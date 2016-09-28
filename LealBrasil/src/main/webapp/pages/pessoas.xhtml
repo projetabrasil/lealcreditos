@@ -25,14 +25,14 @@
 					<f:facet name="header">
 						<p:commandButton value="Novo"						    
 							actionListener="#{pessoajsfController.novo}"
-							update=":formTemplate:formCadastro :formTemplate:formIdentidade">
+							update=":formTemplate:formCadastro :formTemplate:formIdentidade" style="width:5%">
 						</p:commandButton>
 					</f:facet>
 					<p:column headerText="Nome ou Razão Social" sortBy="descricao"
 						filterBy="descricao">
 						<h:outputText value="#{registro.descricao}" />
 					</p:column>
-					<p:column headerText="data de nascimento" sortBy="dataNascimento"
+					<p:column headerText="Nascimento" sortBy="dataNascimento"
 						style="width:12%;
 					font-weight: bold !important; max-height: 15px !important;"
 						filterBy="dataNascimento">
@@ -56,7 +56,7 @@
 							value="#{registro.id_Pessoa_Registro.descricao}" />
 							
 					</p:column>
-					<p:column headerText="Edit" style="width:10%;">
+					<p:column headerText="Editar" style="width:5%;">
 						<p:commandButton icon="ui-icon-pencil"
 							actionListener="#{pessoajsfController.editar}"
 							rendered="#{autenticacaojsfController.perfilLogado.renderizapessoaeditar}"
@@ -65,7 +65,7 @@
 							">
 							<p:confirm header="Confirmacao"
 								message="Deseja realmente alterar este registro?"
-								icon="ui-icon-alert" />
+								icon="ui-icon-alert" style="width:5%"/>
 
 							<f:attribute name="registroAtual" value="#{registro}" />
 						</p:commandButton>
@@ -92,7 +92,7 @@
 		</h:form>
 		<p:dialog widgetVar="dialogoIdentidade" closable="false"
 			resizable="false" modal="true" appendTo="@(body)"
-			header="Escolha o Tipo de Identificação">
+			header="Escolha o Tipo de Identificação" position="60,10"> 
 
 			<h:form id="formIdentidade">
 				<h:panelGrid id="painelIdentificacao">
@@ -109,7 +109,7 @@
 					</p:selectOneRadio>
 
 					<p:outputLabel value="Informe CPF/CNPJ" />
-					<p:inputMask id="identificador" size="20" maxlength="20"
+					<p:inputMask id="identificador" size="30" maxlength="20"
 						value="#{pessoajsfController.pessoa.cpf_Cnpj}" required="true"
 						requiredMessage="É preciso informar a identificação!!!"
 						mask="#{pessoajsfController.pessoa.enum_Aux_Tipo_Identificador.mask}" />
@@ -132,7 +132,7 @@
 		<p:dialog
 			header="Formulário de Cadastro - #{perfil.perfilPagina.descricao}"
 			widgetVar="dialogoCadastro" resizable="false" modal="true"
-			closable="false" appendTo="@(body)">
+			closable="false" appendTo="@(body)" position="60,10">
 			<h:form id="formCadastro">
 				<h:panelGrid id="painelCadastro_1">
 					<h:panelGrid id="painelCadastro_11">

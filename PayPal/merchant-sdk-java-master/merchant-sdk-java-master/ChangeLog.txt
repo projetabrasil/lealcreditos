@@ -1,0 +1,169 @@
+Version 2.11.117 - August 21, 2014
+
+	- Updated stubs.
+	- Updated core version.
+	
+You can see source code of this release in github under https://github.com/paypal/merchant-sdk-java/tree/v2.11.117.
+--------------------------------------------------------------------------------------------------
+Version 2.10.116 - July 23, 2014
+
+	- Updated stubs.
+	
+You can see source code of this release in github under https://github.com/paypal/merchant-sdk-java/tree/v2.10.116.
+--------------------------------------------------------------------------------------------------
+Version 2.9.115 - June 19, 2014
+
+	- Updated stubs.
+	- Bumped up core version.
+	
+You can see source code of this release in github under https://github.com/paypal/merchant-sdk-java/tree/v2.9.115.
+--------------------------------------------------------------------------------------------------
+Version 2.8.114 - May 14, 2014
+
+	- Updated stubs.
+	
+You can see source code of this release in github under https://github.com/paypal/merchant-sdk-java/tree/v2.8.114.
+--------------------------------------------------------------------------------------------------
+Version 2.7.112 - March 26, 2014
+
+        - Updated stubs.
+        - Update pom.xml for Java 1.5+ support
+
+You can see source code of this release in github under https://github.com/paypal/merchant-sdk-java/tree/v2.7.112.
+--------------------------------------------------------------------------------------------------
+Version 2.6.109 - December 13, 2013
+
+        - Updated stubs.
+        - Bug fixes
+
+You can see source code of this release in github under https://github.com/paypal/merchant-sdk-java/tree/v2.6.109.
+--------------------------------------------------------------------------------------------------
+Version 2.5.106 - August 22, 2013
+
+	- Updated stubs.
+	- Updated samples to showcase dynamic configuration.
+	
+You can see source code of this release in github under https://github.com/paypal/merchant-sdk-java/tree/v2.5.106.
+--------------------------------------------------------------------------------------------------
+Version 2.4.103 - June 07, 2013
+
+	- Updated stubs for 103 release.
+	
+You can see source code of this release in github under https://github.com/paypal/merchant-sdk-java/tree/v2.4.103.
+--------------------------------------------------------------------------------------------------
+Version 2.3.102 - May 23, 2013
+
+	- Updated core sdk version.
+	- Updated stubs for 102 release.
+	
+You can see source code of this release in github under https://github.com/paypal/merchant-sdk-java/tree/v2.3.102.
+--------------------------------------------------------------------------------------------------
+Version 2.3.101 - April 30, 2013
+
+	- Updated core sdk version.
+	- Bug fix for json serialization issue (https://github.com/paypal/merchant-sdk-java/issues/5)
+	
+You can see source code of this release in github under https://github.com/paypal/merchant-sdk-java/tree/v2.3.101.
+--------------------------------------------------------------------------------------------------
+Version 2.3.100 - March 25, 2013
+
+	- Updated stubs for 100 release
+	- Added dynamic configuration support by passing configuration parameters using hash map.
+	
+You can see source code of this release in github under https://github.com/paypal/merchant-sdk-java/tree/v2.3.100.
+--------------------------------------------------------------------------------------------------
+Version 2.2.98 - February 05, 2013
+
+	- Updated stubs for 98 release.
+	- Bug fix for XML serialization issue for ampersand (https://github.com/paypal/SDKs/issues/40)
+	- Updated ipn sandbox endpoint in sample.
+	
+You can see source code of this release in github under https://github.com/paypal/merchant-sdk-java/tree/v2.2.98.
+--------------------------------------------------------------------------------------------------
+Version 2.1.96 - December 14, 2012
+
+	- Added support for Instant Payment Notification (Refer IPN-README.md for more details)
+	- Added new feature for supporting multiple endpoints based on portname for using different sdks together.
+	- Added new feature in which that service wrapper class have constructor that takes java.util.Properties (https://github.com/paypal/merchant-sdk-java/issues/2)
+	- Fixes for serialization issue (https://github.com/paypal/merchant-sdk-java/issues/1)
+	
+You can see source code of this release in github under https://github.com/paypal/merchant-sdk-java/tree/v2.1.96.
+--------------------------------------------------------------------------------------------------
+
+Version 2.0.96 - November 28, 2012
+
+	- SDK refreshed to Release 96
+    - Added Maven support for SDK core, SDK and Samples projects
+    - Application ID is not mandatory now.
+    - Added support for passing in credentials dynamically for Authentication, now the call 
+      wrappers have an argument for passing credentials
+    - New type ThirdPartyAuthorization has been added to support Subject and Token based Authorizations. The earlier
+      setAccessToken and setTokenSecret have been deprecated. You can set an instance of ThirdPartyAuthorization to an 
+      ICredntial and pass ICredential as a parameter to  API call  
+    - Java code Refactoring bug fixed (refer : https://github.com/paypal/SDKs/issues/34)  
+--------------------------------------------------------------------------------------------------
+
+
+Version 1.2.95 - September 28, 2012
+
+	- SDK refreshed to Release 95. Please refer https://www.x.com/developers/paypal/documentation-tools/release-notes#MerchantAPI
+	- SDK now supports third party permission by subject header. Configure subject header
+  	  in the configuration file, this is basically third party merchant email address who has 
+	  given permission to you to call api on their behalf.
+	- Bug fixed for Page styling attributes (eg: cpp-header**) serialization.(https://github.com/paypal/SDKs/issues/31) 
+	- Bug fixed for 'convertToXML' method for not escaping xml element correctly.(https://github.com/paypal/SDKs/issues/17)
+	- Bug fixed for BasicAmountType serialization without currencyID attribute.(https://github.com/paypal/SDKs/issues/23)
+	- Updated SDK sample
+--------------------------------------------------------------------------------------------------
+
+
+Version 1.1.93 - August 13, 2012
+ 
+	- SDK refreshed to Release 93. Please refer https://www.x.com/developers/paypal/documentation-tools/release-notes#MerchantAPI
+	- SDK Core - Deserialization Logic Change
+--------------------------------------------------------------------------------------------------
+
+
+Version 1.0.92 - July 30, 2012
+ 
+	- Stable release
+--------------------------------------------------------------------------------------------------
+
+	
+
+Version 0.8.92 - July 19, 2012 
+
+	- wsdl update version 92
+
+--------------------------------------------------------------------------------------------------
+
+Version 0.8.90 - July 05, 2012
+         
+	This release contains minor fixes for incorrect proxy configuration parsing and issues with 
+        using the paypal_auth_signature jar in jre 1.5
+
+--------------------------------------------------------------------------------------------------
+
+Version 0.7.90 - June 11, 2012
+
+	This release contains wsdl update version 90.0
+
+--------------------------------------------------------------------------------------------------
+
+Version 0.7.88 - April 17, 2012
+
+	Fix for incorrect permissions header (X-PP-AUTHORIZATION)
+
+--------------------------------------------------------------------------------------------------
+
+Version 0.6.88 - March 12, 2012
+
+	This release contains wsdl update version 88.0
+
+--------------------------------------------------------------------------------------------------
+
+Version 0.6.86 - February 27, 2012
+
+	This release contains new Merchant SDK (SOAP) and samples for Merchant api's.
+
+--------------------------------------------------------------------------------------------------

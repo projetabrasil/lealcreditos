@@ -2,6 +2,7 @@ package br.com.lealbrasil.model.entities;
 
 import java.io.Serializable;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -36,11 +37,11 @@ public class Usuario extends GenericDomain implements Serializable{
 	
 	@Column(name="Ativo", nullable=false)
 	private boolean Ativo;
-	@ManyToOne
+	@ManyToOne(cascade = {CascadeType.ALL})
 	@JoinColumn ( name ="id_Pessoa_Registro", nullable=false)	
 	private Pessoa id_Pessoa_Registro ;
 	
-	@OneToOne	
+	@OneToOne(cascade = {CascadeType.ALL})	
 	@JoinColumn ( name ="id_pessoa")
 	private Pessoa pessoa;
 	

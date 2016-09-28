@@ -14,12 +14,11 @@
 	<ui:define name="conteudo" update="formCarrosel">
 
 		<h:form id="formCarrosel">
-
-
-			<p:carousel value="#{carroseljsfController.carrosseis}"
+			<p:carousel  value="#{carroseljsfController.mDAs}"
 				rendered="#{carroseljsfController.renderizaCarrossel}"
 				headerText="Vouchers ativos" var="registro"
-				itemStyle="text-align:center" responsive="true">
+				itemStyle="text-align:center" responsive="true"
+				id="carrossel">
 				<f:facet name="header">
 					<p:commandButton value="pontuações"
 						actionListener="#{carroseljsfController.pontuacao()}"
@@ -30,40 +29,56 @@
 					columnClasses="label,value" layout="grid"
 					styleClass="ui-panelgrid-blank">
 					<f:facet name="header">
-						<p:graphicImage name="#{registro.endImagem}" />
+						<p:graphicImage id="foto" value="#{voucherfotos.foto}">
+							<f:param name="caminho" value="#{registro.caminhoDaImagem}" />
+						</p:graphicImage>
 					</f:facet>
 
 
 					<h:outputText value="Fidelizador:" />
-					<h:outputText value="#{registro.empresa}" />
+					<h:outputText value="#{registro.id_Pessoa_Assinante.descricao}" />
 
-					<h:outputText value="Vaucher" />
+					<h:outputText value="Voucher" />
 					<h:outputText value="R$ #{registro.valor}" />
 					<h:outputText value="Validade" />
-					<h:outputText value="#{registro.validade}">
+					<h:outputText value="#{registro.fim}">
 						<f:convertDateTime locale="pt_BR" dateStyle="long" type="date"
 							pattern="dd/MM/yyyy" />
 					</h:outputText>
-
 					<h:outputText value="Código" />
-					<h:outputText value="Vch #{registro.codigoPromocional}" />
+					<h:outputText value="#{registro.codigo}">
+						
+					</h:outputText>
+
+				</p:panelGrid>
+				<p:panelGrid columns="1" styleClass="ui-panelgrid-blank">
+					<p:commandButton value="#{registro.descricaoDisponivel}"
+					   
+						style="color:red;background-color: #009900 !important;"
+						actionListener="#{carroseljsfController.acao}"
+						update=":formTemplate:formCalendario">
+						<f:attribute name="registroAtual" value="#{registro}" 
+						/>
+					</p:commandButton>
 				</p:panelGrid>
 
+
 				<f:facet name="footer">
-                		n. de Valchers : #{fn:length(carroseljsfController.carrosseis)}.
+                		n. de Vouchers : #{fn:length(carroseljsfController.mDAs)}.
         			</f:facet>
 			</p:carousel>
 		</h:form>
 
 		<p:dialog widgetVar="dialogoPontuacao" closable="false"
-			resizable="false" modal="true" appendTo="@(body)" width="30%" position="60,100">
+			resizable="false" modal="true" appendTo="@(body)" width="30%"
+			position="60,10">
 			<h:form id="formListaPontos">
 
 				<p:panel header="Estabelecimentos Pontuados">
 					<p:dataTable id="tabela" emptyMessage="" reflow="true"
 						value="#{carroseljsfController.pHClientes}" paginator="true"
 						rows="5" var="registro" style="font-size:12px;">
-						
+
 
 						<p:column headerText="Estabelecimento" sortBy="descricao"
 							filterBy="descricao" style="width:20%;">
@@ -77,8 +92,7 @@
 						<p:column headerText="Alcances" style="width:10%;">
 							<p:commandButton icon="fa-gift" process="@this"
 								actionListener="#{carroseljsfController.mostradialogBrinde}"
-								update=":formTemplate:formListaBrinde"
-								>
+								update=":formTemplate:formListaBrinde">
 								<f:attribute name="registroAtual" value="#{registro}" />
 							</p:commandButton>
 						</p:column>
@@ -96,17 +110,15 @@
 		</p:dialog>
 
 		<p:dialog widgetVar="dialogoBrinde" closable="false" resizable="false"
-			modal="true" appendTo="@(body)" width="50%" height="50%" position="480,100">
+			modal="true" appendTo="@(body)" width="50%" height="50%"
+			position="60,10">
 			<h:form id="formListaBrinde">
-				
+
 				<p:dataTable id="tabela" emptyMessage="Sem Registros"
 					paginator="true" reflow="true" rows="3"
 					value="#{carroseljsfController.brindes}" var="registro2"
-					
-					style="font-size:12px;"
-					
-					showEffect="explode" hideEffect="bounce" height="100"
-					>
+					style="font-size:12px;" showEffect="explode" hideEffect="bounce"
+					height="100">
 					<f:facet name="header">
 						<p:outputLabel
 							value="Sua pontuação em : #{carroseljsfController.pHCliente.id_Assinante.descricao} é: #{carroseljsfController.pHCliente.pontos}"
@@ -129,10 +141,7 @@
 					</p:column>
 
 					<p:column headerText="Alvo">
-					    					   
-						<p:graphicImage id="foto2" name="#{registro2.caminhodaImagem2}">		
-									
-								
+						<p:graphicImage id="foto2" name="#{registro2.caminhodaImagem2}">
 						</p:graphicImage>
 					</p:column>
 				</p:dataTable>
@@ -141,6 +150,40 @@
 					process="@this">
 				</p:commandButton>
 
+			</h:form>
+		</p:dialog>
+
+
+		<p:dialog widgetVar="dialogoCalendario" closable="false"
+			resizable="false" modal="true" appendTo="@(body)" position="60,10">
+			<h:form id="formCalendario">
+				<h:panelGrid id="painelCalendario">
+
+					<p:outputLabel value="Agenda a Utilização do Voucher" />
+					<p:calendar id="calendar" size="30" maxlength="15"
+						 startWeekday="1" beforeShowDay="disponiveis"
+						 locale="pt_BR" showButtonPanel="true" navigator="true" 
+						 pattern="dd/MM/yyyy"  value="#{agendamento.agendamento.dataAgendamento.time}" >
+						
+						<h:inputHidden id="disponiveis" value="#{carroseljsfController.diasDisponiveis}" /> 
+
+						<f:convertDateTime  locale="pt_BR" navigator="true" 
+							type="date" timezone="GMT+3" />
+					</p:calendar>
+					
+
+				</h:panelGrid>
+				<h:panelGrid columns="2">
+					<p:panelGrid>
+						<p:commandButton value="Confirmar" process="@this"
+							actionListener="#{carroseljsfController.merge()}"
+							update=":mensagens  :formTemplate:formCarrosel:carrossel" />
+					</p:panelGrid>
+					<p:panelGrid>
+						<p:commandButton value="Cancelar" process="@this"
+							actionListener="#{carroseljsfController.canceladialogCalendario()}" />
+					</p:panelGrid>
+				</h:panelGrid>
 			</h:form>
 		</p:dialog>
 

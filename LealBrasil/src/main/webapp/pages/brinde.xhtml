@@ -24,7 +24,7 @@
 					<f:facet name="header">
 						<p:commandButton value="Novo" actionListener="#{brinde.novo()}"
 							update=":formTemplate:formCadastro:painelCadastro
-							:formTemplate:formCadastro" />
+							:formTemplate:formCadastro" style="width:5%"/>
 					</f:facet>
 					<p:column headerText="Descrição" style="width:20%">
 						<h:outputText value="#{registro.descricao}" />
@@ -43,24 +43,24 @@
 
 
 
-					<p:column headerText="Editar">
+					<p:column headerText="Editar" style="width:5%">
 						<p:commandButton icon="icon-edit"
 							actionListener="#{brinde.editar}"
 							update=":formTemplate:formCadastro:painelCadastro
 							:formTemplate:formCadastro">
 							<p:confirm header="Confirmação"
 								message="Deseja realmente alterar este registro?"
-								icon="ui-icon-alert" />
+								icon="ui-icon-alert" style="width:5%"/>
 							<f:attribute name="registroAtual" value="#{registro}" />
 						</p:commandButton>
 					</p:column>
-					<p:column headerText="Excluir">
+					<p:column headerText="Excluir" style="width:5%">
 						<p:commandButton icon="ui-icon-trash"
-							actionListener="#{brinde.excluir}">
+							actionListener="#{brinde.excluir}" style="width:80%">
 							<p:confirm header="Confirmação"
 								message="Deseja realmente apagar este registro?"
 								icon="ui-icon-alert"
-								update=":mensagens :formTemplate:formLista:tabela" />
+								update=":mensagens :formTemplate:formLista:tabela" style="width:5%" />
 							<f:attribute name="registroAtual" value="#{registro}" />
 						</p:commandButton>
 					</p:column>
@@ -75,8 +75,8 @@
 		</h:form>
 		<p:dialog
 			header="Formulário de cadastro de - #{autenticacaojsfController.perfilLogado.paginaAtual.descricao2}"
-			widgetVar="dialogoCadastro" resizable="false" modal="true" width="80%"
-			closable="false" appendTo="@(body)">
+			widgetVar="dialogoCadastro" resizable="false" modal="true" width="40%" 
+			closable="false" appendTo="@(body)" position="60,10">
 			<h:form id="formCadastro">
 				<h:panelGrid id="painelCadastro" columns="2">
 					<p:outputLabel value="Descrição" />
@@ -104,10 +104,9 @@
 						style="font-size:15px;width:490px; ">
 					</p:fileUpload>
 
-					<p:outputLabel for="foto" value="Foto:" />
+					
 					<p:graphicImage id="foto" value="#{fotos.foto}">
 						<f:param name="caminho" value="#{brinde.item.caminhodaImagem}" />
-
 					</p:graphicImage>
 
 				</h:panelGrid>

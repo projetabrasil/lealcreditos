@@ -55,6 +55,10 @@
 		<mapping class="br.com.lealbrasil.model.entities.Item_de_Movimento"/>
 		<mapping class="br.com.lealbrasil.model.entities.Movimento_Mestre"/>
 		<mapping class="br.com.lealbrasil.model.entities.Movimento_Detalhe"/>
+		<mapping class="br.com.lealbrasil.model.entities.Movimento_Detalhe_A"/>
+		<mapping class="br.com.lealbrasil.model.entities.Movimento_Detalhe_Dias_Disponiveis"/>
+		<mapping class="br.com.lealbrasil.model.entities.Agendamento"/>
+														 
 		
 	</session-factory>
 

@@ -21,14 +21,14 @@
 				style="width:100%;">
 				<p:dataTable id="tabela" emptyMessage="" reflow="true"
 					value="#{ponto_mov.pontos_Mov}" paginator="true" rows="5"
-					var="registro" style="font-size:15px;">
+					var="registro" style="font-size:12px;">
 
 
 					<f:facet name="header">
 
 						<p:commandButton id="buttonpontuar" value="#{ponto_mov.tipoMovimentacao.acao}"
 							process="@this" actionListener="#{ponto_mov.novo()}"
-							update=":formTemplate:formPontuar:painelPontuar">
+							update=":formTemplate:formPontuar:painelPontuar" style="width:5%">
 
 
 							<!--  :formTemplate:formPontuar:tipoPontuacao
@@ -96,7 +96,7 @@
 		</h:form>
 		<p:dialog widgetVar="dialogoHistorico" closable="false"
 			resizable="false" modal="true" appendTo="@(body)" width="80%"
-			height="80%">
+			height="80%" position="60,10">
 			<h:form id="formHistorico" style="width:100%;">
 
 				<h:panelGrid id="painelHistorico">
@@ -170,7 +170,7 @@
 		</p:dialog>
 		<p:dialog header="Movimento de pontuações" widgetVar="dialogoCadastro"
 			resizable="false" modal="true" closable="false" appendTo="@(body)"
-			visible="false">
+			visible="false" position="60,10">
 			<h:form id="formCadastro">
 				<p:focus for="descricao" />
 				<h:panelGrid id="painelCadastro_1">

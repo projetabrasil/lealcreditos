@@ -57,7 +57,7 @@ public class Pessoa extends GenericDomain implements Serializable{
 	@Column(name="email", length=90,nullable=true) 
 	private String email;
 	@ManyToOne(cascade = {CascadeType.ALL})
-	@JoinColumn ( name ="id_Pessoa_Registro")	
+	@JoinColumn ( name ="id_Pessoa_Registro")		
 	private Pessoa id_Pessoa_Registro ;
 	
 	public String getDescricao() {

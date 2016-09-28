@@ -2,7 +2,6 @@ package br.com.lealbrasil.model.entities;
 
 import java.io.Serializable;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -18,8 +17,8 @@ import javax.persistence.SequenceGenerator;
 @Entity
 public class Movimento_Detalhe extends GenericDomain implements Serializable {
 	@Id
-	@SequenceGenerator(name = "pk_combo_detalhe", sequenceName = "mess_sounds_combo_detalhe", allocationSize = 1)
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "pk_combo_detalhe")
+	@SequenceGenerator(name = "pk_movimento_detalhe", sequenceName = "mess_sounds_movimento_detalhe", allocationSize = 1)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "pk_movimento_detalhe")
 	private Long id;
 	@ManyToOne
 	@JoinColumn(name = "id_Pessoa_Registro")
@@ -28,6 +27,9 @@ public class Movimento_Detalhe extends GenericDomain implements Serializable {
 	@ManyToOne
 	@JoinColumn(name = "id_Pessoa_Assinante", nullable = false)
 	private Pessoa id_Pessoa_Assinante;
+	@ManyToOne
+	@JoinColumn(name = "id_Movimento_Mestre", nullable = false)
+	private Movimento_Mestre id_Movimento_Mestre;
 	
 	@ManyToOne
 	@JoinColumn(name = "id_Combo_Mestre")
@@ -36,9 +38,9 @@ public class Movimento_Detalhe extends GenericDomain implements Serializable {
 	@ManyToOne
 	@JoinColumn(name = "id_Combo_Detalhe")
 	private Combo_Detalhe id_Combo_Detalhe;
-	@ManyToOne(cascade = { CascadeType.ALL })
-	@JoinColumn(name = "id_Itens_Movimento", nullable = false)
-	private Item_de_Movimento id_Itens_Movimento;
+	@ManyToOne
+	@JoinColumn(name = "id_Item_de_Movimento", nullable = false)
+	private Item_de_Movimento id_Item_de_Movimento;
 	@Enumerated(EnumType.STRING)
 	@Column(name="cD", length=10,nullable=false )
 	private Enum_Aux_Credita_Debita cD;
@@ -60,15 +62,16 @@ public class Movimento_Detalhe extends GenericDomain implements Serializable {
 	private double desconto;
 	@Column(name = "totalLiquido", precision = 18, scale = 4, nullable = false)
 	private double totalLiquido;
+	
 
 	@Override
 	public String toString() {
 		return "Movimento_Detalhe [id=" + id + ", id_Pessoa_Registro=" + id_Pessoa_Registro + ", id_Pessoa_Assinante="
-				+ id_Pessoa_Assinante + ", id_Combo_Mestre=" + id_Combo_Mestre + ", id_Combo_Detalhe="
-				+ id_Combo_Detalhe + ", id_Itens_Movimento=" + id_Itens_Movimento + ", cD=" + cD + ", id_ComboMestre="
-				+ id_ComboMestre + ", referencia=" + referencia + ", descricao=" + descricao + ", valorUnidade="
-				+ valorUnidade + ", qtde=" + qtde + ", total=" + total + ", desconto=" + desconto + ", totalLiquido="
-				+ totalLiquido + "]";
+				+ id_Pessoa_Assinante + ", id_Movimento_Mestre=" + id_Movimento_Mestre + ", id_Combo_Mestre="
+				+ id_Combo_Mestre + ", id_Combo_Detalhe=" + id_Combo_Detalhe + ", id_Item_de_Movimento="
+				+ id_Item_de_Movimento + ", cD=" + cD + ", id_ComboMestre=" + id_ComboMestre + ", referencia="
+				+ referencia + ", descricao=" + descricao + ", valorUnidade=" + valorUnidade + ", qtde=" + qtde
+				+ ", total=" + total + ", desconto=" + desconto + ", totalLiquido=" + totalLiquido + "]";
 	}
 
 	@Override
@@ -84,7 +87,8 @@ public class Movimento_Detalhe extends GenericDomain implements Serializable {
 		result = prime * result + ((id_ComboMestre == null) ? 0 : id_ComboMestre.hashCode());
 		result = prime * result + ((id_Combo_Detalhe == null) ? 0 : id_Combo_Detalhe.hashCode());
 		result = prime * result + ((id_Combo_Mestre == null) ? 0 : id_Combo_Mestre.hashCode());
-		result = prime * result + ((id_Itens_Movimento == null) ? 0 : id_Itens_Movimento.hashCode());
+		result = prime * result + ((id_Item_de_Movimento == null) ? 0 : id_Item_de_Movimento.hashCode());
+		result = prime * result + ((id_Movimento_Mestre == null) ? 0 : id_Movimento_Mestre.hashCode());
 		result = prime * result + ((id_Pessoa_Assinante == null) ? 0 : id_Pessoa_Assinante.hashCode());
 		result = prime * result + ((id_Pessoa_Registro == null) ? 0 : id_Pessoa_Registro.hashCode());
 		temp = Double.doubleToLongBits(qtde);
@@ -137,10 +141,15 @@ public class Movimento_Detalhe extends GenericDomain implements Serializable {
 				return false;
 		} else if (!id_Combo_Mestre.equals(other.id_Combo_Mestre))
 			return false;
-		if (id_Itens_Movimento == null) {
-			if (other.id_Itens_Movimento != null)
+		if (id_Item_de_Movimento == null) {
+			if (other.id_Item_de_Movimento != null)
 				return false;
-		} else if (!id_Itens_Movimento.equals(other.id_Itens_Movimento))
+		} else if (!id_Item_de_Movimento.equals(other.id_Item_de_Movimento))
+			return false;
+		if (id_Movimento_Mestre == null) {
+			if (other.id_Movimento_Mestre != null)
+				return false;
+		} else if (!id_Movimento_Mestre.equals(other.id_Movimento_Mestre))
 			return false;
 		if (id_Pessoa_Assinante == null) {
 			if (other.id_Pessoa_Assinante != null)
@@ -208,13 +217,7 @@ public class Movimento_Detalhe extends GenericDomain implements Serializable {
 		this.id_Combo_Detalhe = id_Combo_Detalhe;
 	}
 
-	public Item_de_Movimento getId_Itens_Movimento() {
-		return id_Itens_Movimento;
-	}
-
-	public void setId_Itens_Movimento(Item_de_Movimento id_Itens_Movimento) {
-		this.id_Itens_Movimento = id_Itens_Movimento;
-	}
+	
 
 	public Combo_Mestre getId_ComboMestre() {
 		return id_ComboMestre;
@@ -286,6 +289,22 @@ public class Movimento_Detalhe extends GenericDomain implements Serializable {
 
 	public void setcD(Enum_Aux_Credita_Debita cD) {
 		this.cD = cD;
+	}
+
+	public Movimento_Mestre getId_Movimento_Mestre() {
+		return id_Movimento_Mestre;
+	}
+
+	public void setId_Movimento_Mestre(Movimento_Mestre id_Movimento_Mestre) {
+		this.id_Movimento_Mestre = id_Movimento_Mestre;
+	}
+
+	public Item_de_Movimento getId_Item_de_Movimento() {
+		return id_Item_de_Movimento;
+	}
+
+	public void setId_Item_de_Movimento(Item_de_Movimento id_Item_de_Movimento) {
+		this.id_Item_de_Movimento = id_Item_de_Movimento;
 	}
 
 }

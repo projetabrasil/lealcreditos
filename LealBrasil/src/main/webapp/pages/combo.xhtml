@@ -11,13 +11,13 @@
 	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
 	xmlns:c="http://java.sun.com/jsp/jstl/core">
 	<ui:define name="conteudo">
-		<h:form id="formlista" style="width:100%;">
-			<p:panel
+		<h:form id="formLista" style="width:100%;">
+			<p:panel id="painelLista" 
 				header="Listagem de #{autenticacaojsfController.perfilLogado.paginaAtual.descricao2}"
-				style="width:100%;">
+				style="width:100%;" class="ui-grid ui-grid-responsive">
 				<p:dataTable id="tabela" emptyMessage="" reflow="true"
 					value="#{combo.combosM}" paginator="true" rows="5" var="registro"
-					style="font-size:12px;">
+					style="font-size:12px;" class="ui-grid ui-grid-responsive">
 					<f:facet name="header">
 						<p:commandButton id="buttonpontuar" value="Nova Combo"
 							process="@this" actionListener="#{combo.novoM()}"
@@ -25,7 +25,7 @@
 							:formTemplate:formCombos 
 							:formTemplate:formCombos:p1
 							:formTemplate:formCombos:p2 
-							:formTemplate:formCombos:p3">
+							:formTemplate:formCombos:p3" style="width:8%">
 						</p:commandButton>
 					</f:facet>
 					<p:column headerText="descricao" style="width:15%">
@@ -67,17 +67,17 @@
 							style="width:5%">
 						</h:outputText>
 					</p:column>
-					<p:column headerText="Editar">
+					<p:column headerText="Editar" style="width:5%">
 						<p:commandButton icon="icon-edit"
 							actionListener="#{combo.editarM}"
 							
 							update=":formTemplate:formCombos 
 							:formTemplate:formCombos:p1
 							:formTemplate:formCombos:p2 
-							:formTemplate:formCombos:p3">
+							:formTemplate:formCombos:p3" style="width:80%">
 							<p:confirm header="Confirmação"
 								message="Deseja realmente alterar este registro?"
-								icon="ui-icon-alert" />
+								icon="ui-icon-alert" style="width:5%" />
 							<f:attribute name="registroAtual" value="#{registro}" />
 						</p:commandButton>
 					</p:column>
@@ -86,10 +86,11 @@
 		</h:form>
 
 		<p:dialog widgetVar="dialogoCombos" closable="false" resizable="false"
-			modal="true" appendTo="@(body)" width="80%" height="80%">
-			<h:form id="formCombos" style="width:100%;">
+			modal="true" appendTo="@(body)" width="80%" height="80%"
+			position="60,10" class="ui-grid ui-grid-responsive">
+			<h:form id="formCombos" style="width:100%;" class="ui-grid ui-grid-responsive">
 				<p:focus for="des" />
-				<h:panelGrid id="p1" columns="7">
+				<h:panelGrid id="p1" columns="7" class="ui-grid ui-grid-responsive">
 					<p:outputLabel value="descrição" />
 					<p:outputLabel value="Referencia" />
 					<p:outputLabel value="Perc. Desc" />
@@ -120,7 +121,7 @@
 					<p:outputLabel value="#{combo.comboM.desconto}" />
 					<p:outputLabel value="#{combo.comboM.totalLiquido}" />
 				</h:panelGrid>
-				<h:panelGrid id="p2" columns="2">
+				<h:panelGrid id="p2" columns="2" class="ui-grid ui-grid-responsive">
 					<h:panelGrid id="p21" columns="2">
 						<p:outputLabel value="Itens do combo" />
 						<p:outputLabel value="Qtde" />
@@ -136,7 +137,7 @@
 							<f:validateLongRange />
 						</p:inputNumber>
 					</h:panelGrid>
-					<h:panelGrid id="p22" columns="3">
+					<h:panelGrid id="p22" columns="3" class="ui-grid ui-grid-responsive">
 						<p:commandButton value="confirma" process="@form"
 							update=":formTemplate:formCombos 
 							:formTemplate:formCombos:p1
@@ -151,7 +152,7 @@
 						<p:commandButton value="Confirma combo" process="@form"
 							style="border: 2px solid #6495ED;margin-top: 25px;float: left;"
 							actionListener="#{combo.merge()}" 
-							update="mensagens">
+							update="mensagens :formTemplate:formLista:painelLista">
 
 						</p:commandButton>
 						<p:commandButton value="cancela" process="@this"
@@ -163,12 +164,12 @@
 				</h:panelGrid>
 
 
-				<h:panelGrid id="p3">
+				<h:panelGrid id="p3" class="ui-grid ui-grid-responsive">
 
 
 					<p:dataTable id="tabelaCombos" emptyMessage="" reflow="true"
 						value="#{combo.combosDTemp}" paginator="true" rows="5"
-						var="registro2" style="font-size:12px;" width="60%">
+						var="registro2" style="font-size:12px;" width="60%" class="ui-grid ui-grid-responsive">
 
 						<p:column headerText="Ref">
 							<h:outputText value="#{registro2.referencia }" style="width:5%" />
@@ -219,7 +220,7 @@
 								update=":formTemplate:formQtde">
 								<p:confirm header="Confirmação"
 									message="Deseja realmente alterar este registro?"
-									icon="ui-icon-alert" />
+									icon="ui-icon-alert" style="width:5%" />
 								<f:attribute name="registroAtual2" value="#{registro2}" />
 							</p:commandButton>
 						</p:column>
@@ -231,14 +232,14 @@
 							:formTemplate:formCombos:p2 :formTemplate:formCombos:p3">
 								<p:confirm header="Confirmação"
 									message="Deseja realmente apagar este registro?"
-									icon="ui-icon-alert" />
+									icon="ui-icon-alert" style="width:5%"/>
 								<f:attribute name="registroAtual2" value="#{registro2}" />
 								<p:ajax event="click" process="@form"
 									oncomplete="$(function(){PrimeFaces.focus('formTemplate:formCombos:p2:p21:itens');});" />
 							</p:commandButton>
 						</p:column>
 					</p:dataTable>
-					<p:confirmDialog global="true">
+					<p:confirmDialog global="true" class="ui-grid ui-grid-responsive">
 						<p:commandButton value="SIM" type="button"
 							styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
 						<p:commandButton value="NAO" type="button"
@@ -248,12 +249,13 @@
 			</h:form>
 		</p:dialog>
 		<p:dialog widgetVar="dialogoQtde" closable="false" resizable="false"
-			modal="true" appendTo="@(body)" width="30%" height="30%">
-			<h:form id="formQtde" style="width:100%;">
+			modal="true" appendTo="@(body)" width="30%" height="30%"
+			position="60,10" class="ui-grid ui-grid-responsive"> 
+			<h:form id="formQtde" style="width:100%;" class="ui-grid ui-grid-responsive">
 				<p:focus for="mudaQtde" />
 
-				<h:panelGrid id="pQtde" columns="2">
-					<h:panelGrid id="pQtde1" columns="2">
+				<h:panelGrid id="pQtde" columns="2" class="ui-grid ui-grid-responsive">
+					<h:panelGrid id="pQtde1" columns="2" class="ui-grid ui-grid-responsive">
 						<p:outputLabel value="Qtde" />
 						<p:inputNumber id="mudaQtde" value="#{combo.comboDTemp.qtde}"
 							minValue="0" maxVAlue="100" emptyValue="1" size="4"
@@ -261,7 +263,7 @@
 							<f:validateLongRange />
 						</p:inputNumber>
 					</h:panelGrid>
-					<h:panelGrid id="pQtde2" columns="3">
+					<h:panelGrid id="pQtde2" columns="3" class="ui-grid ui-grid-responsive">
 						<p:commandButton value="confirma"
 							style="border: 2px solid #6495ED;margin-top: 25px;margin-left: 0px; float: left; "
 							oncomplete="PF('dialogoQtde').hide();">

@@ -25,7 +25,7 @@
 						<p:commandButton value="Novo"
 							oncomplete="PF('dialogoCadastro').show();"
 							actionListener="#{ponto.novo}"
-							update=":formTemplate:formCadastro:painelCadastro" />
+							update=":formTemplate:formCadastro:painelCadastro" style="width:5%"/>
 					</f:facet>
 					<p:column headerText="Descrição" style="width:20%">
 						<h:outputText value="#{registro.descricao}" />
@@ -54,14 +54,15 @@
 						<h:outputText value="R$ #{registro.valorUnidadeDevolucao}"
 							style="width:20%" />
 					</p:column>
-					<p:column headerText="Editar">
+					<p:column headerText="Editar" style="width:5%">
 						<p:commandButton icon="icon-edit"
 							actionListener="#{ponto.editar}"
 							oncomplete="PF('dialogoCadastro').show();"
-							update=":formTemplate:formCadastro:painelCadastro :formTemplate:formCadastro:painelDescricao ">
+							update=":formTemplate:formCadastro:painelCadastro 
+							:formTemplate:formCadastro:painelDescricao " style="width:80%">
 							<p:confirm header="Confirmação"
 								message="Deseja realmente alterar este registro?"
-								icon="ui-icon-alert" />
+								icon="ui-icon-alert" style="width:5%" />
 							<f:attribute name="registroAtual" value="#{registro}" />
 						</p:commandButton>
 					</p:column>
@@ -79,7 +80,7 @@
 		</h:form>
 		<p:dialog header="Formulário de Configuração de #{ponto.perfilLogado.paginaAtual.descricao2}"
 			widgetVar="dialogoCadastro" resizable="false" modal="true"
-			closable="false" appendTo="@(body)">
+			closable="false" appendTo="@(body)" position="60,10">
 			<h:form id="formCadastro">
 				<h:panelGrid id="painelDescricao">
 					<p:outputLabel value="Descrição" />

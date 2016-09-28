@@ -8,6 +8,7 @@ import javax.faces.bean.ViewScoped;
 import javax.faces.event.ActionEvent;
 
 import br.com.lealbrasil.model.dao.Item_de_MovimentoDAO;
+import br.com.lealbrasil.model.entities.Enum_Aux_Perfil_Pagina_Atual;
 import br.com.lealbrasil.model.entities.Enum_Aux_Sim_ou_Nao;
 import br.com.lealbrasil.model.entities.Enum_Aux_Tipo_Item_de_Movimento;
 import br.com.lealbrasil.model.entities.Item_de_Movimento;
@@ -21,12 +22,19 @@ public class Item_de_MovimentojsfController {
 	private Item_de_Movimento item;
 	@ManagedProperty(value="#{autenticacaojsfController.perfilLogado}")
 	PerfilLogado perfilLogado;
-
 	private List<Enum_Aux_Sim_ou_Nao> listaSN;
+	private Enum_Aux_Tipo_Item_de_Movimento itemdeMovimento;
 	@PostConstruct 
 	public void listar(){
 		Item_de_MovimentoDAO iMovDAO = new Item_de_MovimentoDAO();
-		itens = iMovDAO.listar(perfilLogado.getAssLogado(),Enum_Aux_Tipo_Item_de_Movimento.ITEMDESERVICO );
+		if(perfilLogado.getPaginaAtual().equals(Enum_Aux_Perfil_Pagina_Atual.PAGINAITEMDESERVICO))
+			setItemdeMovimento(Enum_Aux_Tipo_Item_de_Movimento.ITEMDESERVICO);
+		else
+			if(perfilLogado.getPaginaAtual().equals(Enum_Aux_Perfil_Pagina_Atual.PAGINAITEMDEPROMOCAO))
+				setItemdeMovimento(Enum_Aux_Tipo_Item_de_Movimento.PROMOCAO);
+		
+	
+		itens = iMovDAO.listar(perfilLogado.getAssLogado(),getItemdeMovimento(),null);
 		setListaSN(Utilidades.listaSN());
 	}
 	public void novo(){
@@ -35,7 +43,7 @@ public class Item_de_MovimentojsfController {
 	
 	public void configItem(){
 		item = new Item_de_Movimento(perfilLogado.getUsLogado().getPessoa(), perfilLogado.getAssLogado() , 
-				 Enum_Aux_Sim_ou_Nao.SIM,Enum_Aux_Tipo_Item_de_Movimento.ITEMDESERVICO );
+				 Enum_Aux_Sim_ou_Nao.SIM,getItemdeMovimento() );
 		
 	}
 	
@@ -74,5 +82,11 @@ public class Item_de_MovimentojsfController {
 	}
 	public void setListaSN(List<Enum_Aux_Sim_ou_Nao> listaSN) {
 		this.listaSN = listaSN;
+	}
+	public Enum_Aux_Tipo_Item_de_Movimento getItemdeMovimento() {
+		return itemdeMovimento;
+	}
+	public void setItemdeMovimento(Enum_Aux_Tipo_Item_de_Movimento itemdeMovimento) {
+		this.itemdeMovimento = itemdeMovimento;
 	}
 }

@@ -44,7 +44,7 @@ public class BrindejsfController extends GenericController {
 		itens = new ArrayList<Item_de_Movimento>(); 
 		
 		Item_de_MovimentoDAO iMDAO = new Item_de_MovimentoDAO();
-		List<Item_de_Movimento> l = iMDAO.listar(perfilLogado.getAssLogado(),Enum_Aux_Tipo_Item_de_Movimento.BRINDE);
+		List<Item_de_Movimento> l = iMDAO.listar(perfilLogado.getAssLogado(),Enum_Aux_Tipo_Item_de_Movimento.BRINDE,null);
 		
 		
 		int x = 0;

@@ -17,17 +17,25 @@ import br.com.lealbrasil.util.HibernateUtil;
 public class Item_de_MovimentoDAO extends GenericDAO<Item_de_Movimento> {
 	
 	@SuppressWarnings("unchecked")
-	public List<Item_de_Movimento> listar(Pessoa id_Pessoa_Assinante, Enum_Aux_Tipo_Item_de_Movimento tipodeItem){
+	public List<Item_de_Movimento> listar(Pessoa id_Pessoa_Assinante, Enum_Aux_Tipo_Item_de_Movimento tipodeItem,
+			List<Enum_Aux_Tipo_Item_de_Movimento> foraTipodeItem){
 		List<Item_de_Movimento> lista = new ArrayList<Item_de_Movimento>();
 		Session sessao = HibernateUtil.getFabricaDeSessoes().openSession();
 		Criteria crit;
 		try{
 			crit = sessao.createCriteria(Item_de_Movimento.class)
 					.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
-					.add(Restrictions.eq("id_Pessoa_Assinante",id_Pessoa_Assinante))
-					.add(Restrictions.eq("enum_Aux_Tipo_Item_de_Movimento",tipodeItem));
+					.add(Restrictions.eq("id_Pessoa_Assinante",id_Pessoa_Assinante));
+			        if(tipodeItem!=null)
+					crit.add(Restrictions.eq("enum_Aux_Tipo_Item_de_Movimento",tipodeItem));
+			        if(foraTipodeItem!=null){
+			        	 crit.add(Restrictions.not(
+			        			    Restrictions.in("enum_Aux_Tipo_Item_de_Movimento",foraTipodeItem)));
+			        	
+			        	}
+			        	
 			
-			System.out.println("lista: "+crit.list());
+			
 			                              
 			lista = crit.list();
 		}catch(RuntimeException error){

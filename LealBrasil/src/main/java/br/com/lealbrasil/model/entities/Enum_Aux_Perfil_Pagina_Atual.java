@@ -13,11 +13,17 @@ public enum Enum_Aux_Perfil_Pagina_Atual {
 	PAGINAPONTUACAOC("PAGINAPONTUACAOC","PMOVPONT",9, Enum_Aux_Perfil_Pessoa.ATENDENTES,Enum_Aux_Perfil_Pessoa.ASSINANTES,true,false,"ponto_movimento.xhtml", "de pontuações de fidelizados - Creditar"),
 	PAGINAPONTUACAOD("PAGINAPONTUACAOD","PMOVPONT",10, Enum_Aux_Perfil_Pessoa.ATENDENTES,Enum_Aux_Perfil_Pessoa.ASSINANTES,true,false,"ponto_movimento.xhtml","de pontuações de fidelizados - Debitar"),
 	PAGINAPONTUACAOE("PAGINAPONTUACAOE","PMOVPONT",11, Enum_Aux_Perfil_Pessoa.ATENDENTES,Enum_Aux_Perfil_Pessoa.ASSINANTES,true,false,"ponto_movimento.xhtml","de pontuações de fidelizados - Estornar"),
-	PAGINAITEMDEMOVIMENTO("PAGINAITEMDEMOVIMENTO","PITEMDEMOV",12,Enum_Aux_Perfil_Pessoa.VENDAS,Enum_Aux_Perfil_Pessoa.VENDAS ,false,false,"item_de_movimento.xhtml","itens de movimento"),																																					
-	PAGINAOUTROS("PAGINAOUTROS","POUTROS",13,Enum_Aux_Perfil_Pessoa.OUTROS,null,false,true,"pessoas.xhtml","outros"),
-	PAGINAINDEX("PAGINAINDEX","PINDEX",14,Enum_Aux_Perfil_Pessoa.OUTROS,null,false,false,"index.xhtml", "página principal"),
-	PAGINACOMBO("PAGINACOMBO","PCOMBO",15,Enum_Aux_Perfil_Pessoa.VENDAS,Enum_Aux_Perfil_Pessoa.VENDAS ,false,false,"combo.xhtml","combo"),
-	PAGINABRINDE("PAGINABRINDE","PBRINDE",16,Enum_Aux_Perfil_Pessoa.ASSINANTES,Enum_Aux_Perfil_Pessoa.ASSINANTES ,true,false,"brinde.xhtml","brindes");
+	PAGINAITEMDESERVICO("PAGINAITEMDESERVICO","PITEMDESERV",12,Enum_Aux_Perfil_Pessoa.VENDAS,Enum_Aux_Perfil_Pessoa.VENDAS ,false,false,"item_de_movimento.xhtml","itens de serviço"),
+	PAGINAITEMDEPROMOCAO("PAGINAITEMDEPROMOCAO","PITEMDEPROM",13,Enum_Aux_Perfil_Pessoa.VENDAS,Enum_Aux_Perfil_Pessoa.VENDAS ,false,false,"item_de_movimento.xhtml","itens de promoção"),
+	
+	PAGINAOUTROS("PAGINAOUTROS","POUTROS",14,Enum_Aux_Perfil_Pessoa.OUTROS,null,false,true,"pessoas.xhtml","outros"),
+	PAGINAINDEX("PAGINAINDEX","PINDEX",15,Enum_Aux_Perfil_Pessoa.OUTROS,null,false,false,"index.xhtml", "página principal"),
+	PAGINACOMBO("PAGINACOMBO","PCOMBO",16,Enum_Aux_Perfil_Pessoa.VENDAS,Enum_Aux_Perfil_Pessoa.VENDAS ,false,false,"combo.xhtml","combo"),
+	PAGINABRINDE("PAGINABRINDE","PBRINDE",17,Enum_Aux_Perfil_Pessoa.ASSINANTES,Enum_Aux_Perfil_Pessoa.ASSINANTES ,true,false,"brinde.xhtml","brindes"),
+	PAGINAMOVIMENTO("PAGINAMOVIMENTO","PMOVIMENTO",18,Enum_Aux_Perfil_Pessoa.REPRESENTANTES,Enum_Aux_Perfil_Pessoa.SUPERVISORES ,false,true,"movimento.xhtml","Contratos"),
+	PAGINAVOUCHER("PAGINAVOUCHER","PVOUCHER",19,Enum_Aux_Perfil_Pessoa.ASSINANTES,Enum_Aux_Perfil_Pessoa.ASSINANTES ,true,false,"voucher.xhtml","Vouchers"),
+	PAGINAAGENDAMENTO("PAGINAAGENDAMENTO","PAGENDA",20,Enum_Aux_Perfil_Pessoa.ASSINANTES,Enum_Aux_Perfil_Pessoa.ASSINANTES ,true,false,"agendamento.xhtml","Vouchers"),
+	PAGINAPAGAMENTO("PAGINAPAGAMENTO","PPAGTO",21,Enum_Aux_Perfil_Pessoa.ASSINANTES,Enum_Aux_Perfil_Pessoa.ASSINANTES ,true,false,"pagamento.xhtml","Pagamento PayPal");
 	
     private String descricao;    
 	private String sigla;
