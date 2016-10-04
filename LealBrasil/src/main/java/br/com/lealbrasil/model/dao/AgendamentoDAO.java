@@ -6,8 +6,12 @@ import java.util.List;
 
 import org.hibernate.Criteria;
 import org.hibernate.Session;
+import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.criterion.Disjunction;
 import org.hibernate.criterion.Projections;
+import org.hibernate.criterion.Property;
 import org.hibernate.criterion.Restrictions;
+import org.hibernate.criterion.Subqueries;
 
 import br.com.lealbrasil.model.entities.Agendamento;
 import br.com.lealbrasil.model.entities.Enum_Aux_Status_Agendamento;
@@ -76,6 +80,34 @@ public class AgendamentoDAO extends GenericDAO<Agendamento> implements Serializa
 			crit.add(Restrictions.eq("id_Movimento_Detalhe_A", idMov));
 			
 			crit.add(Restrictions.eq("enum_Aux_Status_Agendamento", status));
+			l = (Agendamento)crit.uniqueResult();
+		} catch (RuntimeException error) {
+			error.printStackTrace();
+		} finally {
+			sessao.close();
+		}
+		return l;
+	}
+	public Agendamento checaAgendamentoAtivodoCliente(Pessoa assinante,String codigo, Enum_Aux_Status_Agendamento status  ) {
+		Agendamento l = new Agendamento();
+		Session sessao = HibernateUtil.getFabricaDeSessoes().openSession();
+		Criteria crit = sessao.createCriteria(Agendamento.class)
+		.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
+		
+		
+				//DetachedCriteria subQuery1 = 
+				//DetachedCriteria.forClass(Pessoa.class).setProjection(Property.forName("id"));
+		try {
+			DetachedCriteria sub = DetachedCriteria.forClass(Pessoa.class).setProjection(Property.forName("id"));
+			sub.add(Restrictions.eq("cpf_Cnpj",codigo));
+			Disjunction or = Restrictions.disjunction();
+			
+			or.add(Restrictions.eq("codigo",codigo));		
+			or.add(Restrictions.or(Subqueries.propertyIn("id_Pessoa_Cliente", sub)));		
+			crit.add(Restrictions.eq("id_Pessoa_Assinante",assinante ));
+			
+			crit.add(Restrictions.eq("enum_Aux_Status_Agendamento", status));
+			crit.add(or);
 			l = (Agendamento)crit.uniqueResult();
 		} catch (RuntimeException error) {
 			error.printStackTrace();

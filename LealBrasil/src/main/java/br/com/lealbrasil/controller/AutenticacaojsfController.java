@@ -46,7 +46,6 @@ public class AutenticacaojsfController extends GenericController implements Seri
 		perfilLogado.setIdentificadorAssociado("99999999999");
 		perfilLogado.setSenhaUsuario("98765432");
 		autenticar(true);
-
 	}
 
 	public void autenticar(boolean cadAutomatico) {

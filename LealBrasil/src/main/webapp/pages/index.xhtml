@@ -73,7 +73,6 @@
 			resizable="false" modal="true" appendTo="@(body)" width="30%"
 			position="60,10">
 			<h:form id="formListaPontos">
-
 				<p:panel header="Estabelecimentos Pontuados">
 					<p:dataTable id="tabela" emptyMessage="" reflow="true"
 						value="#{carroseljsfController.pHClientes}" paginator="true"
@@ -96,10 +95,6 @@
 								<f:attribute name="registroAtual" value="#{registro}" />
 							</p:commandButton>
 						</p:column>
-
-
-
-
 					</p:dataTable>
 					<p:commandButton value="sair"
 						actionListener="#{carroseljsfController.canceladialogPontuacao()}"

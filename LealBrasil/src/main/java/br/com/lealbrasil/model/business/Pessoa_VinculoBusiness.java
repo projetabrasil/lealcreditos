@@ -16,7 +16,7 @@ public class Pessoa_VinculoBusiness implements Serializable {
 		               
 		Pessoa_VinculoDAO pessoa_Vinculo= new Pessoa_VinculoDAO();
 		 pV = pessoa_Vinculo.pessoaEstaVinculada(pV, perfilLogado);
-		 if (pV==null){			 
+		 if (pV==null  || pV.getId()==null){			 
 			 pV = vinculo_Anterior;
 			 pV = pessoa_Vinculo.merge(pV);
 			 pV.setId_pessoa_d(vinculo_Anterior.getId_pessoa_d());		 

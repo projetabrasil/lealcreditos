@@ -12,6 +12,7 @@ import org.hibernate.criterion.Property;
 import org.hibernate.criterion.Restrictions;
 import org.hibernate.criterion.Subqueries;
 
+import br.com.lealbrasil.model.entities.Enum_Aux_Status_Movimento_Ponto;
 import br.com.lealbrasil.model.entities.Enum_Aux_Tipo_Mov_Ponto;
 import br.com.lealbrasil.model.entities.PerfilLogado;
 import br.com.lealbrasil.model.entities.Pessoa;
@@ -58,6 +59,39 @@ public class Ponto_MovimentoDAO extends GenericDAO<Ponto_Movimento> {
 			}
 
 			pontuacoes = new ArrayList<Ponto_Movimento>(crit.list());      
+
+			return pontuacoes;
+		} catch (RuntimeException error) {
+			error.printStackTrace();
+			throw error;
+		} finally {
+			sessao.close();
+		}
+	}
+	
+	
+	
+	@SuppressWarnings("unchecked")
+	public List<Ponto_Movimento> verificaSePontuacaoExiste( Pessoa cliente, 
+			Pessoa estabelecimento, Enum_Aux_Tipo_Mov_Ponto enum_Aux_Tipo_Mov_Ponto ) {
+		Session sessao = HibernateUtil.getFabricaDeSessoes().openSession();
+		List<Ponto_Movimento> pontuacoes = new ArrayList<Ponto_Movimento>();		
+		Criteria crit;
+
+		try {
+			
+
+				crit = sessao.createCriteria(Ponto_Movimento.class)
+						.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);				
+				crit.add(Restrictions.eq("id_pessoa_cliente", cliente));
+				
+				crit.add(Restrictions.eq("id_pessoa_associado", estabelecimento));				
+				crit.add(Restrictions.eq("creditaDebita", enum_Aux_Tipo_Mov_Ponto));
+				java.util.Date d = Utilidades.retornaCalendario().getTime();
+				java.sql.Date dt = new java.sql.Date (d.getTime());
+				
+				crit.add(Restrictions.eq("dataLancamento", dt ));				
+ 			pontuacoes =  crit.list();      
 
 			return pontuacoes;
 		} catch (RuntimeException error) {
@@ -124,7 +158,7 @@ public class Ponto_MovimentoDAO extends GenericDAO<Ponto_Movimento> {
 	}
 	
 	public Double somadePontos(Pessoa associado, Pessoa cliente, boolean pesqAss,
-			Enum_Aux_Tipo_Mov_Ponto tipoSoma) {
+			Enum_Aux_Tipo_Mov_Ponto tipoSoma, Enum_Aux_Status_Movimento_Ponto enum_Aux_Status_Movimento_Ponto) {
 		Session sessao = HibernateUtil.getFabricaDeSessoes().openSession();
 		Long valorRetorno;
 
@@ -139,6 +173,7 @@ public class Ponto_MovimentoDAO extends GenericDAO<Ponto_Movimento> {
 						.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
 						.add(Restrictions.and(Subqueries.propertyIn("id_pessoa_associado", subQuery1)));
 				crit.add(Restrictions.eq("id_pessoa_associado", associado));
+				crit.add(Restrictions.eq("enum_Aux_Status_Movimento_Ponto", enum_Aux_Status_Movimento_Ponto));
 				if (tipoSoma != null) {
 					crit.add(Restrictions.eq("creditaDebita", tipoSoma));
 
@@ -159,6 +194,7 @@ public class Ponto_MovimentoDAO extends GenericDAO<Ponto_Movimento> {
 			} else {
 				crit = sessao.createCriteria(Ponto_Movimento.class);
 				crit.add(Restrictions.eq("id", 0));
+				crit.add(Restrictions.eq("enum_Aux_Status_Movimento_Ponto", enum_Aux_Status_Movimento_Ponto));
 			}
 			crit.setProjection(Projections.sum("pontosAtingidos"));
             

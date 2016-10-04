@@ -36,6 +36,9 @@ public class PontoDAO extends GenericDAO<Ponto>{
 	}
 	
 	@SuppressWarnings("unchecked")
+	
+	
+	
 	public List<Ponto> retornarListaPontos(Pessoa usuarioLogado, Enum_Aux_Tipo_Item_de_Movimento enum_Aux_Tipo_Item_de_Movimento){
 		Session sessao = HibernateUtil.getFabricaDeSessoes().openSession();
 		try{

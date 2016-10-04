@@ -161,10 +161,17 @@ public class PessoaConfig implements Serializable {
 	}
 	
 	public Pessoa ConfiguraPessoa(Enum_Aux_Tipo_Identificador tipodeIdentificador, Usuario usuarioLogado, Pessoa pessoa, boolean editado) {
+		Pessoa p= ConfiguraPessoa(tipodeIdentificador,pessoa,editado);
+		
+		p.setId_Pessoa_Registro(usuarioLogado.getPessoa());
+		
+		return p;
+	}
+	
+	public Pessoa ConfiguraPessoa(Enum_Aux_Tipo_Identificador tipodeIdentificador, Pessoa pessoa, boolean editado) {
 		if (!editado)
 		pessoa = new Pessoa();
-		pessoa.setId_Empresa(1);
-		pessoa.setId_Pessoa_Registro(usuarioLogado.getPessoa());
+		pessoa.setId_Empresa(1);		
 		pessoa.setUltimaAtualizacao(Utilidades.retornaCalendario());
 		if(tipodeIdentificador!=null)
 		pessoa.setEnum_Aux_Tipo_Identificador(tipodeIdentificador);
@@ -172,9 +179,6 @@ public class PessoaConfig implements Serializable {
 			pessoa.setEnum_Aux_Tipo_Identificador(Enum_Aux_Tipo_Identificador.CPF);
 		if (pessoa.getCpf_Cnpj()==null)
 			pessoa.setCpf_Cnpj("");
-		
-			
-		
 		return pessoa;
 	}
 	public void listarTipodeIdentificadores(){		

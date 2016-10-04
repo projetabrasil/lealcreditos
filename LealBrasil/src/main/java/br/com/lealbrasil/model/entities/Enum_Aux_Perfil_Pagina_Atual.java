@@ -23,7 +23,8 @@ public enum Enum_Aux_Perfil_Pagina_Atual {
 	PAGINAMOVIMENTO("PAGINAMOVIMENTO","PMOVIMENTO",18,Enum_Aux_Perfil_Pessoa.REPRESENTANTES,Enum_Aux_Perfil_Pessoa.SUPERVISORES ,false,true,"movimento.xhtml","Contratos"),
 	PAGINAVOUCHER("PAGINAVOUCHER","PVOUCHER",19,Enum_Aux_Perfil_Pessoa.ASSINANTES,Enum_Aux_Perfil_Pessoa.ASSINANTES ,true,false,"voucher.xhtml","Vouchers"),
 	PAGINAAGENDAMENTO("PAGINAAGENDAMENTO","PAGENDA",20,Enum_Aux_Perfil_Pessoa.ASSINANTES,Enum_Aux_Perfil_Pessoa.ASSINANTES ,true,false,"agendamento.xhtml","Vouchers"),
-	PAGINAPAGAMENTO("PAGINAPAGAMENTO","PPAGTO",21,Enum_Aux_Perfil_Pessoa.ASSINANTES,Enum_Aux_Perfil_Pessoa.ASSINANTES ,true,false,"pagamento.xhtml","Pagamento PayPal");
+	PAGINAPAGAMENTO("PAGINAPAGAMENTO","PPAGTO",21,Enum_Aux_Perfil_Pessoa.ASSINANTES,Enum_Aux_Perfil_Pessoa.ASSINANTES ,true,false,"pagamento.xhtml","Pagamento PayPal"),
+	PAGINAALFA("PAGINAALFATA","PALFA",22,Enum_Aux_Perfil_Pessoa.OUTROS,Enum_Aux_Perfil_Pessoa.OUTROS ,true,true,"alfapage.xhtml","Pagina Inicial");
 	
     private String descricao;    
 	private String sigla;

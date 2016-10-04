@@ -13,9 +13,9 @@ public enum Enum_Aux_Tipo_Identificador {
 	
 	
 	@Enumerated ( EnumType.STRING )
-	private String descricao;
-	private String mask;
+	private String descricao;	
 	private Enum_Aux_Tipo_Pessoa aux_tipo_pessoa;
+	private String mask;
 	private int id;
 	private String label;
 	private String mensagemObrigatoria;

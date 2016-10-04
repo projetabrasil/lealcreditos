@@ -14,6 +14,7 @@ import org.omnifaces.util.Messages;
 import br.com.lealbrasil.controller.entitiesconfig.PessoaConfig;
 import br.com.lealbrasil.model.business.PessoaBusiness2;
 import br.com.lealbrasil.model.business.PessoaGenericBusiness;
+import br.com.lealbrasil.model.business.Pessoa_VinculoBusiness;
 import br.com.lealbrasil.model.dao.PessoaDAO;
 import br.com.lealbrasil.model.dao.PontoDAO;
 import br.com.lealbrasil.model.dao.Ponto_MovimentoDAO;
@@ -23,6 +24,7 @@ import br.com.lealbrasil.model.entities.Enum_Aux_Tipo_Item_de_Movimento;
 import br.com.lealbrasil.model.entities.Enum_Aux_Tipo_Mov_Ponto;
 import br.com.lealbrasil.model.entities.PerfilLogado;
 import br.com.lealbrasil.model.entities.Pessoa;
+import br.com.lealbrasil.model.entities.Pessoa_Vinculo;
 import br.com.lealbrasil.model.entities.Ponto;
 import br.com.lealbrasil.model.entities.Ponto_Movimento;
 import br.com.lealbrasil.model.entities.Usuario;
@@ -68,7 +70,7 @@ public class Ponto_MovimentojsfController implements Serializable {
 		
 		Ponto_MovimentoDAO pDAO = new Ponto_MovimentoDAO();
 		pontos_Mov = pDAO.listar(perfilLogado, null, true);
-		litarPontuacoesConfig();
+		litarPontuacoes();
 		listarTipodeIdentificadores();
 		setTipoIdentificador(Enum_Aux_Tipo_Identificador.CPF);
 	}
@@ -124,15 +126,13 @@ public class Ponto_MovimentojsfController implements Serializable {
 		pessoaPontuada.setCpf_Cnpj("");
 	}
 
-	public void litarPontuacoesConfig() {
+	public void litarPontuacoes() {
 		PontoDAO pDAO = new PontoDAO();
 		setListaPonto(
 				pDAO.retornarListaPontoConfig(perfilLogado.getAssLogado(), Enum_Aux_Tipo_Item_de_Movimento.PONTO));
 	}
 
 	public void configPonto_Movimento() {
-		
-
 		ponto_movimento = new Ponto_Movimento();
 		if (ponto != null && ponto.getId() != null) {
 			ponto_movimento.setId_ponto(ponto);
@@ -215,12 +215,32 @@ public class Ponto_MovimentojsfController implements Serializable {
 		pessoaPontuada = PessoaGenericBusiness.merge(pessoaPontuada, perfilLogado.getUsLogado(), perfilLogado, false);
 	}
 
+	public void vincularPessoa(){
+		// merge pessoa_vinculo;
+		
+		
+					Pessoa_Vinculo pVinc = new Pessoa_Vinculo();
+					pVinc.setAtivo(true);
+					pVinc.setId_Empresa(1);
+					pVinc.setUltimaAtualizacao(Utilidades.retornaCalendario());
+					pVinc.setId_pessoa_d(pessoaPontuada);
+					
+					
+					
+					pVinc.setId_pessoa_m(perfilLogado.getAssLogado());					
+					pVinc.setId_Pessoa_Registro(pessoaPontuada);
+					pVinc.setUltimaAtualizacao(Utilidades.retornaCalendario());
+					Pessoa_VinculoBusiness.merge(pVinc, perfilLogado);
+	}
 	public void merge() {
 
 		if (pessoaPontuada == null || pessoaPontuada.getId() == null)
 			return;
+		vincularPessoa();
+		
 		ponto_movimento.setId_pessoa_cliente(pessoaPontuada);
 		ponto_movimento.setId_Empresa(1);
+		
 
 		if (ponto_movimento.getCreditaDebita().equals(Enum_Aux_Tipo_Mov_Ponto.C)) {
 			int pontos = (int) (ponto_movimento.getUnidadeporPonto()
@@ -242,6 +262,8 @@ public class Ponto_MovimentojsfController implements Serializable {
 		ponto_movimento.setUltimaAtualizacao(Utilidades.retornaCalendario());
 
 		Ponto_MovimentoDAO pDAO = new Ponto_MovimentoDAO();
+		
+		
 		ponto_movimento = pDAO.merge(ponto_movimento);
 
 		if (ponto_movimento != null && ponto_movimento.getId() != null) {

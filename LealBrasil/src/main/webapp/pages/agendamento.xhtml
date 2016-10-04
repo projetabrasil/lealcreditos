@@ -18,7 +18,14 @@
 					var="registro" style="font-size:12px;">
 					<f:facet name="header">
 						<h:outputText value="Agendamentos Ativos" />
+						<p:commandButton value="Utilizar"
+							actionListener="#{agendamento.defineStatus('UTILIZADO')}"
+							process="@this" update="formTemplate:formAgendamento formTemplate:formAgendamento:pgConfirma" />
+						<p:commandButton value="Inutilizar"
+							actionListener="#{agendamento.defineStatus('CANCELADO')}"
+							process="@this" update="formTemplate:formAgendamento formTemplate:formAgendamento:pgConfirma"/>
 					</f:facet>
+
 					<p:column headerText="Cliente" style="width:15%">
 						<c:set var="cliente"
 							value="#{registro.id_Pessoa_Cliente.descricao}" />
@@ -26,7 +33,7 @@
 							style="width:5%">
 						</h:outputText>
 					</p:column>
-					
+
 					<p:column headerText="Valor Voucher" style="width:10%">
 						<h:outputText value="R$ #{registro.valor}" />
 					</p:column>
@@ -42,26 +49,116 @@
 					</p:column>
 
 
-					<p:column headerText="Hora Agendamento" style="width:10%">
+					<p:column headerText="Hora Atualização" style="width:8%">
 						<h:outputText value="#{registro.ultimaAtualizacao.time}">
 							<f:convertDateTime locale="pt_BR" dateStyle="long" type="both"
 								pattern="dd/MM/yyyy HH:mm:ss" />
 						</h:outputText>
 					</p:column>
 
-					<p:column headerText="Responsavel" style="width:10%">
+					<p:column headerText="Responsavel" style="width:5%">
 						<c:set var="resp" value="#{registro.id_Pessoa_Registro.descricao}" />
 						<h:outputText value="#{fn:substringBefore(resp,' ')}"
 							style="width:5%">
 						</h:outputText>
 					</p:column>
+					<p:column headerText="Status" style="width:5%">
+						
+						<h:outputText value="#{registro.enum_Aux_Status_Agendamento.descricao}"
+							style="width:5%;font-size:12px;font-weight:900;color: 
+							#{registro.enum_Aux_Status_Agendamento.descricao.equals('AGENDADO')?'green':
+                                     registro.enum_Aux_Status_Agendamento.descricao.equals('UTILIZADO')?'red':'black'};">
+						</h:outputText>
+					</p:column>
+					<p:column headerText="Data Baixa" style="width:8%">
+						<h:outputText value="#{registro.dataBaixa}">
+							<f:convertDateTime locale="pt_BR" dateStyle="long" type="both"
+								pattern="dd/MM/yyyy HH:mm:ss" />
+						</h:outputText>
+					</p:column>
+
 					<f:facet name="footer">
                 		agendamentos ativos : #{fn:length(agendamento.agendamentos)}.
         			</f:facet>
-
 				</p:dataTable>
-
 			</p:panel>
 		</h:form>
+		<p:dialog header="Vouchers" widgetVar="dialogoAgendamento"
+			resizable="false" modal="true" closesable="false" appendTo="@(body)"
+			position="60,10"
+			style="float: left;
+    padding: 10px;
+    font-family: calibri;
+    color: #6495ED;
+    font-size: 15px;
+    text-align: left;">
+			<h:form id="formAgendamento"
+				target="Ação:  #{agendamento.status_Agendamento.acao} ">
+				<p:focus for="codigo" />
+				<h:panelGrid id="painelAgendamento">
+					<p:outputLabel value="Informe o n. voucher/cpf/cnpj"
+						style="font-size:15px;font-weight:900;;max-width:240px" />
+					<p:inputText value="#{agendamento.codigo}" id="codigo" size="30"
+						style="max-width:240px">
+						<p:ajax event="blur" process="@this"
+							listener="#{agendamento.pesquidaAgendamento()}"
+							update="painelAgendamento pgConfirma" />
+					</p:inputText>
+					<p:outputLabel value="cliente"
+						style="font-size:15px;font-weight:900;"
+						rendered="#{agendamento.renderiza}" size="30" />
+					<p:inputText
+						value="#{agendamento.agendamentoPesquisado.id_Pessoa_Cliente.descricao}"
+						size="30" readonly="true" rendered="#{agendamento.renderiza}" />
+					<p:outputLabel value="data agendamento"
+						style="font-size:15px;font-weight:900;"
+						rendered="#{agendamento.renderiza}" />
+					<p:inputText
+						value="#{agendamento.agendamentoPesquisado.dataAgendamento.time}"
+						readonly="true" rendered="#{agendamento.renderiza}"
+						style="color: #{agendamento.podebaixar  == true ? 'green' : 'red'};
+					font-size:14px;font-weight:900;max-width:240px"
+						size="30">
+						<f:convertDateTime locale="pt_BR" dateStyle="long" type="date"
+							pattern="dd/MM/yyyy" rendered="#{agendamento.renderiza}" />
+					</p:inputText>
+					<p:outputLabel value="n. voucher"
+						style="font-size:15px;font-weight:900;"
+						rendered="#{agendamento.renderiza}" />
+					<p:inputText value="#{agendamento.agendamentoPesquisado.codigo}"
+						size="30" readonly="true" rendered="#{agendamento.renderiza}" />
+					<p:outputLabel value="n. cpf/cnpj"
+						style="font-size:15px;font-weight:900;"
+						rendered="#{agendamento.renderiza}" />
+					<p:inputMask
+						mask="#{agendamento.agendamentoPesquisado.id_Pessoa_Cliente.enum_Aux_Tipo_Identificador.mask}"
+						value="#{agendamento.agendamentoPesquisado.id_Pessoa_Cliente.cpf_Cnpj}"
+						size="30" readonly="true" rendered="#{agendamento.renderiza}" />
+					<p:outputLabel value="Telefone"
+						style="font-size:15px;font-weight:900;"
+						rendered="#{agendamento.renderiza}" />
+					<p:inputMask mask="#{agendamento.enum_Aux_Tipo_Identificador.mask}"
+						value="#{agendamento.agendamentoPesquisado.id_Pessoa_Cliente.fone_1}"
+						size="30" readonly="true" rendered="#{agendamento.renderiza}" />
+
+				</h:panelGrid>
+
+
+				<h:panelGrid id="pgConfirma" columns="2">
+					<p:commandButton value="#{agendamento.status_Agendamento.acao}" 
+						actionListener="#{agendamento.acao}"
+						rendered="#{agendamento.podebaixar}"  process="@form"
+						update="formTemplate:formLista:tabela"/>
+						
+					<p:commandButton value="cancelar" process="@form"
+						actionListener="#{agendamento.cancelar}" >
+						
+						</p:commandButton>
+						
+				</h:panelGrid>
+
+			</h:form>
+
+		</p:dialog>
 	</ui:define>
 </ui:composition>

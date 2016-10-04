@@ -136,7 +136,7 @@ public class MovimentojsfController extends GenericController implements Seriali
 	
 	public String payPal(ActionEvent event){		
 		Utilidades.abrirfecharDialogos("dialogoMovimento", false);
-		System.out.println("movimento temporário: "+mDsTemp.size());
+		
 		perfilLogado.setPaginaAtual(Enum_Aux_Perfil_Pagina_Atual.PAGINAPONTO);
 		Movimento_DetalheDAO mDDAO = new Movimento_DetalheDAO();
 		
@@ -151,12 +151,7 @@ public class MovimentojsfController extends GenericController implements Seriali
 			setTipoIdentificador(Enum_Aux_Tipo_Identificador.CPF);
 		setCpf_Cnpj(mM.getId_Pessoa_Assinante().getCpf_Cnpj());
 		mDsTemp = mDDAO.listarPeloMestre(mM,null, null);		
-		for (Movimento_Detalhe i : mDsTemp) {
-			System.out.println("Movimento: "+i.getId());
-			System.out.println("Descrição: "+i.getDescricao());
-			System.out.println("Qtde: "+i.getQtde());
-			System.out.println("Valor: "+i.getValorUnidade());
-		}
+		
 		
 		
 		paginas.mudaPaginaAtual(event);
@@ -248,7 +243,7 @@ public class MovimentojsfController extends GenericController implements Seriali
 			mDTemp.setId_Combo_Mestre(cBM);
 			mDTemp.setId_Combo_Detalhe(cbd);
 			mDTemp.setId_Item_de_Movimento(cbd.getId_Itens_Movimento());
-			mDTemp.setcD(Enum_Aux_Credita_Debita.CREDITO);
+			mDTemp.setcD(Enum_Aux_Credita_Debita.C);
 			mDTemp.setReferencia(cbd.getId_Itens_Movimento().getReferencia());
 			mDTemp.setDescricao(cbd.getId_Itens_Movimento().getDescricao());
 			mDTemp.setQtde(cbd.getQtde());

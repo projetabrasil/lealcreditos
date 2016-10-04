@@ -29,6 +29,7 @@ import br.com.lealbrasil.model.entities.Agendamento;
 import br.com.lealbrasil.model.entities.Carrossel;
 import br.com.lealbrasil.model.entities.Enum_Aux_Perfil_Pessoa;
 import br.com.lealbrasil.model.entities.Enum_Aux_Status_Agendamento;
+import br.com.lealbrasil.model.entities.Enum_Aux_Status_Movimento_Ponto;
 import br.com.lealbrasil.model.entities.Enum_Aux_Tipo_Item_de_Movimento;
 import br.com.lealbrasil.model.entities.Enum_Aux_Tipo_Mov_Ponto;
 import br.com.lealbrasil.model.entities.Item_de_Movimento;
@@ -129,12 +130,12 @@ public class CarroseljsfController extends GenericController implements Serializ
 		for (Pessoa estabPont : estabelecimentosPontuados) {
 
 			credito = pMovDAO.somadePontos(estabPont, perfilLogado.getUsLogado().getPessoa(), true,
-					Enum_Aux_Tipo_Mov_Ponto.C);
+					Enum_Aux_Tipo_Mov_Ponto.C, Enum_Aux_Status_Movimento_Ponto.CONFIRMADO);
 			debito = pMovDAO.somadePontos(estabPont, perfilLogado.getUsLogado().getPessoa(), true,
-					Enum_Aux_Tipo_Mov_Ponto.D);
+					Enum_Aux_Tipo_Mov_Ponto.D, Enum_Aux_Status_Movimento_Ponto.CONFIRMADO);
 
 			debito += pMovDAO.somadePontos(estabPont, perfilLogado.getUsLogado().getPessoa(), true,
-					Enum_Aux_Tipo_Mov_Ponto.E);
+					Enum_Aux_Tipo_Mov_Ponto.E, Enum_Aux_Status_Movimento_Ponto.CONFIRMADO);
 			pontos = credito - debito;
 			pHCliente = new Pontuacao_Historico_Cliente();
 			pHCliente.setId_Assinante(estabPont);

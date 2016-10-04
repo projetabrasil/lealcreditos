@@ -32,10 +32,29 @@ public class PessoaBusiness2 implements Serializable {
 		return p;
 	}
 
+	public static boolean validacpfCnpj(String cpf_Cnpj, Enum_Aux_Tipo_Identificador tipo) {
+		
+			if (cpf_Cnpj != null && cpf_Cnpj.length() > 0 && (tipo.equals(Enum_Aux_Tipo_Identificador.CPF)
+							|| tipo.equals(Enum_Aux_Tipo_Identificador.CNPJ))) {
+				if (tipo.equals(Enum_Aux_Tipo_Identificador.CPF)
+						&& !Utilidades.isValidCPF(cpf_Cnpj)) {
+					mensagensDisparar("CPF informado é Inválido!!!");
+					return false;
+				} else if (tipo.equals(Enum_Aux_Tipo_Identificador.CNPJ)
+						&& !Utilidades.isValidCNPJ(cpf_Cnpj)) {
+					mensagensDisparar("CNPJ informado é Inválido!!!");
+					return false;
+				}
+
+			}
+			return true;
+		
+	}
+
 	public static boolean validaDados(Usuario usuario, PerfilLogado perfilLogado, boolean validarEmail,
 			boolean validarSenha, boolean validarCpf_Cnpj) {
 		if (validarCpf_Cnpj) {
-			if ( usuario.getPessoa().getCpf_Cnpj() != null && usuario.getPessoa().getCpf_Cnpj().length() > 0
+			if (usuario.getPessoa().getCpf_Cnpj() != null && usuario.getPessoa().getCpf_Cnpj().length() > 0
 					&& (usuario.getPessoa().getEnum_Aux_Tipo_Identificador().equals(Enum_Aux_Tipo_Identificador.CPF)
 							|| usuario.getPessoa().getEnum_Aux_Tipo_Identificador()
 									.equals(Enum_Aux_Tipo_Identificador.CNPJ))) {

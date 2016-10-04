@@ -1,8 +1,8 @@
 package br.com.lealbrasil.model.entities;
 
 public enum Enum_Aux_Credita_Debita {
-	CREDITO("C","CREDITO",0),
-	DEBITO ("D","DEBITO",1);
+	C("C","CREDITO",0),
+	D("D","DEBITO",1);
 	
 	private String abrev;
 	private String descricao;

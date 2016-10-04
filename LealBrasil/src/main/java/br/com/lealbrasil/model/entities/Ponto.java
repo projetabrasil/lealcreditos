@@ -4,74 +4,56 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+
+import br.com.lealbrasil.util.Utilidades;
 
 @SuppressWarnings("serial")
 @Entity
-@Table(name="Pontuacao_Config")
-public class Ponto extends GenericDomain implements Serializable{
-	
-	@Id
-	@SequenceGenerator(name="pk_pontuacao_Config",sequenceName="messsounds_pontuacao_Config", allocationSize=1)
-	@GeneratedValue(strategy=GenerationType.SEQUENCE,generator="pk_pontuacao_Config")
-	private Long id;
-	
-	@Column(name="descricao", nullable=true, length=90)
-	private String descricao;
-	@ManyToOne
-	@JoinColumn ( name ="id_Pessoa_Registro", nullable=false)	
-	private Pessoa id_Pessoa_Registro ;
-	
-	
-	@Column(name="pontuacaoMinima", nullable=false)	
+@Table(name="Ponto")
+public class Ponto extends Item_de_Movimento implements Serializable{
+	@Column(name="pontuacaoMinima")	
 	private int pontuacaoMinima;
-	@Column(name="unidadeporPonto", nullable=false)	
+	@Column(name="unidadeporPonto")	
 	private int unidadeporPonto;	
-	@Column(name="diasValidade",nullable=false)	
+	@Column(name="diasValidade")	
 	private int diasValidade;
 	
-	@Column(name="valordaUnidade",precision=18,scale=4,nullable=false)
-	private double valordaUnidade;	
-	@Column(name="valorUnidadeTroca",precision=18,scale=4,nullable=false)
+	
+	@Column(name="valorUnidadeTroca",precision=18,scale=4)
 	private double valorUnidadeTroca;
-	@Column(name="valorUnidadeDevolucao",precision=18,scale=4,nullable=false)
+	@Column(name="valorUnidadeDevolucao",precision=18,scale=4)
 	private double valorUnidadeDevolucao;
-	@ManyToOne	
-	@JoinColumn ( name ="id_Pessoa_Associado", nullable=false)
-	private Pessoa id_Pessoa_Associado;
-	public Long getId() {
-		return id;
+	
+	
+	public Ponto(){
+		
 	}
 	
 	public Ponto(Pessoa Id_Pessoa_Registro, Pessoa Id_Pessoa_Assinante, Enum_Aux_Tipo_Item_de_Movimento
-			Enum_Aux_Tipo_Item_de_Movimento){
+			enum_Aux_Tipo_Item_de_Movimento){
 		
 		setId_Pessoa_Registro(Id_Pessoa_Registro);
-		setId_Pessoa_Associado(Id_Pessoa_Assinante);
-		
-		
-	}
-	
-	public void setId(Long id) {
-		this.id = id;
-	}
-	public String getDescricao() {
-		return descricao;
-	}
-	public void setDescricao(String descricao) {
-		this.descricao = descricao;
-	}
-	public Pessoa getId_Pessoa_Registro() {
-		return id_Pessoa_Registro;
-	}
-	public void setId_Pessoa_Registro(Pessoa id_Pessoa_Registro) {
-		this.id_Pessoa_Registro = id_Pessoa_Registro;
+		setId_Pessoa_Assinante(Id_Pessoa_Assinante);
+		setEnum_Aux_Tipo_Item_de_Movimento(enum_Aux_Tipo_Item_de_Movimento);
+		setUltimaAtualizacao(Utilidades.retornaCalendario());
+		setCaminhodaImagem("");
+		setCaminhodaImagem2("");
+		setCaminhoTemp("");
+		setDescricao("");
+		setDiasValidade(360);
+		setId_Empresa(1);
+		setIsAnual(Enum_Aux_Sim_ou_Nao.SIM);
+		setIsPrecoUnico(Enum_Aux_Sim_ou_Nao.NAO);
+		setPonto(1);
+		setPontuacaoMinima(1);
+		setReferencia("");
+		setTipodeImagem(".png");
+		setUltimaReferencia(0);
+		setUnidadeporPonto(1);
+		setValordaUnidade(1);		
+		setValorUnidadeDevolucao(2);
+		setValorUnidadeTroca(1);
 	}
 	public int getPontuacaoMinima() {
 		return pontuacaoMinima;
@@ -91,12 +73,6 @@ public class Ponto extends GenericDomain implements Serializable{
 	public void setDiasValidade(int diasValidade) {
 		this.diasValidade = diasValidade;
 	}
-	public double getValordaUnidade() {
-		return valordaUnidade;
-	}
-	public void setValordaUnidade(double valordaUnidade) {
-		this.valordaUnidade = valordaUnidade;
-	}
 	public double getValorUnidadeTroca() {
 		return valorUnidadeTroca;
 	}
@@ -109,37 +85,23 @@ public class Ponto extends GenericDomain implements Serializable{
 	public void setValorUnidadeDevolucao(double valorUnidadeDevolucao) {
 		this.valorUnidadeDevolucao = valorUnidadeDevolucao;
 	}
-	public Pessoa getId_Pessoa_Associado() {
-		return id_Pessoa_Associado;
-	}
-	public void setId_Pessoa_Associado(Pessoa id_Pessoa_Associado) {
-		this.id_Pessoa_Associado = id_Pessoa_Associado;
-	}
 	@Override
 	public String toString() {
-		return "Pontuacao_Config [id=" + id + ", descricao=" + descricao + ", id_Pessoa_Registro=" + id_Pessoa_Registro
-				+ ", pontuacaoMinima=" + pontuacaoMinima + ", unidadeporPonto=" + unidadeporPonto + ", diasValidade="
-				+ diasValidade + ", valordaUnidade=" + valordaUnidade + ", valorUnidadeTroca=" + valorUnidadeTroca
-				+ ", valorUnidadeDevolucao=" + valorUnidadeDevolucao + ", id_Pessoa_Associado=" + id_Pessoa_Associado
-				+ "]";
+		return "Ponto [pontuacaoMinima=" + pontuacaoMinima + ", unidadeporPonto=" + unidadeporPonto + ", diasValidade="
+				+ diasValidade + ", valorUnidadeTroca=" + valorUnidadeTroca + ", valorUnidadeDevolucao="
+				+ valorUnidadeDevolucao + "]";
 	}
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = super.hashCode();
-		result = prime * result + ((descricao == null) ? 0 : descricao.hashCode());
 		result = prime * result + diasValidade;
-		result = prime * result + ((id == null) ? 0 : id.hashCode());
-		result = prime * result + ((id_Pessoa_Associado == null) ? 0 : id_Pessoa_Associado.hashCode());
-		result = prime * result + ((id_Pessoa_Registro == null) ? 0 : id_Pessoa_Registro.hashCode());
 		result = prime * result + pontuacaoMinima;
 		result = prime * result + unidadeporPonto;
 		long temp;
 		temp = Double.doubleToLongBits(valorUnidadeDevolucao);
 		result = prime * result + (int) (temp ^ (temp >>> 32));
 		temp = Double.doubleToLongBits(valorUnidadeTroca);
-		result = prime * result + (int) (temp ^ (temp >>> 32));
-		temp = Double.doubleToLongBits(valordaUnidade);
 		result = prime * result + (int) (temp ^ (temp >>> 32));
 		return result;
 	}
@@ -152,27 +114,7 @@ public class Ponto extends GenericDomain implements Serializable{
 		if (getClass() != obj.getClass())
 			return false;
 		Ponto other = (Ponto) obj;
-		if (descricao == null) {
-			if (other.descricao != null)
-				return false;
-		} else if (!descricao.equals(other.descricao))
-			return false;
 		if (diasValidade != other.diasValidade)
-			return false;
-		if (id == null) {
-			if (other.id != null)
-				return false;
-		} else if (!id.equals(other.id))
-			return false;
-		if (id_Pessoa_Associado == null) {
-			if (other.id_Pessoa_Associado != null)
-				return false;
-		} else if (!id_Pessoa_Associado.equals(other.id_Pessoa_Associado))
-			return false;
-		if (id_Pessoa_Registro == null) {
-			if (other.id_Pessoa_Registro != null)
-				return false;
-		} else if (!id_Pessoa_Registro.equals(other.id_Pessoa_Registro))
 			return false;
 		if (pontuacaoMinima != other.pontuacaoMinima)
 			return false;
@@ -182,11 +124,14 @@ public class Ponto extends GenericDomain implements Serializable{
 			return false;
 		if (Double.doubleToLongBits(valorUnidadeTroca) != Double.doubleToLongBits(other.valorUnidadeTroca))
 			return false;
-		if (Double.doubleToLongBits(valordaUnidade) != Double.doubleToLongBits(other.valordaUnidade))
-			return false;
 		return true;
 	}
-			
+
+
+
+	
+
+				
 }
 	
 	

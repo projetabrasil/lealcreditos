@@ -14,15 +14,24 @@ public class UsuarioBusiness implements Serializable {
 	private static void mensagensDisparar(String mensagem) {
 		Messages.addGlobalInfo(mensagem);
 	}
+	@SuppressWarnings("unused")
 	public static Usuario merge(Usuario usuario){		
 			Usuario us = usuario;
+			
 			try {
 				UsuarioDAO usuarioDAO = new UsuarioDAO();
+				
 				us = usuarioDAO.retornaUsuarioPelaPessoa(us.getPessoa());
-				if (us==null) us = usuario;
+				if(us==null)
+					us = usuario;				
+				us.setConfSenha(usuario.getConfSenha());				
+				us.setSenhaSemCript(usuario.getSenhaSemCript());
+				
+				
+				
+				if (us==null) 
+				us = usuario;
 				us.setAtivo(true);
-				
-				
 				us = (Usuario) usuarioDAO.merge(us);
 				if (us.getId() != null)
 					mensagensDisparar("Usuário: " + Enum_Aux_Tipo_Mensagem.ALTERACAO.getMensagem());

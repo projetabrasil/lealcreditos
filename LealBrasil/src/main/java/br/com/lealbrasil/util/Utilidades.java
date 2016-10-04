@@ -296,20 +296,21 @@ public class Utilidades implements Serializable {
 	public static String randon(String param) {
 
 		String letras = "ABCDEFGHIJKLMNOPQRSTUVYWXZ";
-
 		Random random = new Random();
-
 		String armazenaChaves = "";
 		Long valor;
 		String novoValor;
 		int index = -1;
-
 		for (int i = 0; i < 4; i++) {
 			index = random.nextInt(letras.length());
 			armazenaChaves += letras.substring(index, index + 1);
-			valor = random.nextInt(10) * Long.valueOf(param);
-
+			valor = 0l;
 			novoValor = "" + valor;
+			while (novoValor.length() <= 1) {
+				valor = random.nextInt(10) * Long.valueOf(param);
+				novoValor = "" + valor;
+			}
+
 			armazenaChaves += novoValor.substring(1, 2);
 			if (i % 2 == 0)
 				armazenaChaves += "-";
@@ -328,11 +329,10 @@ public class Utilidades implements Serializable {
 			PdfWriter writer = PdfWriter.getInstance(document, file);
 			document.open();
 			Image img = Image.getInstance(mDA.getCaminhoDaImagem());
-			String dados = "Nome          :"+ag.getId_Pessoa_Cliente().getDescricao() +"\n"+
-					       "Codigo        : "+mDA.getCodigo()+"\n"+
-					       "Telefone      : "+ag.getId_Pessoa_Cliente().getFone_1()+"\n"+
-					       "Agendado para : "+getDataPorExtenso(ag.getDataAgendamento().getTime())+"\n";		
-			
+			String dados = "Nome          :" + ag.getId_Pessoa_Cliente().getDescricao() + "\n" + "Codigo        : "
+					+ mDA.getCodigo() + "\n" + "Telefone      : " + ag.getId_Pessoa_Cliente().getFone_1() + "\n"
+					+ "Agendado para : " + getDataPorExtenso(ag.getDataAgendamento().getTime()) + "\n";
+
 			document.add(img);
 			document.add(new Paragraph(dados));
 			InputStream is = new ByteArrayInputStream(mDA.getRegulamento().getBytes());
@@ -348,9 +348,10 @@ public class Utilidades implements Serializable {
 		}
 
 	}
-	public static String getDataPorExtenso(Date data){
-        DateFormat dfmt = new SimpleDateFormat("d 'de' MMMM 'de' yyyy");
-        return dfmt.format(data);
-   }
+
+	public static String getDataPorExtenso(Date data) {
+		DateFormat dfmt = new SimpleDateFormat("d 'de' MMMM 'de' yyyy");
+		return dfmt.format(data);
+	}
 
 }

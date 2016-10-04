@@ -45,6 +45,7 @@ public class PessoajsfController extends GenericController implements Serializab
 
 	@PostConstruct
 	public void listar() {
+		if(perfilLogado!=null && perfilLogado.getPerfilUsLogado()!=null)
 		pessoas = PessoaBusiness.listar(perfilLogado);
 	}
 
@@ -103,10 +104,14 @@ public class PessoajsfController extends GenericController implements Serializab
 			pessoa.setId_Pessoa_Registro(perfilLogado.getAssLogado());
 		else
 			pessoa.setId_Pessoa_Registro(perfilLogado.getUsLogado().getPessoa());
+		
+		
+		
 		usuario.setPessoa(pessoa);
 
 		if (!PessoaBusiness2.validaDados(usuario, perfilLogado, true, true, true))
 			return;
+		
 		if (pessoa.getId() != null
 				&& perfilLogado.getPaginaAtual().getPerfilPessoa().equals(Enum_Aux_Perfil_Pessoa.ATENDENTES)) {
 			Pessoa_Vinculo pVin = new Pessoa_Vinculo();
@@ -120,6 +125,7 @@ public class PessoajsfController extends GenericController implements Serializab
 				return;
 			}
 		}
+		
 		pessoa = PessoaGenericBusiness.merge(pessoa, usuario, perfilLogado, true);
 		listar();
 		cancela();

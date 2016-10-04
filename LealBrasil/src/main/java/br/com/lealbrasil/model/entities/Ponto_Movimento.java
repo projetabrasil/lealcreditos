@@ -61,10 +61,17 @@ public class Ponto_Movimento extends GenericDomain implements Serializable {
 	private int pontosAtingidos;	
 	@Enumerated(EnumType.STRING)
 	@Column(name="creditaDebita", nullable=false)
-	private Enum_Aux_Tipo_Mov_Ponto creditaDebita;
-	
+	private Enum_Aux_Tipo_Mov_Ponto creditaDebita;	
 	@Temporal(TemporalType.DATE)
 	private Date validade;
+	@Temporal(TemporalType.DATE)
+	private Date dataLancamento;
+	@Column(name="numDoc",length=90)
+	private String numDoc;
+	
+	@Enumerated(EnumType.STRING)
+	@Column(name="enum_Aux_Status_Movimento_Ponto")
+	private Enum_Aux_Status_Movimento_Ponto enum_Aux_Status_Movimento_Ponto;
 
 	public Long getId() {
 		return id;
@@ -186,6 +193,22 @@ public class Ponto_Movimento extends GenericDomain implements Serializable {
 		this.validade = validade;
 	}
 
+	public String getNumDoc() {
+		return numDoc;
+	}
+
+	public void setNumDoc(String numDoc) {
+		this.numDoc = numDoc;
+	}
+
+	public Enum_Aux_Status_Movimento_Ponto getEnum_Aux_Status_Movimento_Ponto() {
+		return enum_Aux_Status_Movimento_Ponto;
+	}
+
+	public void setEnum_Aux_Status_Movimento_Ponto(Enum_Aux_Status_Movimento_Ponto enum_Aux_Status_Movimento_Ponto) {
+		this.enum_Aux_Status_Movimento_Ponto = enum_Aux_Status_Movimento_Ponto;
+	}
+
 	@Override
 	public String toString() {
 		return "Ponto_Movimento [id=" + id + ", id_pessoa_associado=" + id_pessoa_associado + ", id_pessoa_cliente="
@@ -194,7 +217,7 @@ public class Ponto_Movimento extends GenericDomain implements Serializable {
 				+ diasValidade + ", valordaUnidade=" + valordaUnidade + ", valorUnidadeTroca=" + valorUnidadeTroca
 				+ ", valorUnidadeDevolucao=" + valorUnidadeDevolucao + ", valoraPontuar=" + valoraPontuar
 				+ ", pontosAtingidos=" + pontosAtingidos + ", creditaDebita=" + creditaDebita + ", validade=" + validade
-				+ "]";
+				+ ", numDoc=" + numDoc + ", enum_Aux_Status_Movimento_Ponto=" + enum_Aux_Status_Movimento_Ponto + "]";
 	}
 
 	@Override
@@ -203,11 +226,14 @@ public class Ponto_Movimento extends GenericDomain implements Serializable {
 		int result = super.hashCode();
 		result = prime * result + ((creditaDebita == null) ? 0 : creditaDebita.hashCode());
 		result = prime * result + diasValidade;
+		result = prime * result
+				+ ((enum_Aux_Status_Movimento_Ponto == null) ? 0 : enum_Aux_Status_Movimento_Ponto.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result + ((id_Pessoa_Registro == null) ? 0 : id_Pessoa_Registro.hashCode());
 		result = prime * result + ((id_pessoa_associado == null) ? 0 : id_pessoa_associado.hashCode());
 		result = prime * result + ((id_pessoa_cliente == null) ? 0 : id_pessoa_cliente.hashCode());
 		result = prime * result + ((id_ponto == null) ? 0 : id_ponto.hashCode());
+		result = prime * result + ((numDoc == null) ? 0 : numDoc.hashCode());
 		result = prime * result + pontosAtingidos;
 		result = prime * result + pontuacaoMinima;
 		result = prime * result + unidadeporPonto;
@@ -237,6 +263,8 @@ public class Ponto_Movimento extends GenericDomain implements Serializable {
 			return false;
 		if (diasValidade != other.diasValidade)
 			return false;
+		if (enum_Aux_Status_Movimento_Ponto != other.enum_Aux_Status_Movimento_Ponto)
+			return false;
 		if (id == null) {
 			if (other.id != null)
 				return false;
@@ -262,6 +290,11 @@ public class Ponto_Movimento extends GenericDomain implements Serializable {
 				return false;
 		} else if (!id_ponto.equals(other.id_ponto))
 			return false;
+		if (numDoc == null) {
+			if (other.numDoc != null)
+				return false;
+		} else if (!numDoc.equals(other.numDoc))
+			return false;
 		if (pontosAtingidos != other.pontosAtingidos)
 			return false;
 		if (pontuacaoMinima != other.pontuacaoMinima)
@@ -284,6 +317,15 @@ public class Ponto_Movimento extends GenericDomain implements Serializable {
 		return true;
 	}
 
-		
+	public Date getDataLancamento() {
+		return dataLancamento;
+	}
+
+	public void setDataLancamento(Date dataLancamento) {
+		this.dataLancamento = dataLancamento;
+	}
+	
+
+			
 
 }
