@@ -1,11 +1,15 @@
 package br.com.lealbrasil.controller;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.Serializable;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.attribute.BasicFileAttributes;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -55,22 +59,23 @@ public class CarroseljsfController extends GenericController implements Serializ
 	private Pontuacao_Historico_Cliente pHCliente;
 	private StreamedContent fotoRetornada;
 	private List<Movimento_Detalhe_A> mDAs;
+	private Movimento_Detalhe_A mDA;
 	private List<Movimento_Detalhe_Dias_Disponiveis> mDDDs;
 	private List<Integer> diasDisponiveis;
 	private ArrayList<Calendar> datasIndisponiveis;
 	@ManagedProperty(value = "#{agendamento}")
 	private AgendamentojsfController agendamento;
+	private StreamedContent arquivoPdf;
+	private boolean downloadPronto = false;
 
 	@PostConstruct
 	public void listar() {
-		if (!perfilLogado.getPerfilUsLogado().equals(Enum_Aux_Perfil_Pessoa.CLIENTES)
-				&& !perfilLogado.getPerfilUsLogado().equals(Enum_Aux_Perfil_Pessoa.OUTROS))
+		if (!perfilLogado.getPerfilUsLogado().equals(Enum_Aux_Perfil_Pessoa.CLIENTES))
 			setRenderizaCarrossel(false);
-		else
+		else {
 			setRenderizaCarrossel(true);
-
-		listaVouchers();
-
+			listaVouchers();
+		}
 	}
 
 	public void merge() {
@@ -83,30 +88,38 @@ public class CarroseljsfController extends GenericController implements Serializ
 		mDAs = mDADAO.vouchersParaoCliente(perfilLogado.getUsLogado().getPessoa(),
 				Enum_Aux_Tipo_Item_de_Movimento.VOUCHER);
 		checarAgendamentodoCliente();
-
 	}
 
 	public void checarAgendamentodoCliente() {
 		int i = 0;
 		for (Movimento_Detalhe_A movDet : mDAs) {
 			Agendamento agendamento;
+			String caminho = Utilidades.getCaminhofotovouchers() + "" + movDet.getId() + Utilidades.getTipoimagem();
+
+			movDet.setCaminhoDaImagem(caminho);
 			AgendamentoDAO agDAO = new AgendamentoDAO();
 			agendamento = agDAO.checaAgendamentoAtivodoCliente(perfilLogado.getUsLogado().getPessoa(), movDet,
 					Enum_Aux_Status_Agendamento.AGENDADO);
 
 			if (agendamento != null) {
 				movDet.setDisponivel(false);
-				movDet.setDescricaoDisponivel("Agendado!!!");
 				movDet.setCodigo(agendamento.getCodigo());
+				if (arquivoExiste(movDet)) {
+					movDet.setDescricaoDisponivel("Imprimir Comprovante");
+					setDownloadPronto(true);
+				} else {
+					movDet.setDescricaoDisponivel("Gerar Comprovante!");
+					setDownloadPronto(false);
+				}
+
 			} else {
 				movDet.setDisponivel(true);
+				setDownloadPronto(false);
 				movDet.setDescricaoDisponivel("Agendar");
 				movDet.setCodigo("");
 			}
 			mDAs.set(i, movDet);
-			
 			i++;
-
 		}
 
 	}
@@ -156,14 +169,14 @@ public class CarroseljsfController extends GenericController implements Serializ
 		for (Item_de_Movimento brinde : brindes) {
 			try {
 
-				brinde.setCaminhodaImagem(Utilidades.caminho("Brindes"));
+				brinde.setCaminhodaImagem(
+						Utilidades.getCaminhofotobrinde() + "" + brinde.getId() + Utilidades.getTipoimagem());
 				brinde.setTipodeImagem(Utilidades.tipodeImagem());
-				brinde.setCaminhodaImagem(brinde.getCaminhodaImagem() + brinde.getId() + ".png");
 
 				if (brinde.getPonto() > pHCliente.getPontos()) {
-					brinde.setCaminhodaImagem2("/images/naoatingido.png");
+					brinde.setCaminhodaImagem2(Utilidades.getNaoatingido());
 				} else
-					brinde.setCaminhodaImagem2("/images/atingido.png");
+					brinde.setCaminhodaImagem2(Utilidades.getAtingido());
 				brinde.setFoto(retornafoto(brinde.getCaminhodaImagem()));
 				brinde.setFoto2(retornafoto(brinde.getCaminhodaImagem2()));
 				brindes.set(i, brinde);
@@ -178,25 +191,23 @@ public class CarroseljsfController extends GenericController implements Serializ
 	}
 
 	public StreamedContent retornafoto(String caminhodaImagem) throws IOException {
-		String branco;
+
 		if (caminhodaImagem == null || caminhodaImagem.isEmpty()) {
-			branco = "/imagens/branco.png";
-
-			Path path = Paths.get(branco);
-
+			Path path = Paths.get(Utilidades.getBranco());
 			if (Files.exists(path)) {
 				InputStream stream = Files.newInputStream(path);
 				fotoRetornada = new DefaultStreamedContent(stream);
 			}
 
 		} else {
+
 			Path path = Paths.get(caminhodaImagem);
 			if (Files.exists(path)) {
 				InputStream stream = Files.newInputStream(path);
 				fotoRetornada = new DefaultStreamedContent(stream);
 			} else {
-				branco = "/imagens/branco.png";
-				path = Paths.get(branco);
+
+				path = Paths.get(Utilidades.getBranco());
 
 				if (Files.exists(path)) {
 					InputStream stream = Files.newInputStream(path);
@@ -236,25 +247,73 @@ public class CarroseljsfController extends GenericController implements Serializ
 		mDDDs = mDDDDAO.retornaDiasDisponiveis(mDA);
 		retornaDiasDisponiveis();
 		agendamento.novo(mDA);
-
 	}
 
 	public void acao(ActionEvent event) {
 		Movimento_Detalhe_A mDA = (Movimento_Detalhe_A) event.getComponent().getAttributes().get("registroAtual");
 		String acao;
 		acao = mDA.getDescricaoDisponivel().toUpperCase();
-		if (acao.equals("AGENDAR")) 
+		if (acao.equals("AGENDAR"))
 			mostraCalendario(mDA);
-		else{			 
-			String temp = System.getProperty("java.io.tmpdir");
-			Agendamento ag;		
-   		    AgendamentoDAO agDAO = new AgendamentoDAO();
+		else {
+			Agendamento ag;
+			AgendamentoDAO agDAO = new AgendamentoDAO();
 			ag = agDAO.checaAgendamentoAtivodoCliente(perfilLogado.getUsLogado().getPessoa(), mDA,
-			Enum_Aux_Status_Agendamento.AGENDADO);			
-			Utilidades.pdf(temp+mDA.getCodigo()+".pdf", mDA, ag);
-		}
-			
+					Enum_Aux_Status_Agendamento.AGENDADO);
+			if (mDA.getDescricaoDisponivel().equals("Imprimir Comprovante")) {
+				download(mDA);
+			} else if (mDA.getDescricaoDisponivel().equals("Gerar Comprovante!")) {
+				Utilidades.GerarPdf(mDA, ag);
+				checarAgendamentodoCliente();
+			}
 
+		}
+	}
+
+	public void download(Movimento_Detalhe_A mDA) {
+		InputStream pdf = null;
+		try {
+			if (arquivoExiste(mDA)) {
+				pdf = new FileInputStream(Utilidades.getCaminhopdf() + mDA.getCodigo() + ".pdf");
+				arquivoPdf = new DefaultStreamedContent(pdf, "application/pdf","Comprovante_"+mDA.getCodigo() + ".pdf");
+				
+				
+				
+				
+			}else
+				mensagensDisparar(
+						"Arquivo não existe ou não terminou de ser carregado!!!. Tente novamente em 5 segundos");
+		} catch (FileNotFoundException e) {
+			mensagensDisparar("erro ao tentar carregar comprovante!!!");
+			e.printStackTrace();
+		}
+		
+	}
+
+	public boolean arquivoExiste(Movimento_Detalhe_A mDA) {
+		boolean existe = false;
+		String caminho = Utilidades.getCaminhopdf() + mDA.getCodigo() + ".pdf";
+		
+		BasicFileAttributes attr;
+		File arquivo = new File(caminho);
+		if (arquivo.exists()) {
+			Path file = Paths.get(caminho);
+			try {
+				attr = Files.readAttributes(file, BasicFileAttributes.class);
+				if (attr.size() > 0)
+					existe = true;
+			} catch (IOException e) {
+				mensagensDisparar("Erro ao tentar verificar se arquivo PDF existe!!!");
+				e.printStackTrace();
+			}
+		}else
+			existe = false;
+
+		return existe;
+	}
+
+	public void setArquivoPdf(StreamedContent arquivoPdf) {
+		this.arquivoPdf = arquivoPdf;
 	}
 
 	public void montadiasindisponiveis() {
@@ -371,6 +430,26 @@ public class CarroseljsfController extends GenericController implements Serializ
 
 	public void setAgendamento(AgendamentojsfController agendamento) {
 		this.agendamento = agendamento;
+	}
+
+	public boolean isDownloadPronto() {
+		return downloadPronto;
+	}
+
+	public void setDownloadPronto(boolean downloadPronto) {
+		this.downloadPronto = downloadPronto;
+	}
+
+	public StreamedContent getArquivoPdf() {
+		return arquivoPdf;
+	}
+
+	public Movimento_Detalhe_A getmDA() {
+		return mDA;
+	}
+
+	public void setmDA(Movimento_Detalhe_A mDA) {
+		this.mDA = mDA;
 	}
 
 }

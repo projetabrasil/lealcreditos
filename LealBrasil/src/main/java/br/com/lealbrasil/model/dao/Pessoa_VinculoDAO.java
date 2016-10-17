@@ -5,6 +5,7 @@ import java.util.List;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Property;
 import org.hibernate.criterion.Restrictions;
 import org.hibernate.criterion.Subqueries;
@@ -60,13 +61,14 @@ public class Pessoa_VinculoDAO extends GenericDAO<Pessoa_Vinculo> {
 
 			DetachedCriteria subQuery2 = DetachedCriteria.forClass(Pessoa_Enum_Aux_Perfil_Pessoa.class)
 					.setProjection(Property.forName("id_pessoa"));
-			subQuery2.add(Restrictions.eq("enum_Aux_Perfil_Pessoa", perfilUsLogado));
+			subQuery2.add(Restrictions.eq("enum_Aux_Perfil_Pessoa", perfilUsLogado ));
 
 			Criteria crit = sessao.createCriteria(Pessoa_Vinculo.class)
 					.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
 					.add(Restrictions.and(Subqueries.propertyIn("id_pessoa_d", subQuery1),
 							Subqueries.propertyIn("id_pessoa_d", subQuery2)));
 			crit.add(Restrictions.eq("id_pessoa_d", pessoa_Vinculo.getId_pessoa_d()));
+			crit.setMaxResults(1);
 			return (Pessoa_Vinculo) crit.uniqueResult();
 		} catch (RuntimeException error) {
 			throw error;
@@ -74,22 +76,44 @@ public class Pessoa_VinculoDAO extends GenericDAO<Pessoa_Vinculo> {
 			sessao.close();
 		}
 	}
-	public Pessoa_Vinculo retornaVinculo_Mestre(Pessoa_Vinculo pessoa_Vinculo, PerfilLogado perfilLogado,Enum_Aux_Perfil_Pessoa perfilPessoaCadastro) {
+	
+	public Pessoa_Vinculo retornaVinculo_Mestre(Pessoa pessoaDetalhe,Pessoa pessoaMestre, Enum_Aux_Perfil_Pessoa perfilPessoaCadastro) {
 		Session sessao = HibernateUtil.getFabricaDeSessoes().openSession();
 		try {
 			
            
-			DetachedCriteria subQuery1 = DetachedCriteria.forClass(Pessoa_Enum_Aux_Perfil_Pessoa.class)
-					.setProjection(Property.forName("id_pessoa"));
-			if (perfilPessoaCadastro==null )
-			subQuery1.add(Restrictions.eq("enum_Aux_Perfil_Pessoa", perfilLogado.getPerfilUsLogado()));
-			else
-				subQuery1.add(Restrictions.eq("enum_Aux_Perfil_Pessoa", perfilPessoaCadastro));	
+				
 
 			Criteria crit = sessao.createCriteria(Pessoa_Vinculo.class)
-					.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
-					.add(Restrictions.and(Subqueries.propertyIn("id_pessoa_d", subQuery1)));
-			        crit.add(Restrictions.eq("id_pessoa_d",pessoa_Vinculo.getId_pessoa_d()));
+					.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);					
+					crit.add(Restrictions.eq("id_pessoa_d",pessoaDetalhe));			        
+					crit.add(Restrictions.eq("id_pessoa_m",pessoaMestre));
+			        if(perfilPessoaCadastro!=null && perfilPessoaCadastro.getId()>0)
+				        crit.add(Restrictions.eq("enum_Aux_Perfil_Pessoa", perfilPessoaCadastro));
+			        crit.addOrder(Order.desc("id"));
+			        crit.setMaxResults(1);
+					
+			return (Pessoa_Vinculo) crit.uniqueResult();
+		} catch (RuntimeException error) {
+			throw error;
+		} finally {
+			sessao.close();
+		}
+	}
+	
+	public Pessoa_Vinculo retornaVinculo_Mestre(Pessoa pessoaDetalhe, Enum_Aux_Perfil_Pessoa perfilPessoaCadastro) {
+		Session sessao = HibernateUtil.getFabricaDeSessoes().openSession();
+		try {
+			
+           
+				
+
+			Criteria crit = sessao.createCriteria(Pessoa_Vinculo.class)
+					.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);					
+					crit.add(Restrictions.eq("id_pessoa_d",pessoaDetalhe));			        
+			        if(perfilPessoaCadastro!=null && perfilPessoaCadastro.getId()>0)
+				        crit.add(Restrictions.eq("enum_Aux_Perfil_Pessoa", perfilPessoaCadastro));
+			        crit.addOrder(Order.desc("id"));
 			        crit.setMaxResults(1);
 					
 			return (Pessoa_Vinculo) crit.uniqueResult();

@@ -25,7 +25,7 @@
 						<p:commandButton value="Novo"
 							oncomplete="PF('dialogoCadastro').show();"
 							actionListener="#{ponto.novo}"
-							update=":formTemplate:formCadastro:painelCadastro" style="width:5%"/>
+							update=":formTemplate:formCadastro" style="width:5%"/>
 					</f:facet>
 					<p:column headerText="Descrição" style="width:20%">
 						<h:outputText value="#{registro.descricao}" />
@@ -80,7 +80,14 @@
 		</h:form>
 		<p:dialog header="Formulário de Configuração de #{ponto.perfilLogado.paginaAtual.descricao2}"
 			widgetVar="dialogoCadastro" resizable="false" modal="true"
-			closable="false" appendTo="@(body)" position="60,10">
+			closable="false" appendTo="@(body)" dynamic="true"
+			responsive="true" 
+			style="float: left;
+    padding: 10px;
+    font-family: calibri;
+    color: #6495ED;
+    font-size: 15px;
+    text-align: left; overflow:auto;">
 			<h:form id="formCadastro">
 				<h:panelGrid id="painelDescricao">
 					<p:outputLabel value="Descrição" />

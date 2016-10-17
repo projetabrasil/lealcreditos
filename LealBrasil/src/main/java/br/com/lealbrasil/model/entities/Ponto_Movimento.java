@@ -1,5 +1,6 @@
 package br.com.lealbrasil.model.entities;
 
+
 import java.io.Serializable;
 import java.util.Date;
 
@@ -16,6 +17,8 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
+import org.primefaces.model.StreamedContent;
 
 @SuppressWarnings("serial")
 @Entity
@@ -69,9 +72,34 @@ public class Ponto_Movimento extends GenericDomain implements Serializable {
 	@Column(name="numDoc",length=90)
 	private String numDoc;
 	
+	@Transient
+	@Column(name = "caminhodaImagem")	
+	 private String caminhodaImagem;
+	@Transient
+	@Column(name = "caminhodaImagem2")	
+	 private String caminhodaImagem2;
+	
+	@Transient
+	@Column(name = "foto")	
+	 private StreamedContent foto;
+	
+	@Transient
+	@Column(name = "foto2")	
+	 private StreamedContent foto2;
+	
+	@Transient
+	@Column(name = "tipodeImagem")	
+	 private String tipodeImagem;
+	@Transient
+	@Column(name = "caminhoTemp")	
+	 private String caminhoTemp;
+	
+	
 	@Enumerated(EnumType.STRING)
 	@Column(name="enum_Aux_Status_Movimento_Ponto")
 	private Enum_Aux_Status_Movimento_Ponto enum_Aux_Status_Movimento_Ponto;
+	
+	
 
 	public Long getId() {
 		return id;
@@ -324,8 +352,52 @@ public class Ponto_Movimento extends GenericDomain implements Serializable {
 	public void setDataLancamento(Date dataLancamento) {
 		this.dataLancamento = dataLancamento;
 	}
-	
 
-			
+	public String getCaminhodaImagem() {
+		return caminhodaImagem;
+	}
 
+	public void setCaminhodaImagem(String caminhodaImagem) {
+		this.caminhodaImagem = caminhodaImagem;
+	}
+
+	public String getCaminhodaImagem2() {
+		return caminhodaImagem2;
+	}
+
+	public void setCaminhodaImagem2(String caminhodaImagem2) {
+		this.caminhodaImagem2 = caminhodaImagem2;
+	}
+
+	public StreamedContent getFoto() {
+		return foto;
+	}
+
+	public void setFoto(StreamedContent foto) {
+		this.foto = foto;
+	}
+
+	public StreamedContent getFoto2() {
+		return foto2;
+	}
+
+	public void setFoto2(StreamedContent foto2) {
+		this.foto2 = foto2;
+	}
+
+	public String getTipodeImagem() {
+		return tipodeImagem;
+	}
+
+	public void setTipodeImagem(String tipodeImagem) {
+		this.tipodeImagem = tipodeImagem;
+	}
+
+	public String getCaminhoTemp() {
+		return caminhoTemp;
+	}
+
+	public void setCaminhoTemp(String caminhoTemp) {
+		this.caminhoTemp = caminhoTemp;
+	}
 }

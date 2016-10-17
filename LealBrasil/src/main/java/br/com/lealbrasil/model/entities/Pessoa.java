@@ -3,7 +3,6 @@ package br.com.lealbrasil.model.entities;
 import java.io.Serializable;
 import java.util.Date;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -12,7 +11,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -56,7 +55,7 @@ public class Pessoa extends GenericDomain implements Serializable{
 	private String fone_3;
 	@Column(name="email", length=90,nullable=true) 
 	private String email;
-	@ManyToOne(cascade = {CascadeType.ALL})
+	@OneToOne
 	@JoinColumn ( name ="id_Pessoa_Registro")		
 	private Pessoa id_Pessoa_Registro ;
 	@Enumerated(EnumType.STRING)
@@ -159,7 +158,7 @@ public class Pessoa extends GenericDomain implements Serializable{
 				+ descricao + ", fantasia_Apelido=" + fantasia_Apelido + ", identificador=" + identificador
 				+ ", dataNascimento=" + dataNascimento + ", cpf_Cnpj=" + cpf_Cnpj + ", rg_Insc=" + rg_Insc + ", sexo="
 				+ sexo + ", fone_1=" + fone_1 + ", fone_2=" + fone_2 + ", fone_3=" + fone_3 + ", email=" + email
-				+ ", id_Pessoa_Registro=" + id_Pessoa_Registro + ", autoPontuacao=" + autoPontuacao + "]";
+				+ ", autoPontuacao=" + autoPontuacao + "]";
 	}
 	@Override
 	public int hashCode() {
@@ -176,7 +175,6 @@ public class Pessoa extends GenericDomain implements Serializable{
 		result = prime * result + ((fone_2 == null) ? 0 : fone_2.hashCode());
 		result = prime * result + ((fone_3 == null) ? 0 : fone_3.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
-		result = prime * result + ((id_Pessoa_Registro == null) ? 0 : id_Pessoa_Registro.hashCode());
 		result = prime * result + ((identificador == null) ? 0 : identificador.hashCode());
 		result = prime * result + ((rg_Insc == null) ? 0 : rg_Insc.hashCode());
 		result = prime * result + ((sexo == null) ? 0 : sexo.hashCode());
@@ -240,11 +238,6 @@ public class Pessoa extends GenericDomain implements Serializable{
 				return false;
 		} else if (!id.equals(other.id))
 			return false;
-		if (id_Pessoa_Registro == null) {
-			if (other.id_Pessoa_Registro != null)
-				return false;
-		} else if (!id_Pessoa_Registro.equals(other.id_Pessoa_Registro))
-			return false;
 		if (identificador == null) {
 			if (other.identificador != null)
 				return false;
@@ -259,11 +252,6 @@ public class Pessoa extends GenericDomain implements Serializable{
 			return false;
 		return true;
 	}
-	public Enum_Aux_Sim_ou_Nao getAutoPontuacao() {
-		return autoPontuacao;
-	}
-	public void setAutoPontuacao(Enum_Aux_Sim_ou_Nao autoPontuacao) {
-		this.autoPontuacao = autoPontuacao;
-	}
+	
 		
 }

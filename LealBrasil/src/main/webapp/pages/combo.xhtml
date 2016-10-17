@@ -28,7 +28,12 @@
 							:formTemplate:formCombos:p3" style="width:8%">
 						</p:commandButton>
 					</f:facet>
-					<p:column headerText="descricao" style="width:15%">
+					<p:column headerText="Ref." style="width:5%">
+						<h:outputText id="Ref" value="R$ #{registro.referencia}">
+						</h:outputText>
+					</p:column>
+					<p:column headerText="descricao" style="width:12%">
+					
 						
 						<p:commandLink id="descricao" outcome="#"
 							value="#{registro.descricao}">
@@ -37,7 +42,7 @@
 
 					</p:column>
 
-					<p:column headerText="Total" style="width:10%">
+					<p:column headerText="Total" style="width:8%">
 						<h:outputText id="total" value="R$ #{registro.total}">
 						</h:outputText>
 					</p:column>
@@ -53,6 +58,8 @@
 						<h:outputText id="liquido" value="R$ #{registro.totalLiquido}">
 						</h:outputText>
 					</p:column>
+					
+					
 
 					<p:column headerText="Atualização" style="width:10%">
 						<h:outputText value="#{registro.ultimaAtualizacao.time}">

@@ -8,6 +8,19 @@
 		<param-value>excite-bike</param-value>
 	</context-param>
 
+	<mime-mapping>  
+        <extension>jpg</extension>  
+        <mime-type>image/jpeg</mime-type>  
+    </mime-mapping>
+    <mime-mapping>  
+        <extension>png</extension>  
+        <mime-type>image/png</mime-type>  
+    </mime-mapping>    
+    <mime-mapping>  
+        <extension>tmp</extension>  
+        <mime-type>image/tmp</mime-type>  
+    </mime-mapping>  
+
 
 	<!-- Localização do faces-config.xml -->
 	<context-param>
@@ -44,6 +57,8 @@
 		<param-name>upload</param-name>
 		<param-value>1</param-value>
 	</context-param>
+
+
 
 	<context-param>
 		<param-name>password</param-name>
@@ -93,6 +108,15 @@
 	<listener>
 		<listener-class>br.com.lealbrasil.util.AutenticacaoListener</listener-class>
 	</listener>
+	
+	<servlet>
+     <servlet-name>DownloadServlet</servlet-name>
+     <servlet-class>br.com.lealbrasil.util.DownloadServlet</servlet-class>
+</servlet>
+<servlet-mapping>
+     <servlet-name>DownloadServlet</servlet-name>
+     <url-pattern>/download</url-pattern>
+</servlet-mapping>
 
 	<!-- Configuração do JSF -->
 	<servlet>
@@ -100,6 +124,8 @@
 		<servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
 		<load-on-startup>1</load-on-startup>
 	</servlet>
+	
+	
 
 
 	<!-- Map these files with JSF -->

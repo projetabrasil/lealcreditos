@@ -14,11 +14,10 @@
 	<ui:define name="conteudo" update="formCarrosel">
 
 		<h:form id="formCarrosel">
-			<p:carousel  value="#{carroseljsfController.mDAs}"
+			<p:carousel value="#{carroseljsfController.mDAs}"
 				rendered="#{carroseljsfController.renderizaCarrossel}"
 				headerText="Vouchers ativos" var="registro"
-				itemStyle="text-align:center" responsive="true"
-				id="carrossel">
+				itemStyle="text-align:center" responsive="true" id="carrossel">
 				<f:facet name="header">
 					<p:commandButton value="pontuações"
 						actionListener="#{carroseljsfController.pontuacao()}"
@@ -29,8 +28,9 @@
 					columnClasses="label,value" layout="grid"
 					styleClass="ui-panelgrid-blank">
 					<f:facet name="header">
-						<p:graphicImage id="foto" value="#{voucherfotos.foto}">
-							<f:param name="caminho" value="#{registro.caminhoDaImagem}" />
+						<p:graphicImage id="foto" value="#{imagensjsfController.image}">
+							<f:param name="caminho" value="#{registro.caminhoDaImagem}"
+								style="max-width:90px;max-height:80px;width: auto;height: auto;" />
 						</p:graphicImage>
 					</f:facet>
 
@@ -47,18 +47,18 @@
 					</h:outputText>
 					<h:outputText value="Código" />
 					<h:outputText value="#{registro.codigo}">
-						
+
 					</h:outputText>
 
 				</p:panelGrid>
 				<p:panelGrid columns="1" styleClass="ui-panelgrid-blank">
 					<p:commandButton value="#{registro.descricaoDisponivel}"
-					   
 						style="color:red;background-color: #009900 !important;"
 						actionListener="#{carroseljsfController.acao}"
-						update=":formTemplate:formCalendario">
-						<f:attribute name="registroAtual" value="#{registro}" 
-						/>
+						update=":formTemplate:formCalendario" ajax="false"
+						onclick="PrimeFaces.monitorDownload(start, stop)">
+						<p:fileDownload value="#{carroseljsfController.arquivoPdf}" />
+						<f:attribute name="registroAtual" value="#{registro}" />
 					</p:commandButton>
 				</p:panelGrid>
 
@@ -67,6 +67,15 @@
                 		n. de Vouchers : #{fn:length(carroseljsfController.mDAs)}.
         			</f:facet>
 			</p:carousel>
+			<script type="text/javascript">    
+function start() {    
+    statusDialog.show();    
+}    
+    
+function stop() {    
+    statusDialog.hide();    
+}    
+        </script>
 		</h:form>
 
 		<p:dialog widgetVar="dialogoPontuacao" closable="false"
@@ -81,7 +90,7 @@
 
 						<p:column headerText="Estabelecimento" sortBy="descricao"
 							filterBy="descricao" style="width:20%;">
-							<h:outputText value="#{registro.id_Assinante.descricao}" />
+							<h:outputText value="#{registro.id_Assinante.fantasia_Apelido}" />
 						</p:column>
 						<p:column headerText="Pontuação" style="width:10%;">
 							<p:outputLabel id="pontos" size="30" maxlength="15"
@@ -130,13 +139,15 @@
 							style="width:10%" />
 					</p:column>
 					<p:column headerText="Foto">
-						<p:graphicImage id="foto" value="#{fotos.foto}">
+						<p:graphicImage id="foto" value="#{imagensjsfController.image}"
+						style="max-width:90px;max-height:80px;width: auto;height: auto;">
 							<f:param name="caminho" value="#{registro2.caminhodaImagem}" />
 						</p:graphicImage>
 					</p:column>
 
 					<p:column headerText="Alvo">
-						<p:graphicImage id="foto2" name="#{registro2.caminhodaImagem2}">
+						<p:graphicImage id="foto2" name="#{registro2.caminhodaImagem2}"
+						style="max-width:90px;max-height:80px;width: auto;height: auto;">
 						</p:graphicImage>
 					</p:column>
 				</p:dataTable>
@@ -155,17 +166,18 @@
 				<h:panelGrid id="painelCalendario">
 
 					<p:outputLabel value="Agenda a Utilização do Voucher" />
-					<p:calendar id="calendar" size="30" maxlength="15"
-						 startWeekday="1" beforeShowDay="disponiveis"
-						 locale="pt_BR" showButtonPanel="true" navigator="true" 
-						 pattern="dd/MM/yyyy"  value="#{agendamento.agendamento.dataAgendamento.time}" >
-						
-						<h:inputHidden id="disponiveis" value="#{carroseljsfController.diasDisponiveis}" /> 
+					<p:calendar id="calendar" size="30" maxlength="15" startWeekday="1"
+						beforeShowDay="disponiveis" locale="pt_BR" showButtonPanel="true"
+						navigator="true" pattern="dd/MM/yyyy"
+						value="#{agendamento.agendamento.dataAgendamento.time}">
 
-						<f:convertDateTime  locale="pt_BR" navigator="true" 
-							type="date" timezone="GMT+3" />
+						<h:inputHidden id="disponiveis"
+							value="#{carroseljsfController.diasDisponiveis}" />
+
+						<f:convertDateTime locale="pt_BR" navigator="true" type="date"
+							timezone="GMT+3" />
 					</p:calendar>
-					
+
 
 				</h:panelGrid>
 				<h:panelGrid columns="2">

@@ -48,7 +48,7 @@ public class Ponto extends Item_de_Movimento implements Serializable{
 		setPonto(1);
 		setPontuacaoMinima(1);
 		setReferencia("");
-		setTipodeImagem(".png");
+		setTipodeImagem(Utilidades.tipodeImagem());
 		setUltimaReferencia(0);
 		setUnidadeporPonto(1);
 		setValordaUnidade(1);		

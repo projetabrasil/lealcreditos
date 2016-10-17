@@ -51,6 +51,7 @@ public class Movimento_Detalhe_AjsfController extends GenericController implemen
 	private List<Enum_Aux_Sim_ou_Nao> listaSN;
 	private boolean skip;
 	private double saldoDisponivel;
+	private final String tipoDeImagem = Utilidades.getTipoImagemSemPonto();
 
 	@PostConstruct
 	public void listar() {
@@ -88,10 +89,10 @@ public class Movimento_Detalhe_AjsfController extends GenericController implemen
 
 	public void listar_Movimento_Detalhe() {
 		Movimento_DetalheDAO mDDAO = new Movimento_DetalheDAO();
-		mDs = mDDAO.listarPeloMestre(null, perfilLogado.getAssLogado(), Enum_Aux_Tipo_Item_de_Movimento.VOUCHER);
+		mDs = mDDAO.listarPeloMestre(null, perfilLogado.getAssLogado(), Enum_Aux_Tipo_Item_de_Movimento.ITEMDESERVICO);
 		Movimento_Detalhe_ADAO mDADAO = new Movimento_Detalhe_ADAO();
 		setSaldoDisponivel(
-				mDADAO.somapeloTipodeMovimento(perfilLogado.getAssLogado(), Enum_Aux_Tipo_Item_de_Movimento.VOUCHER));
+				mDADAO.somapeloTipodeMovimento(perfilLogado.getAssLogado(), Enum_Aux_Tipo_Item_de_Movimento.ITEMDESERVICO));
 		setListaSN(Utilidades.listaSN());
 		listarDiasdaSemana();
 	}
@@ -99,6 +100,17 @@ public class Movimento_Detalhe_AjsfController extends GenericController implemen
 	public void listarMovimento_Detalhe_A(Pessoa id_Pessoa_Assinante) {
 		Movimento_Detalhe_ADAO mDADAO = new Movimento_Detalhe_ADAO();
 		mDAs = mDADAO.listar(id_Pessoa_Assinante);
+		definecaminhodaImagem();
+	}
+	public void definecaminhodaImagem(){
+		int i=0;
+	    for (Movimento_Detalhe_A movDet : mDAs) {
+	    	movDet.setCaminhoDaImagem(Utilidades.getCaminhofotovouchers()+""+movDet.getId()+Utilidades.getTipoimagem());	    	
+	    	mDAs.set(i,movDet);
+	    	
+			i++;
+		}	  
+	 	
 	}
 
 	public void novo() {
@@ -142,7 +154,7 @@ public class Movimento_Detalhe_AjsfController extends GenericController implemen
 			mensagensDisparar("Imagem é obrigatória!!!");
 			return false;
 		}
-
+        
 		if (mDA.getInicio().before(Utilidades.retornaCalendario2())) {
 			mensagensDisparar("escolha uma data Válida!!!");
 			return false;
@@ -163,10 +175,7 @@ public class Movimento_Detalhe_AjsfController extends GenericController implemen
 		return true;
 	}
 
-	public void definirCaminhodaImagem(String id) {
-		mDA.setCaminhoDaImagem(Utilidades.caminho("Vouchers"));
-		mDA.setCaminhoDaImagem(mDA.getCaminhoDaImagem() + id + Utilidades.tipodeImagem());
-	}
+	
 
 	public void merge() {
 		if (!mergeOk())
@@ -175,7 +184,11 @@ public class Movimento_Detalhe_AjsfController extends GenericController implemen
 		String caminhoTemp = mDA.getCaminhoTemp();
 		mDA = mDADAO.merge(mDA);
 		mDA.setCaminhoTemp(caminhoTemp);
-		definirCaminhodaImagem("" + mDA.getId());
+		
+		
+		mDA.setCaminhoDaImagem(Utilidades.getCaminhofotovouchers()+""+mDA.getId()+Utilidades.getTipoimagem());
+		
+		
 		copiarImagem();
 		Movimento_Detalhe_Dias_DisponiveisDAO mDDDDAO = new Movimento_Detalhe_Dias_DisponiveisDAO();
 		setmDDDs(mDDDDAO.retornaDiasDisponiveis(mDA));
@@ -202,8 +215,10 @@ public class Movimento_Detalhe_AjsfController extends GenericController implemen
 	public void editar(ActionEvent event) {
 		mDA = (Movimento_Detalhe_A) event.getComponent().getAttributes().get("registroAtual");
 		// QUANDO SALVA NO BANCO SALVAO O CAMINHO TEMP NO CAMINHO DA IMAGEM;
-		mDA.setCaminhoTemp(mDA.getCaminhoDaImagem());
-		definirCaminhodaImagem("" + mDA.getId());
+		mDA.setCaminhoDaImagem(Utilidades.getCaminhofotovouchers()+""+mDA.getId()+Utilidades.getTipoimagem() );
+		
+		mDA.setCaminhoTemp(mDA.getCaminhoDaImagem());	
+		
 		Movimento_Detalhe_Dias_DisponiveisDAO mdddDAO = new Movimento_Detalhe_Dias_DisponiveisDAO();
 		mDDDs = mdddDAO.retornaDiasDisponiveis(mDA);
 		mDA.setEnum_Aux_Tipo_Item_de_Movimento(Enum_Aux_Tipo_Item_de_Movimento.VOUCHER);
@@ -220,11 +235,22 @@ public class Movimento_Detalhe_AjsfController extends GenericController implemen
 		mDA = (Movimento_Detalhe_A) event.getComponent().getAttributes().get("registroAtual");
 		Movimento_Detalhe_ADAO mDADAO = new Movimento_Detalhe_ADAO();
 		mDADAO.excluir(mDA);
+		try {
+			Path arquivo = Paths.get(Utilidades.getCaminhofotovouchers()+""+mDA.getId()+Utilidades.getTipoimagem());
+			Files.deleteIfExists(arquivo);
+		} catch (IOException error) {
+
+			error.printStackTrace();
+		}
+		
 	}
 
 	public void copiarImagem() {
+		
+		
 		Path origem = Paths.get(mDA.getCaminhoTemp());
 		Path destino = Paths.get(mDA.getCaminhoDaImagem());
+		
 		try {
 			Files.copy(origem, destino, StandardCopyOption.REPLACE_EXISTING);
 		} catch (IOException error) {
@@ -239,6 +265,7 @@ public class Movimento_Detalhe_AjsfController extends GenericController implemen
 			Path arquivoTemp = Files.createTempFile(null, null);
 			Files.copy(arquivoUpload.getInputstream(), arquivoTemp, StandardCopyOption.REPLACE_EXISTING);
 			mDA.setCaminhoTemp(arquivoTemp.toString());
+			
 			mDA.setCaminhoDaImagem(mDA.getCaminhoTemp());
 
 			mensagensDisparar("Arquivo carregado com sucesso");
@@ -375,5 +402,9 @@ public class Movimento_Detalhe_AjsfController extends GenericController implemen
 
 	public void setSaldoDisponivel(double saldoDisponivel) {
 		this.saldoDisponivel = saldoDisponivel;
+	}
+
+	public String getTipoDeImagem() {
+		return tipoDeImagem;
 	}
 }

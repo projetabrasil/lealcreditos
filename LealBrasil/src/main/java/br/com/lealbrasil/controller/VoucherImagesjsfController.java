@@ -13,6 +13,8 @@ import javax.faces.bean.RequestScoped;
 import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.StreamedContent;
 
+import br.com.lealbrasil.util.Utilidades;
+
 @RequestScoped
 @ManagedBean(name = "voucherfotos")
 public class VoucherImagesjsfController {
@@ -21,15 +23,13 @@ public class VoucherImagesjsfController {
 	@ManagedProperty("#{param.caminho2}")
 	private String caminhodaImagem2;
 
-	private StreamedContent foto;
-	private StreamedContent foto2;
+	private StreamedContent foto = null;
+	private StreamedContent foto2 = null;
 
 	public StreamedContent getFoto() throws IOException {
-		String branco;
-		if (caminhodaImagem == null || caminhodaImagem.isEmpty()) {
-			branco = "/imagens/branco.png"; 											
-			Path path = Paths.get(branco);
-
+		
+		if (caminhodaImagem == null || caminhodaImagem.isEmpty()) {			 											
+			Path path = Paths.get(Utilidades.getBranco());
 			if (Files.exists(path)) {
 				InputStream stream = Files.newInputStream(path);
 				foto = new DefaultStreamedContent(stream);
@@ -42,10 +42,8 @@ public class VoucherImagesjsfController {
 			if (Files.exists(path)) {
 				InputStream stream = Files.newInputStream(path);
 				foto = new DefaultStreamedContent(stream);
-			} else {
-				branco = "/imagens/branco.png";
-				path = Paths.get(branco);
-
+			} else {				
+				path = Paths.get(Utilidades.getBranco());
 				if (Files.exists(path)) {
 					InputStream stream = Files.newInputStream(path);
 					foto = new DefaultStreamedContent(stream);
@@ -68,11 +66,9 @@ public class VoucherImagesjsfController {
 	}
 
 	public StreamedContent getFoto2() throws IOException {
-		String branco;
-		if (caminhodaImagem2 == null || caminhodaImagem2.isEmpty()) {
-			branco = "/imagens/branco.png"; // Utilidades.caminho("Brindes")+"branco"
-											// + Utilidades.tipodeImagem();
-			Path path = Paths.get(branco);
+		
+		if (caminhodaImagem2 == null || caminhodaImagem2.isEmpty()) {			
+			Path path = Paths.get(Utilidades.getBranco());
 
 			if (Files.exists(path)) {
 				InputStream stream = Files.newInputStream(path);
@@ -84,9 +80,8 @@ public class VoucherImagesjsfController {
 			if (Files.exists(path)) {
 				InputStream stream = Files.newInputStream(path);
 				foto2 = new DefaultStreamedContent(stream);
-			} else {
-				branco = "/imagens/branco.png";
-				path = Paths.get(branco);
+			} else {				
+				path = Paths.get(Utilidades.getBranco());
 
 				if (Files.exists(path)) {
 					InputStream stream = Files.newInputStream(path);

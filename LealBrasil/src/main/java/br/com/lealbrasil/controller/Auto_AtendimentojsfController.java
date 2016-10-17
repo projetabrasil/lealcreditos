@@ -1,6 +1,12 @@
 package br.com.lealbrasil.controller;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.io.Serializable;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,6 +15,10 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 
 import org.omnifaces.util.Messages;
+import org.primefaces.event.FileUploadEvent;
+import org.primefaces.model.DefaultStreamedContent;
+import org.primefaces.model.StreamedContent;
+import org.primefaces.model.UploadedFile;
 
 import br.com.lealbrasil.controller.entitiesconfig.PessoaConfig;
 import br.com.lealbrasil.model.business.PessoaBusiness2;
@@ -58,10 +68,17 @@ public class Auto_AtendimentojsfController implements Serializable {
 	private Double pontoSomaDebitoUtilizacao;
 	private Double pontoSomaDebitoEstorno;
 	private PessoaConfig pessoaConfig;
+	private InputStream foto = null;
+	private StreamedContent comprovante = null;
+	private UploadedFile upLoaded;
+	private final String tipoDeImagem = Utilidades.getTipoImagemSemPonto();
+	private String mensagemComprovante = "Caso esteja sem o comprovante vinculado e \n digite o n. documento ERRADO,\n"
+			+ "poderá invalidar sua pontuação. Deseja continuar?";
 
 	@PostConstruct
 	public void novo() {
 		ponto_movimento = new Ponto_Movimento();
+		ponto_movimento.setCaminhodaImagem(Utilidades.getBranco());
 		cliente = configurarPessoa(Enum_Aux_Tipo_Identificador.CPF);
 		cliente.setEnum_Aux_Tipo_Identificador(Enum_Aux_Tipo_Identificador.CPF);
 		estabelecimento = configurarPessoa(Enum_Aux_Tipo_Identificador.CNPJ);
@@ -82,19 +99,68 @@ public class Auto_AtendimentojsfController implements Serializable {
 	}
 
 	public void vincularPessoa() {
-		Pessoa_Vinculo pVinc = new Pessoa_Vinculo();
-		pVinc.setAtivo(true);
-		pVinc.setId_Empresa(1);
-		pVinc.setUltimaAtualizacao(Utilidades.retornaCalendario());
-		pVinc.setId_pessoa_d(cliente);
+		if (estabelecimento != null) {
+			Pessoa_Vinculo pVincRet = new Pessoa_Vinculo();
+			Pessoa_VinculoDAO pVDAO = new Pessoa_VinculoDAO();
+			pVincRet = pVDAO.retornaVinculo_Mestre(cliente, estabelecimento, Enum_Aux_Perfil_Pessoa.CLIENTES);
 
-		pVinc.setId_pessoa_m(estabelecimento);
-		pVinc.setId_Pessoa_Registro(cliente);
-		pVinc.setUltimaAtualizacao(Utilidades.retornaCalendario());
-		Pessoa_VinculoBusiness.merge(pVinc, perfilLogado);
+			if (pVincRet == null) {
+				Pessoa_Vinculo pVinc = new Pessoa_Vinculo();
+
+				pVinc.setAtivo(true);
+				pVinc.setId_Empresa(1);
+				pVinc.setUltimaAtualizacao(Utilidades.retornaCalendario());
+				pVinc.setId_pessoa_d(cliente);
+				pVinc.setEnum_Aux_Perfil_Pessoa(Enum_Aux_Perfil_Pessoa.CLIENTES);
+
+				pVinc.setId_pessoa_m(estabelecimento);
+				pVinc.setId_Pessoa_Registro(cliente);
+				pVinc.setUltimaAtualizacao(Utilidades.retornaCalendario());
+				Pessoa_VinculoBusiness.merge(pVinc);
+			}
+		} else {
+			if (perfilLogado == null) {
+				cadastroAutomatico();
+			}
+		}
+
+	}
+
+	public void upload(FileUploadEvent event) {
+		try {
+			try {
+				comprovante = new DefaultStreamedContent(event.getFile().getInputstream());
+				this.setUpLoaded(event.getFile());
+			} catch (IOException e) {
+
+			}
+
+			UploadedFile arquivoUpload = event.getFile();
+			Path arquivoTemp = Files.createTempFile(null, null);
+
+			Files.copy(arquivoUpload.getInputstream(), arquivoTemp, StandardCopyOption.REPLACE_EXISTING);
+
+			ponto_movimento.setCaminhoTemp(arquivoTemp.toString());
+
+			ponto_movimento.setCaminhodaImagem(ponto_movimento.getCaminhoTemp());
+			mensagensDisparar("Arquivo carregado com sucesso");
+		} catch (IOException erro) {
+			mensagensDisparar("Ocorreu um erro ao tentar realizar carregamento do arquivo");
+			erro.printStackTrace();
+		}
 	}
 
 	public void merge() {
+		Path caminhoTemp = null;
+		if (ponto_movimento.getCaminhoTemp() == null || ponto_movimento.getCaminhoTemp() == "") {
+			mensagensDisparar("Sem o comprovante, caso digite n. Doc errado,  será inválidado!!!");
+		} else {
+			caminhoTemp = Paths.get(ponto_movimento.getCaminhoTemp());
+			if (!Files.exists(caminhoTemp)) {
+				mensagensDisparar("Imagem é obrigatória!!!");
+				mensagensDisparar("Sem o comprovante, caso digite n. Doc errado,  será inválidado!!!");
+			}
+		}
 
 		if (cliente == null || cliente.getId() == null) {
 			mensagensDisparar("Informe seu CPF/CNPJ e Verifique a existência de seu cadastro!!!");
@@ -146,13 +212,28 @@ public class Auto_AtendimentojsfController implements Serializable {
 		Ponto_MovimentoDAO pDAO = new Ponto_MovimentoDAO();
 		List<Ponto_Movimento> pMov = pDAO.verificaSePontuacaoExiste(cliente, estabelecimento,
 				Enum_Aux_Tipo_Mov_Ponto.C);
-		
 
 		if (pMov != null && pMov.size() > 0) {
 			mensagensDisparar("Sua pontuação já ocorreu hoje para este estabelecimento!!!");
 			return;
 		}
 		ponto_movimento = pDAO.merge(ponto_movimento);
+		
+		String cam = Utilidades.getCaminhofotocomprovante() + "" + ponto_movimento.getId() + Utilidades.getTipoimagem();
+		ponto_movimento.setCaminhodaImagem(cam);
+		if (ponto_movimento.getCaminhoTemp()!=null && ponto_movimento.getCaminhoTemp().length() > 0) {
+			Path origem = caminhoTemp;
+			Path destino = Paths.get(ponto_movimento.getCaminhodaImagem());
+			try {
+				Utilidades.gravaDiretorio(ponto_movimento.getCaminhodaImagem());
+
+				Files.copy(origem, destino, StandardCopyOption.REPLACE_EXISTING);
+			} catch (IOException error) {
+				mensagensDisparar("Ocorreu um erro ao tentar salvar a imagem");
+				error.printStackTrace();
+			}
+		}
+
 		if (ponto_movimento != null && ponto_movimento.getId() != null) {
 			mensagensDisparar("Pontuação para  " + ponto_movimento.getId_pessoa_cliente().getDescricao()
 					+ " realizada com sucesso!!!");
@@ -165,7 +246,7 @@ public class Auto_AtendimentojsfController implements Serializable {
 	public void cadastroAutomatico() {
 		perfilLogado = new PerfilLogado();
 		perfilLogado.setRenderizaAssociado(false);
-		perfilLogado.setIdentificadorAssociado("99999999999");
+		perfilLogado.setIdentificadorAssinante("99999999999");
 		perfilLogado.setSenhaUsuario("98765432");
 		autenticar();
 	}
@@ -192,7 +273,7 @@ public class Auto_AtendimentojsfController implements Serializable {
 			Pessoa_Vinculo pVin = new Pessoa_Vinculo();
 			Pessoa_VinculoDAO pVinDAO = new Pessoa_VinculoDAO();
 			pVin.setId_pessoa_d(cliente);
-			pVin = pVinDAO.retornaVinculo_Mestre(pVin, perfilLogado, Enum_Aux_Perfil_Pessoa.ATENDENTES);
+			pVin = pVinDAO.retornaVinculo_Mestre(cliente, Enum_Aux_Perfil_Pessoa.ATENDENTES);
 			if (pVin != null && !perfilLogado.getUsLogado().getPessoa().getId().equals(pVin.getId_pessoa_m().getId())) {
 				Pessoa p = pVin.getId_pessoa_m();
 				mensagensDisparar(
@@ -214,7 +295,7 @@ public class Auto_AtendimentojsfController implements Serializable {
 	public void autenticar() {
 		UsuarioDAO usuarioDAO = new UsuarioDAO();
 		if (perfilLogado.getIdentificadorUsuario() == null || perfilLogado.getIdentificadorUsuario().length() <= 0)
-			perfilLogado.setIdentificadorUsuario(perfilLogado.getIdentificadorAssociado());
+			perfilLogado.setIdentificadorUsuario(perfilLogado.getIdentificadorAssinante());
 
 		perfilLogado.setUsLogado(
 				usuarioDAO.autenticar(perfilLogado.getIdentificadorUsuario(), perfilLogado.getSenhaUsuario()));
@@ -294,17 +375,16 @@ public class Auto_AtendimentojsfController implements Serializable {
 	}
 
 	public void pessoaaverificar(String pessoa) {
-		
-		
-		if (pessoa.equals("Estabelecimento")) {			
+
+		if (pessoa.equals("Estabelecimento")) {
 			String cpf_Cnpj = estabelecimento.getCpf_Cnpj();
 			cpf_Cnpj = Utilidades.retiraCaracteres(cpf_Cnpj);
 			cpf_Cnpj = Utilidades.retiraVazios(cpf_Cnpj);
-			if(!PessoaBusiness2.validacpfCnpj(cpf_Cnpj,  tipoIdentificadorEstabelecimento))
+			if (!PessoaBusiness2.validacpfCnpj(cpf_Cnpj, tipoIdentificadorEstabelecimento))
 				return;
-			
+
 			estabelecimento = verificaPessoa(estabelecimento, tipoIdentificadorEstabelecimento);
-			
+
 			if (estabelecimento != null && estabelecimento.getId() != null)
 				setListaPonto(litarRelacaodePontos(estabelecimento));
 			if (getListaPonto() != null && getListaPonto().size() > 0) {
@@ -319,16 +399,16 @@ public class Auto_AtendimentojsfController implements Serializable {
 			String cpf_Cnpj = cliente.getIdentificador();
 			cpf_Cnpj = Utilidades.retiraCaracteres(cpf_Cnpj);
 			cpf_Cnpj = Utilidades.retiraVazios(cpf_Cnpj);
-			if(!PessoaBusiness2.validacpfCnpj(cpf_Cnpj,  tipoIdentificadorCliente))
+			if (!PessoaBusiness2.validacpfCnpj(cpf_Cnpj, tipoIdentificadorCliente))
 				return;
-			
+
 			cliente = verificaPessoa(cliente, tipoIdentificadorCliente);
 			if (cliente == null || cliente.getId() == null) {
 				configPessoaNova(cpf_Cnpj);
 				cliente.setIdentificador(cpf_Cnpj);
 				cliente.setCpf_Cnpj(cpf_Cnpj);
 				cliente.setEnum_Aux_Tipo_Identificador(getTipoIdentificadorCliente());
-				
+
 				Utilidades.abrirfecharDialogos("dialogoCadastro", true);
 			} else {
 				retornasomaPontuacao(cliente, estabelecimento);
@@ -376,7 +456,7 @@ public class Auto_AtendimentojsfController implements Serializable {
 			ponto_movimento.setValorUnidadeTroca(ponto.getValorUnidadeTroca());
 			ponto_movimento.setDiasValidade(ponto.getDiasValidade());
 			ponto_movimento.setValidade(Utilidades.retornaValidade(ponto_movimento.getDiasValidade()));
-			
+
 			ponto_movimento.setValoraPontuar(0);
 			ponto_movimento.setCreditaDebita(Enum_Aux_Tipo_Mov_Ponto.C);
 			ponto_movimento.setEnum_Aux_Status_Movimento_Ponto(Enum_Aux_Status_Movimento_Ponto.ACONFIRMAR);
@@ -562,6 +642,38 @@ public class Auto_AtendimentojsfController implements Serializable {
 
 	public void setPessoaConfig(PessoaConfig pessoaConfig) {
 		this.pessoaConfig = pessoaConfig;
+	}
+
+	public InputStream getFoto() {
+		return foto;
+	}
+
+	public void setFoto(InputStream foto) {
+		this.foto = foto;
+	}
+
+	public StreamedContent getComprovante() {
+		return comprovante;
+	}
+
+	public void setComprovante(StreamedContent comprovante) {
+		this.comprovante = comprovante;
+	}
+
+	public UploadedFile getUpLoaded() {
+		return upLoaded;
+	}
+
+	public void setUpLoaded(UploadedFile upLoaded) {
+		this.upLoaded = upLoaded;
+	}
+
+	public String getTipoDeImagem() {
+		return tipoDeImagem;
+	}
+
+	public String getMensagemComprovante() {
+		return mensagemComprovante;
 	}
 
 }

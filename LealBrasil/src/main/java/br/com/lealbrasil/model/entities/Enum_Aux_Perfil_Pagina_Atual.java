@@ -16,6 +16,7 @@ public enum Enum_Aux_Perfil_Pagina_Atual {
 	PAGINAITEMDESERVICO("PAGINAITEMDESERVICO","PITEMDESERV",12,Enum_Aux_Perfil_Pessoa.VENDAS,Enum_Aux_Perfil_Pessoa.VENDAS ,false,false,"item_de_movimento.xhtml","itens de serviço"),
 	PAGINAITEMDEPROMOCAO("PAGINAITEMDEPROMOCAO","PITEMDEPROM",13,Enum_Aux_Perfil_Pessoa.VENDAS,Enum_Aux_Perfil_Pessoa.VENDAS ,false,false,"item_de_movimento.xhtml","itens de promoção"),
 	
+	
 	PAGINAOUTROS("PAGINAOUTROS","POUTROS",14,Enum_Aux_Perfil_Pessoa.OUTROS,null,false,true,"pessoas.xhtml","outros"),
 	PAGINAINDEX("PAGINAINDEX","PINDEX",15,Enum_Aux_Perfil_Pessoa.OUTROS,null,false,false,"index.xhtml", "página principal"),
 	PAGINACOMBO("PAGINACOMBO","PCOMBO",16,Enum_Aux_Perfil_Pessoa.VENDAS,Enum_Aux_Perfil_Pessoa.VENDAS ,false,false,"combo.xhtml","combo"),

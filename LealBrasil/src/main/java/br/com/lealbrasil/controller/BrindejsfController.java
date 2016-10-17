@@ -1,6 +1,7 @@
 package br.com.lealbrasil.controller;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -15,6 +16,8 @@ import javax.faces.bean.ViewScoped;
 import javax.faces.event.ActionEvent;
 
 import org.primefaces.event.FileUploadEvent;
+import org.primefaces.model.DefaultStreamedContent;
+import org.primefaces.model.StreamedContent;
 import org.primefaces.model.UploadedFile;
 
 import br.com.lealbrasil.model.dao.Item_de_MovimentoDAO;
@@ -33,10 +36,23 @@ public class BrindejsfController extends GenericController {
 	private PerfilLogado perfilLogado;
 	private List<Item_de_Movimento> itens;
 	private Item_de_Movimento item;
+	UploadedFile upLoaded;
+	private byte[] fileContents;
+	private String branco = Utilidades.getCaminhobase()+"branco"+Utilidades.getTipoImagem();
+	private StreamedContent foto = null;
+	private final String tipoDeImagem = Utilidades.getTipoImagemSemPonto();
 	
 
 	@PostConstruct
 	public void listar() {
+		item = new Item_de_Movimento();
+		item.setCaminhodaImagem(branco);
+		try {
+			setFoto(convertFoto());
+		} catch (IOException e) {			
+			e.printStackTrace();
+		}
+		item.setCaminhoTemp(item.getCaminhodaImagem());
 		listadecaminhosdeimagem();
 	}
 
@@ -49,20 +65,19 @@ public class BrindejsfController extends GenericController {
 		
 		int x = 0;
 		for (Item_de_Movimento i : l) {			
-			i.setCaminhodaImagem(Utilidades.caminho("Brindes"));
+			i.setCaminhodaImagem(Utilidades.getCaminhofotobrinde()+""+i.getId()+Utilidades.getTipoimagem());
+			
+			
+			
 			i.setTipodeImagem(Utilidades.tipodeImagem());
-			i.setCaminhodaImagem(i.getCaminhodaImagem() + i.getId() + ".png");			
+						
 			itens.add(x,i);
 			x++;
 		}
 		
 	}
 
-	public void especificaCaminhoEImagem(String id) {
-		item.setCaminhodaImagem(Utilidades.caminho("Brindes"));
-		item.setTipodeImagem(Utilidades.tipodeImagem());
-		item.setCaminhodaImagem(item.getCaminhodaImagem() + id + item.getTipodeImagem());
-	}
+	
 
 	public void novo() {
 		item = new Item_de_Movimento(perfilLogado.getUsLogado().getPessoa(), perfilLogado.getAssLogado() , 
@@ -78,7 +93,7 @@ public class BrindejsfController extends GenericController {
 			mensagensDisparar("Imagem é obrigatória!!!");
 			return;
 		} else {
-			caminhoTemp = Paths.get(item.getCaminhoTemp());
+			caminhoTemp = Paths.get( item.getCaminhoTemp());
 			if (!Files.exists(caminhoTemp)) {
 				mensagensDisparar("Imagem é obrigatória!!!");
 				return;
@@ -89,15 +104,12 @@ public class BrindejsfController extends GenericController {
 		
 		
 		item = iMDAO.merge(item);
-		especificaCaminhoEImagem("" + item.getId());
-		if (item.getCaminhodaImagem() == null || item.getCaminhodaImagem().length() <= 0) {
-			item.setCaminhodaImagem(item.getCaminhodaImagem());
-			item = iMDAO.merge(item);
-		}
+		item.setCaminhodaImagem(Utilidades.getCaminhofotobrinde()+""+item.getId()+Utilidades.getTipoimagem());
 
 		Path origem = caminhoTemp;
 		Path destino = Paths.get(item.getCaminhodaImagem());
 		try {
+			 Utilidades.gravaDiretorio(item.getCaminhodaImagem());
 			Files.copy(origem, destino, StandardCopyOption.REPLACE_EXISTING);
 		} catch (IOException error) {
 			mensagensDisparar("Ocorreu um erro ao tentar salvar a imagem");
@@ -111,29 +123,69 @@ public class BrindejsfController extends GenericController {
 
 	public void editar(ActionEvent event) {
 		item = (Item_de_Movimento) event.getComponent().getAttributes().get("registroAtual");
-		especificaCaminhoEImagem("" + item.getId());
+		item.setCaminhodaImagem(Utilidades.getCaminhofotobrinde()+""+item.getId()+Utilidades.getTipoimagem());
 		item.setCaminhoTemp(item.getCaminhodaImagem());
 		Utilidades.abrirfecharDialogos("dialogoCadastro", true);
 
 	}
 
-	public void upload(FileUploadEvent event) {
+	public void upload(FileUploadEvent event) {		
 		try {
+			try {
+	            foto = new DefaultStreamedContent(event.getFile().getInputstream());
+	            this.setUpLoaded(event.getFile());
+	        } catch (IOException e) {
+	            
+	        }
+			
 			UploadedFile arquivoUpload = event.getFile();
+			
+			
 			// Messages.addGlobalInfo(arquivoUpload.getContentType()+"-"+arquivoUpload.getSize()+"-"+arquivoUpload.getFileName()+"-");
 			Path arquivoTemp = Files.createTempFile(null, null);
-
+			
 			Files.copy(arquivoUpload.getInputstream(), arquivoTemp, StandardCopyOption.REPLACE_EXISTING);
+			
+			
 			item.setCaminhoTemp(arquivoTemp.toString());
 			item.setCaminhodaImagem(item.getCaminhoTemp());
-			
-
 			mensagensDisparar("Arquivo carregado com sucesso");
 		} catch (IOException erro) {
 			mensagensDisparar("Ocorreu um erro ao tentar realizar carregamento do arquivo");
 			erro.printStackTrace();
 		}
 	}
+	
+	public StreamedContent convertFoto() throws IOException {
+		
+		if (item.getCaminhodaImagem() == null || item.getCaminhodaImagem().isEmpty()) {
+			 
+											
+			Path path = Paths.get(branco);
+
+			if (Files.exists(path)) {
+				InputStream stream = Files.newInputStream(path);
+				foto = new DefaultStreamedContent(stream);
+			}
+
+		} else {
+			Path path = Paths.get(item.getCaminhodaImagem());
+			if (Files.exists(path)) {
+				InputStream stream = Files.newInputStream(path);
+				foto = new DefaultStreamedContent(stream);
+			} else {
+				
+				path = Paths.get(branco);
+
+				if (Files.exists(path)) {
+					InputStream stream = Files.newInputStream(path);
+					foto = new DefaultStreamedContent(stream);
+				}
+			}
+		}
+		return foto;
+	}
+	
 
 	public void cancelar() {
 
@@ -143,7 +195,7 @@ public class BrindejsfController extends GenericController {
 
 	public void excluir(ActionEvent event) {
 		item = (Item_de_Movimento) event.getComponent().getAttributes().get("registroAtual");
-		especificaCaminhoEImagem("" + item.getId());
+		item.setCaminhodaImagem(Utilidades.getCaminhofotobrinde()+""+item.getId()+Utilidades.getTipoimagem());
 		Path arquivo = Paths.get(item.getCaminhodaImagem());
 		try {
 			Files.deleteIfExists(arquivo);
@@ -186,6 +238,44 @@ public class BrindejsfController extends GenericController {
 
 	public void setItem(Item_de_Movimento item) {
 		this.item = item;
+	}
+
+	public UploadedFile getUpLoaded() {
+		return upLoaded;
+	}
+
+	public void setUpLoaded(UploadedFile upLoaded) {
+		this.upLoaded = upLoaded;
+	}
+
+	public byte[] getFileContents() {
+		return fileContents;
+	}
+
+	public void setFileContents(byte[] fileContents) {
+		this.fileContents = fileContents;
+	}
+
+	
+
+	public void setFoto(StreamedContent foto) {
+		this.foto = foto;
+	}
+
+	public String getBranco() {
+		return branco;
+	}
+
+	public void setBranco(String branco) {
+		this.branco = branco;
+	}
+
+	public StreamedContent getFoto() {
+		return foto;
+	}
+
+	public String getTipoDeImagem() {
+		return tipoDeImagem;
 	}
 
 	

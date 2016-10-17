@@ -3,7 +3,6 @@ package br.com.lealbrasil.model.entities;
 import java.io.Serializable;
 import java.text.DecimalFormat;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -28,10 +27,10 @@ public class Item_de_Movimento extends GenericDomain implements Serializable {
 	@SequenceGenerator(name="pk_item_de_movimento",sequenceName="messounds_item_de_movimento", allocationSize=1 )
 	@GeneratedValue(strategy=GenerationType.SEQUENCE,generator="pk_item_de_movimento")
 	private Long id;
-	@ManyToOne(cascade = {CascadeType.ALL})
+	@ManyToOne
 	@JoinColumn(name="id_Pessoa_Registro", nullable=false)
 	private Pessoa id_Pessoa_Registro;
-	@ManyToOne(cascade = {CascadeType.ALL})
+	@ManyToOne
 	@JoinColumn(name="id_Pessoa_Assinante", nullable = false)
 	private Pessoa id_Pessoa_Assinante;
 	@Column(name="descricao", length = 90, nullable = false)
@@ -101,7 +100,7 @@ public class Item_de_Movimento extends GenericDomain implements Serializable {
 		 setUltimaReferencia(iDao.retornaUltimaReferencia(id_Pessoa_Assinante,enum_Aux_Tipo_Item_de_Movimento));
 		 DecimalFormat df = new DecimalFormat("0000");
 		 setReferencia(enum_Aux_Tipo_Item_de_Movimento.getReferencia()+df.format(ultimaReferencia));
-		 setTipodeImagem(".png");
+		 setTipodeImagem(Utilidades.getTipoImagem());
 		 
 	     
 		 

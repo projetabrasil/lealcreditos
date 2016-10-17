@@ -117,7 +117,7 @@ public class PessoajsfController extends GenericController implements Serializab
 			Pessoa_Vinculo pVin = new Pessoa_Vinculo();
 			Pessoa_VinculoDAO pVinDAO = new Pessoa_VinculoDAO();
 			pVin.setId_pessoa_d(pessoa);
-			pVin = pVinDAO.retornaVinculo_Mestre(pVin, perfilLogado, Enum_Aux_Perfil_Pessoa.ATENDENTES);
+			pVin = pVinDAO.retornaVinculo_Mestre(pessoa,   Enum_Aux_Perfil_Pessoa.ATENDENTES);
 			if (pVin != null && !perfilLogado.getUsLogado().getPessoa().getId().equals(pVin.getId_pessoa_m().getId())) {
 				Pessoa p = pVin.getId_pessoa_m();
 				mensagensDisparar(
@@ -166,6 +166,21 @@ public class PessoajsfController extends GenericController implements Serializab
 		if (pessoa.getIdentificador() == null || pessoa.getIdentificador().length() <= 0) {
 			pessoa.setIdentificador(identificador);
 			pessoa.setCpf_Cnpj(identificador);
+		}
+		else{
+			 if (perfilLogado.getPaginaAtual().equals(Enum_Aux_Perfil_Pagina_Atual.PAGINAATENDENTES)){
+				 
+				 Pessoa_Vinculo pVin = new Pessoa_Vinculo();
+					Pessoa_VinculoDAO pVinDAO = new Pessoa_VinculoDAO();					
+					pVin = pVinDAO.retornaVinculo_Mestre(pessoa, Enum_Aux_Perfil_Pessoa.ATENDENTES);
+					if (pVin != null && !perfilLogado.getUsLogado().getPessoa().getId().equals(pVin.getId_pessoa_m().getId())) {
+						Pessoa p = pVin.getId_pessoa_m();
+						mensagensDisparar(
+								"Este atendente já tem um Vinculo com um Outro Associado: " + p.getFantasia_Apelido());
+						return;
+					}
+				 
+			 }
 		}
 		if (pessoa.getEnum_Aux_Tipo_Identificador().getAux_tipo_pessoa().equals(Enum_Aux_Tipo_Pessoa.OUTROS))
 			pessoa.setEnum_Aux_Tipo_Identificador(Enum_Aux_Tipo_Identificador.CPF);

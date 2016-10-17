@@ -35,8 +35,8 @@
 					icon="/resources/images/manager.png"
 					actionListener="#{autenticacaojsfController.renderizar(false)}">
 				</p:menuitem>
-				<p:menuitem value="Auto pontuação"
-					icon="/resources/images/auto pontuação.png"
+				<p:menuitem value="Auto pontuaÃ§Ã£o"
+					icon="/resources/images/auto pontuaÃ§Ã£o.png"
 					oncomplete="PF('dialogoPontuar').show();">
 				</p:menuitem>
 			</p:dock>
@@ -50,7 +50,7 @@
 				<p:focus for="identificador2" />
 
 				<h:panelGrid id="painelA" >
-					<h:outputLabel value="Auto Pontuação - Aguardando Aprovação"
+					<h:outputLabel value="Auto PontuaÃ§Ã£o - Aguardando AprovaÃ§Ã£o"
 						style="color:#{ponto_mov.tipoMovimentacao.cor};font-size:15px;font-weight:900;" />
 				</h:panelGrid>
 
@@ -83,7 +83,7 @@
 
 						<p:inputMask id="identificador2" size="24" maxlength="20"
 							value="#{auto.estabelecimento.identificador}" required="true"
-							requiredMessage="É preciso informar a identificação!!!"
+							requiredMessage="Ã‰ preciso informar a identificaÃ§Ã£o!!!"
 							mask="#{auto.tipoIdentificadorEstabelecimento.mask}">
 							<p:ajax event="blur" process="@this"
 								listener="#{auto.pessoaaverificar('Estabelecimento')}"
@@ -95,7 +95,7 @@
 						<p:outputLabel id="pessoa_estabelecimento"
 							value="Estab: #{fn:substring(pessoa_estabelecimento,0,20)}"
 							style="color:blue;font-size:15px;font-weight:900;" />
-						<h:outputLabel value="Pontuação" />
+						<h:outputLabel value="PontuaÃ§Ã£o" />
 
 
 
@@ -134,7 +134,7 @@
 
 					<h:panelGrid id="painelCliente">
 
-						<h:outputLabel value="Você:"
+						<h:outputLabel value="VocÃª:"
 							style="color:red;font-size:15px;font-weight:900;" />
 
 
@@ -155,7 +155,7 @@
 
 						<p:inputMask id="identificador" size="24" maxlength="20"
 							value="#{auto.cliente.identificador}" required="true"
-							requiredMessage="É preciso informar a identificação!!!"
+							requiredMessage="Ã‰ preciso informar a identificaÃ§Ã£o!!!"
 							mask="#{auto.tipoIdentificadorCliente.mask}">
 							<p:ajax event="blur" process="@this"
 								listener="#{auto.pessoaaverificar('Cliente')}"
@@ -177,13 +177,13 @@
 						<p:outputLabel value="Valor do Documento" />
 						<p:inputNumber id="valaPontuar" size="24" maxlength="20"
 							value="#{auto.ponto_movimento.valoraPontuar}" required="true"
-							requiredMessage="É preciso informar pontuação!!!">
+							requiredMessage="Ã‰ preciso informar pontuaÃ§Ã£o!!!">
 							<f:validateLongRange minimum="0" />
 						</p:inputNumber>
 						<p:outputLabel value="N. do Documento" decimalPlaces="0"/>
 						<p:inputMask mask="?99999999999999999999999999999999999999999999999999" placeHolder="" id="nDoc" size="24" maxlength="20"
 							value="#{auto.ponto_movimento.numDoc}" required="true"
-							requiredMessage="É preciso informar pontuação!!!">
+							requiredMessage="Ã‰ preciso informar pontuaÃ§Ã£o!!!">
 							<f:validateLongRange minimum="0" />
 						</p:inputMask>
 
@@ -209,7 +209,7 @@
 		</p:dialog>
 		
 		<p:dialog
-			header="Cadastro Único"
+			header="Cadastro Ãšnico"
 			widgetVar="dialogoCadastro" resizable="false" modal="true"
 			closable="false" appendTo="@(body)" position="60,10"
 			style="float: left;
@@ -230,8 +230,8 @@
 							required="#{auto.pessoaConfig.labelNomeObrigatorio}"
 							requiredMessage="#{auto.pessoaConfig.labelNomeRequiredMessage}"
 							rendered="#{auto.pessoaConfig.labelNomeRenderiza}"
-							validatorMessage="O minimo de caracteres para nome são  '5'"
-							placeholder="Mínimo 5 Letras">
+							validatorMessage="O minimo de caracteres para nome sÃ£o  '5'"
+							placeholder="MÃ­nimo 5 Letras">
 							<f:validateLength minimum="5" />
 						</p:inputText>
 					</h:panelGrid>
@@ -244,8 +244,8 @@
 							required="#{auto.pessoaConfig.labelFantasiaObrigatorio}"
 							requiredMessage="#{auto.pessoaConfig.labelFantasiaRequiredMessage}"
 							rendered="#{auto.pessoaConfig.labelFantasiaRenderiza}"
-							validatorMessage="O minimo de caracteres para nome são  '5'"
-							placeholder="Mínimo 5 Letras">
+							validatorMessage="O minimo de caracteres para nome sÃ£o  '5'"
+							placeholder="MÃ­nimo 5 Letras">
 							<f:validateLength minimum="5" />
 						</p:inputText>
 					</h:panelGrid>
@@ -381,8 +381,8 @@
 						<p:outputLabel value="Confirme a Senha" />
 						<p:password size="30" maxlength="8"
 							value="#{auto.usAuto.confSenha}" required="true"
-							requiredMessage="Informe a confirmação de senha!!!"
-							validatorMessage="O minimo de digitos para confirmação senha: '8'"
+							requiredMessage="Informe a confirmaÃ§Ã£o de senha!!!"
+							validatorMessage="O minimo de digitos para confirmaÃ§Ã£o senha: '8'"
 							placeholder="8 letras e/ou digitos">
 							<f:validateLength minimum="8" />
 						</p:password>
@@ -403,8 +403,6 @@
 			</h:form>
 		</p:dialog>
 	</div>
-
 </h:body>
-
 
 </html>

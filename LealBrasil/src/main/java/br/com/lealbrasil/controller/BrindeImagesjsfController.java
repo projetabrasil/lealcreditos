@@ -13,6 +13,8 @@ import javax.faces.bean.RequestScoped;
 import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.StreamedContent;
 
+import br.com.lealbrasil.util.Utilidades;
+
 @RequestScoped
 @ManagedBean(name = "fotos")
 public class BrindeImagesjsfController {
@@ -23,12 +25,12 @@ public class BrindeImagesjsfController {
 
 	private StreamedContent foto;
 	private StreamedContent foto2;
+	private final String branco = Utilidades.getCaminhobase()+"branco"+Utilidades.getTipoImagem();
 
 	public StreamedContent getFoto() throws IOException {
-		String branco;
+		
 		if (caminhodaImagem == null || caminhodaImagem.isEmpty()) {
-			branco = "/imagens/branco.png"; // Utilidades.caminho("Brindes")+"branco"
-											// + Utilidades.tipodeImagem();
+			
 			Path path = Paths.get(branco);
 
 			if (Files.exists(path)) {
@@ -42,7 +44,7 @@ public class BrindeImagesjsfController {
 				InputStream stream = Files.newInputStream(path);
 				foto = new DefaultStreamedContent(stream);
 			} else {
-				branco = "/imagens/branco.png";
+				
 				path = Paths.get(branco);
 
 				if (Files.exists(path)) {
@@ -66,11 +68,8 @@ public class BrindeImagesjsfController {
 		this.foto = foto;
 	}
 
-	public StreamedContent getFoto2() throws IOException {
-		String branco;
-		if (caminhodaImagem2 == null || caminhodaImagem2.isEmpty()) {
-			branco = "/imagens/branco.png"; // Utilidades.caminho("Brindes")+"branco"
-											// + Utilidades.tipodeImagem();
+	public StreamedContent getFoto2() throws IOException {		
+		if (caminhodaImagem2 == null || caminhodaImagem2.isEmpty()) {		
 			Path path = Paths.get(branco);
 
 			if (Files.exists(path)) {
@@ -83,8 +82,7 @@ public class BrindeImagesjsfController {
 			if (Files.exists(path)) {
 				InputStream stream = Files.newInputStream(path);
 				foto2 = new DefaultStreamedContent(stream);
-			} else {
-				branco = "/imagens/branco.png";
+			} else {				
 				path = Paths.get(branco);
 
 				if (Files.exists(path)) {

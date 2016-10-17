@@ -3,7 +3,6 @@ package br.com.lealbrasil.model.entities;
 import java.io.Serializable;
 import java.util.Date;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -28,10 +27,10 @@ public class Movimento_Detalhe_A extends GenericDomain implements Serializable {
    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator="pk_movimento_detalhe_a")
     private Long id;
 
-	@ManyToOne(cascade = {CascadeType.ALL})
+	@ManyToOne
 	@JoinColumn(name = "id_Pessoa_Registro")
 	private Pessoa id_Pessoa_Registro;
-	@ManyToOne(cascade = {CascadeType.ALL})
+	@ManyToOne
 	@JoinColumn(name = "id_Pessoa_Assinante")
 	private Pessoa id_Pessoa_Assinante;
 

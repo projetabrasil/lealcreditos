@@ -14,16 +14,22 @@ import org.omnifaces.util.Messages;
 import br.com.lealbrasil.controller.entitiesconfig.PessoaConfig;
 import br.com.lealbrasil.model.business.PessoaBusiness2;
 import br.com.lealbrasil.model.business.PessoaGenericBusiness;
+import br.com.lealbrasil.model.business.Pessoa_Enum_Perfil_de_PessoaBusiness;
 import br.com.lealbrasil.model.business.Pessoa_VinculoBusiness;
 import br.com.lealbrasil.model.dao.PessoaDAO;
+import br.com.lealbrasil.model.dao.Pessoa_Enum_Aux_Perfil_PessoasDAO;
+import br.com.lealbrasil.model.dao.Pessoa_VinculoDAO;
 import br.com.lealbrasil.model.dao.PontoDAO;
 import br.com.lealbrasil.model.dao.Ponto_MovimentoDAO;
 import br.com.lealbrasil.model.entities.Enum_Aux_Perfil_Pagina_Atual;
+import br.com.lealbrasil.model.entities.Enum_Aux_Perfil_Pessoa;
+import br.com.lealbrasil.model.entities.Enum_Aux_Status_Movimento_Ponto;
 import br.com.lealbrasil.model.entities.Enum_Aux_Tipo_Identificador;
 import br.com.lealbrasil.model.entities.Enum_Aux_Tipo_Item_de_Movimento;
 import br.com.lealbrasil.model.entities.Enum_Aux_Tipo_Mov_Ponto;
 import br.com.lealbrasil.model.entities.PerfilLogado;
 import br.com.lealbrasil.model.entities.Pessoa;
+import br.com.lealbrasil.model.entities.Pessoa_Enum_Aux_Perfil_Pessoa;
 import br.com.lealbrasil.model.entities.Pessoa_Vinculo;
 import br.com.lealbrasil.model.entities.Ponto;
 import br.com.lealbrasil.model.entities.Ponto_Movimento;
@@ -55,19 +61,21 @@ public class Ponto_MovimentojsfController implements Serializable {
 
 	@PostConstruct
 	public void listar() {
-		if (!perfilLogado.getPaginaAtual().equals(Enum_Aux_Perfil_Pagina_Atual.PAGINAPONTUACAOC)
-				&& !perfilLogado.getPaginaAtual().equals(Enum_Aux_Perfil_Pagina_Atual.PAGINAPONTUACAOD)
-				&& !perfilLogado.getPaginaAtual().equals(Enum_Aux_Perfil_Pagina_Atual.PAGINAPONTUACAOE))
+
+		if ((perfilLogado == null || perfilLogado.getPaginaAtual() == null)
+				|| (!perfilLogado.getPaginaAtual().equals(Enum_Aux_Perfil_Pagina_Atual.PAGINAPONTUACAOC)
+						&& !perfilLogado.getPaginaAtual().equals(Enum_Aux_Perfil_Pagina_Atual.PAGINAPONTUACAOD)
+						&& !perfilLogado.getPaginaAtual().equals(Enum_Aux_Perfil_Pagina_Atual.PAGINAPONTUACAOE)))
 			return;
-		
-		if (perfilLogado.getPaginaAtual().equals(Enum_Aux_Perfil_Pagina_Atual.PAGINAPONTUACAOC)) 
+
+		if (perfilLogado.getPaginaAtual().equals(Enum_Aux_Perfil_Pagina_Atual.PAGINAPONTUACAOC))
 			setTipoMovimentacao(Enum_Aux_Tipo_Mov_Ponto.C);
 
-		else if (perfilLogado.getPaginaAtual().equals(Enum_Aux_Perfil_Pagina_Atual.PAGINAPONTUACAOD)) 
+		else if (perfilLogado.getPaginaAtual().equals(Enum_Aux_Perfil_Pagina_Atual.PAGINAPONTUACAOD))
 			setTipoMovimentacao(Enum_Aux_Tipo_Mov_Ponto.D);
-		 else if (perfilLogado.getPaginaAtual().equals(Enum_Aux_Perfil_Pagina_Atual.PAGINAPONTUACAOE)) 
+		else if (perfilLogado.getPaginaAtual().equals(Enum_Aux_Perfil_Pagina_Atual.PAGINAPONTUACAOE))
 			setTipoMovimentacao(Enum_Aux_Tipo_Mov_Ponto.E);
-		
+
 		Ponto_MovimentoDAO pDAO = new Ponto_MovimentoDAO();
 		pontos_Mov = pDAO.listar(perfilLogado, null, true);
 		litarPontuacoes();
@@ -159,6 +167,7 @@ public class Ponto_MovimentojsfController implements Serializable {
 
 	public void configPessoaNova(String cpf_Cnpj) {
 		pessoaPontuada = new Pessoa();
+
 		configurarPessoa();
 		pessoaPontuada = pessoaConfig.ConfiguraPessoa(tipoIdentificador, perfilLogado.getUsLogado(), pessoaPontuada,
 				false);
@@ -215,32 +224,56 @@ public class Ponto_MovimentojsfController implements Serializable {
 		pessoaPontuada = PessoaGenericBusiness.merge(pessoaPontuada, perfilLogado.getUsLogado(), perfilLogado, false);
 	}
 
-	public void vincularPessoa(){
-		// merge pessoa_vinculo;
-		
-		
-					Pessoa_Vinculo pVinc = new Pessoa_Vinculo();
-					pVinc.setAtivo(true);
-					pVinc.setId_Empresa(1);
-					pVinc.setUltimaAtualizacao(Utilidades.retornaCalendario());
-					pVinc.setId_pessoa_d(pessoaPontuada);
-					
-					
-					
-					pVinc.setId_pessoa_m(perfilLogado.getAssLogado());					
-					pVinc.setId_Pessoa_Registro(pessoaPontuada);
-					pVinc.setUltimaAtualizacao(Utilidades.retornaCalendario());
-					Pessoa_VinculoBusiness.merge(pVinc, perfilLogado);
+	public void vincularPessoa() {
+		if (perfilLogado.getAssLogado() != null) {
+			
+			Pessoa_Enum_Aux_Perfil_Pessoa pessoa_Perfil = new Pessoa_Enum_Aux_Perfil_Pessoa();
+			pessoa_Perfil.setId_pessoa(pessoaPontuada);		
+			
+			pessoa_Perfil.setEnum_Aux_Perfil_Pessoa(Enum_Aux_Perfil_Pessoa.CLIENTES);
+			pessoa_Perfil.setUltimaAtualizacao(Utilidades.retornaCalendario());	
+			pessoa_Perfil.setId_Empresa(1);
+			pessoa_Perfil.setId_Pessoa_Registro(perfilLogado.getUsLogado().getPessoa());
+			pessoa_Perfil.setUltimaAtualizacao(Utilidades.retornaCalendario());
+			pessoa_Perfil = Pessoa_Enum_Perfil_de_PessoaBusiness.merge(pessoa_Perfil);
+			Pessoa_Enum_Aux_Perfil_PessoasDAO pp = new  Pessoa_Enum_Aux_Perfil_PessoasDAO() ;
+			Pessoa_Enum_Aux_Perfil_Pessoa ppRet = new  Pessoa_Enum_Aux_Perfil_Pessoa() ;
+			ppRet = pp.isPerfilExiste(pessoa_Perfil);
+			if (ppRet == null){
+				pp.merge(pessoa_Perfil);
+			}
+			
+			Pessoa_Vinculo pVincRet = new Pessoa_Vinculo();
+			Pessoa_VinculoDAO pVDAO = new Pessoa_VinculoDAO();
+			pVincRet = pVDAO.retornaVinculo_Mestre(pessoaPontuada, perfilLogado.getAssLogado(),
+					Enum_Aux_Perfil_Pessoa.CLIENTES);
+
+			if (pVincRet == null) {
+				Pessoa_Vinculo pVinc = new Pessoa_Vinculo();
+
+				pVinc.setAtivo(true);
+				pVinc.setId_Empresa(1);
+				pVinc.setUltimaAtualizacao(Utilidades.retornaCalendario());
+				pVinc.setId_pessoa_d(pessoaPontuada);
+				pVinc.setEnum_Aux_Perfil_Pessoa(Enum_Aux_Perfil_Pessoa.CLIENTES);
+
+				pVinc.setId_pessoa_m(perfilLogado.getAssLogado());
+				pVinc.setId_Pessoa_Registro(pessoaPontuada);
+				pVinc.setUltimaAtualizacao(Utilidades.retornaCalendario());
+				Pessoa_VinculoBusiness.merge(pVinc);
+			}
+		}
+
 	}
+
 	public void merge() {
 
 		if (pessoaPontuada == null || pessoaPontuada.getId() == null)
 			return;
 		vincularPessoa();
-		
+
 		ponto_movimento.setId_pessoa_cliente(pessoaPontuada);
 		ponto_movimento.setId_Empresa(1);
-		
 
 		if (ponto_movimento.getCreditaDebita().equals(Enum_Aux_Tipo_Mov_Ponto.C)) {
 			int pontos = (int) (ponto_movimento.getUnidadeporPonto()
@@ -260,10 +293,11 @@ public class Ponto_MovimentojsfController implements Serializable {
 		}
 
 		ponto_movimento.setUltimaAtualizacao(Utilidades.retornaCalendario());
+		ponto_movimento.setEnum_Aux_Status_Movimento_Ponto(Enum_Aux_Status_Movimento_Ponto.CONFIRMADO);
+		ponto_movimento.setDataLancamento(Utilidades.retornaValidade(0));
 
 		Ponto_MovimentoDAO pDAO = new Ponto_MovimentoDAO();
-		
-		
+
 		ponto_movimento = pDAO.merge(ponto_movimento);
 
 		if (ponto_movimento != null && ponto_movimento.getId() != null) {
@@ -292,8 +326,6 @@ public class Ponto_MovimentojsfController implements Serializable {
 	public void setPerfilLogado(PerfilLogado perfilLogado) {
 		this.perfilLogado = perfilLogado;
 	}
-
-
 
 	public List<Ponto_Movimento> getHistorico() {
 		return historico;
@@ -415,5 +447,4 @@ public class Ponto_MovimentojsfController implements Serializable {
 		this.pontos_Mov = pontos_Mov;
 	}
 
-		
 }

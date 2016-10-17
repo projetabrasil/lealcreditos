@@ -4,6 +4,8 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -36,6 +38,9 @@ public class Pessoa_Vinculo extends GenericDomain implements Serializable {
 	@JoinColumn ( name ="id_Pessoa_Registro", nullable=false)	
 	private Pessoa id_Pessoa_Registro ;
 
+	@Enumerated(EnumType.STRING)
+	private Enum_Aux_Perfil_Pessoa enum_Aux_Perfil_Pessoa ;
+
 	
 	public Pessoa getId_pessoa_d() {
 		return id_pessoa_d;
@@ -61,23 +66,19 @@ public class Pessoa_Vinculo extends GenericDomain implements Serializable {
 		this.id_pessoa_m = id_pessoa_m;
 	}
 
-	/* (non-Javadoc)
-	 * @see java.lang.Object#toString()
-	 */
 	@Override
 	public String toString() {
 		return "Pessoa_Vinculo [id=" + id + ", id_pessoa_m=" + id_pessoa_m + ", id_pessoa_d=" + id_pessoa_d + ", ativo="
-				+ ativo + ", id_Pessoa_Registro=" + id_Pessoa_Registro + "]";
+				+ ativo + ", id_Pessoa_Registro=" + id_Pessoa_Registro + ", enum_Aux_Perfil_Pessoa="
+				+ enum_Aux_Perfil_Pessoa + "]";
 	}
 
-	/* (non-Javadoc)
-	 * @see java.lang.Object#hashCode()
-	 */
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = super.hashCode();
 		result = prime * result + (ativo ? 1231 : 1237);
+		result = prime * result + ((enum_Aux_Perfil_Pessoa == null) ? 0 : enum_Aux_Perfil_Pessoa.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result + ((id_Pessoa_Registro == null) ? 0 : id_Pessoa_Registro.hashCode());
 		result = prime * result + ((id_pessoa_d == null) ? 0 : id_pessoa_d.hashCode());
@@ -85,9 +86,6 @@ public class Pessoa_Vinculo extends GenericDomain implements Serializable {
 		return result;
 	}
 
-	/* (non-Javadoc)
-	 * @see java.lang.Object#equals(java.lang.Object)
-	 */
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -98,6 +96,8 @@ public class Pessoa_Vinculo extends GenericDomain implements Serializable {
 			return false;
 		Pessoa_Vinculo other = (Pessoa_Vinculo) obj;
 		if (ativo != other.ativo)
+			return false;
+		if (enum_Aux_Perfil_Pessoa != other.enum_Aux_Perfil_Pessoa)
 			return false;
 		if (id == null) {
 			if (other.id != null)
@@ -142,6 +142,14 @@ public class Pessoa_Vinculo extends GenericDomain implements Serializable {
 	 */
 	public void setId_Pessoa_Registro(Pessoa id_Pessoa_Registro) {
 		this.id_Pessoa_Registro = id_Pessoa_Registro;
+	}
+
+	public Enum_Aux_Perfil_Pessoa getEnum_Aux_Perfil_Pessoa() {
+		return enum_Aux_Perfil_Pessoa;
+	}
+
+	public void setEnum_Aux_Perfil_Pessoa(Enum_Aux_Perfil_Pessoa enum_Aux_Perfil_Pessoa) {
+		this.enum_Aux_Perfil_Pessoa = enum_Aux_Perfil_Pessoa;
 	}
 
 	

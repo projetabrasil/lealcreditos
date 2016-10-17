@@ -92,7 +92,14 @@
 		</h:form>
 		<p:dialog widgetVar="dialogoIdentidade" closable="false"
 			resizable="false" modal="true" appendTo="@(body)"
-			header="Escolha o Tipo de Identificação" position="60,10"> 
+			header="Escolha o Tipo de Identificação" dynamic="true"
+			responsive="true" 
+			style="float: left;
+    padding: 10px;
+    font-family: calibri;
+    color: #6495ED;
+    font-size: 15px;
+    text-align: left; overflow:auto;"> 
 
 			<h:form id="formIdentidade">
 				<h:panelGrid id="painelIdentificacao">
@@ -130,9 +137,16 @@
 		</p:dialog>
 
 		<p:dialog
-			header="Formulário de Cadastro - #{perfil.perfilPagina.descricao}"
+			header="Formulário de Cadastro - #{autenticacaojsfController.perfilLogado.paginaAtual.perfilPessoa.descricao}"
 			widgetVar="dialogoCadastro" resizable="false" modal="true"
-			closable="false" appendTo="@(body)" position="60,10">
+			closable="false" appendTo="@(body)" dynamic="true"
+			responsive="true" 
+			style="float: left;
+    padding: 10px;
+    font-family: calibri;
+    color: #6495ED;
+    font-size: 15px;
+    text-align: left;overflow:auto;">
 			<h:form id="formCadastro">
 				<h:panelGrid id="painelCadastro_1">
 					<h:panelGrid id="painelCadastro_11">

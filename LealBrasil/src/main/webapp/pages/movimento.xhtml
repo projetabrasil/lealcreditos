@@ -138,7 +138,8 @@
 						style="width:420px" panelStyle="width:420px">
 						<f:selectItem itemLabel="selecione um Combo" itemValue="" />
 						<f:selectItems value="#{movimento.cBMs}" var="d" itemValue="#{d}"
-							itemLabel="#{d.descricao}" />
+						  
+							itemLabel="#{d.referencia} - #{d.descricao} - R$ #{d.total}" />
 
 						<p:ajax event="change" update="tabelaItens"
 							listener="#{movimento.ajustaComboMestreDetalhe()}"

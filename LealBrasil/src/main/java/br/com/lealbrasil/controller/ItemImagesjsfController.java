@@ -13,6 +13,8 @@ import javax.faces.bean.RequestScoped;
 import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.StreamedContent;
 
+import br.com.lealbrasil.util.Utilidades;
+
 @RequestScoped
 @ManagedBean(name = "fotoItem")
 public class ItemImagesjsfController {
@@ -33,14 +35,8 @@ public class ItemImagesjsfController {
 	private StreamedContent foto2;
 
 	public StreamedContent getFoto() throws IOException {
-		
-		String branco;
-		
-		
-		
-		if (getCaminhodaImagem() == null || getCaminhodaImagem().isEmpty()) {
-			branco = "/imagens/branco.png"; 											
-			Path path = Paths.get(branco);
+		if (getCaminhodaImagem() == null || getCaminhodaImagem().isEmpty()) {			 											
+			Path path = Paths.get(Utilidades.getBranco());
 
 			if (Files.exists(path)) {
 				InputStream stream = Files.newInputStream(path);
@@ -55,8 +51,8 @@ public class ItemImagesjsfController {
 				InputStream stream = Files.newInputStream(path);
 				foto = new DefaultStreamedContent(stream);
 			} else {
-				branco = "/imagens/branco.png";
-				path = Paths.get(branco);
+				
+				path = Paths.get(Utilidades.getBranco());
 
 				if (Files.exists(path)) {
 					InputStream stream = Files.newInputStream(path);

@@ -14,6 +14,7 @@ import java.net.URLConnection;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.text.DateFormat;
 import java.text.Normalizer;
 import java.text.ParseException;
@@ -27,6 +28,7 @@ import java.util.TimeZone;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.omnifaces.util.Messages;
 import org.primefaces.context.RequestContext;
 import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.StreamedContent;
@@ -47,10 +49,56 @@ import br.com.lealbrasil.model.entities.Movimento_Detalhe_A;
 public class Utilidades implements Serializable {
 	private static final int[] pesoCPF = { 11, 10, 9, 8, 7, 6, 5, 4, 3, 2 };
 	private static final int[] pesoCNPJ = { 6, 5, 4, 3, 2, 9, 8, 7, 6, 5, 4, 3, 2 };
-	private static final String caminhoFotoBrinde = "c:/imagens/brindes/";
-	private static final String caminhoFotoVouchers = "c:/imagens/vouchers/";
-	private static String caminhobase = "/images/";
-	private static String tipoImagem = ".png";
+	private static final String caminhoFotoBrinde = System.getProperty("user.home") + "/imagens/brindes/";
+	private static final String caminhoFotoVouchers = System.getProperty("user.home") + "/imagens/vouchers/";
+	private static final String caminhoFotoAgendamento = System.getProperty("user.home") + "/imagens/agendamento/";
+	private static String caminhoFotoComprovante = System.getProperty("user.home") + "/imagens/comprovantes/";
+	private static final String caminhoPDF = System.getProperty("user.home") + "/pdfs/";
+
+	private static String tipoImagem = ".jpeg";
+	private static String tipoImagemSemPonto = "jpeg";
+	private static final String caminhobase = System.getProperty("user.home") + "/imagens/";
+	private static final String branco = Utilidades.getCaminhobase() + "branco" + Utilidades.getTipoImagem();
+	private static final String naoatingido = "/images/" + "naoatingido" + Utilidades.getTipoImagem();
+	private static final String atingido = "/images/" + "atingido" + Utilidades.getTipoImagem();
+	
+
+	public static String retornaCaminho(String diretorio, boolean temporario) {
+		String retorno = "";
+		if (!temporario) {
+			/*
+			 * *.* - coloquei porque se não fica apenas o nome do diretorio
+			 * atual e pega o diretório absoluto anterior
+			 */
+			gravaDiretorio(diretorio + "*.*");
+		} else {
+			retorno = System.getProperty("java.io.tmpdir");
+		}
+
+		return retorno;
+
+	}
+	
+	
+
+	public static void gravaDiretorio(String caminho) {
+		File file = new File(caminho);
+		String parentPath = file.getAbsoluteFile().getParent();
+		Path newDirectoryPath = Paths.get(parentPath);
+
+		
+		if (!Files.exists(newDirectoryPath)) {
+			
+			try {
+
+				Files.createDirectory(newDirectoryPath);
+
+			} catch (IOException e) {
+				System.err.println(e);
+			}
+		} 
+		
+	}
 
 	public static String tipodeImagem() {
 		return getTipoimagem();
@@ -229,24 +277,22 @@ public class Utilidades implements Serializable {
 		return json;
 	}
 
-	private static String getCaminhofotobrinde() {
+	public static String getCaminhofotobrinde() {
 		return caminhoFotoBrinde;
 	}
 
-	private static String getCaminhofotovouchers() {
+	public static String getCaminhofotovouchers() {
 		return caminhoFotoVouchers;
 	}
 
-	private static String getTipoimagem() {
+	public static String getTipoimagem() {
 		return tipoImagem;
 	}
 
 	public static StreamedContent retornaFoto(String caminhodoArquivo) throws IOException {
-		String branco;
+
 		StreamedContent foto = null;
 		if (caminhodoArquivo == null || caminhodoArquivo.isEmpty()) {
-			branco = "/imagens/branco.png"; // Utilidades.caminho("Brindes")+"branco"
-											// + Utilidades.tipodeImagem();
 			Path path = Paths.get(branco);
 
 			if (Files.exists(path)) {
@@ -260,7 +306,6 @@ public class Utilidades implements Serializable {
 				InputStream stream = Files.newInputStream(path);
 				foto = new DefaultStreamedContent(stream);
 			} else {
-				branco = "/imagens/branco.png";
 				path = Paths.get(branco);
 
 				if (Files.exists(path.getFileName())) {
@@ -275,7 +320,7 @@ public class Utilidades implements Serializable {
 	public static String caminho(String tipo) {
 		String caminho;
 		if (tipo.toUpperCase().equals("BRINDES"))
-			caminho = getCaminhofotobrinde();
+			caminho = System.getProperty("user.dir") + getCaminhofotobrinde();
 		else
 			caminho = getCaminhofotovouchers();
 		return caminho;
@@ -283,10 +328,6 @@ public class Utilidades implements Serializable {
 
 	public static String getCaminhobase() {
 		return caminhobase;
-	}
-
-	public static void setCaminhobase(String caminhobase) {
-		Utilidades.caminhobase = caminhobase;
 	}
 
 	public static void setTipoimagem(String tipoimagem) {
@@ -320,38 +361,103 @@ public class Utilidades implements Serializable {
 		return invertida;
 	}
 
-	public static void pdf(String caminho, Movimento_Detalhe_A mDA, Agendamento ag) {
+	public static void GerarPdf(Movimento_Detalhe_A mDA, Agendamento ag) {
+		mensagensDisparar("iniciando a construção do comprovante");
+		String caminhoPdf = caminhoPDF + mDA.getCodigo() + ".pdf";
+		String caminhoDaImagem = Utilidades.getCaminhofotovouchers() + mDA.getId() + Utilidades.getTipoimagem();
+		
 		Document document = new Document();
 		try {
 			// String k = "<html><body> This is my Project </body></html>";
-			OutputStream file = new FileOutputStream(new File(caminho));
+
+			gravaDiretorio(Utilidades.getCaminhopdf());
+			OutputStream file = new FileOutputStream(new File(caminhoPdf));
 
 			PdfWriter writer = PdfWriter.getInstance(document, file);
 			document.open();
-			Image img = Image.getInstance(mDA.getCaminhoDaImagem());
+
+			Path path = Paths.get(caminhoDaImagem);
+			Image img = null;
+			if (Files.exists(path))
+				img = Image.getInstance(caminhoDaImagem);
+
 			String dados = "Nome          :" + ag.getId_Pessoa_Cliente().getDescricao() + "\n" + "Codigo        : "
 					+ mDA.getCodigo() + "\n" + "Telefone      : " + ag.getId_Pessoa_Cliente().getFone_1() + "\n"
 					+ "Agendado para : " + getDataPorExtenso(ag.getDataAgendamento().getTime()) + "\n";
-
-			document.add(img);
+			if (img != null)
+				document.add(img);
 			document.add(new Paragraph(dados));
 			InputStream is = new ByteArrayInputStream(mDA.getRegulamento().getBytes());
+			mensagensDisparar("finalizando a construção do comprovante");
 			XMLWorkerHelper.getInstance().parseXHtml(writer, document, is);
 			document.close();
 			file.close();
-
-			java.awt.Desktop desktop = java.awt.Desktop.getDesktop();
-			desktop.open(new File(caminho));
 
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 
 	}
+	
+	
+	
+
 
 	public static String getDataPorExtenso(Date data) {
 		DateFormat dfmt = new SimpleDateFormat("d 'de' MMMM 'de' yyyy");
 		return dfmt.format(data);
 	}
+
+	public static void copiaOrigemDestino(String origem, String destino) {
+		Path or = Paths.get(origem);
+		Path de = Paths.get(destino);
+		try {
+			Files.copy(or, de, StandardCopyOption.REPLACE_EXISTING);
+		} catch (IOException error) {
+			error.printStackTrace();
+		}
+	}
+
+	public static String getCaminhopdf() {
+		return caminhoPDF;
+	}
+
+	public static String getTipoImagem() {
+		return tipoImagem;
+	}
+
+	public static String getCaminhofotoagendamento() {
+		return caminhoFotoAgendamento;
+	}
+
+	public static void mensagensDisparar(String mensagem) {
+		Messages.addGlobalInfo(mensagem);
+	}
+
+	public static String getBranco() {
+		return branco;
+	}
+
+	public static String getNaoatingido() {
+		return naoatingido;
+	}
+
+	public static String getAtingido() {
+		return atingido;
+	}
+
+	public static String getTipoImagemSemPonto() {
+		return tipoImagemSemPonto;
+	}
+
+	public static String getCaminhofotocomprovante() {
+		return caminhoFotoComprovante;
+	}
+
+	public static void setCaminhofotocomprovante(String caminhofotocomprovante) {
+		caminhoFotoComprovante = caminhofotocomprovante;
+	}
+
+	
 
 }

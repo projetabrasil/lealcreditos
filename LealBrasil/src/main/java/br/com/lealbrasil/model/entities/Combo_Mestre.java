@@ -2,7 +2,6 @@ package br.com.lealbrasil.model.entities;
 
 import java.io.Serializable;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -19,10 +18,10 @@ public class Combo_Mestre extends GenericDomain implements Serializable {
 	@SequenceGenerator(name="pk_combo_mestre", sequenceName="mess_sounds_combo_mestre", allocationSize=1)
 	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="pk_combo_mestre")
 	private Long id;
-	@ManyToOne(cascade = {CascadeType.ALL})
+	@ManyToOne
 	@JoinColumn(name="id_Pessoa_Registro", nullable=false)
 	private Pessoa id_Pessoa_Registro;
-	@ManyToOne(cascade = {CascadeType.ALL})
+	@ManyToOne
 	@JoinColumn(name="id_Pessoa_Assinante", nullable=false)
 	private Pessoa id_Pessoa_Assinante;
 	@Column(name="descricao",length =90, nullable=false)

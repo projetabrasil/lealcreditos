@@ -17,7 +17,7 @@
 </h:head>
 
 
-<h:body style="overflow-x: hidden; overflow-y: hidden ">
+<h:body style="overflow:scroll!important;">
 	<div class="ui-grid ui-grid-responsive">
 		<p:growl id="mensagens" autoUpdate="true" redisplay="true" />
 
@@ -27,7 +27,7 @@
 					value="Login: #{autenticacaojsfController.perfilLogado.usLogado.pessoa.descricao}"
 					style="color:blue;font-size:15px;font-weight:600;" />
 				<p:outputLabel
-					value=" - #{autenticacaojsfController.perfilLogado.assLogado.descricao}"
+					value=" - #{autenticacaojsfController.perfilLogado.assLogado.fantasia_Apelido}"
 					rendered="#{autenticacaojsfController.perfilLogado.renderizaAssociado}"
 					style="color:blue;font-size:15px;font-weight:900;" />
 
@@ -144,6 +144,7 @@
 								rendered="#{autenticacaojsfController.perfilLogado.temPermissoes(['VENDAS'])}">
 								<f:attribute name="paginaAtual" value="PAGINAITEMDEPROMOCAO" />
 							</p:menuitem>
+							
 							<p:menuitem value="Combo"
 								actionListener="#{paginas.mudaPaginaAtual}"
 								rendered="#{autenticacaojsfController.perfilLogado.temPermissoes(['VENDAS'])}">
@@ -179,8 +180,8 @@
 
 
 
-			<div id="corpo">
-				<h:form id="formTemplate">
+			<div id="corpo" >
+				<h:form id="formTemplate" >
 					<ui:insert name="conteudo">
 					</ui:insert>
 

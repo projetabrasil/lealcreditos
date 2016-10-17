@@ -2,10 +2,12 @@ package br.com.lealbrasil.model.business;
 
 import java.io.Serializable;
 
+import br.com.lealbrasil.model.dao.Pessoa_Enum_Aux_Perfil_PessoasDAO;
 import br.com.lealbrasil.model.entities.Enum_Aux_Perfil_Pessoa;
 import br.com.lealbrasil.model.entities.PerfilLogado;
 import br.com.lealbrasil.model.entities.Pessoa;
 import br.com.lealbrasil.model.entities.Pessoa_Enum_Aux_Perfil_Pessoa;
+import br.com.lealbrasil.model.entities.Pessoa_Vinculo;
 import br.com.lealbrasil.model.entities.Usuario;
 import br.com.lealbrasil.util.Utilidades;
 
@@ -47,14 +49,46 @@ public class PessoaGenericBusiness implements Serializable {
 			pessoa_Perfil.setEnum_Aux_Perfil_Pessoa(Enum_Aux_Perfil_Pessoa.CLIENTES);
 			
 		
-			
+		pessoa_Perfil.setUltimaAtualizacao(Utilidades.retornaCalendario());	
 		pessoa_Perfil.setId_Empresa(1);
 		pessoa_Perfil.setId_Pessoa_Registro(perfilLogado.getUsLogado().getPessoa());
 		pessoa_Perfil.setUltimaAtualizacao(Utilidades.retornaCalendario());
 		pessoa_Perfil = Pessoa_Enum_Perfil_de_PessoaBusiness.merge(pessoa_Perfil);
 		
+		Pessoa_Enum_Aux_Perfil_PessoasDAO pp = new  Pessoa_Enum_Aux_Perfil_PessoasDAO() ;
+		Pessoa_Enum_Aux_Perfil_Pessoa ppRet = new  Pessoa_Enum_Aux_Perfil_Pessoa() ;
+		ppRet = pp.isPerfilExiste(pessoa_Perfil);
+		if (ppRet == null){
+			pp.merge(pessoa_Perfil);
+		}
+		
+		
+		
+		
+		if (pessoa.getId() != null
+				&& perfilLogado.getPaginaAtual().getPerfilPessoa().equals(Enum_Aux_Perfil_Pessoa.ATENDENTES)) 		
+		vincularPessoa(pessoa, perfilLogado);
+		
+		
+		
 		
 		return pessoa;
+	}
+	
+	public static void vincularPessoa(Pessoa quem, PerfilLogado perfilLogado) {
+		Pessoa_Vinculo pVinc = new Pessoa_Vinculo();
+		pVinc.setAtivo(true);
+		pVinc.setId_Empresa(1);
+		pVinc.setEnum_Aux_Perfil_Pessoa(perfilLogado.getPaginaAtual().getPerfilPessoa());
+		pVinc.setUltimaAtualizacao(Utilidades.retornaCalendario());
+		pVinc.setId_pessoa_d(quem);
+
+		pVinc.setId_pessoa_m(perfilLogado.getAssLogado());
+		pVinc.setId_Pessoa_Registro(perfilLogado.getUsLogado().getPessoa());
+		pVinc.setUltimaAtualizacao(Utilidades.retornaCalendario());
+		
+
+		Pessoa_VinculoBusiness.merge(pVinc);
 	}
 	
 	public static Pessoa  buscaPessoa(String identificacao, Pessoa pessoaCadastro){

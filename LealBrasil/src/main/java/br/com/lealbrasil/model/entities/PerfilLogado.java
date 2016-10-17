@@ -21,7 +21,7 @@ public class PerfilLogado implements Serializable {
 	Enum_Aux_Perfil_Pessoa perfilUsLogado;
 	private List<Enum_Aux_Perfil_Pessoa> listaPerfisdousLogado;
 	private String foco;
-	private String identificadorAssociado;
+	private String identificadorAssinante;
 	private String identificadorUsuario;
 	private String senhaUsuario;
 	private boolean renderizaAssociado;
@@ -55,7 +55,7 @@ public class PerfilLogado implements Serializable {
 		else
 			foco = "ass";
 
-		identificadorAssociado = "";
+		identificadorAssinante = "";
 		identificadorUsuario = "";
 		senhaUsuario = "";
 		usLogado = new Usuario();
@@ -67,27 +67,15 @@ public class PerfilLogado implements Serializable {
 
 	public void verificaAssinante() {
 
-		if (perfilUsLogado != null
-				&& (perfilUsLogado.equals(Enum_Aux_Perfil_Pessoa.ASSINANTES)
-						|| perfilUsLogado.equals(Enum_Aux_Perfil_Pessoa.ATENDENTES)
-						|| perfilUsLogado.equals(Enum_Aux_Perfil_Pessoa.VENDAS))
-				&& perfilUsLogado.isTemPerfilMestre() && assLogado.getId() == null) {
-			if (perfilUsLogado.equals(Enum_Aux_Perfil_Pessoa.ASSINANTES)
-					|| perfilUsLogado.equals(Enum_Aux_Perfil_Pessoa.VENDAS))
-				setAssLogado(usLogado.getPessoa());
-			else if (perfilUsLogado.equals(Enum_Aux_Perfil_Pessoa.ATENDENTES)) {
-				Pessoa_VinculoDAO pVincDAO = new Pessoa_VinculoDAO();
-				Pessoa_Vinculo pessoa_Vinculo = new Pessoa_Vinculo();
-				pessoa_Vinculo.setId_pessoa_d(usLogado.getPessoa());
-				pessoa_Vinculo = pVincDAO.retornaVinculo_Mestre(pessoa_Vinculo, perfilUsLogado);
-				if (pessoa_Vinculo != null && pessoa_Vinculo.getId_pessoa_m() != null) {
-					setAssLogado(pessoa_Vinculo.getId_pessoa_m());
-				}
-			}
+		if (perfilUsLogado != null				&& ( perfilUsLogado.equals(Enum_Aux_Perfil_Pessoa.ASSINANTES) 						
+				                                    || perfilUsLogado.equals(Enum_Aux_Perfil_Pessoa.ATENDENTES)
+				                                    || perfilUsLogado.equals(Enum_Aux_Perfil_Pessoa.VENDAS))
+						&& perfilUsLogado.isTemPerfilMestre() && assLogado.getId() != null) {
+			
 			setRenderizaAssociado(true);
-			if (assLogado != null && assLogado.getIdentificador() != null && identificadorAssociado != null
-					&& identificadorAssociado.length() > 0
-					&& !assLogado.getIdentificador().equals(identificadorAssociado)) {
+			if (assLogado != null && assLogado.getIdentificador() != null && identificadorAssinante != null
+					&& identificadorAssinante.length() > 0
+					&& !assLogado.getIdentificador().equals(identificadorAssinante)) {
 				autenticacao.redirecionaPaginas("alfapage.xhtml",
 						"erro no redirecionamento para página alfapage!!!",true);
 			}
@@ -179,7 +167,13 @@ public class PerfilLogado implements Serializable {
 
 	@Override
 	public String toString() {
-		return "PerfilLogado [usLogado=" + usLogado + ", assLogado=" + assLogado + ", paginaAtual=" + paginaAtual + "]";
+		return "PerfilLogado [usLogado=" + usLogado + ", assLogado=" + assLogado + ", paginaAtual=" + paginaAtual
+				+ ", perfilUsLogado=" + perfilUsLogado + ", listaPerfisdousLogado=" + listaPerfisdousLogado + ", foco="
+				+ foco + ", identificadorAssinante=" + identificadorAssinante + ", identificadorUsuario="
+				+ identificadorUsuario + ", senhaUsuario=" + senhaUsuario + ", renderizaAssociado=" + renderizaAssociado
+				+ ", renderizaPontuacao=" + renderizaPontuacao + ", renderizapessoanovo=" + renderizapessoanovo
+				+ ", renderizapessoaeditar=" + renderizapessoaeditar + ", pontos=" + pontos + ", autenticacao="
+				+ autenticacao + "]";
 	}
 
 	@Override
@@ -232,13 +226,7 @@ public class PerfilLogado implements Serializable {
 		this.foco = foco;
 	}
 
-	public String getIdentificadorAssociado() {
-		return identificadorAssociado;
-	}
 
-	public void setIdentificadorAssociado(String identificadorAssociado) {
-		this.identificadorAssociado = identificadorAssociado;
-	}
 
 	public String getIdentificadorUsuario() {
 		return identificadorUsuario;
@@ -262,6 +250,26 @@ public class PerfilLogado implements Serializable {
 
 	public void setPerfilUsLogado(Enum_Aux_Perfil_Pessoa perfilUsLogado) {
 		this.perfilUsLogado = perfilUsLogado;
+		if ( this.perfilUsLogado.equals(Enum_Aux_Perfil_Pessoa.ASSINANTES)
+				|| perfilUsLogado.equals(Enum_Aux_Perfil_Pessoa.VENDAS))
+			setAssLogado(usLogado.getPessoa());
+		else 
+			if (perfilUsLogado.equals(Enum_Aux_Perfil_Pessoa.ATENDENTES)) {
+			Pessoa_VinculoDAO pVincDAO = new Pessoa_VinculoDAO();
+			Pessoa_Vinculo pessoa_Vinculo = new Pessoa_Vinculo();
+			pessoa_Vinculo.setId_pessoa_d(usLogado.getPessoa());
+			pessoa_Vinculo = pVincDAO.retornaVinculo_Mestre(getUsLogado().getPessoa(),Enum_Aux_Perfil_Pessoa.ATENDENTES);
+			if (pessoa_Vinculo != null && pessoa_Vinculo.getId_pessoa_m() != null) {
+				setAssLogado(pessoa_Vinculo.getId_pessoa_m());
+				setIdentificadorAssinante(pessoa_Vinculo.getId_pessoa_m().getCpf_Cnpj());
+				setRenderizaAssociado(true);
+			}
+			else{
+				setAssLogado(null);
+				setIdentificadorAssinante("---");
+				setRenderizaAssociado(false);
+			}
+		}
 	}
 
 	public boolean isRenderizaAssociado() {
@@ -311,6 +319,14 @@ public class PerfilLogado implements Serializable {
 
 	public void setPontos(List<Ponto> pontos) {
 		this.pontos = pontos;
+	}
+
+	public String getIdentificadorAssinante() {
+		return identificadorAssinante;
+	}
+
+	public void setIdentificadorAssinante(String identificadorAssinante) {
+		this.identificadorAssinante = identificadorAssinante;
 	}
 
 }

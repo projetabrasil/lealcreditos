@@ -108,7 +108,11 @@
 						</h:outputText>
 					</p:column>
 					<p:column headerText="Foto">
-						<p:graphicImage id="foto" value="#{voucherfotos.foto}">
+						<p:graphicImage id="foto" value="#{imagensjsfController.image}"
+						style="max-width:90px;
+    max-height:80px;
+    width: auto;
+    height: auto;">
 							<f:param name="caminho" value="#{registro.caminhoDaImagem}" />
 						</p:graphicImage>
 					</p:column>
@@ -268,10 +272,14 @@
 								<p:outputLabel for="upload" value="buscar e carregar  foto:" />
 								<p:fileUpload id="upload" mode="advanced" auto="true"
 									style="font-size:15px;width:490px;" update="foto"
-									fileUploadListener="#{detalhe_A.upload}" allowTypes="/(\.|\/)(png)$/">
+									fileUploadListener="#{detalhe_A.upload}" allowTypes="/(\.|\/)(#{detalhe_A.tipoDeImagem})$/">
 								</p:fileUpload>
 
-								<p:graphicImage id="foto" value="#{voucherfotos.foto}">
+								<p:graphicImage id="foto" value="#{imagensjsfController.image}"
+								style="max-width:90px;
+    max-height:80px;
+    width: auto;
+    height: auto;">
 									<f:param name="caminho"
 										value="#{detalhe_A.mDA.caminhoDaImagem}" />
 								</p:graphicImage>
@@ -284,7 +292,8 @@
 									oncomplete="PF('wiz').loadStep('tab1',false)"
 									actionListener="#{detalhe_A.merge()}"
 									update="
-									mensagens :formTemplate:formListaVoucher:tabelaVoucher"
+									mensagens :formTemplate:formListaVoucher:tabelaVoucher
+									:formTemplate:formVoucher"
 									process="@this" />
 								<p:commandButton value="cancelar()"
 									oncomplete="PF('wiz').loadStep('tab1',false)"

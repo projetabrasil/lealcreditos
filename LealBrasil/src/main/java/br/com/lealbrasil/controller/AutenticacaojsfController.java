@@ -43,16 +43,15 @@ public class AutenticacaojsfController extends GenericController implements Seri
 
 	public void cadastroAutomatico() {
 		perfilLogado.setRenderizaAssociado(false);
-		perfilLogado.setIdentificadorAssociado("99999999999");
+		perfilLogado.setIdentificadorAssinante("99999999999");
 		perfilLogado.setSenhaUsuario("98765432");
 		autenticar(true);
 	}
 
 	public void autenticar(boolean cadAutomatico) {
-
 		UsuarioDAO usuarioDAO = new UsuarioDAO();
 		if (perfilLogado.getIdentificadorUsuario() == null || perfilLogado.getIdentificadorUsuario().length() <= 0)
-			perfilLogado.setIdentificadorUsuario(perfilLogado.getIdentificadorAssociado());
+			perfilLogado.setIdentificadorUsuario(perfilLogado.getIdentificadorAssinante());
 
 		perfilLogado.setUsLogado(
 				usuarioDAO.autenticar(perfilLogado.getIdentificadorUsuario(), perfilLogado.getSenhaUsuario()));
@@ -60,7 +59,6 @@ public class AutenticacaojsfController extends GenericController implements Seri
 			mensagensDisparar(Enum_Aux_Tipo_Mensagem.ERRAUTENTICACAO.getMensagem());
 			return;
 		}
-
 		perfilLogado.listagemPerfisdousLogado();
 		if (perfilLogado.getListaPerfisdousLogado() != null & perfilLogado.getListaPerfisdousLogado().size() > 1) {
 			perfilLogado.escondeDialogoAltenticacacao(true);
@@ -79,7 +77,6 @@ public class AutenticacaojsfController extends GenericController implements Seri
 					perfilLogado.setRenderizapessoanovo(false);
 				}
 				redirecionapaginaIndex(cadAutomatico);
-
 			}
 		}
 	}

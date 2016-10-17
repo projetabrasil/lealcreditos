@@ -61,7 +61,7 @@ public class Movimento_DetalheDAO extends GenericDAO<Movimento_Detalhe> {
 							subQuery2.add(Restrictions.eq("enum_Aux_Tipo_Item_de_Movimento",enum_Aux_Tipo_Item_de_Movimento));
 														 	
 							crit.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
-							crit.add(Restrictions.and(Subqueries.propertyIn("id_Item_de_Movimento", subQuery1),
+							crit.add(Restrictions.and(Subqueries.propertyIn("id_Movimento_Mestre", subQuery1),
 									Subqueries.propertyIn("id_Item_de_Movimento", subQuery2)));
 							
 					}
