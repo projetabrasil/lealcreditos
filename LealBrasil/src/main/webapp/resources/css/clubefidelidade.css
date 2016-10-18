@@ -1,5 +1,6 @@
 .ui-panel-my-titlebar {
   background: #FF9900;
+  width:100%;
  }
  
  .ui-panel-my-titlebar2 {
@@ -16,11 +17,4 @@
     position: relative;
     float: left;
 }
-
-function centerAndShowDialog(dialog)
-    {
-        $(dialog).css("top",Math.max(0,(($(window).height() - $(dialog).outerHeight()) / 2) + $(window).scrollTop()) + "px");
-        $(dialog).css("left",Math.max(0, (($(window).width() - $(dialog).outerWidth()) / 2) + $(window).scrollLeft()) + "px");
-        dialog.show();
-    }
 

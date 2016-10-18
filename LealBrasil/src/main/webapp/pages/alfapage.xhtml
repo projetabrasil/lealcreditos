@@ -12,45 +12,84 @@
 <h:head>
 	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
 	<h:outputStylesheet library="css" name="clubefidelidade.css" />
+	<h:outputStylesheet library="css" name="style.css" />
 	<h:outputScript library="js" name="pessoas.js" />
 
 	<title>Clube Fidelidade</title>
 </h:head>
 
 
-<h:body style="overflow-x: hidden; overflow-y: hidden "
-	styleClass="Bimage">
+<h:body>
 	<p:growl id="mensagens" autoUpdate="true" redisplay="true" />
-	<div style=""></div>
-
-	<h:form>
-		<p:panel header="Clube Fidelidade" styleClass="ui-panel-my-titlebar">
-		</p:panel>
-	</h:form>
-	<div id="one">
+	<div id="menus" style="">
 		<h:form>
-			<p:dock position="top">
-
-				<p:menuitem value="Administrativo"
-					icon="/resources/images/manager.png"
-					actionListener="#{autenticacaojsfController.renderizar(false)}">
-				</p:menuitem>
-				<p:menuitem value="Auto pontuaÃ§Ã£o"
-					icon="/resources/images/auto pontuaÃ§Ã£o.png"
-					oncomplete="PF('dialogoPontuar').show();">
-				</p:menuitem>
-			</p:dock>
+		<p:commandButton styleClass="botaogeral" value="Empresa"/>
+			<p:commandButton styleClass="botaogeraldois" value="Proposta"/>
+				
+			<p:commandButton styleClass="botaoum" value="Entrar"
+				actionListener="#{autenticacaojsfController.renderizar(false)}" />
+			<p:commandButton styleClass="botaodois" value="Pontuar"
+				oncomplete="PF('dialogoPontuar').show(); PF('dialogoPontuar').content.scrollTop('0')" />
 		</h:form>
+
+	</div>
+	<div id="topo" style="">
+		
+		<h1>Leal Brasil - Clube para Clientes Leais</h1>
+		
+		
+	</div>
+	
+
+	<div id="one">
+
+
+
+		<div id="conteudo">
+			<br /> <br /> <br /> <br />
+
+			<h2 style="font-color:red" >Seu menor custo e melhor resultado</h2>
+			<h4 style="font-weight: 600;" >É promover para clientes que já conhece
+			seus produtos e/ou serviços. Já pensou sobre isso?
+			</h4> 
+			<br /> <br /> <br />
+			
+			<h2>Proposta</h2>
+
+			<h4 style="font-weight: 600;" > 
+			Contribuir de forma efetiva para impulsão e aumento de vendas e
+			lucratividade de nossos clientes, através da oferta de uma solução
+			simples, eficaz e com baixo custo de investimento que permite:
+			</h4>
+
+		</div>
+		<div id="sidebar">
+			<h1>sidebar</h1>
+		</div>
+
+
+
+
+
 	</div>
 	<div>
+
 		<p:dialog widgetVar="dialogoPontuar" closable="false"
-			resizable="false" modal="true" appendTo="@(body)" position="60,10">
+			resizable="false" modal="true" appendTo="@(body)" dynamic="true"
+			responsive="true"
+			style="float: left;
+    padding: 10px;
+    font-family: calibri;
+    color: #6495ED;
+    font-size: 15px;
+    text-align: left; display:block;overflow:auto;">
 
 			<h:form id="formPontuar">
 				<p:focus for="identificador2" />
 
-				<h:panelGrid id="painelA" >
-					<h:outputLabel value="Auto PontuaÃ§Ã£o - Aguardando AprovaÃ§Ã£o"
+
+				<h:panelGrid id="painelA">
+					<h:outputLabel value="Auto Pontuação - Aguardando Aprovação"
 						style="color:#{ponto_mov.tipoMovimentacao.cor};font-size:15px;font-weight:900;" />
 				</h:panelGrid>
 
@@ -60,9 +99,9 @@
     font-family: calibri;
     color: #6495ED;
     font-size: 15px;
-    text-align: left; display:block;" styleClass="top-aligned-columns" cellpadding="5"  cellspacing="5">
-					<h:panelGrid id="painelEstabelecimento"
-						>
+    text-align: left; display:block"
+					styleClass="top-aligned-columns" cellpadding="5" cellspacing="5">
+					<h:panelGrid id="painelEstabelecimento">
 
 						<h:outputLabel value="Estabelecimento"
 							style="color:green;font-size:15px;font-weight:900;" />
@@ -83,7 +122,7 @@
 
 						<p:inputMask id="identificador2" size="24" maxlength="20"
 							value="#{auto.estabelecimento.identificador}" required="true"
-							requiredMessage="Ã‰ preciso informar a identificaÃ§Ã£o!!!"
+							requiredMessage="É preciso informar a identificação!!!"
 							mask="#{auto.tipoIdentificadorEstabelecimento.mask}">
 							<p:ajax event="blur" process="@this"
 								listener="#{auto.pessoaaverificar('Estabelecimento')}"
@@ -95,7 +134,7 @@
 						<p:outputLabel id="pessoa_estabelecimento"
 							value="Estab: #{fn:substring(pessoa_estabelecimento,0,20)}"
 							style="color:blue;font-size:15px;font-weight:900;" />
-						<h:outputLabel value="PontuaÃ§Ã£o" />
+						<h:outputLabel value="Pontuação" />
 
 
 
@@ -110,8 +149,11 @@
 								listener="#{auto.configPonto_Movimento()}"
 								update="valPontuacao soma valaPontuar
 						 pessoa_cliente validade"
-								oncomplete="$(function(){PrimeFaces.focus('formTemplate:formPontuar:valPontuacao');});" />
+								oncomplete="$(function(){PrimeFaces.focus('formTemplate:formPontuar:valaPontuar');});" />
 						</p:selectOneMenu>
+
+
+
 
 
 
@@ -120,9 +162,8 @@
 							value="Valor do Ponto: R$ #{auto.ponto_movimento.valordaUnidade}"
 							style="color:blue;font-size:15px;font-weight:900;"
 							rendered="#{!auto.tipoMovimentacao.visualizadebito}" />
-							<p:outputLabel 
-							value="Validade:"
-							style="color:#{auto.ponto_movimento.creditaDebita.cor};font-size:15px;font-weight:900;"/>
+						<p:outputLabel value="Validade:"
+							style="color:#{auto.ponto_movimento.creditaDebita.cor};font-size:15px;font-weight:900;" />
 
 						<p:outputLabel id="validade"
 							value="#{auto.ponto_movimento.validade.time}"
@@ -134,7 +175,7 @@
 
 					<h:panelGrid id="painelCliente">
 
-						<h:outputLabel value="VocÃª:"
+						<h:outputLabel value="Você:"
 							style="color:red;font-size:15px;font-weight:900;" />
 
 
@@ -155,18 +196,17 @@
 
 						<p:inputMask id="identificador" size="24" maxlength="20"
 							value="#{auto.cliente.identificador}" required="true"
-							requiredMessage="Ã‰ preciso informar a identificaÃ§Ã£o!!!"
+							requiredMessage="É preciso informar a identificação!!!"
 							mask="#{auto.tipoIdentificadorCliente.mask}">
 							<p:ajax event="blur" process="@this"
 								listener="#{auto.pessoaaverificar('Cliente')}"
-								update="pessoa_cliente valPontuacao soma valaPontuar validade formCadastro" />
+								update="pessoa_cliente valPontuacao soma valaPontuar validade" />
 						</p:inputMask>
 
 
-						
-							
-							<c:set var="pessoa_cliente"
-							value="#{auto.cliente.descricao}" />
+
+
+						<c:set var="pessoa_cliente" value="#{auto.cliente.descricao}" />
 						<p:outputLabel id="pessoa_cliente"
 							value="Cliente: #{fn:substring(pessoa_cliente,0,15)}"
 							style="color:blue;font-size:15px;font-weight:900;" />
@@ -177,90 +217,110 @@
 						<p:outputLabel value="Valor do Documento" />
 						<p:inputNumber id="valaPontuar" size="24" maxlength="20"
 							value="#{auto.ponto_movimento.valoraPontuar}" required="true"
-							requiredMessage="Ã‰ preciso informar pontuaÃ§Ã£o!!!">
+							requiredMessage="É preciso informar pontuação!!!">
 							<f:validateLongRange minimum="0" />
 						</p:inputNumber>
-						<p:outputLabel value="N. do Documento" decimalPlaces="0"/>
-						<p:inputMask mask="?99999999999999999999999999999999999999999999999999" placeHolder="" id="nDoc" size="24" maxlength="20"
+						<p:outputLabel value="N. do Documento" decimalPlaces="0" />
+						<p:inputMask
+							mask="?99999999999999999999999999999999999999999999999999"
+							placeHolder="" id="nDoc" size="24" maxlength="20"
 							value="#{auto.ponto_movimento.numDoc}" required="true"
-							requiredMessage="Ã‰ preciso informar pontuaÃ§Ã£o!!!">
+							requiredMessage="É preciso informar pontuação!!!">
 							<f:validateLongRange minimum="0" />
 						</p:inputMask>
 
 						<h:outputLabel id="soma"
 							value="Pontos do Cliente: #{auto.pontoSoma} Leal(is) "
 							style="color:#0000FF;font-size:15px;font-weight:900;" />
+					</h:panelGrid>
+					<h:panelGrid id="pF">
+						<p:outputLabel for="upload" value="Comprovante(Cupom/NFe):" />
+						<p:fileUpload id="upload" mode="advanced"
+							fileUploadListener="#{auto.upload}" update=":mensagens foto"
+							auto="true" style="font-size:15px;width:250px; "
+							allowTypes="/(\.|\/)(#{auto.tipoDeImagem})$/">
 
-						
-						
+						</p:fileUpload>
+						<p:graphicImage id="foto" value="#{imagensjsfController.image}"
+							style="max-width:90px;
+    max-height:80px;
+    width: auto;
+    height: auto;">
+							<f:param name="caminho"
+								value="#{auto.ponto_movimento.caminhodaImagem}" />
+						</p:graphicImage>
 					</h:panelGrid>
+
 					<h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5">
-						<p:commandButton value="Validar"
-							actionListener="#{auto.merge()}" process="@form"
-							update="formPontuar">
+						<p:commandButton value="Validar" actionListener="#{auto.merge()}"
+							process="@form" update="formPontuar">
+
+							<p:confirm header="Confirmação"
+								message="#{auto.mensagemComprovante}" icon="ui-icon-alert"
+								style="width:5%" />
 						</p:commandButton>
-						<p:commandButton value="Cancelar"
-						actionListener="#{auto.merge()}" process="@form"
-							oncomplete="PF('dialogoPontuar').hide();">
+						<p:commandButton value="Cancelar" actionListener="#{auto.merge()}"
+							process="@form" oncomplete="PF('dialogoPontuar').hide();">
 						</p:commandButton>
 					</h:panelGrid>
+					<p:confirmDialog global="true" style="white-space: pre;">
+						<p:commandButton value="SIM" type="button"
+							styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+						<p:commandButton value="NÃO" type="button"
+							styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+					</p:confirmDialog>
+
 				</h:panelGrid>
 			</h:form>
 		</p:dialog>
-		
-		<p:dialog
-			header="Cadastro Ãšnico"
-			widgetVar="dialogoCadastro" resizable="false" modal="true"
-			closable="false" appendTo="@(body)" position="60,10"
+
+		<p:dialog header="Cadastro Único" widgetVar="dialogoCadastro"
+			resizable="false" modal="true" closable="false" appendTo="@(body)"
+			position="center"
 			style="float: left;
     padding: 10px;
     font-family: calibri;
     color: #6495ED;
     font-size: 15px;
-    text-align: left;" >
+    text-align: left; width: 70%; height:60%;">
 			<h:form id="formCadastro">
-			   <p:focus for="nome" />
+				<p:focus for="nome" />
 				<h:panelGrid id="painelCadastro_1">
 					<h:panelGrid id="painelCadastro_11">
-						<p:outputLabel
-							value="#{auto.pessoaConfig.labelNome}"
+						<p:outputLabel value="#{auto.pessoaConfig.labelNome}"
 							rendered="#{auto.pessoaConfig.labelNomeRenderiza}" />
 						<p:inputText id="nome" size="67" maxlength="90"
 							value="#{auto.cliente.descricao}"
 							required="#{auto.pessoaConfig.labelNomeObrigatorio}"
 							requiredMessage="#{auto.pessoaConfig.labelNomeRequiredMessage}"
 							rendered="#{auto.pessoaConfig.labelNomeRenderiza}"
-							validatorMessage="O minimo de caracteres para nome sÃ£o  '5'"
-							placeholder="MÃ­nimo 5 Letras">
+							validatorMessage="O minimo de caracteres para nome são  '5'"
+							placeholder="Mínimo 5 Letras">
 							<f:validateLength minimum="5" />
 						</p:inputText>
 					</h:panelGrid>
 					<h:panelGrid id="painelCadastro_12">
-						<p:outputLabel
-							value="#{auto.pessoaConfig.labelFantasia}"
+						<p:outputLabel value="#{auto.pessoaConfig.labelFantasia}"
 							rendered="#{auto.pessoaConfig.labelFantasiaRenderiza}" />
 						<p:inputText size="67" maxlength="90"
 							value="#{auto.cliente.fantasia_Apelido}"
 							required="#{auto.pessoaConfig.labelFantasiaObrigatorio}"
 							requiredMessage="#{auto.pessoaConfig.labelFantasiaRequiredMessage}"
 							rendered="#{auto.pessoaConfig.labelFantasiaRenderiza}"
-							validatorMessage="O minimo de caracteres para nome sÃ£o  '5'"
-							placeholder="MÃ­nimo 5 Letras">
+							validatorMessage="O minimo de caracteres para nome são  '5'"
+							placeholder="Mínimo 5 Letras">
 							<f:validateLength minimum="5" />
 						</p:inputText>
 					</h:panelGrid>
 
 					<h:panelGrid id="painelCadastro_13">
-						<p:outputLabel
-							value="#{auto.pessoaConfig.labelSexo}"
+						<p:outputLabel value="#{auto.pessoaConfig.labelSexo}"
 							rendered="#{auto.pessoaConfig.labelSexoRenderiza}" />
-						<p:selectOneRadio id="perfil"
-							value="#{auto.cliente.sexo}"
-							 columns="5"
-							converter="omnifaces.SelectItemsConverter" rendered="#{auto.pessoaConfig.labelSexoRenderiza}">
-							<f:selectItems
-								value="#{auto.pessoaConfig.listaSexo}"
-								var="c" itemLabel="#{c.abrev}" itemValue="#{c}" />
+						<p:selectOneRadio id="perfil" value="#{auto.cliente.sexo}"
+							columns="5" converter="omnifaces.SelectItemsConverter"
+							rendered="#{auto.pessoaConfig.labelSexoRenderiza}">
+							<f:selectItems value="#{auto.pessoaConfig.listaSexo}" var="c"
+								itemLabel="#{c.abrev}" itemValue="#{c}" />
 							<p:ajax event="change" process="@this"
 								oncomplete="$(function(){PrimeFaces.focus('formCadastro:calendar');});" />
 						</p:selectOneRadio>
@@ -271,25 +331,26 @@
 					<h:panelGrid id="painelCadastro_21">
 						<p:outputLabel value="Data de nascimento"
 							rendered="#{auto.pessoaConfig.labelDataNascimentoRenderiza}" />
-						<p:calendar id="calendar" size="30" maxlength="15" mask="99/99/9999" 
-							value="#{auto.cliente.dataNascimento}"
+						<p:calendar id="calendar" size="30" maxlength="15"
+							mask="99/99/9999" value="#{auto.cliente.dataNascimento}"
 							required="#{auto.pessoaConfig.labelDataNascimentoObrigatorio}"
 							requiredMessage="#{auto.pessoaConfig.labelDataNascimentoRequiredMessage}"
-							rendered="#{auto.pessoaConfig.labelDataNascimentoRenderiza}">							
-							<f:convertDateTime pattern="dd/MM/yyyy" dateStyle="full" type="both"  timezone="GMT+3"/>
+							rendered="#{auto.pessoaConfig.labelDataNascimentoRenderiza}">
+							<f:convertDateTime pattern="dd/MM/yyyy" dateStyle="full"
+								type="both" timezone="GMT+3" />
 						</p:calendar>
 					</h:panelGrid>
 					<h:panelGrid id="painelCadastro_22">
-						<p:outputLabel
-							value="#{auto.pessoaConfig.labelcpf_Cnpj}"
+						<p:outputLabel value="#{auto.pessoaConfig.labelcpf_Cnpj}"
 							rendered="#{auto.pessoaConfig.labelcpf_CnpjRenderiza}" />
-						<p:inputMask  id="identificador" size="30" maxlength="15"
+						<p:inputMask id="identificador" size="30" maxlength="15"
 							mask="#{auto.tipoIdentificadorCliente.mask}"
 							value="#{auto.cliente.cpf_Cnpj}"
 							converter="mascaraTelefoneConverter"
 							required="#{auto.pessoaConfig.labelcpf_CnpjObrigatorio}"
 							requiredMessage="#{auto.pessoaConfig.labelcpf_CnpjRequiredMessage}"
-							rendered="#{auto.pessoaConfig.labelcpf_CnpjRenderiza}" readonly="true">
+							rendered="#{auto.pessoaConfig.labelcpf_CnpjRenderiza}"
+							readonly="true">
 						</p:inputMask>
 					</h:panelGrid>
 
@@ -301,8 +362,7 @@
 
 				<h:panelGrid columns="2" id="painelCadastro_3">
 					<h:panelGrid id="painelCadastro_31">
-						<p:outputLabel
-							value="#{auto.pessoaConfig.labelrg_Insc}"
+						<p:outputLabel value="#{auto.pessoaConfig.labelrg_Insc}"
 							rendered="#{auto.pessoaConfig.labelrg_InscRenderiza}" />
 						<p:inputText size="30" maxlength="15"
 							value="#{auto.cliente.rg_Insc}"
@@ -316,9 +376,8 @@
 						<p:outputLabel for="fone_1"
 							value="#{auto.pessoaConfig.labelfone_1}"
 							rendered="#{auto.pessoaConfig.labelfone_1Renderiza}" />
-						<p:inputMask mask="#{auto.pessoaConfig.maskTel}"
-							id="fone_1" size="30" maxlength="15"
-							value="#{auto.cliente.fone_1}"
+						<p:inputMask mask="#{auto.pessoaConfig.maskTel}" id="fone_1"
+							size="30" maxlength="15" value="#{auto.cliente.fone_1}"
 							required="#{auto.pessoaConfig.labelfone_1Obrigatorio}"
 							requiredMessage="#{auto.pessoaConfig.labelfone_1RequiredMessage}"
 							rendered="#{auto.pessoaConfig.labelfone_1Renderiza}">
@@ -327,23 +386,19 @@
 				</h:panelGrid>
 				<h:panelGrid columns="2" id="painelCadastro_4">
 					<h:panelGrid id="painelCadastro_41">
-						<p:outputLabel
-							value="#{auto.pessoaConfig.labelfone_2}"
+						<p:outputLabel value="#{auto.pessoaConfig.labelfone_2}"
 							rendered="#{auto.pessoaConfig.labelfone_2Renderiza}" />
-						<p:inputMask mask="#{auto.pessoaConfig.maskTel}"
-							size="30" maxlength="15"
-							value="#{auto.cliente.fone_2}"
+						<p:inputMask mask="#{auto.pessoaConfig.maskTel}" size="30"
+							maxlength="15" value="#{auto.cliente.fone_2}"
 							required="#{auto.pessoaConfig.labelfone_2Obrigatorio}"
 							requiredMessage="#{auto.pessoaConfig.labelfone_2RequiredMessage}"
 							rendered="#{auto.pessoaConfig.labelfone_2Renderiza}">
 						</p:inputMask>
 					</h:panelGrid>
 					<h:panelGrid id="painelCadastro_42">
-						<p:outputLabel
-							value="#{auto.pessoaConfig.labelfone_3}" />
-						<p:inputMask mask="#{auto.pessoaConfig.maskTel}"
-							size="30" maxlength="15"
-							value="#{auto.cliente.fone_3}"
+						<p:outputLabel value="#{auto.pessoaConfig.labelfone_3}" />
+						<p:inputMask mask="#{auto.pessoaConfig.maskTel}" size="30"
+							maxlength="15" value="#{auto.cliente.fone_3}"
 							required="#{auto.pessoaConfig.labelfone_3Obrigatorio}"
 							requiredMessage="#{auto.pessoaConfig.labelfone_3RequiredMessage}"
 							rendered="#{auto.pessoaConfig.labelfone_3Renderiza}">
@@ -353,8 +408,7 @@
 				</h:panelGrid>
 				<h:panelGrid columns="2" id="painelCadastro_5">
 					<h:panelGrid id="painelCadastro_51">
-						<p:outputLabel
-							value="#{auto.pessoaConfig.labelemail}"
+						<p:outputLabel value="#{auto.pessoaConfig.labelemail}"
 							rendered="#{auto.pessoaConfig.labelemailRenderiza}" />
 						<p:inputText size="67" maxlength="90"
 							value="#{auto.cliente.email}"
@@ -370,8 +424,8 @@
 					<h:panelGrid id="painelCadastro_61">
 						<p:outputLabel value="Informe a Senha" />
 						<p:password size="30" maxlength="8"
-							value="#{auto.usAuto.senhaSemCript}"
-							required="true" requiredMessage="Informe a senha!!!"
+							value="#{auto.usAuto.senhaSemCript}" required="true"
+							requiredMessage="Informe a senha!!!"
 							validatorMessage="O minimo de digitos para senha: '8'"
 							placeholder="8 letras e/ou digitos">
 							<f:validateLength minimum="8" />
@@ -381,8 +435,8 @@
 						<p:outputLabel value="Confirme a Senha" />
 						<p:password size="30" maxlength="8"
 							value="#{auto.usAuto.confSenha}" required="true"
-							requiredMessage="Informe a confirmaÃ§Ã£o de senha!!!"
-							validatorMessage="O minimo de digitos para confirmaÃ§Ã£o senha: '8'"
+							requiredMessage="Informe a confirmação de senha!!!"
+							validatorMessage="O minimo de digitos para confirmação senha: '8'"
 							placeholder="8 letras e/ou digitos">
 							<f:validateLength minimum="8" />
 						</p:password>
@@ -397,12 +451,16 @@
 					</p:panelGrid>
 					<p:panelGrid>
 						<p:commandButton value="Cancelar" process="@this"
-						actionListener="#{auto.cancelar}" />
+							actionListener="#{auto.cancelar}" />
 					</p:panelGrid>
 				</h:panelGrid>
 			</h:form>
 		</p:dialog>
 	</div>
+
+
+
 </h:body>
+
 
 </html>
