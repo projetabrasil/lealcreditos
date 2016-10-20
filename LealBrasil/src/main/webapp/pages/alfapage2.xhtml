@@ -21,169 +21,54 @@
 
 <h:body>
 	<p:growl id="mensagens" autoUpdate="true" redisplay="true" />
-	<div id="topo">
-		<p:panel styleClass="ui-panel-my-titlebar">
-			<h:form>
-				<p:commandButton styleClass="botaogeral" value="Empresa" />
-				<p:commandButton styleClass="botaogeraldois" value="Proposta" />
-				<p:outputLabel styleClass="cabecalho">Clube Fidelidade  Leal Brasil</p:outputLabel>
-				<p:commandButton styleClass="botaodois" value="Auto pontuar"
-					oncomplete="PF('dialogoPontuar').show(); PF('dialogoPontuar').content.scrollTop('0')" />
+	<div id="menus" style="">
+		<h:form>
+		<p:commandButton styleClass="botaogeral" value="Empresa"/>
+			<p:commandButton styleClass="botaogeraldois" value="Proposta"/>
+				
+			<p:commandButton styleClass="botaoum" value="Entrar"
+				actionListener="#{autenticacaojsfController.renderizar(false)}" />
+			<p:commandButton styleClass="botaodois" value="Pontuar"
+				oncomplete="PF('dialogoPontuar').show(); PF('dialogoPontuar').content.scrollTop('0')" />
+		</h:form>
 
-
-				<p:commandButton styleClass="botaoum" value="Entrar"
-					actionListener="#{autenticacaojsfController.renderizar(false)}" />
-
-			</h:form>
-		</p:panel>
 	</div>
-
-
-
+	<div id="topo" style="">		
+		<h1>Clube Fidelidade <br/> Leal Brasil</h1>
+	</div>
+	
 
 	<div id="one">
 
 
 
 		<div id="conteudo">
+		    <p:graphicImage name ="/images/economia.jpg"/>		
+			<h2 style="font-color:red" >Já pensou sobre isto? </h2>
+			<h4 style="font-weight: 600;" >Seu menor custo e seu melhor resultado é 
+			promover para clientes que já conhece
+			seus produtos e/ou serviços.<br/>
+			Nós estamos aqui para ajudá-lo!!!
+			</h4> 
 			<br /> <br /> <br />
-			<p:outputLabel styleClass="titulos">Já pensou sobre isto?</p:outputLabel>
-			<br />
-			<p:outputLabel styleClass="textos">
-				Seu menor custo e seu melhor resultado é promover para clientes que
-				já conhecem seus 
-				
-			</p:outputLabel>
-			<br />
-			<p:outputLabel styleClass="textos">
-				 
-				produtos e/ou serviços.
-			</p:outputLabel>
-			<br /> <br /> <br /> <br /> <br /> <br />
-
-			<p:outputLabel styleClass="titulos">Compra Coletiva</p:outputLabel>
-			<br />
-
-			<p:outputLabel styleClass="textos">Crie sua própria
-			compra coletiva utilizando nossa plataforma. Reduza seus custos!
-			Promova imediatamente aos seus clientes</p:outputLabel>
-			<br />
-			<p:outputLabel styleClass="itemum">Pergunte ao consultor porque o custo é muito menor.</p:outputLabel>
 			
+			<h2>Proposta</h2>
 
+			<h4 style="font-weight: 600;" > 
+			Contribuir de forma efetiva para impulsão e aumento de vendas e
+			lucratividade de nossos clientes, através da oferta de uma solução
+			simples, eficaz e com baixo custo de investimento que permite:
+			</h4>
 
 		</div>
 		<div id="sidebar">
-			<br /> <br />
-			<p:outputLabel styleClass="titulos">A Empresa</p:outputLabel>
-			<br />
-			<p:outputLabel styleClass="textos">
-				Localizados em Florianópolis - SC, 
-				somos uma empresa especializada no desenvolvimento 
-				de soluções de tecnologia para marketing de 
-				relacionamento e fidelização de clientes. 
-				Nosso objetivo é contribuir efetivamente para o 
-				aumento das vendas e  lucratividade das empresas 
-				clientes, através da oferta de uma solução simples, 
-				eficaz e com baixo custo de investimento que permite:
- 			</p:outputLabel>
-			<br />
-			<p:outputLabel styleClass="itemum">1 - Criação de  um sistema personalizado 
-			de  PONTUAÇÃO  que valoriza os clientes fiéis de estabelecimentos comerciais ou 
-			prestadores de serviços,  
-			através de descontos em novas compras e prêmios por consumo;
-			</p:outputLabel>
-
-			<br />
-			<p:outputLabel styleClass="itemdois">2 - Execução de  campanhas 
-			comerciais com  promoção de produtos e serviços  para alavancar 
-			novas vendas de maneira mais efetiva, direcionando ações e 
-			promoções para consumidores leais;
-			</p:outputLabel>
-
-			<br />
-			<p:outputLabel styleClass="itemum">
-			3 - Entender os hábitos de consumo e comportamento dos clientes 
-			para focar ações comerciais, visando melhores resultados;
-			</p:outputLabel>
-			<br />
-
-			<p:outputLabel styleClass="itemdois">
-			4 - Nossa solução é WEB Based - Acesso através da Internet por meio 
-			de Login e Senha exclusivos e criptografados;
-			</p:outputLabel>
-			<p:outputLabel styleClass="itemum">
-			</p:outputLabel>
+			<h1>sidebar</h1>
 		</div>
-		
-		<div id="conteudodois">
-			<br /> <br /> <br /><br /> <br /> <br /> 
-			<p:outputLabel styleClass="titulos">Recursos do Módulo Lealdade</p:outputLabel>			
-			<br />
-			<p:outputLabel styleClass="itemum">
-				1 - Cadastro de clientes;			
-			</p:outputLabel>
-			<br />
-			<p:outputLabel styleClass="itemdois">				
-				2 - Classificação de clientes por categorias;								
-			</p:outputLabel>
-			<br />
-			<p:outputLabel styleClass="itemum">
-				3 - Controle de Pontuações do cliente, tal como seus créditos, débitos e saldo atual;
-			</p:outputLabel>
-			<br />
-			<p:outputLabel styleClass="itemdois">
-				4 - Cadastro de prêmios;				
-			</p:outputLabel>
-			<br />
-			<p:outputLabel styleClass="itemum">
-				5 - Controle de Prêmios utilizados pelo cliente;
-			</p:outputLabel>
-			<br />
-			<p:outputLabel styleClass="itemdois">
-				6 - Índice de lealdade do cliente;
-			</p:outputLabel>
-			<br />
-			<p:outputLabel styleClass="itemum">
-				7 - Site personalizado para acompanhamento das pontuações do cliente em diversos estabelecimentos;
-			</p:outputLabel>
-
-			<br />
-			<p:outputLabel styleClass="itemdois">				
-				8 - Publicação e promoções na página principal personalizada do cliente;
-			</p:outputLabel>
 
 
-		</div>
-		<div id="sidebardois">
-			<br /> <br />
-			<br /> <br />
-			<br /> <br />
-			<p:outputLabel styleClass="titulos">Recursos do Módulo de Relacionamento com Cliente Leal</p:outputLabel>
-			
-			
-			<br />
-			<p:outputLabel styleClass="itemdois">A finalidade deste módulo é auxiliar o seu estabelecimento a aumentar os seus resultados por meio de análises e conhecimento aprofundado do cliente leal;
-			</p:outputLabel>
 
-			<br />
-			<p:outputLabel styleClass="itemum">Aniversariantes do mês;
-			</p:outputLabel>
 
-			<br />
-			<p:outputLabel styleClass="itemdois">Faixa Etária;
-			</p:outputLabel>
-			<br />
-			<p:outputLabel styleClass="itemum">Frequência e tempo de retorno;
-			</p:outputLabel>
-			<br />
-			<p:outputLabel styleClass="itemdois">Promoções e ações personalizadas;
-			</p:outputLabel>
-			<br />
-			<p:outputLabel styleClass="itemum">Medir o resultado de ações e promoções;
-			</p:outputLabel>
-			
-		</div>
+
 	</div>
 	<div>
 
