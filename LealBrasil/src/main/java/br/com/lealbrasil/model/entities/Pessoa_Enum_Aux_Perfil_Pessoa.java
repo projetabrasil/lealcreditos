@@ -99,11 +99,7 @@ public class Pessoa_Enum_Aux_Perfil_Pessoa extends GenericDomain implements Seri
 				return false;
 		} else if (!id.equals(other.id))
 			return false;
-		if (id_Pessoa_Registro == null) {
-			if (other.id_Pessoa_Registro != null)
-				return false;
-		} else if (!id_Pessoa_Registro.equals(other.id_Pessoa_Registro))
-			return false;
+		
 		if (id_pessoa == null) {
 			if (other.id_pessoa != null)
 				return false;

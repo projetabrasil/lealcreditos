@@ -40,10 +40,19 @@ import com.itextpdf.text.pdf.PdfWriter;
 import com.itextpdf.tool.xml.XMLWorkerHelper;
 
 import antlr.StringUtils;
+import br.com.lealbrasil.model.dao.PessoaDAO;
+import br.com.lealbrasil.model.dao.Pessoa_Enum_Aux_Perfil_PessoasDAO;
+import br.com.lealbrasil.model.dao.Pessoa_VinculoDAO;
+import br.com.lealbrasil.model.dao.UsuarioDAO;
 import br.com.lealbrasil.model.entities.Agendamento;
+import br.com.lealbrasil.model.entities.Enum_Aux_Perfil_Pessoa;
 import br.com.lealbrasil.model.entities.Enum_Aux_Sim_ou_Nao;
 import br.com.lealbrasil.model.entities.Enum_Aux_Tipo_Item_de_Movimento;
 import br.com.lealbrasil.model.entities.Movimento_Detalhe_A;
+import br.com.lealbrasil.model.entities.Pessoa;
+import br.com.lealbrasil.model.entities.Pessoa_Enum_Aux_Perfil_Pessoa;
+import br.com.lealbrasil.model.entities.Pessoa_Vinculo;
+import br.com.lealbrasil.model.entities.Usuario;
 
 @SuppressWarnings("serial")
 public class Utilidades implements Serializable {
@@ -61,7 +70,6 @@ public class Utilidades implements Serializable {
 	private static final String branco = Utilidades.getCaminhobase() + "branco" + Utilidades.getTipoImagem();
 	private static final String naoatingido = "/images/" + "naoatingido" + Utilidades.getTipoImagem();
 	private static final String atingido = "/images/" + "atingido" + Utilidades.getTipoImagem();
-	
 
 	public static String retornaCaminho(String diretorio, boolean temporario) {
 		String retorno = "";
@@ -78,17 +86,14 @@ public class Utilidades implements Serializable {
 		return retorno;
 
 	}
-	
-	
 
 	public static void gravaDiretorio(String caminho) {
 		File file = new File(caminho);
 		String parentPath = file.getAbsoluteFile().getParent();
 		Path newDirectoryPath = Paths.get(parentPath);
 
-		
 		if (!Files.exists(newDirectoryPath)) {
-			
+
 			try {
 
 				Files.createDirectory(newDirectoryPath);
@@ -96,8 +101,8 @@ public class Utilidades implements Serializable {
 			} catch (IOException e) {
 				System.err.println(e);
 			}
-		} 
-		
+		}
+
 	}
 
 	public static String tipodeImagem() {
@@ -260,6 +265,96 @@ public class Utilidades implements Serializable {
 		return lista;
 	}
 
+	public static Usuario validaEstabelecimento(Pessoa estab) {
+
+		UsuarioDAO usuarioDAO = new UsuarioDAO();
+		Usuario usuario = usuarioDAO.autenticar(estab, Enum_Aux_Perfil_Pessoa.ASSINANTES);
+		return usuario;
+	}
+	
+	public static Pessoa avaliaPessoa(Pessoa p, String destino) {
+		PessoaDAO pDAO = new PessoaDAO();
+		Pessoa pessoa = p;
+		if (pessoa.getIdentificador().length() != 11 && pessoa.getIdentificador().length() != 14) {
+			pessoa = Utilidades.criapessoa(destino + " com cpf ou cnpj com número de dígitos inválidos!!!");
+		} else {
+			if (pessoa.getIdentificador().length() == 11) {
+				if (!Utilidades.isValidCPF(pessoa.getIdentificador()))
+					pessoa = Utilidades.criapessoa(destino + " com CPF inválido!!!");
+
+			} else if (pessoa.getIdentificador().length() == 14) {
+				if (!Utilidades.isValidCNPJ(pessoa.getIdentificador()))
+					pessoa = Utilidades.criapessoa(destino + " com CNPJ inválido!!!");
+			}
+
+			if (pessoa.isCpf_cnpjValido()) {
+				pessoa.setMensagem(destino + " cadastrado");
+				p.setCadastrado(false);
+				pessoa.setCpf_cnpjValido(true);
+
+				pessoa = pDAO.retornaPelaIdentificacao(p.getIdentificador());
+				if (pessoa == null) {
+					pessoa = p;
+					pessoa.setCpf_cnpjValido(true);
+					pessoa.setCadastrado(false);
+
+				} else {
+					if (pessoa.getId() == null) {
+						pessoa.setCpf_cnpjValido(true);
+						pessoa.setCadastrado(false);
+					} else {
+						pessoa.setCpf_cnpjValido(true);
+						pessoa.setCadastrado(true);
+					}
+				}
+			}
+		}
+		return pessoa;
+	}
+	public static Pessoa cadastraPessoa(Pessoa p, Pessoa mestre, Pessoa resp, Enum_Aux_Perfil_Pessoa perfil){
+		p.setId_Empresa(1);
+		p.setId_Pessoa_Registro(resp);
+		p.setUltimaAtualizacao(Utilidades.retornaCalendario());
+		Pessoa pes = p;
+		PessoaDAO pDAO = new PessoaDAO();
+		
+		
+		pes = pDAO.retornaPelaIdentificacao(pes.getIdentificador());
+		if(pes == null){
+			pes = p;
+			pes = pDAO.merge(pes);
+		}
+		
+		Pessoa_Enum_Aux_Perfil_Pessoa pp = new Pessoa_Enum_Aux_Perfil_Pessoa() ;
+		pp.setId_Empresa(1);
+		pp.setUltimaAtualizacao(Utilidades.retornaCalendario());
+		pp.setId_Pessoa_Registro(resp);
+		pp.setEnum_Aux_Perfil_Pessoa(perfil);
+		pp.setId_pessoa(pes);
+		
+		Pessoa_Enum_Aux_Perfil_PessoasDAO ppDAO = new Pessoa_Enum_Aux_Perfil_PessoasDAO(); 
+		
+		pp = ppDAO.merge(pp);
+		
+		if(perfil.isPossuiVinculo()){
+			Pessoa_Vinculo pv = new Pessoa_Vinculo();
+			Pessoa_Vinculo pvRet = new Pessoa_Vinculo();
+			pv.setAtivo(true);
+			pv.setEnum_Aux_Perfil_Pessoa(perfil);
+			pv.setId_Empresa(1);
+			pv.setUltimaAtualizacao(Utilidades.retornaCalendario());
+			pv.setId_Pessoa_Registro(resp);
+			pv.setId_pessoa_d(p);
+			pv.setId_pessoa_m(mestre);			
+			pvRet = pv;
+			Pessoa_VinculoDAO pvDAO = new Pessoa_VinculoDAO();
+			pvRet =pvDAO.retornaVinculo_Mestre(p, mestre, perfil);
+			if(pvRet == null)
+			pv = pvDAO.merge(pv);
+		}
+		return pes;
+	}
+
 	public static String buscarCep(String cep) {
 		String json;
 
@@ -365,7 +460,7 @@ public class Utilidades implements Serializable {
 		mensagensDisparar("iniciando a construção do comprovante");
 		String caminhoPdf = caminhoPDF + mDA.getCodigo() + ".pdf";
 		String caminhoDaImagem = Utilidades.getCaminhofotovouchers() + mDA.getId() + Utilidades.getTipoimagem();
-		
+
 		Document document = new Document();
 		try {
 			// String k = "<html><body> This is my Project </body></html>";
@@ -398,10 +493,14 @@ public class Utilidades implements Serializable {
 		}
 
 	}
-	
-	
-	
 
+	public static Pessoa criapessoa(String mensagem) {
+		Pessoa pessoa = new Pessoa();
+		pessoa.setMensagem(mensagem);
+		pessoa.setCadastrado(false);
+		pessoa.setCpf_cnpjValido(false);
+		return pessoa;
+	}
 
 	public static String getDataPorExtenso(Date data) {
 		DateFormat dfmt = new SimpleDateFormat("d 'de' MMMM 'de' yyyy");
@@ -457,7 +556,5 @@ public class Utilidades implements Serializable {
 	public static void setCaminhofotocomprovante(String caminhofotocomprovante) {
 		caminhoFotoComprovante = caminhofotocomprovante;
 	}
-
-	
 
 }

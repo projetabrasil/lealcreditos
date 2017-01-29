@@ -5,6 +5,7 @@ import java.util.List;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Property;
 import org.hibernate.criterion.Restrictions;
 import org.hibernate.criterion.Subqueries;
@@ -26,6 +27,28 @@ public class PontoDAO extends GenericDAO<Ponto>{
 			        crit.add(Restrictions.eq("enum_Aux_Tipo_Item_de_Movimento", tipo));
 			lista =  (List<Ponto>)  crit.list();
 			return lista;
+		}catch(RuntimeException erro){
+			
+			erro.printStackTrace();
+			
+			throw erro;
+		}
+		
+	}
+	
+	public Ponto retornaPrimeiroPonto(Pessoa estab,Enum_Aux_Tipo_Item_de_Movimento tipo){
+		Session sessao = HibernateUtil.getFabricaDeSessoes().openSession();
+		try{
+			Criteria crit = sessao.createCriteria(Ponto.class)
+					.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
+			        crit.add(Restrictions.eq("id_Pessoa_Assinante", estab));
+			        crit.add(Restrictions.eq("enum_Aux_Tipo_Item_de_Movimento", tipo));
+			        crit.addOrder(Order.desc("id"));
+			        crit.setMaxResults(1);
+			Ponto p = new Ponto();
+			p = (Ponto) crit.uniqueResult();
+			
+			return p;
 		}catch(RuntimeException erro){
 			
 			erro.printStackTrace();

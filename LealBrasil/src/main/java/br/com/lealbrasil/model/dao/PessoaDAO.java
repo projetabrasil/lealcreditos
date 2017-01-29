@@ -33,7 +33,7 @@ public class PessoaDAO extends GenericDAO<Pessoa> {
 				perfilLogado.getPaginaAtual().equals(Enum_Aux_Perfil_Pagina_Atual.PAGINAASSINANTES) ){
 				
 				subQuery1 = DetachedCriteria.forClass(Pessoa_Vinculo.class)
-					    .setProjection(Property.forName("id_pessoa_d"));			    
+					    .setProjection(Property.forName("id_pessoa"));			    
 					subQuery1.add(Restrictions.eq("id_pessoa_m",perfilLogado.getUsLogado().getPessoa()));			
 					crit = sessao.createCriteria(Pessoa.class)
 							    .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)

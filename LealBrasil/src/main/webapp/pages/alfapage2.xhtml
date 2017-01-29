@@ -240,10 +240,7 @@
 
 						</p:fileUpload>
 						<p:graphicImage id="foto" value="#{imagensjsfController.image}"
-							style="max-width:90px;
-    max-height:80px;
-    width: auto;
-    height: auto;">
+							style="max-width:90px;    max-height:80px;     width: auto;     height: auto;">
 							<f:param name="caminho"
 								value="#{auto.ponto_movimento.caminhodaImagem}" />
 						</p:graphicImage>
@@ -252,7 +249,6 @@
 					<h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5">
 						<p:commandButton value="Validar" actionListener="#{auto.merge()}"
 							process="@form" update="formPontuar">
-
 							<p:confirm header="Confirmação"
 								message="#{auto.mensagemComprovante}" icon="ui-icon-alert"
 								style="width:5%" />
@@ -272,188 +268,7 @@
 			</h:form>
 		</p:dialog>
 
-		<p:dialog header="Cadastro Único" widgetVar="dialogoCadastro"
-			resizable="false" modal="true" closable="false" appendTo="@(body)"
-			position="center"
-			style="float: left;
-    padding: 10px;
-    font-family: calibri;
-    color: #6495ED;
-    font-size: 15px;
-    text-align: left; width: 70%; height:60%;">
-			<h:form id="formCadastro">
-				<p:focus for="nome" />
-				<h:panelGrid id="painelCadastro_1">
-					<h:panelGrid id="painelCadastro_11">
-						<p:outputLabel value="#{auto.pessoaConfig.labelNome}"
-							rendered="#{auto.pessoaConfig.labelNomeRenderiza}" />
-						<p:inputText id="nome" size="67" maxlength="90"
-							value="#{auto.cliente.descricao}"
-							required="#{auto.pessoaConfig.labelNomeObrigatorio}"
-							requiredMessage="#{auto.pessoaConfig.labelNomeRequiredMessage}"
-							rendered="#{auto.pessoaConfig.labelNomeRenderiza}"
-							validatorMessage="O minimo de caracteres para nome são  '5'"
-							placeholder="Mínimo 5 Letras">
-							<f:validateLength minimum="5" />
-						</p:inputText>
-					</h:panelGrid>
-					<h:panelGrid id="painelCadastro_12">
-						<p:outputLabel value="#{auto.pessoaConfig.labelFantasia}"
-							rendered="#{auto.pessoaConfig.labelFantasiaRenderiza}" />
-						<p:inputText size="67" maxlength="90"
-							value="#{auto.cliente.fantasia_Apelido}"
-							required="#{auto.pessoaConfig.labelFantasiaObrigatorio}"
-							requiredMessage="#{auto.pessoaConfig.labelFantasiaRequiredMessage}"
-							rendered="#{auto.pessoaConfig.labelFantasiaRenderiza}"
-							validatorMessage="O minimo de caracteres para nome são  '5'"
-							placeholder="Mínimo 5 Letras">
-							<f:validateLength minimum="5" />
-						</p:inputText>
-					</h:panelGrid>
-
-					<h:panelGrid id="painelCadastro_13">
-						<p:outputLabel value="#{auto.pessoaConfig.labelSexo}"
-							rendered="#{auto.pessoaConfig.labelSexoRenderiza}" />
-						<p:selectOneRadio id="perfil" value="#{auto.cliente.sexo}"
-							columns="5" converter="omnifaces.SelectItemsConverter"
-							rendered="#{auto.pessoaConfig.labelSexoRenderiza}">
-							<f:selectItems value="#{auto.pessoaConfig.listaSexo}" var="c"
-								itemLabel="#{c.abrev}" itemValue="#{c}" />
-							<p:ajax event="change" process="@this"
-								oncomplete="$(function(){PrimeFaces.focus('formCadastro:calendar');});" />
-						</p:selectOneRadio>
-					</h:panelGrid>
-				</h:panelGrid>
-
-				<h:panelGrid columns="2" id="painelCadastro_2">
-					<h:panelGrid id="painelCadastro_21">
-						<p:outputLabel value="Data de nascimento"
-							rendered="#{auto.pessoaConfig.labelDataNascimentoRenderiza}" />
-						<p:calendar id="calendar" size="30" maxlength="15"
-							mask="99/99/9999" value="#{auto.cliente.dataNascimento}"
-							required="#{auto.pessoaConfig.labelDataNascimentoObrigatorio}"
-							requiredMessage="#{auto.pessoaConfig.labelDataNascimentoRequiredMessage}"
-							rendered="#{auto.pessoaConfig.labelDataNascimentoRenderiza}">
-							<f:convertDateTime pattern="dd/MM/yyyy" dateStyle="full"
-								type="both" timezone="GMT+3" />
-						</p:calendar>
-					</h:panelGrid>
-					<h:panelGrid id="painelCadastro_22">
-						<p:outputLabel value="#{auto.pessoaConfig.labelcpf_Cnpj}"
-							rendered="#{auto.pessoaConfig.labelcpf_CnpjRenderiza}" />
-						<p:inputMask id="identificador" size="30" maxlength="15"
-							mask="#{auto.tipoIdentificadorCliente.mask}"
-							value="#{auto.cliente.cpf_Cnpj}"
-							converter="mascaraTelefoneConverter"
-							required="#{auto.pessoaConfig.labelcpf_CnpjObrigatorio}"
-							requiredMessage="#{auto.pessoaConfig.labelcpf_CnpjRequiredMessage}"
-							rendered="#{auto.pessoaConfig.labelcpf_CnpjRenderiza}"
-							readonly="true">
-						</p:inputMask>
-					</h:panelGrid>
-
-
-
-
-				</h:panelGrid>
-
-
-				<h:panelGrid columns="2" id="painelCadastro_3">
-					<h:panelGrid id="painelCadastro_31">
-						<p:outputLabel value="#{auto.pessoaConfig.labelrg_Insc}"
-							rendered="#{auto.pessoaConfig.labelrg_InscRenderiza}" />
-						<p:inputText size="30" maxlength="15"
-							value="#{auto.cliente.rg_Insc}"
-							required="#{auto.pessoaConfig.labelrg_InscObrigatorio}"
-							requiredMessage="#{auto.pessoaConfig.labelrg_InscRequiredMessage}"
-							rendered="#{auto.pessoaConfig.labelrg_InscRenderiza}">
-						</p:inputText>
-					</h:panelGrid>
-
-					<h:panelGrid id="painelCadastro_32">
-						<p:outputLabel for="fone_1"
-							value="#{auto.pessoaConfig.labelfone_1}"
-							rendered="#{auto.pessoaConfig.labelfone_1Renderiza}" />
-						<p:inputMask mask="#{auto.pessoaConfig.maskTel}" id="fone_1"
-							size="30" maxlength="15" value="#{auto.cliente.fone_1}"
-							required="#{auto.pessoaConfig.labelfone_1Obrigatorio}"
-							requiredMessage="#{auto.pessoaConfig.labelfone_1RequiredMessage}"
-							rendered="#{auto.pessoaConfig.labelfone_1Renderiza}">
-						</p:inputMask>
-					</h:panelGrid>
-				</h:panelGrid>
-				<h:panelGrid columns="2" id="painelCadastro_4">
-					<h:panelGrid id="painelCadastro_41">
-						<p:outputLabel value="#{auto.pessoaConfig.labelfone_2}"
-							rendered="#{auto.pessoaConfig.labelfone_2Renderiza}" />
-						<p:inputMask mask="#{auto.pessoaConfig.maskTel}" size="30"
-							maxlength="15" value="#{auto.cliente.fone_2}"
-							required="#{auto.pessoaConfig.labelfone_2Obrigatorio}"
-							requiredMessage="#{auto.pessoaConfig.labelfone_2RequiredMessage}"
-							rendered="#{auto.pessoaConfig.labelfone_2Renderiza}">
-						</p:inputMask>
-					</h:panelGrid>
-					<h:panelGrid id="painelCadastro_42">
-						<p:outputLabel value="#{auto.pessoaConfig.labelfone_3}" />
-						<p:inputMask mask="#{auto.pessoaConfig.maskTel}" size="30"
-							maxlength="15" value="#{auto.cliente.fone_3}"
-							required="#{auto.pessoaConfig.labelfone_3Obrigatorio}"
-							requiredMessage="#{auto.pessoaConfig.labelfone_3RequiredMessage}"
-							rendered="#{auto.pessoaConfig.labelfone_3Renderiza}">
-						</p:inputMask>
-					</h:panelGrid>
-
-				</h:panelGrid>
-				<h:panelGrid columns="2" id="painelCadastro_5">
-					<h:panelGrid id="painelCadastro_51">
-						<p:outputLabel value="#{auto.pessoaConfig.labelemail}"
-							rendered="#{auto.pessoaConfig.labelemailRenderiza}" />
-						<p:inputText size="67" maxlength="90"
-							value="#{auto.cliente.email}"
-							required="#{auto.pessoaConfig.labelemailObrigatorio}"
-							requiredMessage="#{auto.pessoaConfig.labelemailRequiredMessage}"
-							rendered="#{auto.pessoaConfig.labelemailRenderiza}">
-						</p:inputText>
-					</h:panelGrid>
-				</h:panelGrid>
-
-				<h:panelGrid columns="2" id="painelCadastro_6"
-					rendered="#{auto.perfilLogado.paginaAtual.renderizaCadastrodeUsuarios}">
-					<h:panelGrid id="painelCadastro_61">
-						<p:outputLabel value="Informe a Senha" />
-						<p:password size="30" maxlength="8"
-							value="#{auto.usAuto.senhaSemCript}" required="true"
-							requiredMessage="Informe a senha!!!"
-							validatorMessage="O minimo de digitos para senha: '8'"
-							placeholder="8 letras e/ou digitos">
-							<f:validateLength minimum="8" />
-						</p:password>
-					</h:panelGrid>
-					<h:panelGrid id="painelCadastro_62">
-						<p:outputLabel value="Confirme a Senha" />
-						<p:password size="30" maxlength="8"
-							value="#{auto.usAuto.confSenha}" required="true"
-							requiredMessage="Informe a confirmação de senha!!!"
-							validatorMessage="O minimo de digitos para confirmação senha: '8'"
-							placeholder="8 letras e/ou digitos">
-							<f:validateLength minimum="8" />
-						</p:password>
-					</h:panelGrid>
-				</h:panelGrid>
-
-				<h:panelGrid columns="2" id="painelCadastro_7">
-					<p:panelGrid>
-						<p:commandButton value="Salvar" process="@form"
-							actionListener="#{auto.mergePessoa}"
-							update=":mensagens :formPontuar" />
-					</p:panelGrid>
-					<p:panelGrid>
-						<p:commandButton value="Cancelar" process="@this"
-							actionListener="#{auto.cancelar}" />
-					</p:panelGrid>
-				</h:panelGrid>
-			</h:form>
-		</p:dialog>
+		
 	</div>
 
 

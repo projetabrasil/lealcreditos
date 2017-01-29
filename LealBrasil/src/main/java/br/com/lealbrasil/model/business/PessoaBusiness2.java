@@ -46,6 +46,8 @@ public class PessoaBusiness2 implements Serializable {
 					return false;
 				}
 
+			}else{
+				return false;
 			}
 			return true;
 		

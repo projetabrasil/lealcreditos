@@ -21,63 +21,78 @@
 
 <h:body>
 	<p:growl id="mensagens" autoUpdate="true" redisplay="true" />
-	<div id="topo">
-		<p:panel styleClass="ui-panel-my-titlebar">
-			<h:form>
-				<p:commandButton styleClass="botaogeral" value="Empresa" />
-				<p:commandButton styleClass="botaogeraldois" value="Proposta" />
-				<p:outputLabel styleClass="cabecalho">Clube Fidelidade  Leal Brasil</p:outputLabel>
-				<p:commandButton styleClass="botaodois" value="Auto pontuar"
-					oncomplete="PF('dialogoPontuar').show(); PF('dialogoPontuar').content.scrollTop('0')" />
+	<div id="main">
+		<div id="topo">
+			<p:panel styleClass="ui-panel-my-titlebar">
+				<h:form>
+					<p:commandButton styleClass="botaogeral" value="Empresa" />
+					<p:commandButton styleClass="botaogeraldois" value="Proposta" />
+					<p:outputLabel styleClass="cabecalho">Clube Fidelidade  Leal Brasil</p:outputLabel>
+					<p:commandButton styleClass="botaodois" value="Auto pontuar"
+						oncomplete="PF('dialogoPontuar').show(); PF('dialogoPontuar').content.scrollTop('0')" />
+					<p:commandButton styleClass="botaodois" value="Auto Cadastro"
+						oncomplete="PF('dialogoVerificar').show(); PF('dialogoVerificar').content.scrollTop('0')"
+						update=":formVerificar:painelIdentificacao  :formVerificar:labelsenha 
+						:formVerificar:idsenha" />
+
+					<p:commandButton styleClass="botaoum" value="Entrar"
+						actionListener="#{autenticacaojsfController.renderizar(false)}" />
+
+				</h:form>
+			</p:panel>
+		</div>
 
 
-				<p:commandButton styleClass="botaoum" value="Entrar"
-					actionListener="#{autenticacaojsfController.renderizar(false)}" />
 
-			</h:form>
-		</p:panel>
-	</div>
+
+		<div id="one">
 
 
 
-
-	<div id="one">
-
-
-
-		<div id="conteudo">
-			<br /> <br /> <br />
-			<p:outputLabel styleClass="titulos">Já pensou sobre isto?</p:outputLabel>
-			<br />
-			<p:outputLabel styleClass="textos">
+			<div id="conteudo">
+				<br /> <br /> <br />
+				<p:outputLabel styleClass="titulos">Já pensou sobre isto?</p:outputLabel>
+				<br />
+				<p:outputLabel styleClass="textos">
 				Seu menor custo e seu melhor resultado é promover para clientes que
-				já conhecem seus 
+				 
 				
 			</p:outputLabel>
-			<br />
-			<p:outputLabel styleClass="textos">
+				<br />
+				<p:outputLabel styleClass="textos">
+				já conhecem seus 
 				 
-				produtos e/ou serviços.
+				
 			</p:outputLabel>
-			<br /> <br /> <br /> <br /> <br /> <br />
+				<br />
+				<p:outputLabel styleClass="textos">
+				 
+				produtos
+			</p:outputLabel>
+				<br />
+				<p:outputLabel styleClass="textos">
+				 
+				e/ou serviços.
+			</p:outputLabel>
+				<br /> <br />
 
-			<p:outputLabel styleClass="titulos">Compra Coletiva</p:outputLabel>
-			<br />
+				<p:outputLabel styleClass="titulos">Compra Coletiva</p:outputLabel>
+				<br />
 
-			<p:outputLabel styleClass="textos">Crie sua própria
-			compra coletiva utilizando nossa plataforma. Reduza seus custos!
+				<p:outputLabel styleClass="textos">Crie sua própria
+			compra coletiva utilizando nossa plataforma.<br /> Reduza seus custos!<br />
 			Promova imediatamente aos seus clientes</p:outputLabel>
-			<br />
-			<p:outputLabel styleClass="itemum">Pergunte ao consultor porque o custo é muito menor.</p:outputLabel>
-			
+				<br />
+				<p:outputLabel style="font-color:red" styleClass="itemum">Pergunte ao consultor porque o custo é muito menor.</p:outputLabel>
 
 
-		</div>
-		<div id="sidebar">
-			<br /> <br />
-			<p:outputLabel styleClass="titulos">A Empresa</p:outputLabel>
-			<br />
-			<p:outputLabel styleClass="textos">
+
+			</div>
+			<div id="sidebar">
+				<br /> <br />
+				<p:outputLabel styleClass="titulos">A Empresa</p:outputLabel>
+				<br />
+				<p:outputLabel styleClass="textos">
 				Localizados em Florianópolis - SC, 
 				somos uma empresa especializada no desenvolvimento 
 				de soluções de tecnologia para marketing de 
@@ -87,105 +102,170 @@
 				clientes, através da oferta de uma solução simples, 
 				eficaz e com baixo custo de investimento que permite:
  			</p:outputLabel>
-			<br />
-			<p:outputLabel styleClass="itemum">1 - Criação de  um sistema personalizado 
+				<br />
+				<p:outputLabel styleClass="itemum">1 - Criação de  um sistema personalizado 
 			de  PONTUAÇÃO  que valoriza os clientes fiéis de estabelecimentos comerciais ou 
 			prestadores de serviços,  
 			através de descontos em novas compras e prêmios por consumo;
 			</p:outputLabel>
 
-			<br />
-			<p:outputLabel styleClass="itemdois">2 - Execução de  campanhas 
+				<br />
+				<p:outputLabel styleClass="itemdois">2 - Execução de  campanhas 
 			comerciais com  promoção de produtos e serviços  para alavancar 
 			novas vendas de maneira mais efetiva, direcionando ações e 
 			promoções para consumidores leais;
 			</p:outputLabel>
 
-			<br />
-			<p:outputLabel styleClass="itemum">
+				<br />
+				<p:outputLabel styleClass="itemum">
 			3 - Entender os hábitos de consumo e comportamento dos clientes 
 			para focar ações comerciais, visando melhores resultados;
 			</p:outputLabel>
-			<br />
+				<br />
 
-			<p:outputLabel styleClass="itemdois">
+				<p:outputLabel styleClass="itemdois">
 			4 - Nossa solução é WEB Based - Acesso através da Internet por meio 
 			de Login e Senha exclusivos e criptografados;
 			</p:outputLabel>
-			<p:outputLabel styleClass="itemum">
-			</p:outputLabel>
-		</div>
-		
-		<div id="conteudodois">
-			<br /> <br /> <br /><br /> <br /> <br /> 
-			<p:outputLabel styleClass="titulos">Recursos do Módulo Lealdade</p:outputLabel>			
-			<br />
-			<p:outputLabel styleClass="itemum">
+				<p:outputLabel styleClass="itemum">
+				</p:outputLabel>
+			</div>
+
+			<div id="conteudodois">
+				<br /> <br /> <br /> <br /> <br /> <br />
+				<p:outputLabel styleClass="titulos">Recursos do Módulo Lealdade</p:outputLabel>
+				<br />
+				<p:outputLabel styleClass="itemum">
 				1 - Cadastro de clientes;			
 			</p:outputLabel>
-			<br />
-			<p:outputLabel styleClass="itemdois">				
+				<br />
+				<p:outputLabel styleClass="itemdois">				
 				2 - Classificação de clientes por categorias;								
 			</p:outputLabel>
-			<br />
-			<p:outputLabel styleClass="itemum">
+				<br />
+				<p:outputLabel styleClass="itemum">
 				3 - Controle de Pontuações do cliente, tal como seus créditos, débitos e saldo atual;
 			</p:outputLabel>
-			<br />
-			<p:outputLabel styleClass="itemdois">
+				<br />
+				<p:outputLabel styleClass="itemdois">
 				4 - Cadastro de prêmios;				
 			</p:outputLabel>
-			<br />
-			<p:outputLabel styleClass="itemum">
+				<br />
+				<p:outputLabel styleClass="itemum">
 				5 - Controle de Prêmios utilizados pelo cliente;
 			</p:outputLabel>
-			<br />
-			<p:outputLabel styleClass="itemdois">
+				<br />
+				<p:outputLabel styleClass="itemdois">
 				6 - Índice de lealdade do cliente;
 			</p:outputLabel>
-			<br />
-			<p:outputLabel styleClass="itemum">
+				<br />
+				<p:outputLabel styleClass="itemum">
 				7 - Site personalizado para acompanhamento das pontuações do cliente em diversos estabelecimentos;
 			</p:outputLabel>
 
-			<br />
-			<p:outputLabel styleClass="itemdois">				
+				<br />
+				<p:outputLabel styleClass="itemdois">				
 				8 - Publicação e promoções na página principal personalizada do cliente;
 			</p:outputLabel>
 
 
-		</div>
-		<div id="sidebardois">
-			<br /> <br />
-			<br /> <br />
-			<br /> <br />
-			<p:outputLabel styleClass="titulos">Recursos do Módulo de Relacionamento com Cliente Leal</p:outputLabel>
-			
-			
-			<br />
-			<p:outputLabel styleClass="itemdois">A finalidade deste módulo é auxiliar o seu estabelecimento a aumentar os seus resultados por meio de análises e conhecimento aprofundado do cliente leal;
+			</div>
+			<div id="sidebartitulocentral">
+				<br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br />
+				<br /> <br /> <br />
+				<p:outputLabel styleClass="titulos">Recursos do Módulo de Relacionamento com Cliente Leal</p:outputLabel>
+				<div id="sidebardois">
+					<br />
+
+					<p:outputLabel styleClass="itemdois">A finalidade deste módulo é auxiliar o seu estabelecimento a aumentar os seus resultados por meio de análises e conhecimento aprofundado do cliente leal,
+			utilizando os seguintes relatórios e ações:;
 			</p:outputLabel>
 
-			<br />
-			<p:outputLabel styleClass="itemum">Aniversariantes do mês;
+					<br />
+					<p:outputLabel styleClass="itemum">1 - Aniversariantes do mês;
 			</p:outputLabel>
 
-			<br />
-			<p:outputLabel styleClass="itemdois">Faixa Etária;
+					<br />
+					<p:outputLabel styleClass="itemdois">2 - Faixa Etária;
 			</p:outputLabel>
-			<br />
-			<p:outputLabel styleClass="itemum">Frequência e tempo de retorno;
+					<br />
+					<p:outputLabel styleClass="itemum">3 - Frequência e tempo de retorno;
 			</p:outputLabel>
-			<br />
-			<p:outputLabel styleClass="itemdois">Promoções e ações personalizadas;
+					<br />
+					<p:outputLabel styleClass="itemdois">4 - Promoções e ações personalizadas;
 			</p:outputLabel>
-			<br />
-			<p:outputLabel styleClass="itemum">Medir o resultado de ações e promoções;
+					<br />
+					<p:outputLabel styleClass="itemum">5 - Medir o resultado de ações e promoções;
 			</p:outputLabel>
-			
+
+				</div>
+			</div>
 		</div>
 	</div>
 	<div>
+
+		<p:dialog widgetVar="dialogoVerificar" closable="false"
+			resizable="false" modal="true" appendTo="@(body)" dynamic="true"
+			responsive="true" visible="false"
+			style="float: left;
+    padding: 10px;
+    font-family: calibri;
+    color: #6495ED;
+    font-size: 15px;
+    text-align: left; overflow:auto;">
+
+			<h:form id="formVerificar">
+				<h:panelGrid id="painelIdentificacao">
+					<p:focus for="identificador" />
+					<p:selectOneRadio id="perfil"
+						value="#{auto.autoPes.enum_Aux_Tipo_Identificador}"
+						layout="pageDirection" columns="5"
+						converter="omnifaces.SelectItemsConverter"
+						
+							listener="#{auto.checaPessoa()}" >
+						<f:selectItems value="#{auto.listaTipodeIdentificadores}" var="c"
+							itemLabel="#{c.descricao}" itemValue="#{c}"/>
+							
+							<p:ajax event="change" update="identificador idsenha" process="@this"
+							oncomplete="$(function(){PrimeFaces.focus('identificador');});" />
+						
+					</p:selectOneRadio>
+
+					<p:outputLabel value="Informe CPF/CNPJ" />
+					<p:inputMask id="identificador" size="30" maxlength="20"
+						value="#{auto.autoPes.identificador}" required="true"
+						requiredMessage="É preciso informar a identificação!!!"
+						mask="#{auto.autoPes.enum_Aux_Tipo_Identificador.mask}">
+						
+													
+							<p:ajax event="blur" process="@form"
+							listener="#{auto.checaPessoa()}"
+							update="idlabel1 idlabel2 idsenha formVerificar:labelsenha" />
+						
+						</p:inputMask>
+					<p:outputLabel value="Fidelizado:" />
+					<p:outputLabel id="idlabel1" value="#{auto.autoPes.descricao}" />
+					<p:outputLabel id="idlabel2" value="#{auto.autoPes.fantasia_Apelido}" />
+
+					<p:outputLabel id="labelsenha" value="Informe a Senha" rendered="#{auto.renderizaSenha}" />
+					<p:password id="idsenha" size="30" maxlength="8" rendered="#{auto.renderizaSenha}"							
+						value="#{auto.autoUs.senhaSemCript}" required="true"
+						requiredMessage="Informe a senha!!!"
+						validatorMessage="O minimo de digitos para senha: '8'"
+						placeholder="8 letras e/ou digitos">
+						<f:validateLength minimum="8" />
+					</p:password>
+
+
+
+				</h:panelGrid>
+
+			</h:form>
+
+		</p:dialog>
+
+
+
 
 		<p:dialog widgetVar="dialogoPontuar" closable="false"
 			resizable="false" modal="true" appendTo="@(body)" dynamic="true"
@@ -198,156 +278,145 @@
     text-align: left; display:block;overflow:auto;">
 
 			<h:form id="formPontuar">
-				<p:focus for="identificador2" />
-
 
 				<h:panelGrid id="painelA">
 					<h:outputLabel value="Auto Pontuação - Aguardando Aprovação"
 						style="color:#{ponto_mov.tipoMovimentacao.cor};font-size:15px;font-weight:900;" />
 				</h:panelGrid>
 
-				<h:panelGrid id="painelPontuar" columns="2"
-					style="float: left;
-    padding: 10px;
-    font-family: calibri;
-    color: #6495ED;
-    font-size: 15px;
-    text-align: left; display:block"
-					styleClass="top-aligned-columns" cellpadding="5" cellspacing="5">
-					<h:panelGrid id="painelEstabelecimento">
+				<p:wizard widgetVar="wiz" flowListener="#{auto.onFlowProcess}"
+					width="40%" style="overflow: hidden !important;">
+					<p:tab id="tab1" title="Fidelizado">
 
-						<h:outputLabel value="Estabelecimento"
-							style="color:green;font-size:15px;font-weight:900;" />
+						<p:panelGrid header="Auto Pontuação" columns="1">
+							<h:outputLabel value="Para Você"
+								style="color:red;font-size:15px;font-weight:900;" />
 
-						<p:selectOneRadio id="perfil2"
-							value="#{auto.tipoIdentificadorEstabelecimento}" columns="5"
-							converter="omnifaces.SelectItemsConverter">
-							<f:selectItems
-								value="#{auto.listaTipodeIdentificadoresEstabelecimento}"
-								var="c" itemLabel="#{c.descricao}" itemValue="#{c}" />
-							<p:ajax event="change" update="identificador2 nomeIdentificador2"
-								process="@this"
-								oncomplete="$(function(){PrimeFaces.focus('formTemplate:formPontuar:identificador2');});" />
-						</p:selectOneRadio>
+							<p:selectOneRadio id="perfil" size="25"
+								value="#{auto.tipoIdentificadorCliente}" columns="5"
+								converter="omnifaces.SelectItemsConverter">
+								<f:selectItems value="#{auto.listaTipodeIdentificadoresCliente}"
+									var="c" itemLabel="#{c.descricao}" itemValue="#{c}" />
+								<p:ajax event="change" update="identificador nomeIdentificador"
+									process="@this"
+									oncomplete="$(function(){PrimeFaces.focus('formTemplate:formPontuar:identificador');});" />
+							</p:selectOneRadio>
 
-						<p:outputLabel id="nomeIdentificador2"
-							value="#{auto.tipoIdentificadorEstabelecimento.descricao} do Estabelecimento" />
+							<p:outputLabel id="nomeIdentificador"
+								value="Informe  seu #{auto.tipoIdentificadorCliente.descricao}" />
+							<p:inputMask id="identificador" size="24" maxlength="20"
+								value="#{auto.cliente.identificador}" required="true"
+								requiredMessage="É preciso informar a identificação!!!"
+								mask="#{auto.tipoIdentificadorCliente.mask}">
+								<p:ajax event="blur" process="@this"
+									listener="#{auto.pessoaaverificar('Cliente')}"
+									update="pessoa_cliente valPontuacao soma valaPontuar validade" />
+							</p:inputMask>
+							<c:set var="pessoa_cliente" value="#{auto.cliente.descricao}" />
+							<p:outputLabel id="pessoa_cliente"
+								value="Cliente: #{fn:substring(pessoa_cliente,0,15)}"
+								style="color:blue;font-size:15px;font-weight:900;" />
+						</p:panelGrid>
+					</p:tab>
 
-						<p:inputMask id="identificador2" size="24" maxlength="20"
-							value="#{auto.estabelecimento.identificador}" required="true"
-							requiredMessage="É preciso informar a identificação!!!"
-							mask="#{auto.tipoIdentificadorEstabelecimento.mask}">
-							<p:ajax event="blur" process="@this"
-								listener="#{auto.pessoaaverificar('Estabelecimento')}"
-								update="pessoa_estabelecimento tipoPontuacao valPontuacao soma valaPontuar
+					<p:tab id="tab2" title="Estabelecimento">
+						<p:panelGrid header="Estabelecimento" columns="1">
+							<h:outputLabel value="Estabelecimento"
+								style="color:green;font-size:15px;font-weight:900;" />
+
+							<p:selectOneRadio id="perfil2"
+								value="#{auto.tipoIdentificadorEstabelecimento}" columns="5"
+								converter="omnifaces.SelectItemsConverter">
+								<f:selectItems
+									value="#{auto.listaTipodeIdentificadoresEstabelecimento}"
+									var="c" itemLabel="#{c.descricao}" itemValue="#{c}" />
+								<p:ajax event="change"
+									update="identificador2 nomeIdentificador2" process="@this"
+									oncomplete="$(function(){PrimeFaces.focus('formTemplate:formPontuar:identificador2');});" />
+							</p:selectOneRadio>
+
+							<p:outputLabel id="nomeIdentificador2"
+								value="#{auto.tipoIdentificadorEstabelecimento.descricao} do Estabelecimento" />
+
+							<p:inputMask id="identificador2" size="24" maxlength="20"
+								value="#{auto.estabelecimento.identificador}" required="true"
+								requiredMessage="É preciso informar a identificação!!!"
+								mask="#{auto.tipoIdentificadorEstabelecimento.mask}">
+								<p:ajax event="blur" process="@this"
+									listener="#{auto.pessoaaverificar('Estabelecimento')}"
+									update="pessoa_estabelecimento tipoPontuacao valPontuacao soma valaPontuar
 						 	validade" />
-						</p:inputMask>
-						<c:set var="pessoa_estabelecimento"
-							value="#{auto.estabelecimento.fantasia_Apelido}" />
-						<p:outputLabel id="pessoa_estabelecimento"
-							value="Estab: #{fn:substring(pessoa_estabelecimento,0,20)}"
-							style="color:blue;font-size:15px;font-weight:900;" />
-						<h:outputLabel value="Pontuação" />
+							</p:inputMask>
+							<c:set var="pessoa_estabelecimento"
+								value="#{auto.estabelecimento.fantasia_Apelido}" />
+							<p:outputLabel id="pessoa_estabelecimento"
+								value="Estab: #{fn:substring(pessoa_estabelecimento,0,20)}"
+								style="color:blue;font-size:15px;font-weight:900;" />
+						</p:panelGrid>
 
 
+					</p:tab>
 
+					<p:tab id="tab3" title="Pontuacao">
+						<p:panelGrid header="Auto Pontuação" columns="2">
+							<h:outputLabel value="Pontuação" />
+							<p:outputLabel value="Validade:"
+								style="color:#{auto.ponto_movimento.creditaDebita.cor};font-size:15px;font-weight:900;" />
 
-						<p:selectOneMenu id="tipoPontuacao" value="#{auto.ponto}"
-							converter="omnifaces.SelectItemsConverter"
-							rendered="#{!ponto_mov.tipoMovimentacao.visualizadebito}"
-							style="width:178px" panelStyle="width:178px">
-							<f:selectItems value="#{auto.listaPonto}" var="d"
-								itemValue="#{d}" itemLabel="#{d.descricao}" />
-							<p:ajax event="change" process="@this"
-								listener="#{auto.configPonto_Movimento()}"
-								update="valPontuacao soma valaPontuar
+							<p:selectOneMenu id="tipoPontuacao" value="#{auto.ponto}"
+								converter="omnifaces.SelectItemsConverter"
+								rendered="#{!ponto_mov.tipoMovimentacao.visualizadebito}"
+								style="width:178px" panelStyle="width:178px">
+								<f:selectItems value="#{auto.listaPonto}" var="d"
+									itemValue="#{d}" itemLabel="#{d.descricao}" />
+								<p:ajax event="change" process="@this"
+									listener="#{auto.configPonto_Movimento()}"
+									update="valPontuacao soma valaPontuar
 						 pessoa_cliente validade"
-								oncomplete="$(function(){PrimeFaces.focus('formTemplate:formPontuar:valaPontuar');});" />
-						</p:selectOneMenu>
+									oncomplete="$(function(){PrimeFaces.focus('formTemplate:formPontuar:valaPontuar');});" />
+							</p:selectOneMenu>
+							<p:outputLabel id="validade"
+								value="#{auto.ponto_movimento.validade.time}"
+								style="color:#{auto.ponto_movimento.creditaDebita.cor};font-size:15px;font-weight:900;">
+								<f:convertDateTime locale="pt_BR" type="both" dateStyle="long"
+									pattern="dd/MM/yyyy" />
+							</p:outputLabel>
+
+							<p:outputLabel id="valPontuacao"
+								value="Valor do Ponto: R$ #{auto.ponto_movimento.valordaUnidade}"
+								style="color:blue;font-size:15px;font-weight:900;"
+								rendered="#{!auto.tipoMovimentacao.visualizadebito}" />
+
+							<h:outputLabel id="soma"
+								value="Seus pontos atuais: #{auto.pontoSoma} Leal(is) "
+								style="color:#0000FF;font-size:15px;font-weight:900;" />
 
 
 
 
+							<p:outputLabel value="Valor do Documento" />
+							<p:outputLabel value="N. do Documento" decimalPlaces="0" />
+							<p:inputNumber id="valaPontuar" size="24" maxlength="20"
+								value="#{auto.ponto_movimento.valoraPontuar}" required="true"
+								requiredMessage="É preciso informar pontuação!!!">
+								<f:validateLongRange minimum="0" />
+							</p:inputNumber>
+
+							<p:inputMask
+								mask="?99999999999999999999999999999999999999999999999999"
+								placeHolder="" id="nDoc" size="24" maxlength="20"
+								value="#{auto.ponto_movimento.numDoc}" required="true"
+								requiredMessage="É preciso informar pontuação!!!">
+								<f:validateLongRange minimum="0" />
+							</p:inputMask>
 
 
+						</p:panelGrid>
 
-						<p:outputLabel id="valPontuacao"
-							value="Valor do Ponto: R$ #{auto.ponto_movimento.valordaUnidade}"
-							style="color:blue;font-size:15px;font-weight:900;"
-							rendered="#{!auto.tipoMovimentacao.visualizadebito}" />
-						<p:outputLabel value="Validade:"
-							style="color:#{auto.ponto_movimento.creditaDebita.cor};font-size:15px;font-weight:900;" />
-
-						<p:outputLabel id="validade"
-							value="#{auto.ponto_movimento.validade.time}"
-							style="color:#{auto.ponto_movimento.creditaDebita.cor};font-size:15px;font-weight:900;">
-							<f:convertDateTime locale="pt_BR" type="both" dateStyle="long"
-								pattern="dd/MM/yyyy" />
-						</p:outputLabel>
-					</h:panelGrid>
-
-					<h:panelGrid id="painelCliente">
-
-						<h:outputLabel value="Você:"
-							style="color:red;font-size:15px;font-weight:900;" />
-
-
-
-						<p:selectOneRadio id="perfil" size="25"
-							value="#{auto.tipoIdentificadorCliente}" columns="5"
-							converter="omnifaces.SelectItemsConverter">
-							<f:selectItems value="#{auto.listaTipodeIdentificadoresCliente}"
-								var="c" itemLabel="#{c.descricao}" itemValue="#{c}" />
-							<p:ajax event="change" update="identificador nomeIdentificador"
-								process="@this"
-								oncomplete="$(function(){PrimeFaces.focus('formTemplate:formPontuar:identificador');});" />
-						</p:selectOneRadio>
-
-						<p:outputLabel id="nomeIdentificador"
-							value="Informe  seu #{auto.tipoIdentificadorCliente.descricao}" />
-
-
-						<p:inputMask id="identificador" size="24" maxlength="20"
-							value="#{auto.cliente.identificador}" required="true"
-							requiredMessage="É preciso informar a identificação!!!"
-							mask="#{auto.tipoIdentificadorCliente.mask}">
-							<p:ajax event="blur" process="@this"
-								listener="#{auto.pessoaaverificar('Cliente')}"
-								update="pessoa_cliente valPontuacao soma valaPontuar validade" />
-						</p:inputMask>
-
-
-
-
-						<c:set var="pessoa_cliente" value="#{auto.cliente.descricao}" />
-						<p:outputLabel id="pessoa_cliente"
-							value="Cliente: #{fn:substring(pessoa_cliente,0,15)}"
-							style="color:blue;font-size:15px;font-weight:900;" />
-
-
-
-
-						<p:outputLabel value="Valor do Documento" />
-						<p:inputNumber id="valaPontuar" size="24" maxlength="20"
-							value="#{auto.ponto_movimento.valoraPontuar}" required="true"
-							requiredMessage="É preciso informar pontuação!!!">
-							<f:validateLongRange minimum="0" />
-						</p:inputNumber>
-						<p:outputLabel value="N. do Documento" decimalPlaces="0" />
-						<p:inputMask
-							mask="?99999999999999999999999999999999999999999999999999"
-							placeHolder="" id="nDoc" size="24" maxlength="20"
-							value="#{auto.ponto_movimento.numDoc}" required="true"
-							requiredMessage="É preciso informar pontuação!!!">
-							<f:validateLongRange minimum="0" />
-						</p:inputMask>
-
-						<h:outputLabel id="soma"
-							value="Pontos do Cliente: #{auto.pontoSoma} Leal(is) "
-							style="color:#0000FF;font-size:15px;font-weight:900;" />
-					</h:panelGrid>
-					<h:panelGrid id="pF">
+					</p:tab>
+					<p:tab id="tab4" title="comprovante">
 						<p:outputLabel for="upload" value="Comprovante(Cupom/NFe):" />
+
 						<p:fileUpload id="upload" mode="advanced"
 							fileUploadListener="#{auto.upload}" update=":mensagens foto"
 							auto="true" style="font-size:15px;width:250px; "
@@ -355,16 +424,14 @@
 
 						</p:fileUpload>
 						<p:graphicImage id="foto" value="#{imagensjsfController.image}"
-							style="max-width:90px;
-    max-height:80px;
-    width: auto;
-    height: auto;">
+							style="max-width:90px;max-height:80px;width: auto;height: auto;">
 							<f:param name="caminho"
 								value="#{auto.ponto_movimento.caminhodaImagem}" />
 						</p:graphicImage>
-					</h:panelGrid>
 
-					<h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5">
+
+
+
 						<p:commandButton value="Validar" actionListener="#{auto.merge()}"
 							process="@form" update="formPontuar">
 
@@ -375,201 +442,221 @@
 						<p:commandButton value="Cancelar" actionListener="#{auto.merge()}"
 							process="@form" oncomplete="PF('dialogoPontuar').hide();">
 						</p:commandButton>
-					</h:panelGrid>
-					<p:confirmDialog global="true" style="white-space: pre;">
-						<p:commandButton value="SIM" type="button"
-							styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
-						<p:commandButton value="NÃO" type="button"
-							styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
-					</p:confirmDialog>
 
-				</h:panelGrid>
+						<p:confirmDialog global="true" style="white-space: pre;">
+							<p:commandButton value="SIM" type="button"
+								styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+							<p:commandButton value="NÃO" type="button"
+								styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+						</p:confirmDialog>
+					</p:tab>
+				</p:wizard>
 			</h:form>
 		</p:dialog>
 
-		<p:dialog header="Cadastro Único" widgetVar="dialogoCadastro"
-			resizable="false" modal="true" closable="false" appendTo="@(body)"
-			position="center"
+
+
+
+
+		<p:dialog header="Cadastro unitário - válido por toda cidade"
+			widgetVar="dialogoCadastro" visible="false" resizable="false"
+			modal="true" closable="false" appendTo="@(body)" position="center"
 			style="float: left;
     padding: 10px;
     font-family: calibri;
     color: #6495ED;
-    font-size: 15px;
+    font-size: 12px;
     text-align: left; width: 70%; height:60%;">
 			<h:form id="formCadastro">
-				<p:focus for="nome" />
-				<h:panelGrid id="painelCadastro_1">
-					<h:panelGrid id="painelCadastro_11">
-						<p:outputLabel value="#{auto.pessoaConfig.labelNome}"
-							rendered="#{auto.pessoaConfig.labelNomeRenderiza}" />
-						<p:inputText id="nome" size="67" maxlength="90"
-							value="#{auto.cliente.descricao}"
-							required="#{auto.pessoaConfig.labelNomeObrigatorio}"
-							requiredMessage="#{auto.pessoaConfig.labelNomeRequiredMessage}"
-							rendered="#{auto.pessoaConfig.labelNomeRenderiza}"
-							validatorMessage="O minimo de caracteres para nome são  '5'"
-							placeholder="Mínimo 5 Letras">
-							<f:validateLength minimum="5" />
-						</p:inputText>
-					</h:panelGrid>
-					<h:panelGrid id="painelCadastro_12">
-						<p:outputLabel value="#{auto.pessoaConfig.labelFantasia}"
-							rendered="#{auto.pessoaConfig.labelFantasiaRenderiza}" />
-						<p:inputText size="67" maxlength="90"
-							value="#{auto.cliente.fantasia_Apelido}"
-							required="#{auto.pessoaConfig.labelFantasiaObrigatorio}"
-							requiredMessage="#{auto.pessoaConfig.labelFantasiaRequiredMessage}"
-							rendered="#{auto.pessoaConfig.labelFantasiaRenderiza}"
-							validatorMessage="O minimo de caracteres para nome são  '5'"
-							placeholder="Mínimo 5 Letras">
-							<f:validateLength minimum="5" />
-						</p:inputText>
-					</h:panelGrid>
+				<p:wizard widgetVar="wiz" flowListener="#{auto.onFlowProcess}"
+					width="40%" style="overflow: hidden !important;">
+					<p:focus for="nome" />
+					<p:tab id="tab1" title="Dados - 1">
 
-					<h:panelGrid id="painelCadastro_13">
-						<p:outputLabel value="#{auto.pessoaConfig.labelSexo}"
-							rendered="#{auto.pessoaConfig.labelSexoRenderiza}" />
-						<p:selectOneRadio id="perfil" value="#{auto.cliente.sexo}"
-							columns="5" converter="omnifaces.SelectItemsConverter"
-							rendered="#{auto.pessoaConfig.labelSexoRenderiza}">
-							<f:selectItems value="#{auto.pessoaConfig.listaSexo}" var="c"
-								itemLabel="#{c.abrev}" itemValue="#{c}" />
-							<p:ajax event="change" process="@this"
-								oncomplete="$(function(){PrimeFaces.focus('formCadastro:calendar');});" />
-						</p:selectOneRadio>
-					</h:panelGrid>
-				</h:panelGrid>
+						<h:panelGrid id="painelCadastro_1">
+							<h:panelGrid id="painelCadastro_11">
+								<p:outputLabel value="#{auto.pessoaConfig.labelNome}"
+									rendered="#{auto.pessoaConfig.labelNomeRenderiza}" />
+								<p:inputText id="nome" size="67" maxlength="90"
+									value="#{auto.cliente.descricao}"
+									required="#{auto.pessoaConfig.labelNomeObrigatorio}"
+									requiredMessage="#{auto.pessoaConfig.labelNomeRequiredMessage}"
+									rendered="#{auto.pessoaConfig.labelNomeRenderiza}"
+									validatorMessage="O minimo de caracteres para nome são  '5'"
+									placeholder="Mínimo 5 Letras">
+									<f:validateLength minimum="5" />
+								</p:inputText>
+							</h:panelGrid>
+							<h:panelGrid id="painelCadastro_12">
+								<p:outputLabel value="#{auto.pessoaConfig.labelFantasia}"
+									rendered="#{auto.pessoaConfig.labelFantasiaRenderiza}" />
+								<p:inputText size="67" maxlength="90"
+									value="#{auto.cliente.fantasia_Apelido}"
+									required="#{auto.pessoaConfig.labelFantasiaObrigatorio}"
+									requiredMessage="#{auto.pessoaConfig.labelFantasiaRequiredMessage}"
+									rendered="#{auto.pessoaConfig.labelFantasiaRenderiza}"
+									validatorMessage="O minimo de caracteres para nome são  '5'"
+									placeholder="Mínimo 5 Letras">
+									<f:validateLength minimum="5" />
+								</p:inputText>
+							</h:panelGrid>
 
-				<h:panelGrid columns="2" id="painelCadastro_2">
-					<h:panelGrid id="painelCadastro_21">
-						<p:outputLabel value="Data de nascimento"
-							rendered="#{auto.pessoaConfig.labelDataNascimentoRenderiza}" />
-						<p:calendar id="calendar" size="30" maxlength="15"
-							mask="99/99/9999" value="#{auto.cliente.dataNascimento}"
-							required="#{auto.pessoaConfig.labelDataNascimentoObrigatorio}"
-							requiredMessage="#{auto.pessoaConfig.labelDataNascimentoRequiredMessage}"
-							rendered="#{auto.pessoaConfig.labelDataNascimentoRenderiza}">
-							<f:convertDateTime pattern="dd/MM/yyyy" dateStyle="full"
-								type="both" timezone="GMT+3" />
-						</p:calendar>
-					</h:panelGrid>
-					<h:panelGrid id="painelCadastro_22">
-						<p:outputLabel value="#{auto.pessoaConfig.labelcpf_Cnpj}"
-							rendered="#{auto.pessoaConfig.labelcpf_CnpjRenderiza}" />
-						<p:inputMask id="identificador" size="30" maxlength="15"
-							mask="#{auto.tipoIdentificadorCliente.mask}"
-							value="#{auto.cliente.cpf_Cnpj}"
-							converter="mascaraTelefoneConverter"
-							required="#{auto.pessoaConfig.labelcpf_CnpjObrigatorio}"
-							requiredMessage="#{auto.pessoaConfig.labelcpf_CnpjRequiredMessage}"
-							rendered="#{auto.pessoaConfig.labelcpf_CnpjRenderiza}"
-							readonly="true">
-						</p:inputMask>
-					</h:panelGrid>
+							<h:panelGrid id="painelCadastro_13">
+								<p:outputLabel value="#{auto.pessoaConfig.labelSexo}"
+									rendered="#{auto.pessoaConfig.labelSexoRenderiza}" />
+								<p:selectOneRadio id="perfil" value="#{auto.cliente.sexo}"
+									columns="5" converter="omnifaces.SelectItemsConverter"
+									rendered="#{auto.pessoaConfig.labelSexoRenderiza}">
+									<f:selectItems value="#{auto.pessoaConfig.listaSexo}" var="c"
+										itemLabel="#{c.abrev}" itemValue="#{c}" />
+									<p:ajax event="change" process="@this"
+										oncomplete="$(function(){PrimeFaces.focus('formCadastro:calendar');});" />
+								</p:selectOneRadio>
+							</h:panelGrid>
+						</h:panelGrid>
 
 
+					</p:tab>
 
+					<p:tab id="tab2" title="Dados - 2">
+						<h:panelGrid columns="2" id="painelCadastro_2">
+							<h:panelGrid id="painelCadastro_21">
+								<p:outputLabel value="Data de nascimento"
+									rendered="#{auto.pessoaConfig.labelDataNascimentoRenderiza}" />
+								<p:calendar id="calendar" size="30" maxlength="15"
+									mask="99/99/9999" value="#{auto.cliente.dataNascimento}"
+									required="#{auto.pessoaConfig.labelDataNascimentoObrigatorio}"
+									requiredMessage="#{auto.pessoaConfig.labelDataNascimentoRequiredMessage}"
+									rendered="#{auto.pessoaConfig.labelDataNascimentoRenderiza}">
+									<f:convertDateTime pattern="dd/MM/yyyy" dateStyle="full"
+										type="both" timezone="GMT+3" />
+								</p:calendar>
+							</h:panelGrid>
+							<h:panelGrid id="painelCadastro_22">
+								<p:outputLabel value="#{auto.pessoaConfig.labelcpf_Cnpj}"
+									rendered="#{auto.pessoaConfig.labelcpf_CnpjRenderiza}" />
+								<p:inputMask id="identificador" size="30" maxlength="15"
+									mask="#{auto.tipoIdentificadorCliente.mask}"
+									value="#{auto.cliente.cpf_Cnpj}"
+									converter="mascaraTelefoneConverter"
+									required="#{auto.pessoaConfig.labelcpf_CnpjObrigatorio}"
+									requiredMessage="#{auto.pessoaConfig.labelcpf_CnpjRequiredMessage}"
+									rendered="#{auto.pessoaConfig.labelcpf_CnpjRenderiza}"
+									readonly="true">
+								</p:inputMask>
+							</h:panelGrid>
+						</h:panelGrid>
+					</p:tab>
 
-				</h:panelGrid>
+					<p:tab id="tab3" title="Dados - 3">
+						<h:panelGrid columns="2" id="painelCadastro_3">
+							<h:panelGrid id="painelCadastro_31">
+								<p:outputLabel value="#{auto.pessoaConfig.labelrg_Insc}"
+									rendered="#{auto.pessoaConfig.labelrg_InscRenderiza}" />
+								<p:inputText size="30" maxlength="15"
+									value="#{auto.cliente.rg_Insc}"
+									required="#{auto.pessoaConfig.labelrg_InscObrigatorio}"
+									requiredMessage="#{auto.pessoaConfig.labelrg_InscRequiredMessage}"
+									rendered="#{auto.pessoaConfig.labelrg_InscRenderiza}">
+								</p:inputText>
+							</h:panelGrid>
 
+							<h:panelGrid id="painelCadastro_32">
+								<p:outputLabel for="fone_1"
+									value="#{auto.pessoaConfig.labelfone_1}"
+									rendered="#{auto.pessoaConfig.labelfone_1Renderiza}" />
+								<p:inputMask mask="#{auto.pessoaConfig.maskTel}" id="fone_1"
+									size="30" maxlength="15" value="#{auto.cliente.fone_1}"
+									required="#{auto.pessoaConfig.labelfone_1Obrigatorio}"
+									requiredMessage="#{auto.pessoaConfig.labelfone_1RequiredMessage}"
+									rendered="#{auto.pessoaConfig.labelfone_1Renderiza}">
+								</p:inputMask>
+							</h:panelGrid>
+						</h:panelGrid>
+					</p:tab>
+					<p:tab id="tab4" title="dados  4">
+						<h:panelGrid columns="2" id="painelCadastro_4">
+							<h:panelGrid id="painelCadastro_41">
+								<p:outputLabel value="#{auto.pessoaConfig.labelfone_2}"
+									rendered="#{auto.pessoaConfig.labelfone_2Renderiza}" />
+								<p:inputMask mask="#{auto.pessoaConfig.maskTel}" size="30"
+									maxlength="15" value="#{auto.cliente.fone_2}"
+									required="#{auto.pessoaConfig.labelfone_2Obrigatorio}"
+									requiredMessage="#{auto.pessoaConfig.labelfone_2RequiredMessage}"
+									rendered="#{auto.pessoaConfig.labelfone_2Renderiza}">
+								</p:inputMask>
+							</h:panelGrid>
+							<h:panelGrid id="painelCadastro_42">
+								<p:outputLabel value="#{auto.pessoaConfig.labelfone_3}" />
+								<p:inputMask mask="#{auto.pessoaConfig.maskTel}" size="30"
+									maxlength="15" value="#{auto.cliente.fone_3}"
+									required="#{auto.pessoaConfig.labelfone_3Obrigatorio}"
+									requiredMessage="#{auto.pessoaConfig.labelfone_3RequiredMessage}"
+									rendered="#{auto.pessoaConfig.labelfone_3Renderiza}">
+								</p:inputMask>
+							</h:panelGrid>
 
-				<h:panelGrid columns="2" id="painelCadastro_3">
-					<h:panelGrid id="painelCadastro_31">
-						<p:outputLabel value="#{auto.pessoaConfig.labelrg_Insc}"
-							rendered="#{auto.pessoaConfig.labelrg_InscRenderiza}" />
-						<p:inputText size="30" maxlength="15"
-							value="#{auto.cliente.rg_Insc}"
-							required="#{auto.pessoaConfig.labelrg_InscObrigatorio}"
-							requiredMessage="#{auto.pessoaConfig.labelrg_InscRequiredMessage}"
-							rendered="#{auto.pessoaConfig.labelrg_InscRenderiza}">
-						</p:inputText>
-					</h:panelGrid>
-
-					<h:panelGrid id="painelCadastro_32">
-						<p:outputLabel for="fone_1"
-							value="#{auto.pessoaConfig.labelfone_1}"
-							rendered="#{auto.pessoaConfig.labelfone_1Renderiza}" />
-						<p:inputMask mask="#{auto.pessoaConfig.maskTel}" id="fone_1"
-							size="30" maxlength="15" value="#{auto.cliente.fone_1}"
-							required="#{auto.pessoaConfig.labelfone_1Obrigatorio}"
-							requiredMessage="#{auto.pessoaConfig.labelfone_1RequiredMessage}"
-							rendered="#{auto.pessoaConfig.labelfone_1Renderiza}">
-						</p:inputMask>
-					</h:panelGrid>
-				</h:panelGrid>
-				<h:panelGrid columns="2" id="painelCadastro_4">
-					<h:panelGrid id="painelCadastro_41">
-						<p:outputLabel value="#{auto.pessoaConfig.labelfone_2}"
-							rendered="#{auto.pessoaConfig.labelfone_2Renderiza}" />
-						<p:inputMask mask="#{auto.pessoaConfig.maskTel}" size="30"
-							maxlength="15" value="#{auto.cliente.fone_2}"
-							required="#{auto.pessoaConfig.labelfone_2Obrigatorio}"
-							requiredMessage="#{auto.pessoaConfig.labelfone_2RequiredMessage}"
-							rendered="#{auto.pessoaConfig.labelfone_2Renderiza}">
-						</p:inputMask>
-					</h:panelGrid>
-					<h:panelGrid id="painelCadastro_42">
-						<p:outputLabel value="#{auto.pessoaConfig.labelfone_3}" />
-						<p:inputMask mask="#{auto.pessoaConfig.maskTel}" size="30"
-							maxlength="15" value="#{auto.cliente.fone_3}"
-							required="#{auto.pessoaConfig.labelfone_3Obrigatorio}"
-							requiredMessage="#{auto.pessoaConfig.labelfone_3RequiredMessage}"
-							rendered="#{auto.pessoaConfig.labelfone_3Renderiza}">
-						</p:inputMask>
-					</h:panelGrid>
-
-				</h:panelGrid>
-				<h:panelGrid columns="2" id="painelCadastro_5">
-					<h:panelGrid id="painelCadastro_51">
-						<p:outputLabel value="#{auto.pessoaConfig.labelemail}"
-							rendered="#{auto.pessoaConfig.labelemailRenderiza}" />
-						<p:inputText size="67" maxlength="90"
-							value="#{auto.cliente.email}"
-							required="#{auto.pessoaConfig.labelemailObrigatorio}"
-							requiredMessage="#{auto.pessoaConfig.labelemailRequiredMessage}"
-							rendered="#{auto.pessoaConfig.labelemailRenderiza}">
-						</p:inputText>
-					</h:panelGrid>
-				</h:panelGrid>
-
-				<h:panelGrid columns="2" id="painelCadastro_6"
-					rendered="#{auto.perfilLogado.paginaAtual.renderizaCadastrodeUsuarios}">
-					<h:panelGrid id="painelCadastro_61">
-						<p:outputLabel value="Informe a Senha" />
-						<p:password size="30" maxlength="8"
-							value="#{auto.usAuto.senhaSemCript}" required="true"
-							requiredMessage="Informe a senha!!!"
-							validatorMessage="O minimo de digitos para senha: '8'"
-							placeholder="8 letras e/ou digitos">
-							<f:validateLength minimum="8" />
-						</p:password>
-					</h:panelGrid>
-					<h:panelGrid id="painelCadastro_62">
-						<p:outputLabel value="Confirme a Senha" />
-						<p:password size="30" maxlength="8"
-							value="#{auto.usAuto.confSenha}" required="true"
-							requiredMessage="Informe a confirmação de senha!!!"
-							validatorMessage="O minimo de digitos para confirmação senha: '8'"
-							placeholder="8 letras e/ou digitos">
-							<f:validateLength minimum="8" />
-						</p:password>
-					</h:panelGrid>
-				</h:panelGrid>
-
-				<h:panelGrid columns="2" id="painelCadastro_7">
-					<p:panelGrid>
-						<p:commandButton value="Salvar" process="@form"
-							actionListener="#{auto.mergePessoa}"
-							update=":mensagens :formPontuar" />
-					</p:panelGrid>
-					<p:panelGrid>
-						<p:commandButton value="Cancelar" process="@this"
-							actionListener="#{auto.cancelar}" />
-					</p:panelGrid>
-				</h:panelGrid>
+						</h:panelGrid>
+					</p:tab>
+					<p:tab id="tab5" title="dados  5">
+						<h:panelGrid columns="2" id="painelCadastro_5">
+							<h:panelGrid id="painelCadastro_51">
+								<p:outputLabel value="#{auto.pessoaConfig.labelemail}"
+									rendered="#{auto.pessoaConfig.labelemailRenderiza}" />
+								<p:inputText size="67" maxlength="90"
+									value="#{auto.cliente.email}"
+									required="#{auto.pessoaConfig.labelemailObrigatorio}"
+									requiredMessage="#{auto.pessoaConfig.labelemailRequiredMessage}"
+									rendered="#{auto.pessoaConfig.labelemailRenderiza}">
+								</p:inputText>
+							</h:panelGrid>
+						</h:panelGrid>
+					</p:tab>
+					<p:tab id="tab6" title="dados  6">
+						<h:panelGrid columns="2" id="painelCadastro_6"
+							rendered="#{auto.perfilLogado.paginaAtual.renderizaCadastrodeUsuarios}">
+							<h:panelGrid id="painelCadastro_61">
+								<p:outputLabel value="Informe a Senha" />
+								<p:password size="30" maxlength="8"
+									value="#{auto.usAuto.senhaSemCript}" required="true"
+									requiredMessage="Informe a senha!!!"
+									validatorMessage="O minimo de digitos para senha: '8'"
+									placeholder="8 letras e/ou digitos">
+									<f:validateLength minimum="8" />
+								</p:password>
+							</h:panelGrid>
+							<h:panelGrid id="painelCadastro_62">
+								<p:outputLabel value="Confirme a Senha" />
+								<p:password size="30" maxlength="8"
+									value="#{auto.usAuto.confSenha}" required="true"
+									requiredMessage="Informe a confirmação de senha!!!"
+									validatorMessage="O minimo de digitos para confirmação senha: '8'"
+									placeholder="8 letras e/ou digitos">
+									<f:validateLength minimum="8" />
+								</p:password>
+							</h:panelGrid>
+						</h:panelGrid>
+					</p:tab>
+					<p:tab id="tab7" title="dados  7">
+						<h:panelGrid columns="2" id="painelCadastro_7">
+							<p:panelGrid>
+								<p:commandButton value="Salvar" process="@form"
+									actionListener="#{auto.mergePessoa}"
+									update=":mensagens :formPontuar" />
+							</p:panelGrid>
+							<p:panelGrid>
+								<p:commandButton value="Cancelar" process="@this"
+									actionListener="#{auto.cancelar}" />
+							</p:panelGrid>
+						</h:panelGrid>
+					</p:tab>
+				</p:wizard>
 			</h:form>
 		</p:dialog>
+
+
 	</div>
+
 
 
 

@@ -16,6 +16,7 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 @SuppressWarnings("serial")
 @Entity
 @Table(name="Pessoa")
@@ -62,6 +63,24 @@ public class Pessoa extends GenericDomain implements Serializable{
 	@Column(name="AutoPontuacao")
 	private Enum_Aux_Sim_ou_Nao autoPontuacao;
 	
+	@Transient
+	private String mensagem;
+	@Transient
+	private boolean cadastrado;
+	@Transient
+	private boolean cpf_cnpjValido;
+	@Transient
+	private String senha;
+	@Transient
+	private double pontosAnt;
+	@Transient
+	private double pontosdoMovimento;
+	@Transient
+	private double pontosAtuais;
+	
+	
+	
+	
 	public String getDescricao() {
 		return descricao;
 	}
@@ -86,6 +105,7 @@ public class Pessoa extends GenericDomain implements Serializable{
 	}
 	public void setEnum_Aux_Tipo_Identificador(Enum_Aux_Tipo_Identificador enum_Aux_Tipo_Identificador) {
 		this.enum_Aux_Tipo_Identificador = enum_Aux_Tipo_Identificador;
+		
 	}
 	public Long getId() {
 		return id;
@@ -158,7 +178,9 @@ public class Pessoa extends GenericDomain implements Serializable{
 				+ descricao + ", fantasia_Apelido=" + fantasia_Apelido + ", identificador=" + identificador
 				+ ", dataNascimento=" + dataNascimento + ", cpf_Cnpj=" + cpf_Cnpj + ", rg_Insc=" + rg_Insc + ", sexo="
 				+ sexo + ", fone_1=" + fone_1 + ", fone_2=" + fone_2 + ", fone_3=" + fone_3 + ", email=" + email
-				+ ", autoPontuacao=" + autoPontuacao + "]";
+				+ ", autoPontuacao=" + autoPontuacao + ", mensagem=" + mensagem + ", cadastrado=" + cadastrado
+				+ ", cpf_cnpjValido=" + cpf_cnpjValido + ", senha=" + senha + ", pontosAnt=" + pontosAnt
+				+ ", pontosdoMovimento=" + pontosdoMovimento + ", pontosAtuais=" + pontosAtuais + "]";
 	}
 	@Override
 	public int hashCode() {
@@ -251,6 +273,54 @@ public class Pessoa extends GenericDomain implements Serializable{
 		if (sexo != other.sexo)
 			return false;
 		return true;
+	}
+	public String getMensagem() {
+		return mensagem;
+	}
+	public void setMensagem(String mensagem) {
+		this.mensagem = mensagem;
+	}
+	public Enum_Aux_Sim_ou_Nao getAutoPontuacao() {
+		return autoPontuacao;
+	}
+	public void setAutoPontuacao(Enum_Aux_Sim_ou_Nao autoPontuacao) {
+		this.autoPontuacao = autoPontuacao;
+	}
+	public boolean isCadastrado() {
+		return cadastrado;
+	}
+	public void setCadastrado(boolean cadastrado) {
+		this.cadastrado = cadastrado;
+	}
+	public boolean isCpf_cnpjValido() {
+		return cpf_cnpjValido;
+	}
+	public void setCpf_cnpjValido(boolean cpf_cnpjValido) {
+		this.cpf_cnpjValido = cpf_cnpjValido;
+	}
+	public String getSenha() {
+		return senha;
+	}
+	public void setSenha(String senha) {
+		this.senha = senha;
+	}
+	public double getPontosAnt() {
+		return pontosAnt;
+	}
+	public void setPontosAnt(double pontosAnt) {
+		this.pontosAnt = pontosAnt;
+	}
+	public double getPontosdoMovimento() {
+		return pontosdoMovimento;
+	}
+	public void setPontosdoMovimento(double pontosdoMovimento) {
+		this.pontosdoMovimento = pontosdoMovimento;
+	}
+	public double getPontosAtuais() {
+		return pontosAtuais;
+	}
+	public void setPontosAtuais(double pontosAtuais) {
+		this.pontosAtuais = pontosAtuais;
 	}
 	
 		

@@ -16,8 +16,10 @@
 	</h:head>
 
 	<ui:define name="conteudo">
-		<h:form id="formlista" style="width:100%;" update="buttonpontuar :formTemplate:formPontuar:painelPontuar" >
-			<p:panel header="Listagem de #{autenticacaojsfController.perfilLogado.paginaAtual.descricao2}"
+		<h:form id="formlista" style="width:100%;"
+			update="buttonpontuar :formTemplate:formPontuar:painelPontuar">
+			<p:panel
+				header="Listagem de #{autenticacaojsfController.perfilLogado.paginaAtual.descricao2}"
 				style="width:100%;">
 				<p:dataTable id="tabela" emptyMessage="" reflow="true"
 					value="#{ponto_mov.pontos_Mov}" paginator="true" rows="5"
@@ -26,12 +28,13 @@
 
 					<f:facet name="header">
 
-						<p:commandButton id="buttonpontuar" value="#{ponto_mov.tipoMovimentacao.acao}"
-							process="@this" actionListener="#{ponto_mov.novo()}"
+						<p:commandButton id="buttonpontuar"
+							value="#{ponto_mov.tipoMovimentacao.acao}" process="@this"
+							actionListener="#{ponto_mov.novo()}"
 							update=":formTemplate:formPontuar:painelPontuar" style="width:5%">
 
 
-							
+
 						</p:commandButton>
 					</f:facet>
 
@@ -47,8 +50,7 @@
 					</p:column>
 
 					<p:column headerText="Tipo" style="width:15%">
-						<c:set var="descrPont"
-							value="#{registro.id_ponto.descricao}" />
+						<c:set var="descrPont" value="#{registro.id_ponto.descricao}" />
 						<h:outputText id="descrPontOut"
 							update=":formTemplate:formHistorico"
 							value="#{fn:substring(descrPont,0,20)}" style="width:5%">
@@ -104,13 +106,18 @@
 							var="registro2" style="font-size:15px;">
 							<f:facet name="header">
 								<p:outputLabel
-									value="Cliente: #{ponto_mov.clienteHistorico.descricao} - Pontos: #{ponto_mov.pontoSoma} Leal(is) "
-									style="color:blue;font-size:15px;font-weight:900;" />
+									value="Cliente: #{ponto_mov.clienteHistorico.descricao} - Pontos:  " />
+
+								<p:outputLabel value="#{ponto_mov.pontoSoma}">
+									<f:convertNumber type="number" groupingUsed="true"
+										minFractionDigits="2" pattern="#0.00" />
+									<p:outputLabel value=" $Leais" />
+
+								</p:outputLabel>
 							</f:facet>
 
 							<p:column headerText="Tipo" style="width:15%">
-								<c:set var="descrPont"
-									value="#{registro2.id_ponto.descricao}" />
+								<c:set var="descrPont" value="#{registro2.id_ponto.descricao}" />
 								<h:outputText id="descrPontOut"
 									update=":formTemplate:formHistorico"
 									value="#{fn:substring(descrPont,0,20)}" style="width:5%">
@@ -284,14 +291,13 @@
 			<h:form id="formPontuar">
 
 				<h:panelGrid id="painelPontuar">
-					<h:outputLabel
-						value="Ação: #{ponto_mov.tipoMovimentacao.acao} "
+					<h:outputLabel value="Ação: #{ponto_mov.tipoMovimentacao.acao} "
 						style="color:#{ponto_mov.tipoMovimentacao.cor};font-size:15px;font-weight:900;" />
 					<h:outputLabel value="Escolha CPF ou CNPJ" />
 					<p:focus for="identificador" />
 					<p:selectOneRadio id="perfil"
 						value="#{ponto_mov.tipoIdentificador}" columns="5"
-						converter="omnifaces.SelectItemsConverter"  >
+						converter="omnifaces.SelectItemsConverter">
 						<f:selectItems value="#{ponto_mov.listaTipodeIdentificadores}"
 							var="c" itemLabel="#{c.descricao}" itemValue="#{c}" />
 						<p:ajax event="change" update="identificador" process="@form"
@@ -312,28 +318,41 @@
 
 					<h:outputLabel value="Escolha o Tipo de Pontuação " />
 
-					<p:selectOneMenu id="tipoPontuacao"
-						value="#{ponto_mov.ponto}"
+					<p:selectOneMenu id="tipoPontuacao" value="#{ponto_mov.ponto}"
 						converter="omnifaces.SelectItemsConverter" style="width:250px"
 						panelStyle="width:250px"
-						rendered="#{!ponto_mov.tipoMovimentacao.visualizadebito}" >
+						rendered="#{!ponto_mov.tipoMovimentacao.visualizadebito}">
 						<f:selectItems value="#{ponto_mov.listaPonto}" var="d"
-							itemValue="#{d}" itemLabel="#{d.descricao}"/>
+							itemValue="#{d}" itemLabel="#{d.descricao}" />
 
 
-						<p:ajax event="change" process="@this" listener="#{ponto_mov.configPonto_Movimento()}"
+						<p:ajax event="change" process="@this"
+							listener="#{ponto_mov.configPonto_Movimento()}"
 							update="valPontuacao soma valaPontuar
-						 pessoa_cliente validade" 
-							oncomplete="$(function(){PrimeFaces.focus('formTemplate:formPontuar:valPontuacao');});"/>
-						 
+						 pessoa_cliente validade"
+							oncomplete="$(function(){PrimeFaces.focus('formTemplate:formPontuar:valPontuacao');});" />
+
 					</p:selectOneMenu>
 
 
 
 
-					<h:outputLabel id="soma"
-						value="Pontos do Cliente: #{ponto_mov.pontoSoma} Leal(is) "
+
+					<h:outputLabel value="Pontos do Cliente: "
 						style="color:#0000FF;font-size:15px;font-weight:900;" />
+
+
+
+					<p:outputLabel id="soma" value="#{ponto_mov.pontoSoma}">
+						<f:convertNumber type="number" groupingUsed="true"
+							minFractionDigits="2" pattern="#0.00" />
+						<p:outputLabel value=" $Leais" />
+
+					</p:outputLabel>
+
+
+
+
 
 					<p:outputLabel id="valPontuacao"
 						value="Valor do Ponto: R$ #{ponto_mov.ponto_movimento.valordaUnidade}"
@@ -350,12 +369,12 @@
 					<p:outputLabel
 						value="Pontos a #{ponto_mov.ponto_movimento.creditaDebita.acao.toLowerCase()}"
 						rendered="#{ponto_mov.tipoMovimentacao.visualizadebito}" />
-					<p:inputNumber  decimalPlaces="0" id="pontosAtingidos" symbol="Leal " symbolPosition="p"
-						emptyValue="0" size="30" maxlength="20"
-						value="#{ponto_mov.ponto_movimento.pontosAtingidos}" required="true"
-						requiredMessage="É preciso informar pontuação!!!"
-						rendered="#{ponto_mov.tipoMovimentacao.visualizadebito}"
-						>
+					<p:inputNumber decimalPlaces="0" id="pontosAtingidos"
+						symbol="Leal " symbolPosition="p" emptyValue="0" size="30"
+						maxlength="20"
+						value="#{ponto_mov.ponto_movimento.pontosAtingidos}"
+						required="true" requiredMessage="É preciso informar pontuação!!!"
+						rendered="#{ponto_mov.tipoMovimentacao.visualizadebito}">
 
 					</p:inputNumber>
 					<p:outputLabel id="pessoa_cliente"

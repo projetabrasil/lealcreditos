@@ -276,8 +276,8 @@ public class Ponto_MovimentojsfController implements Serializable {
 		ponto_movimento.setId_Empresa(1);
 
 		if (ponto_movimento.getCreditaDebita().equals(Enum_Aux_Tipo_Mov_Ponto.C)) {
-			int pontos = (int) (ponto_movimento.getUnidadeporPonto()
-					* ((int) ponto_movimento.getValoraPontuar() / ponto_movimento.getValordaUnidade()));
+			double pontos = (double) (ponto_movimento.getUnidadeporPonto()
+					* ((double) ponto_movimento.getValoraPontuar() / ponto_movimento.getValordaUnidade()));
 			ponto_movimento.setPontosAtingidos(pontos);
 
 		} else {

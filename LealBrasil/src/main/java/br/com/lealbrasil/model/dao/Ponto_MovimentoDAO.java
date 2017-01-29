@@ -105,7 +105,7 @@ public class Ponto_MovimentoDAO extends GenericDAO<Ponto_Movimento> {
 	public Double somadePontos(PerfilLogado perfilLogado, Pessoa cliente, boolean pesqAss,
 			Enum_Aux_Tipo_Mov_Ponto tipoSoma) {
 		Session sessao = HibernateUtil.getFabricaDeSessoes().openSession();
-		Long valorRetorno;
+		Double valorRetorno;
 
 		DetachedCriteria subQuery1 = null;
 		Criteria crit;
@@ -142,10 +142,10 @@ public class Ponto_MovimentoDAO extends GenericDAO<Ponto_Movimento> {
 			crit.setProjection(Projections.sum("pontosAtingidos"));
             
 			if (crit.uniqueResult() != null) {				
-				valorRetorno =  new Long((long) crit.uniqueResult());
+				valorRetorno =  new Double((double) crit.uniqueResult());
 
 			} else				
-				valorRetorno =  new Long(0l);
+				valorRetorno =  new Double(0l);
 			
 			
 			return valorRetorno.doubleValue();
@@ -160,7 +160,7 @@ public class Ponto_MovimentoDAO extends GenericDAO<Ponto_Movimento> {
 	public Double somadePontos(Pessoa associado, Pessoa cliente, boolean pesqAss,
 			Enum_Aux_Tipo_Mov_Ponto tipoSoma, Enum_Aux_Status_Movimento_Ponto enum_Aux_Status_Movimento_Ponto) {
 		Session sessao = HibernateUtil.getFabricaDeSessoes().openSession();
-		Long valorRetorno;
+		Double valorRetorno;
 
 		DetachedCriteria subQuery1 = null;
 		Criteria crit;
@@ -199,10 +199,10 @@ public class Ponto_MovimentoDAO extends GenericDAO<Ponto_Movimento> {
 			crit.setProjection(Projections.sum("pontosAtingidos"));
             
 			if (crit.uniqueResult() != null) {				
-				valorRetorno =  new Long((long) crit.uniqueResult());
+				valorRetorno =  new Double((double) crit.uniqueResult());
 
 			} else				
-				valorRetorno =  new Long(0l);
+				valorRetorno =  new Double(0l);
 			
 			
 			return valorRetorno.doubleValue();

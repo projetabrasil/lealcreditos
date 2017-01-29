@@ -104,11 +104,7 @@ public class Pessoa_Vinculo extends GenericDomain implements Serializable {
 				return false;
 		} else if (!id.equals(other.id))
 			return false;
-		if (id_Pessoa_Registro == null) {
-			if (other.id_Pessoa_Registro != null)
-				return false;
-		} else if (!id_Pessoa_Registro.equals(other.id_Pessoa_Registro))
-			return false;
+		
 		if (id_pessoa_d == null) {
 			if (other.id_pessoa_d != null)
 				return false;

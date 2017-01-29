@@ -86,6 +86,8 @@ public class Movimento_Detalhe_AjsfController extends GenericController implemen
 		diasEscolhidos = new String[ar.size()];
 		diasEscolhidos = ar.toArray(diasEscolhidos);
 	}
+	
+	
 
 	public void listar_Movimento_Detalhe() {
 		Movimento_DetalheDAO mDDAO = new Movimento_DetalheDAO();

@@ -15,7 +15,9 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 
 import org.omnifaces.util.Messages;
+import org.primefaces.context.RequestContext;
 import org.primefaces.event.FileUploadEvent;
+import org.primefaces.event.FlowEvent;
 import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.StreamedContent;
 import org.primefaces.model.UploadedFile;
@@ -61,6 +63,8 @@ public class Auto_AtendimentojsfController implements Serializable {
 	private Pessoa cliente;
 	private Pessoa estabelecimento;
 	private Usuario usAuto;
+	private Usuario autoUs;
+	private Pessoa autoPes;
 	private List<Ponto> listaPonto;
 
 	private Double pontoSoma;
@@ -74,18 +78,30 @@ public class Auto_AtendimentojsfController implements Serializable {
 	private final String tipoDeImagem = Utilidades.getTipoImagemSemPonto();
 	private String mensagemComprovante = "Caso esteja sem o comprovante vinculado e \n digite o n. documento ERRADO,\n"
 			+ "poderá invalidar sua pontuação. Deseja continuar?";
+	private boolean skip;
+	private boolean proximo;
+
+	private List<Enum_Aux_Tipo_Identificador> listaTipodeIdentificadores;
+	private boolean renderizaSenha;
 
 	@PostConstruct
 	public void novo() {
+		setRenderizaSenha(false);
 		ponto_movimento = new Ponto_Movimento();
 		ponto_movimento.setCaminhodaImagem(Utilidades.getBranco());
 		cliente = configurarPessoa(Enum_Aux_Tipo_Identificador.CPF);
+		autoPes = configurarPessoa(Enum_Aux_Tipo_Identificador.CPF);
+		autoPes.setEnum_Aux_Tipo_Identificador(Enum_Aux_Tipo_Identificador.CPF);
+		autoUs = new Usuario();
+		autoUs.setSenhaSemCript("");
+
 		cliente.setEnum_Aux_Tipo_Identificador(Enum_Aux_Tipo_Identificador.CPF);
 		estabelecimento = configurarPessoa(Enum_Aux_Tipo_Identificador.CNPJ);
 		setTipoIdentificadorCliente(Enum_Aux_Tipo_Identificador.CPF);
 		setTipoIdentificadorEstabelecimento(Enum_Aux_Tipo_Identificador.CNPJ);
 		listarTipodeIdentificadores();
 		usAuto = new Usuario();
+		setProximo(false);
 
 		pontoSoma = 0d;
 		pontoSomaCredito = 0d;
@@ -96,6 +112,18 @@ public class Auto_AtendimentojsfController implements Serializable {
 
 	public void cancelar() {
 		novo();
+	}
+
+	public String onFlowProcess(FlowEvent event) {
+		if (skip) {
+			skip = false; // reset in case user goes back
+			return "confirm";
+		} else {
+			if (isProximo())
+				return event.getNewStep();
+			else
+				return event.getOldStep();
+		}
 	}
 
 	public void vincularPessoa() {
@@ -218,10 +246,10 @@ public class Auto_AtendimentojsfController implements Serializable {
 			return;
 		}
 		ponto_movimento = pDAO.merge(ponto_movimento);
-		
+
 		String cam = Utilidades.getCaminhofotocomprovante() + "" + ponto_movimento.getId() + Utilidades.getTipoimagem();
 		ponto_movimento.setCaminhodaImagem(cam);
-		if (ponto_movimento.getCaminhoTemp()!=null && ponto_movimento.getCaminhoTemp().length() > 0) {
+		if (ponto_movimento.getCaminhoTemp() != null && ponto_movimento.getCaminhoTemp().length() > 0) {
 			Path origem = caminhoTemp;
 			Path destino = Paths.get(ponto_movimento.getCaminhodaImagem());
 			try {
@@ -292,6 +320,32 @@ public class Auto_AtendimentojsfController implements Serializable {
 		Utilidades.abrirfecharDialogos("dialogoCadastro", false);
 	}
 
+	public Usuario checaUsuario(Pessoa pessoa, String senha) {
+		UsuarioDAO usuarioDAO = new UsuarioDAO();
+		Usuario usuario = usuarioDAO.checaUsuarioCadastrado(pessoa, senha);
+		return usuario;
+	}
+
+	public void checaPessoa() {
+		autoPes = verificaPessoa(autoPes.getIdentificador(), autoPes.getEnum_Aux_Tipo_Identificador());
+		if (autoPes == null) {
+			setRenderizaSenha(false);
+			autoPes = configurarPessoa(Enum_Aux_Tipo_Identificador.CPF);
+			autoPes.setEnum_Aux_Tipo_Identificador(Enum_Aux_Tipo_Identificador.CPF);
+
+		} else {
+			autoUs = checaUsuario(autoPes, autoUs.getConfSenha());
+			if (autoUs == null || autoUs.getId() == null) {
+				autoUs = new Usuario();
+				autoUs.setConfSenha("");
+				setRenderizaSenha(false);
+			} else
+				setRenderizaSenha(true);
+		}
+		System.out.println("renderiza: "+isRenderizaSenha());
+
+	}
+
 	public void autenticar() {
 		UsuarioDAO usuarioDAO = new UsuarioDAO();
 		if (perfilLogado.getIdentificadorUsuario() == null || perfilLogado.getIdentificadorUsuario().length() <= 0)
@@ -342,10 +396,12 @@ public class Auto_AtendimentojsfController implements Serializable {
 		identificadores = Enum_Aux_Tipo_Identificador.values();
 		listaTipodeIdentificadoresEstabelecimento = new ArrayList<Enum_Aux_Tipo_Identificador>();
 		listaTipodeIdentificadoresCliente = new ArrayList<Enum_Aux_Tipo_Identificador>();
+		listaTipodeIdentificadores = new ArrayList<Enum_Aux_Tipo_Identificador>();
 		for (Enum_Aux_Tipo_Identificador identificador : identificadores) {
 			if (identificador.getAux_tipo_pessoa().isSelecionar()) {
 				listaTipodeIdentificadoresEstabelecimento.add(identificador);
 				listaTipodeIdentificadoresCliente.add(identificador);
+				listaTipodeIdentificadores.add(identificador);
 			}
 		}
 	}
@@ -375,18 +431,27 @@ public class Auto_AtendimentojsfController implements Serializable {
 	}
 
 	public void pessoaaverificar(String pessoa) {
-
+		setProximo(false);
 		if (pessoa.equals("Estabelecimento")) {
-			String cpf_Cnpj = estabelecimento.getCpf_Cnpj();
+			String cpf_Cnpj = estabelecimento.getIdentificador();
 			cpf_Cnpj = Utilidades.retiraCaracteres(cpf_Cnpj);
 			cpf_Cnpj = Utilidades.retiraVazios(cpf_Cnpj);
-			if (!PessoaBusiness2.validacpfCnpj(cpf_Cnpj, tipoIdentificadorEstabelecimento))
+			if (!PessoaBusiness2.validacpfCnpj(cpf_Cnpj, tipoIdentificadorEstabelecimento)) {
+
 				return;
+			}
 
 			estabelecimento = verificaPessoa(estabelecimento, tipoIdentificadorEstabelecimento);
 
-			if (estabelecimento != null && estabelecimento.getId() != null)
+			if (estabelecimento != null && estabelecimento.getId() != null) {
 				setListaPonto(litarRelacaodePontos(estabelecimento));
+				setProximo(true);
+			}
+
+			else {
+				setProximo(false);
+			}
+
 			if (getListaPonto() != null && getListaPonto().size() > 0) {
 				ponto = getListaPonto().get(0);
 				configPonto_Movimento();
@@ -399,8 +464,10 @@ public class Auto_AtendimentojsfController implements Serializable {
 			String cpf_Cnpj = cliente.getIdentificador();
 			cpf_Cnpj = Utilidades.retiraCaracteres(cpf_Cnpj);
 			cpf_Cnpj = Utilidades.retiraVazios(cpf_Cnpj);
-			if (!PessoaBusiness2.validacpfCnpj(cpf_Cnpj, tipoIdentificadorCliente))
+			if (!PessoaBusiness2.validacpfCnpj(cpf_Cnpj, tipoIdentificadorCliente)) {
+				setProximo(false);
 				return;
+			}
 
 			cliente = verificaPessoa(cliente, tipoIdentificadorCliente);
 			if (cliente == null || cliente.getId() == null) {
@@ -408,9 +475,14 @@ public class Auto_AtendimentojsfController implements Serializable {
 				cliente.setIdentificador(cpf_Cnpj);
 				cliente.setCpf_Cnpj(cpf_Cnpj);
 				cliente.setEnum_Aux_Tipo_Identificador(getTipoIdentificadorCliente());
-
+				setProximo(false);
 				Utilidades.abrirfecharDialogos("dialogoCadastro", true);
+				RequestContext context = RequestContext.getCurrentInstance();
+
+				context.update("formCadastro");
+
 			} else {
+				setProximo(true);
 				retornasomaPontuacao(cliente, estabelecimento);
 			}
 			listaPonto = new ArrayList<Ponto>();
@@ -470,6 +542,30 @@ public class Auto_AtendimentojsfController implements Serializable {
 		String cpf_Cnpj = p.getIdentificador();
 		cpf_Cnpj = Utilidades.retiraCaracteres(cpf_Cnpj);
 		cpf_Cnpj = Utilidades.retiraVazios(cpf_Cnpj);
+
+		if (tipoIdentificador.equals(Enum_Aux_Tipo_Identificador.CPF) && cpf_Cnpj.length() != 11) {
+			mensagensDisparar("número de dígitos é diferente de 11");
+			p = new Pessoa();
+			return p;
+		}
+		if (tipoIdentificador.equals(Enum_Aux_Tipo_Identificador.CNPJ) && cpf_Cnpj.length() != 14) {
+			mensagensDisparar("número de dígitos é diferente de 14");
+			p = new Pessoa();
+			return p;
+		}
+		PessoaDAO pessoaDAO = new PessoaDAO();
+		p = pessoaDAO.retornaPelaIdentificacao(cpf_Cnpj);
+
+		return p;
+	}
+
+	public Pessoa verificaPessoa(String identificador, Enum_Aux_Tipo_Identificador tipoIdentificador) {
+
+		String cpf_Cnpj = identificador;
+
+		cpf_Cnpj = Utilidades.retiraCaracteres(cpf_Cnpj);
+		cpf_Cnpj = Utilidades.retiraVazios(cpf_Cnpj);
+		Pessoa p;
 
 		if (tipoIdentificador.equals(Enum_Aux_Tipo_Identificador.CPF) && cpf_Cnpj.length() != 11) {
 			mensagensDisparar("número de dígitos é diferente de 11");
@@ -674,6 +770,54 @@ public class Auto_AtendimentojsfController implements Serializable {
 
 	public String getMensagemComprovante() {
 		return mensagemComprovante;
+	}
+
+	public boolean isSkip() {
+		return skip;
+	}
+
+	public void setSkip(boolean skip) {
+		this.skip = skip;
+	}
+
+	public boolean isProximo() {
+		return proximo;
+	}
+
+	public void setProximo(boolean proximo) {
+		this.proximo = proximo;
+	}
+
+	public List<Enum_Aux_Tipo_Identificador> getListaTipodeIdentificadores() {
+		return listaTipodeIdentificadores;
+	}
+
+	public void setListaTipodeIdentificadores(List<Enum_Aux_Tipo_Identificador> listaTipodeIdentificadores) {
+		this.listaTipodeIdentificadores = listaTipodeIdentificadores;
+	}
+
+	public Usuario getAutoUs() {
+		return autoUs;
+	}
+
+	public void setAutoUs(Usuario autoUs) {
+		this.autoUs = autoUs;
+	}
+
+	public Pessoa getAutoPes() {
+		return autoPes;
+	}
+
+	public void setAutoPes(Pessoa autoPes) {
+		this.autoPes = autoPes;
+	}
+
+	public boolean isRenderizaSenha() {
+		return renderizaSenha;
+	}
+
+	public void setRenderizaSenha(boolean renderizaSenha) {
+		this.renderizaSenha = renderizaSenha;
 	}
 
 }
