@@ -374,6 +374,9 @@ public class Utilidades implements Serializable {
 	public static String buscarCep(String cep) {
 		String json;
 
+		
+		
+		
 		try {
 			URL url = new URL("http://viacep.com.br/ws/" + cep + "/json");
 			URLConnection urlConnection = url.openConnection();
