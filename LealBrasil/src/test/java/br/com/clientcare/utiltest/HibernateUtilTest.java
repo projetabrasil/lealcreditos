@@ -33,9 +33,8 @@ public class HibernateUtilTest {
 
 	@SuppressWarnings("unused")
 	@Ignore
-	@Test	
+	@Test
 	public void calendario() {
-
 		Session sessao = HibernateUtil.getFabricaDeSessoes().openSession();
 		Criteria crit = null;
 		DetachedCriteria subQuery1 = null;
@@ -51,65 +50,75 @@ public class HibernateUtilTest {
 	@Test
 	public void cadastraUsuario() throws ParseException {
 		p = new Pessoa();
-		p.setCpf_Cnpj("89230906115");
-		PessoaDAO pDAO = new PessoaDAO();
-		p = pDAO.retornaPelaIdentificacao(p.getIdentificador());
+		p.setCpf_Cnpj("892.309061-   15");
+		p.setCpf_Cnpj(Utilidades.retiraCaracteres(p.getCpf_Cnpj()));
 
-		if (p == null) {
-			p = new Pessoa(); 
-			p.setCpf_Cnpj("89230906115");
+		boolean vf = false;
+		if (p.getCpf_Cnpj().length() == 11)
+			vf = Utilidades.isValidCPF(p.getCpf_Cnpj());
+		else if (p.getCpf_Cnpj().length() == 14)
+			vf = Utilidades.isValidCNPJ(p.getCpf_Cnpj());
+
+		if (vf) {
+
 			p.setIdentificador(p.getCpf_Cnpj());
-			p.setRg_Insc("3739787");
-			p.setSexo(Enum_Aux_Sexo.MASCULINO);
-			p.setFone_1("48996453129");
-			p.setFone_2("");
-			p.setFone_3("");
-			p.setEmail("paulo.logicabrasil@gmail.com");
-			p.setId_Pessoa_Registro(null);
-			p.setAutoPontuacao(Enum_Aux_Sim_ou_Nao.NAO);
-			p.setEnum_Aux_Tipo_Identificador(Enum_Aux_Tipo_Identificador.CPF);
-			p.setDescricao("Paulo Marcos Rodrigues Pereira");
-			p.setFantasia_Apelido("");
-			p.setDataNascimento(Utilidades.retornaData("23/09/1978"));
-		}
-		p = pDAO.merge(p);
-		us = new Usuario();
-		us.setPessoa(p);
-		UsuarioDAO usDAO = new UsuarioDAO();
-		us = usDAO.retornaUsuarioPelaPessoa(p);
-		if (us == null) {
-			us.setAtivo(true);
-			us.setConfSenha("");
-			us.setId(null);
-			us.setId_Empresa(1);
-			us.setId_Pessoa_Registro(p);
+			PessoaDAO pDAO = new PessoaDAO();
+			p = pDAO.retornaPelaIdentificacao(p.getIdentificador());
+
+			if (p == null) {
+				p = new Pessoa();
+				p.setCpf_Cnpj("89230906115");
+				p.setIdentificador(p.getCpf_Cnpj());
+				p.setRg_Insc("3739787");
+				p.setSexo(Enum_Aux_Sexo.MASCULINO);
+				p.setFone_1("48996453129");
+				p.setFone_2("");
+				p.setFone_3("");
+				p.setEmail("paulo.logicabrasil@gmail.com");
+				p.setId_Pessoa_Registro(null);
+				p.setAutoPontuacao(Enum_Aux_Sim_ou_Nao.NAO);
+				p.setEnum_Aux_Tipo_Identificador(Enum_Aux_Tipo_Identificador.CPF);
+				p.setDescricao("Paulo Marcos Rodrigues Pereira");
+				p.setFantasia_Apelido("");
+				p.setDataNascimento(Utilidades.retornaData("23/09/1978"));
+			}
+			p = pDAO.merge(p);
+			us = new Usuario();
 			us.setPessoa(p);
-			us.setSenhaSemCript(null);
-		}
-		us = usDAO.merge(us);
-		
-		pp = new Pessoa_Enum_Aux_Perfil_Pessoa();
-		Pessoa_Enum_Aux_Perfil_PessoasDAO ppDAO = new Pessoa_Enum_Aux_Perfil_PessoasDAO();
-				
-		pp.setId_pessoa(p);
-		pp.setEnum_Aux_Perfil_Pessoa(Enum_Aux_Perfil_Pessoa.ADMINISTRADORES);	
-		
-		pp = ppDAO.retornaPerfildaPessoaPelaPessoa(pp);
-		
-		if(pp==null){
+			UsuarioDAO usDAO = new UsuarioDAO();
+			us = usDAO.retornaUsuarioPelaPessoa(p);
+			if (us == null) {
+				us.setAtivo(true);
+				us.setConfSenha("");
+				us.setId(null);
+				us.setId_Empresa(1);
+				us.setId_Pessoa_Registro(p);
+				us.setPessoa(p);
+				us.setSenhaSemCript(null);
+			}
+			us = usDAO.merge(us);
+
+			pp = new Pessoa_Enum_Aux_Perfil_Pessoa();
+			Pessoa_Enum_Aux_Perfil_PessoasDAO ppDAO = new Pessoa_Enum_Aux_Perfil_PessoasDAO();
+
 			pp.setId_pessoa(p);
 			pp.setEnum_Aux_Perfil_Pessoa(Enum_Aux_Perfil_Pessoa.ADMINISTRADORES);
-			pp.setId_Empresa(1);
-			
-			pp.setId_Pessoa_Registro(p);
-			pp.setUltimaAtualizacao(Utilidades.retornaCalendario());
-		}	
-		
-		pp = ppDAO.merge(pp);
-		
-		
-		
-		
+
+			pp = ppDAO.retornaPerfildaPessoaPelaPessoa(pp);
+
+			if (pp == null) {
+				pp.setId_pessoa(p);
+				pp.setEnum_Aux_Perfil_Pessoa(Enum_Aux_Perfil_Pessoa.ADMINISTRADORES);
+				pp.setId_Empresa(1);
+
+				pp.setId_Pessoa_Registro(p);
+				pp.setUltimaAtualizacao(Utilidades.retornaCalendario());
+			}
+
+			pp = ppDAO.merge(pp);
+
+		}
+
 	}
 
 }

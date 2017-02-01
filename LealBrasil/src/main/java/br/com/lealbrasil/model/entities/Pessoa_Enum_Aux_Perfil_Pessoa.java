@@ -27,18 +27,16 @@ public class Pessoa_Enum_Aux_Perfil_Pessoa extends GenericDomain implements Seri
 	private Long id;
 	
 	
-	@Enumerated(EnumType.STRING)
+	@Enumerated(EnumType.STRING)	
 	@Column(name="enum_Aux_Perfil_Pessoa", nullable=false)
-	private Enum_Aux_Perfil_Pessoa enum_Aux_Perfil_Pessoa;
-	
-	
+	private Enum_Aux_Perfil_Pessoa enum_Aux_Perfil_Pessoa;	
 	@ManyToOne
 	@JoinColumn ( name ="id_pessoa", nullable=false)
 	Pessoa id_pessoa;
 	
 	@ManyToOne
 	@JoinColumn ( name ="id_Pessoa_Registro", nullable=false)	
-	private Pessoa id_Pessoa_Registro ;
+	private Pessoa id_Pessoa_Registro;
 	
 	
 	public Enum_Aux_Perfil_Pessoa getEnum_Aux_Perfil_Pessoa() {

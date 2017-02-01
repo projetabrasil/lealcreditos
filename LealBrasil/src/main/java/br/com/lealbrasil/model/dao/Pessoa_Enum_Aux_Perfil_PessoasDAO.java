@@ -94,21 +94,14 @@ public class Pessoa_Enum_Aux_Perfil_PessoasDAO extends GenericDAO<Pessoa_Enum_Au
 	
 
 	public Pessoa_Enum_Aux_Perfil_Pessoa retornaPerfildaPessoaPelaPessoa(Pessoa_Enum_Aux_Perfil_Pessoa pp) {
-		Pessoa_Enum_Aux_Perfil_Pessoa pf = null;
-		
-
+		Pessoa_Enum_Aux_Perfil_Pessoa pf = null;		
 		Session sessao = HibernateUtil.getFabricaDeSessoes().openSession();
 		try {
-			
-			DetachedCriteria subQuery1 = DetachedCriteria.forClass(Pessoa.class)
-				    .setProjection(Property.forName("id_pessoa"));
-			subQuery1.add(Restrictions.eq("id_pessoa",pp.getId_pessoa()));
-				    
-				
-				Criteria crit = sessao.createCriteria(Pessoa_Enum_Aux_Perfil_Pessoa.class)
-				    .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
-				    .add(Restrictions.and(Subqueries.propertyIn("id_pessoa", subQuery1)));
-				crit.setMaxResults(1);
+			Criteria crit = sessao.createCriteria(Pessoa_Enum_Aux_Perfil_Pessoa.class);
+			crit.createAlias("id_pessoa", "p");
+			crit.add(Restrictions.eq("p.id", pp.getId_pessoa().getId()));
+			crit.add(Restrictions.like("enum_Aux_Perfil_Pessoa", pp.getEnum_Aux_Perfil_Pessoa()));
+			crit.setMaxResults(1);
 			pf = (Pessoa_Enum_Aux_Perfil_Pessoa) crit.uniqueResult();
 		} catch (RuntimeException error) {
 			error.printStackTrace();
