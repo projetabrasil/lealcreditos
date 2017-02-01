@@ -114,11 +114,8 @@ public class HibernateUtilTest {
 				pp.setId_Pessoa_Registro(p);
 				pp.setUltimaAtualizacao(Utilidades.retornaCalendario());
 			}
-
 			pp = ppDAO.merge(pp);
-
 		}
-
 	}
 
 }
