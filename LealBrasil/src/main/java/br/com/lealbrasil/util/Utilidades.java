@@ -87,6 +87,22 @@ public class Utilidades implements Serializable {
 
 	}
 
+	public static Date retornaData(String data) throws ParseException {
+
+		if (data == null || data.equals(""))
+			return null;
+		Date date = null;
+		try {
+			DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+			date = (java.util.Date) formatter.parse(data);
+		} catch (ParseException e) {
+			throw e ;
+		}
+		return date;
+	}
+
+	
+
 	public static void gravaDiretorio(String caminho) {
 		File file = new File(caminho);
 		String parentPath = file.getAbsoluteFile().getParent();
@@ -271,7 +287,7 @@ public class Utilidades implements Serializable {
 		Usuario usuario = usuarioDAO.autenticar(estab, Enum_Aux_Perfil_Pessoa.ASSINANTES);
 		return usuario;
 	}
-	
+
 	public static Pessoa avaliaPessoa(Pessoa p, String destino) {
 		PessoaDAO pDAO = new PessoaDAO();
 		Pessoa pessoa = p;
@@ -311,32 +327,32 @@ public class Utilidades implements Serializable {
 		}
 		return pessoa;
 	}
-	public static Pessoa cadastraPessoa(Pessoa p, Pessoa mestre, Pessoa resp, Enum_Aux_Perfil_Pessoa perfil){
+
+	public static Pessoa cadastraPessoa(Pessoa p, Pessoa mestre, Pessoa resp, Enum_Aux_Perfil_Pessoa perfil) {
 		p.setId_Empresa(1);
 		p.setId_Pessoa_Registro(resp);
 		p.setUltimaAtualizacao(Utilidades.retornaCalendario());
 		Pessoa pes = p;
 		PessoaDAO pDAO = new PessoaDAO();
-		
-		
+
 		pes = pDAO.retornaPelaIdentificacao(pes.getIdentificador());
-		if(pes == null){
+		if (pes == null) {
 			pes = p;
 			pes = pDAO.merge(pes);
 		}
-		
-		Pessoa_Enum_Aux_Perfil_Pessoa pp = new Pessoa_Enum_Aux_Perfil_Pessoa() ;
+
+		Pessoa_Enum_Aux_Perfil_Pessoa pp = new Pessoa_Enum_Aux_Perfil_Pessoa();
 		pp.setId_Empresa(1);
 		pp.setUltimaAtualizacao(Utilidades.retornaCalendario());
 		pp.setId_Pessoa_Registro(resp);
 		pp.setEnum_Aux_Perfil_Pessoa(perfil);
 		pp.setId_pessoa(pes);
-		
-		Pessoa_Enum_Aux_Perfil_PessoasDAO ppDAO = new Pessoa_Enum_Aux_Perfil_PessoasDAO(); 
-		
+
+		Pessoa_Enum_Aux_Perfil_PessoasDAO ppDAO = new Pessoa_Enum_Aux_Perfil_PessoasDAO();
+
 		pp = ppDAO.merge(pp);
-		
-		if(perfil.isPossuiVinculo()){
+
+		if (perfil.isPossuiVinculo()) {
 			Pessoa_Vinculo pv = new Pessoa_Vinculo();
 			Pessoa_Vinculo pvRet = new Pessoa_Vinculo();
 			pv.setAtivo(true);
@@ -345,12 +361,12 @@ public class Utilidades implements Serializable {
 			pv.setUltimaAtualizacao(Utilidades.retornaCalendario());
 			pv.setId_Pessoa_Registro(resp);
 			pv.setId_pessoa_d(p);
-			pv.setId_pessoa_m(mestre);			
+			pv.setId_pessoa_m(mestre);
 			pvRet = pv;
 			Pessoa_VinculoDAO pvDAO = new Pessoa_VinculoDAO();
-			pvRet =pvDAO.retornaVinculo_Mestre(p, mestre, perfil);
-			if(pvRet == null)
-			pv = pvDAO.merge(pv);
+			pvRet = pvDAO.retornaVinculo_Mestre(p, mestre, perfil);
+			if (pvRet == null)
+				pv = pvDAO.merge(pv);
 		}
 		return pes;
 	}

@@ -20,13 +20,12 @@ import javax.persistence.Transient;
 @SuppressWarnings("serial")
 @Entity
 @Table(name="Pessoa")
-public class Pessoa extends GenericDomain implements Serializable{	
+public class Pessoa extends GenericDomain implements Serializable{
 	
 	@Id
 	@SequenceGenerator(name="pk_pessoa",sequenceName="messsounds_pessoa", allocationSize=1)
 	@GeneratedValue(strategy=GenerationType.SEQUENCE,generator="pk_pessoa")
-	private Long id;
-	
+	private Long id;	
 	@Enumerated(EnumType.STRING)
 	@Column(name="enum_Aux_Tipo_Identificador", nullable=false)	
 	private Enum_Aux_Tipo_Identificador enum_Aux_Tipo_Identificador ;
