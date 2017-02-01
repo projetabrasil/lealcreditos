@@ -2,7 +2,7 @@ package br.com.lealbrasil.model.entities;
 
 public enum Enum_Aux_Perfil_Pessoa {
 	
-	ADMINISTRADORES("Administradores",0,true,"ADM",false,false,false),
+	ADMINISTRADORES("Administradores",0,true,"ADM",false,false,false),	
 	ASSINANTES("Assinantes",1,true,"ASS",true,true,false), 
 	CLIENTES("Clientes",2,false,"CLT",true,true,true),
 	ATENDENTES("Atendentes",3,true,"ATE",true,true,false),

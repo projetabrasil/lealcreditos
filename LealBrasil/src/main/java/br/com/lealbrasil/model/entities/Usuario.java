@@ -38,7 +38,7 @@ public class Usuario extends GenericDomain implements Serializable{
 	private boolean Ativo;
 	@ManyToOne
 	@JoinColumn ( name ="id_Pessoa_Registro", nullable=false)	
-	private Pessoa id_Pessoa_Registro ;
+	private Pessoa id_Pessoa_Registro;
 	
 	@OneToOne	
 	@JoinColumn ( name ="id_pessoa")
