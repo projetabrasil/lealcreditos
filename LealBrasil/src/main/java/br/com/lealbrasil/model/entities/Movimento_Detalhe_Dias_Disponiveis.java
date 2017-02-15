@@ -25,9 +25,6 @@ public class Movimento_Detalhe_Dias_Disponiveis extends GenericDomain implements
 	@JoinColumn(name = "id_Pessoa_Registro")
 	private Pessoa id_Pessoa_Registro;
 
-
-	
-	
 	
 	@ManyToOne	
 	@JoinColumn(name="id_Movimento_Detalhe_A", nullable=false )

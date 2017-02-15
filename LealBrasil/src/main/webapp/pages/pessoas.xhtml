@@ -23,6 +23,7 @@
 					value="#{pessoajsfController.pessoas}" paginator="true" rows="5"
 					var="registro" style="font-size:15px;">
 					<f:facet name="header">
+					    
 						<p:commandButton value="Novo"						    
 							actionListener="#{pessoajsfController.novo}"
 							update=":formTemplate:formCadastro :formTemplate:formIdentidade" style="width:5%">
@@ -150,6 +151,7 @@
 						<p:outputLabel
 							value="#{pessoajsfController.pessoaConfig.labelNome}"
 							rendered="#{pessoajsfController.pessoaConfig.labelNomeRenderiza}" />
+							
 						<p:inputText size="67" maxlength="90"
 							value="#{pessoajsfController.pessoa.descricao}"
 							required="#{pessoajsfController.pessoaConfig.labelNomeObrigatorio}"

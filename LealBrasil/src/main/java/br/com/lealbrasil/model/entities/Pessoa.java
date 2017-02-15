@@ -25,7 +25,8 @@ public class Pessoa extends GenericDomain implements Serializable{
 	@Id
 	@SequenceGenerator(name="pk_pessoa",sequenceName="messsounds_pessoa", allocationSize=1)
 	@GeneratedValue(strategy=GenerationType.SEQUENCE,generator="pk_pessoa")
-	private Long id;	
+	private Long id;
+	
 	@Enumerated(EnumType.STRING)
 	@Column(name="enum_Aux_Tipo_Identificador", nullable=false)	
 	private Enum_Aux_Tipo_Identificador enum_Aux_Tipo_Identificador ;
@@ -57,7 +58,7 @@ public class Pessoa extends GenericDomain implements Serializable{
 	private String email;
 	@OneToOne
 	@JoinColumn ( name ="id_Pessoa_Registro")		
-	private Pessoa id_Pessoa_Registro ;
+	private Pessoa id_Pessoa_Registro;
 	@Enumerated(EnumType.STRING)
 	@Column(name="AutoPontuacao")
 	private Enum_Aux_Sim_ou_Nao autoPontuacao;
@@ -76,8 +77,6 @@ public class Pessoa extends GenericDomain implements Serializable{
 	private double pontosdoMovimento;
 	@Transient
 	private double pontosAtuais;
-	
-	
 	
 	
 	public String getDescricao() {

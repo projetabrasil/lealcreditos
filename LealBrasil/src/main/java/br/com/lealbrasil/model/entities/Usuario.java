@@ -16,6 +16,7 @@ import javax.persistence.Transient;
 
 import org.apache.shiro.crypto.hash.SimpleHash;
 
+
 @SuppressWarnings("serial")
 @Entity
 @Table(name="Usuario")

@@ -31,8 +31,9 @@ public class Pessoa_Enum_Aux_Perfil_Pessoa extends GenericDomain implements Seri
 	@Column(name="enum_Aux_Perfil_Pessoa", nullable=false)
 	private Enum_Aux_Perfil_Pessoa enum_Aux_Perfil_Pessoa;	
 	@ManyToOne
+	
 	@JoinColumn ( name ="id_pessoa", nullable=false)
-	Pessoa id_pessoa;
+	private Pessoa id_pessoa;
 	
 	@ManyToOne
 	@JoinColumn ( name ="id_Pessoa_Registro", nullable=false)	
