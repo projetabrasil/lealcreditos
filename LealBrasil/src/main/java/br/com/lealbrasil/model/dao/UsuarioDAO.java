@@ -13,21 +13,19 @@ import br.com.lealbrasil.util.HibernateUtil;
 
 public class UsuarioDAO extends GenericDAO<Usuario> {
 
-	public Usuario autenticar(String usuario, String senha) {
+	public Usuario autenticar(String identificadorUsuario, String senha) {
 		Session sessao = HibernateUtil.getFabricaDeSessoes().openSession();
-
 		try {
 			Criteria consulta = sessao.createCriteria(Usuario.class);
 			consulta.createAlias("pessoa", "p");
-			consulta.add(Restrictions.eq("p.identificador", usuario));
+			consulta.add(Restrictions.eq("p.identificador", identificadorUsuario));
 			SimpleHash hash = new SimpleHash("md5", senha);
-
+			System.out.println("senha criptografada: " + hash.toHex());
 			consulta.add(Restrictions.eq("senha", hash.toHex()));
-
 			Usuario resultado = (Usuario) consulta.uniqueResult();
-
 			return resultado;
-		} catch (RuntimeException error) {
+		} catch (RuntimeException error) {			
+			error.printStackTrace();
 			throw error;
 		} finally {
 			sessao.close();
@@ -88,7 +86,6 @@ public class UsuarioDAO extends GenericDAO<Usuario> {
 	public String criptografaSenha(String senha) {
 		SimpleHash hash = new SimpleHash("md5", senha);
 		return hash.toHex();
-
 	}
 
 	public Usuario retornaUsuarioPelaPessoa(Pessoa pessoa) {

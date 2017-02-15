@@ -6,7 +6,6 @@ public enum Enum_Aux_Tipo_Item_de_Movimento {
  PONTO("PONTO",2,"Ponto","Pt"),
  VOUCHER("VOUCHER",3,"Voucher","Vh"),
  PROMOCAO("PROMOCAO",4,"Promoção","Pr"),
- 
  FORMAPAGAMENTO("FORMAPAGAMENTO",5,"Forma de Pagamento","Fp");
  
 	

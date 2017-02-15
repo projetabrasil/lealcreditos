@@ -25,9 +25,11 @@ public class Pessoa_Vinculo extends GenericDomain implements Serializable {
 	private Long id;
 	
 	@ManyToOne
+	// estou vinculado a ?
 	@JoinColumn(name="id_pessoa_m", nullable=false)
 	private Pessoa id_pessoa_m;
 	@ManyToOne
+	// sou a pessoa que estou vinculada
 	@JoinColumn(name="id_pessoa_d", nullable=false)	
 	private Pessoa id_pessoa_d;
 	

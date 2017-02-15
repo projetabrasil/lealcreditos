@@ -15,13 +15,15 @@ public class Ponto extends Item_de_Movimento implements Serializable{
 	@Column(name="pontuacaoMinima")	
 	private int pontuacaoMinima;
 	@Column(name="unidadeporPonto")	
-	private int unidadeporPonto;	
+	private int unidadeporPonto;
+	
 	@Column(name="diasValidade")	
 	private int diasValidade;
 	
 	
 	@Column(name="valorUnidadeTroca",precision=18,scale=4)
 	private double valorUnidadeTroca;
+	/*obsoleto*/
 	@Column(name="valorUnidadeDevolucao",precision=18,scale=4)
 	private double valorUnidadeDevolucao;
 	

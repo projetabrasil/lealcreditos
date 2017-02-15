@@ -48,9 +48,9 @@ public class HibernateUtilTest {
 	}
 
 	@Test
-	public void cadastraUsuario() throws ParseException {
+	public void cadastraPessoa() throws ParseException {
 		p = new Pessoa();
-		p.setCpf_Cnpj("892.309061-   15");
+		p.setCpf_Cnpj("74473450678");
 		p.setCpf_Cnpj(Utilidades.retiraCaracteres(p.getCpf_Cnpj()));
 
 		boolean vf = false;
@@ -64,10 +64,12 @@ public class HibernateUtilTest {
 			p.setIdentificador(p.getCpf_Cnpj());
 			PessoaDAO pDAO = new PessoaDAO();
 			p = pDAO.retornaPelaIdentificacao(p.getIdentificador());
+			
+			System.out.println("Aqui é uma pessoa: "+p);
 
 			if (p == null) {
 				p = new Pessoa();
-				p.setCpf_Cnpj("89230906115");
+				p.setCpf_Cnpj("74473450678");
 				p.setIdentificador(p.getCpf_Cnpj());
 				p.setRg_Insc("3739787");
 				p.setSexo(Enum_Aux_Sexo.MASCULINO);
@@ -85,17 +87,27 @@ public class HibernateUtilTest {
 			p = pDAO.merge(p);
 			us = new Usuario();
 			us.setPessoa(p);
+
 			UsuarioDAO usDAO = new UsuarioDAO();
 			us = usDAO.retornaUsuarioPelaPessoa(p);
+
 			if (us == null) {
-				us.setAtivo(true);
-				us.setConfSenha("");
-				us.setId(null);
-				us.setId_Empresa(1);
-				us.setId_Pessoa_Registro(p);
-				us.setPessoa(p);
-				us.setSenhaSemCript(null);
+				try {
+					us = new Usuario();
+					us.setPessoa(p);
+					us.setAtivo(true);
+					us.setConfSenha("P2a3u0l9");
+					us.setId(null);
+					us.setId_Empresa(1);
+					us.setId_Pessoa_Registro(p);
+					us.setPessoa(p);
+					us.setSenhaSemCript(null);
+				} catch (RuntimeException error) {
+					error.printStackTrace();
+					throw error;
+				}
 			}
+			us.setSenhaSemCript("P2a3u0l9");
 			us = usDAO.merge(us);
 
 			pp = new Pessoa_Enum_Aux_Perfil_Pessoa();
@@ -107,6 +119,7 @@ public class HibernateUtilTest {
 			pp = ppDAO.retornaPerfildaPessoaPelaPessoa(pp);
 
 			if (pp == null) {
+				pp = new Pessoa_Enum_Aux_Perfil_Pessoa();
 				pp.setId_pessoa(p);
 				pp.setEnum_Aux_Perfil_Pessoa(Enum_Aux_Perfil_Pessoa.ADMINISTRADORES);
 				pp.setId_Empresa(1);

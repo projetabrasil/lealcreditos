@@ -65,8 +65,8 @@ public class PessoaGenericBusiness implements Serializable {
 		
 		
 		
-		if (pessoa.getId() != null
-				&& perfilLogado.getPaginaAtual().getPerfilPessoa().equals(Enum_Aux_Perfil_Pessoa.ATENDENTES)) 		
+		if (pessoa.getId() != null 	&& (perfilLogado.getPaginaAtual().getPerfilPessoa().equals(Enum_Aux_Perfil_Pessoa.ATENDENTES) || 
+				perfilLogado.getPaginaAtual().getPerfilPessoa().equals(Enum_Aux_Perfil_Pessoa.CLIENTES))) 		
 		vincularPessoa(pessoa, perfilLogado);
 		
 		
@@ -86,8 +86,6 @@ public class PessoaGenericBusiness implements Serializable {
 		pVinc.setId_pessoa_m(perfilLogado.getAssLogado());
 		pVinc.setId_Pessoa_Registro(perfilLogado.getUsLogado().getPessoa());
 		pVinc.setUltimaAtualizacao(Utilidades.retornaCalendario());
-		
-
 		Pessoa_VinculoBusiness.merge(pVinc);
 	}
 	

@@ -14,9 +14,8 @@ import br.com.lealbrasil.util.Utilidades;
 
 @SuppressWarnings("serial")
 public class PerfilLogado implements Serializable {
-
-	Usuario usLogado;
-	Pessoa assLogado;
+	private Usuario usLogado;
+	private Pessoa assLogado;
 	Enum_Aux_Perfil_Pagina_Atual paginaAtual;
 	Enum_Aux_Perfil_Pessoa perfilUsLogado;
 	private List<Enum_Aux_Perfil_Pessoa> listaPerfisdousLogado;
@@ -58,7 +57,7 @@ public class PerfilLogado implements Serializable {
 		identificadorAssinante = "";
 		identificadorUsuario = "";
 		senhaUsuario = "";
-		usLogado = new Usuario();
+		usLogado = new Usuario()	;
 		assLogado = new Pessoa();
 		setPaginaAtual(Enum_Aux_Perfil_Pagina_Atual.PAGINAAUTENTICACAO);
 		setRenderizapessoaeditar(true);
