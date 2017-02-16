@@ -213,7 +213,7 @@
 						<p:outputLabel id="identificador" size="30" maxlength="15"
 							mask="#{pessoajsfController.pessoa.enum_Aux_Tipo_Identificador.mask}"
 							value="#{pessoajsfController.pessoa.cpf_Cnpj}"
-							converter="mascaraTelefoneConverter"
+							converter="mascaraCPFConverter"
 							required="#{pessoajsfController.pessoaConfig.labelcpf_CnpjObrigatorio}"
 							requiredMessage="#{pessoajsfController.pessoaConfig.labelcpf_CnpjRequiredMessage}"
 							rendered="#{pessoajsfController.pessoaConfig.labelcpf_CnpjRenderiza}">
