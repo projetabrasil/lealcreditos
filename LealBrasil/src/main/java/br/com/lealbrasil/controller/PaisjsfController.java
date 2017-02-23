@@ -17,6 +17,7 @@ import br.com.lealbrasil.model.entities.PerfilLogado;
 @ManagedBean
 @ViewScoped
 public class PaisjsfController  extends GenericController implements Serializable {
+	
 	private List<Pais> paises;
 	private PessoaConfig pessoaConfig;
 	
@@ -31,6 +32,7 @@ public class PaisjsfController  extends GenericController implements Serializabl
 	public void listar() {
 		if(perfilLogado!=null && perfilLogado.getPerfilUsLogado()!=null)
 		paises = PaisBusiness.listar(perfilLogado);
+		
 	}
 	
 	public void configurarPessoa() {
@@ -38,6 +40,7 @@ public class PaisjsfController  extends GenericController implements Serializabl
 	}
 
 	public List<Pais> getPaises() {
+		listar();
 		return paises;
 	}
 

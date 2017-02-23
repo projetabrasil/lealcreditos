@@ -40,6 +40,9 @@
 		<mapping
 			class="br.com.lealbrasil.model.entities.Pessoa_Enum_Aux_Perfil_Pessoa" />
 		<mapping class="br.com.lealbrasil.model.entities.Pessoa" />
+		<mapping class="br.com.lealbrasil.model.entities.Pais" />
+		<mapping class="br.com.lealbrasil.model.entities.Estado" />
+		<mapping class="br.com.lealbrasil.model.entities.Cidade" />
 		<mapping class="br.com.lealbrasil.model.entities.Pessoa_Vinculo" />
 		<mapping class="br.com.lealbrasil.model.entities.Ponto_Movimento" />
 		<mapping class="br.com.lealbrasil.model.entities.Usuario" />

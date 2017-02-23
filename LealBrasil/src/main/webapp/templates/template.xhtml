@@ -98,6 +98,13 @@
 									<f:attribute name="paginaAtual" value="PAGINAVENDAS" />
 								</p:menuitem>
 							</p:submenu>
+							<p:submenu label="Regiões">			
+								<p:menuitem value="Paises"
+									actionListener="#{paginas.mudaPaginaAtual}"
+									rendered="#{autenticacaojsfController.perfilLogado.temPermissoes(['ADMINISTRADORES'])}">
+									<f:attribute name="paginaAtual" value="PAGINAPAISES" />
+								</p:menuitem>
+							</p:submenu>
 						</p:submenu>
 						<p:submenu label="Pontos">
 							<p:menuitem value="Pontuar"

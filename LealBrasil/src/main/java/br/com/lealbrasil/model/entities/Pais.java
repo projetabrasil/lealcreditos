@@ -26,10 +26,10 @@ public class Pais extends GenericDomain implements Serializable {
 	@Column(name="sigla", length = 5, nullable=false)
 	private String sigla;
 	
-	@Column(name="maskZip", length = 90, nullable=false)
+	@Column(name="maskZip", length = 20, nullable=true)
 	private String maskZip;
 	
-	@Column(name="maskTel", length = 90, nullable=false)
+	@Column(name="maskTel", length = 20, nullable=true)
 	private String maskTel;
 
 	public Long getId() {
@@ -72,6 +72,7 @@ public class Pais extends GenericDomain implements Serializable {
 		this.maskTel = maskTel;
 	}
 
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;

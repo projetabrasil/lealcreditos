@@ -10,7 +10,10 @@ import br.com.lealbrasil.model.entities.PerfilLogado;
 import br.com.lealbrasil.util.HibernateUtil;
 
 public class PaisDAO extends GenericDAO<Pais> {
+	
+	@SuppressWarnings("unchecked")
 	public List<Pais> listar(PerfilLogado perfilLogado) {
+		
 		Session sessao = HibernateUtil.getFabricaDeSessoes().openSession();		
 		try{	
 			Criteria consulta = sessao.createCriteria(Pais.class);			
