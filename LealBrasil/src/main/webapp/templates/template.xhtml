@@ -104,6 +104,26 @@
 									rendered="#{autenticacaojsfController.perfilLogado.temPermissoes(['ADMINISTRADORES'])}">
 									<f:attribute name="paginaAtual" value="PAGINAPAISES" />
 								</p:menuitem>
+								<p:menuitem value="Estados"
+									actionListener="#{paginas.mudaPaginaAtual}"
+									rendered="#{autenticacaojsfController.perfilLogado.temPermissoes(['ADMINISTRADORES'])}">
+									<f:attribute name="paginaAtual" value="PAGINAESTADOS" />
+								</p:menuitem>
+								<p:menuitem value="Cidades"
+									actionListener="#{paginas.mudaPaginaAtual}"
+									rendered="#{autenticacaojsfController.perfilLogado.temPermissoes(['ADMINISTRADORES'])}">
+									<f:attribute name="paginaAtual" value="PAGINACIDADES" />
+								</p:menuitem>
+								<p:menuitem value="Bairros"
+									actionListener="#{paginas.mudaPaginaAtual}"
+									rendered="#{autenticacaojsfController.perfilLogado.temPermissoes(['ADMINISTRADORES'])}">
+									<f:attribute name="paginaAtual" value="PAGINABAIRROS" />
+								</p:menuitem>
+								<p:menuitem value="Logradouros"
+									actionListener="#{paginas.mudaPaginaAtual}"
+									rendered="#{autenticacaojsfController.perfilLogado.temPermissoes(['ADMINISTRADORES'])}">
+									<f:attribute name="paginaAtual" value="PAGINALOGRADOUROS" />
+								</p:menuitem>
 							</p:submenu>
 						</p:submenu>
 						<p:submenu label="Pontos">

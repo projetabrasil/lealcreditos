@@ -43,6 +43,9 @@
 		<mapping class="br.com.lealbrasil.model.entities.Pais" />
 		<mapping class="br.com.lealbrasil.model.entities.Estado" />
 		<mapping class="br.com.lealbrasil.model.entities.Cidade" />
+		<mapping class="br.com.lealbrasil.model.entities.Logradouro" />
+		<mapping class="br.com.lealbrasil.model.entities.Bairro" />
+		<mapping class="br.com.lealbrasil.model.entities.Endereco" />
 		<mapping class="br.com.lealbrasil.model.entities.Pessoa_Vinculo" />
 		<mapping class="br.com.lealbrasil.model.entities.Ponto_Movimento" />
 		<mapping class="br.com.lealbrasil.model.entities.Usuario" />

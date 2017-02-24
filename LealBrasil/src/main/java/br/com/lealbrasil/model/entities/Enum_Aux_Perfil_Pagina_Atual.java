@@ -16,7 +16,11 @@ public enum Enum_Aux_Perfil_Pagina_Atual {
 	PAGINAITEMDESERVICO("PAGINAITEMDESERVICO","PITEMDESERV",12,Enum_Aux_Perfil_Pessoa.VENDAS,Enum_Aux_Perfil_Pessoa.VENDAS ,false,false,"item_de_movimento.xhtml","itens de serviço"),
 	PAGINAITEMDEPROMOCAO("PAGINAITEMDEPROMOCAO","PITEMDEPROM",13,Enum_Aux_Perfil_Pessoa.VENDAS,Enum_Aux_Perfil_Pessoa.VENDAS ,false,false,"item_de_movimento.xhtml","itens de promoção"),
 	
-	PAGINAPAISES("PAGINAPAISES", "PPAI",0,null,null,false,true,"paises.xhtml", "países" ),
+	PAGINAPAISES("PAGINAPAISES", "PPAIS",0,null,null,false,true,"paises.xhtml", "países" ),			//FALTA ARRUMAR O FORMULÁRIO NO XHTML DE PAIS, DEPOIS É SÓ REPLICAR PARA OS OUTROS XHTML's ABAIXO
+	PAGINAESTADOS("PAGINAESTADOS", "PESTADO",0,null,null,false,true,"estados.xhtml", "estados" ),	//CRIAR XHTML PARA ESTADO
+	PAGINACIDADES("PAGINACIDADES", "PCIDADE",0,null,null,false,true,"cidades.xhtml", "cidade" ),	//CRIAR XHTML PARA CIDADE
+	PAGINABAIRROS("PAGINABAIRROS", "PBAIRROS",0,null,null,false,true,"bairros.xhtml", "bairros" ),	//CRIAR XHTML PARA BAIRRO
+	PAGINALOGRADOUROS("PAGINALOGRADOUROS", "PLOGRADOUROS",0,null,null,false,true,"logradouros.xhtml", "logradouros" ),	//CRIAR XHTML PARA LOGRADOURO
 	
 	PAGINAOUTROS("PAGINAOUTROS","POUTROS",14,Enum_Aux_Perfil_Pessoa.OUTROS,null,false,true,"pessoas.xhtml","outros"),
 	PAGINAINDEX("PAGINAINDEX","PINDEX",15,Enum_Aux_Perfil_Pessoa.OUTROS,null,false,false,"index.xhtml", "página principal"),

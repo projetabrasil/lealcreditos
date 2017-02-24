@@ -7,21 +7,19 @@ import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
-import javax.faces.event.ActionEvent;
 
 import br.com.lealbrasil.controller.entitiesconfig.PessoaConfig;
-import br.com.lealbrasil.model.business.PaisBusiness;
-import br.com.lealbrasil.model.entities.Pais;
+import br.com.lealbrasil.model.business.EnderecoBusiness;
+import br.com.lealbrasil.model.entities.Endereco;
 import br.com.lealbrasil.model.entities.PerfilLogado;
-import br.com.lealbrasil.util.Utilidades;
 
 @SuppressWarnings("serial")
 @ManagedBean
 @ViewScoped
-public class PaisjsfController  extends GenericController implements Serializable {
+public class EnderecojsfController extends GenericController implements Serializable {
 	
-	private Pais pais;
-	private List<Pais> paises;
+	private Endereco endereco;
+	private List<Endereco> enderecos;
 	private PessoaConfig pessoaConfig;
 	
 	@ManagedProperty(value = "#{autenticacaojsfController.perfilLogado}")
@@ -34,34 +32,15 @@ public class PaisjsfController  extends GenericController implements Serializabl
 	@PostConstruct
 	public void listar() {
 		if(perfilLogado!=null && perfilLogado.getPerfilUsLogado()!=null)
-		paises = PaisBusiness.listar(perfilLogado);
+		enderecos = EnderecoBusiness.listar(perfilLogado);
 	}
 	
-	public void novo(ActionEvent event) {
-		perfilLogadoTemp = perfilLogado;
-		pais = new Pais();		
-		Utilidades.abrirfecharDialogos("dialogoIdentidade",true);
-	}
-	
-	public void configurarPessoa() {
-		pessoaConfig = new PessoaConfig();
+	public List<Endereco> getEnderecos() {
+		return enderecos;
 	}
 
-	public Pais getPais() {
-		return pais;
-	}
-
-	public void setPais(Pais pais) {
-		this.pais = pais;
-	}
-
-	public List<Pais> getPaises() {
-		listar();
-		return paises;
-	}
-
-	public void setPaises(List<Pais> paises) {
-		this.paises = paises;
+	public void setEnderecos(List<Endereco> enderecos) {
+		this.enderecos = enderecos;
 	}
 
 	public PessoaConfig getPessoaConfig() {
@@ -96,7 +75,13 @@ public class PaisjsfController  extends GenericController implements Serializabl
 		this.autenticacao = autenticacao;
 	}
 
-	
+	public Endereco getEndereco() {
+		return endereco;
+	}
+
+	public void setEndereco(Endereco endereco) {
+		this.endereco = endereco;
+	}
 	
 	
 }

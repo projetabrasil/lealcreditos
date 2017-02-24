@@ -10,18 +10,18 @@ import javax.faces.bean.ViewScoped;
 import javax.faces.event.ActionEvent;
 
 import br.com.lealbrasil.controller.entitiesconfig.PessoaConfig;
-import br.com.lealbrasil.model.business.PaisBusiness;
-import br.com.lealbrasil.model.entities.Pais;
+import br.com.lealbrasil.model.business.CidadeBusiness;
+import br.com.lealbrasil.model.entities.Cidade;
 import br.com.lealbrasil.model.entities.PerfilLogado;
 import br.com.lealbrasil.util.Utilidades;
 
 @SuppressWarnings("serial")
 @ManagedBean
 @ViewScoped
-public class PaisjsfController  extends GenericController implements Serializable {
+public class CidadejsfController extends GenericController implements Serializable {
 	
-	private Pais pais;
-	private List<Pais> paises;
+	private Cidade cidade;
+	private List<Cidade> cidades;
 	private PessoaConfig pessoaConfig;
 	
 	@ManagedProperty(value = "#{autenticacaojsfController.perfilLogado}")
@@ -34,34 +34,21 @@ public class PaisjsfController  extends GenericController implements Serializabl
 	@PostConstruct
 	public void listar() {
 		if(perfilLogado!=null && perfilLogado.getPerfilUsLogado()!=null)
-		paises = PaisBusiness.listar(perfilLogado);
+		cidades = CidadeBusiness.listar(perfilLogado);
 	}
 	
 	public void novo(ActionEvent event) {
 		perfilLogadoTemp = perfilLogado;
-		pais = new Pais();		
+		cidade = new Cidade();		
 		Utilidades.abrirfecharDialogos("dialogoIdentidade",true);
 	}
 	
-	public void configurarPessoa() {
-		pessoaConfig = new PessoaConfig();
+	public List<Cidade> getCidades() {
+		return cidades;
 	}
 
-	public Pais getPais() {
-		return pais;
-	}
-
-	public void setPais(Pais pais) {
-		this.pais = pais;
-	}
-
-	public List<Pais> getPaises() {
-		listar();
-		return paises;
-	}
-
-	public void setPaises(List<Pais> paises) {
-		this.paises = paises;
+	public void setCidades(List<Cidade> cidades) {
+		this.cidades = cidades;
 	}
 
 	public PessoaConfig getPessoaConfig() {
@@ -96,7 +83,13 @@ public class PaisjsfController  extends GenericController implements Serializabl
 		this.autenticacao = autenticacao;
 	}
 
-	
+	public Cidade getCidade() {
+		return cidade;
+	}
+
+	public void setCidade(Cidade cidade) {
+		this.cidade = cidade;
+	}
 	
 	
 }

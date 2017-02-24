@@ -8,19 +8,20 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
-
 @SuppressWarnings("serial")
 @Entity
-@Table(name="Pais")
-public class Pais extends GenericDomain implements Serializable {
+@Table(name="Estado")
+public class Estado extends GenericDomain implements Serializable {
 	
 	@Id
-	@SequenceGenerator(name="pk_pais",sequenceName="messsounds_pais", allocationSize=1)
-	@GeneratedValue(strategy=GenerationType.SEQUENCE,generator="pk_pais")
+	@SequenceGenerator(name="pk_estado",sequenceName="messsounds_estado", allocationSize=1)
+	@GeneratedValue(strategy=GenerationType.SEQUENCE,generator="pk_estado")
 	private Long id;
 	
 	@Column(name="descricao", length = 90, nullable=false)
@@ -29,14 +30,12 @@ public class Pais extends GenericDomain implements Serializable {
 	@Column(name="sigla", length = 5, nullable=false)
 	private String sigla;
 	
-	@Column(name="maskZip", length = 20, nullable=true)
-	private String maskZip;
-	
-	@Column(name="maskTel", length = 20, nullable=true)
-	private String maskTel;
+	@ManyToOne
+	@JoinColumn(name = "id_pais")
+	private Pais pais;
 	
 	@Transient
-	private List<Estado> estados;
+	private List<Cidade> cidades;
 
 	public Long getId() {
 		return id;
@@ -62,39 +61,30 @@ public class Pais extends GenericDomain implements Serializable {
 		this.sigla = sigla;
 	}
 
-	public String getMaskZip() {
-		return maskZip;
+	public Pais getPais() {
+		return pais;
 	}
 
-	public void setMaskZip(String maskZip) {
-		this.maskZip = maskZip;
+	public void setPais(Pais pais) {
+		this.pais = pais;
 	}
 
-	public String getMaskTel() {
-		return maskTel;
+	public List<Cidade> getCidades() {
+		return cidades;
 	}
 
-	public void setMaskTel(String maskTel) {
-		this.maskTel = maskTel;
-	}
-
-	public List<Estado> getEstados() {
-		return estados;
-	}
-
-	public void setEstados(List<Estado> estados) {
-		this.estados = estados;
+	public void setCidades(List<Cidade> cidades) {
+		this.cidades = cidades;
 	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = super.hashCode();
+		result = prime * result + ((cidades == null) ? 0 : cidades.hashCode());
 		result = prime * result + ((descricao == null) ? 0 : descricao.hashCode());
-		result = prime * result + ((estados == null) ? 0 : estados.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
-		result = prime * result + ((maskTel == null) ? 0 : maskTel.hashCode());
-		result = prime * result + ((maskZip == null) ? 0 : maskZip.hashCode());
+		result = prime * result + ((pais == null) ? 0 : pais.hashCode());
 		result = prime * result + ((sigla == null) ? 0 : sigla.hashCode());
 		return result;
 	}
@@ -107,31 +97,26 @@ public class Pais extends GenericDomain implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Pais other = (Pais) obj;
+		Estado other = (Estado) obj;
+		if (cidades == null) {
+			if (other.cidades != null)
+				return false;
+		} else if (!cidades.equals(other.cidades))
+			return false;
 		if (descricao == null) {
 			if (other.descricao != null)
 				return false;
 		} else if (!descricao.equals(other.descricao))
-			return false;
-		if (estados == null) {
-			if (other.estados != null)
-				return false;
-		} else if (!estados.equals(other.estados))
 			return false;
 		if (id == null) {
 			if (other.id != null)
 				return false;
 		} else if (!id.equals(other.id))
 			return false;
-		if (maskTel == null) {
-			if (other.maskTel != null)
+		if (pais == null) {
+			if (other.pais != null)
 				return false;
-		} else if (!maskTel.equals(other.maskTel))
-			return false;
-		if (maskZip == null) {
-			if (other.maskZip != null)
-				return false;
-		} else if (!maskZip.equals(other.maskZip))
+		} else if (!pais.equals(other.pais))
 			return false;
 		if (sigla == null) {
 			if (other.sigla != null)
@@ -143,10 +128,13 @@ public class Pais extends GenericDomain implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Pais [id=" + id + ", descricao=" + descricao + ", sigla=" + sigla + ", maskZip=" + maskZip
-				+ ", maskTel=" + maskTel + ", estados=" + estados + "]";
+		return "Estado [id=" + id + ", descricao=" + descricao + ", sigla=" + sigla + ", pais=" + pais + ", cidades="
+				+ cidades + "]";
 	}
 
+	
+	
+	
 	
 	
 }

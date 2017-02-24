@@ -10,18 +10,18 @@ import javax.faces.bean.ViewScoped;
 import javax.faces.event.ActionEvent;
 
 import br.com.lealbrasil.controller.entitiesconfig.PessoaConfig;
-import br.com.lealbrasil.model.business.PaisBusiness;
-import br.com.lealbrasil.model.entities.Pais;
+import br.com.lealbrasil.model.business.LogradouroBusiness;
+import br.com.lealbrasil.model.entities.Logradouro;
 import br.com.lealbrasil.model.entities.PerfilLogado;
 import br.com.lealbrasil.util.Utilidades;
 
 @SuppressWarnings("serial")
 @ManagedBean
 @ViewScoped
-public class PaisjsfController  extends GenericController implements Serializable {
+public class LogradourojsfController extends GenericController implements Serializable {
 	
-	private Pais pais;
-	private List<Pais> paises;
+	private Logradouro logradouro;
+	private List<Logradouro> logradouros;
 	private PessoaConfig pessoaConfig;
 	
 	@ManagedProperty(value = "#{autenticacaojsfController.perfilLogado}")
@@ -34,34 +34,21 @@ public class PaisjsfController  extends GenericController implements Serializabl
 	@PostConstruct
 	public void listar() {
 		if(perfilLogado!=null && perfilLogado.getPerfilUsLogado()!=null)
-		paises = PaisBusiness.listar(perfilLogado);
+		logradouros = LogradouroBusiness.listar(perfilLogado);
 	}
 	
 	public void novo(ActionEvent event) {
 		perfilLogadoTemp = perfilLogado;
-		pais = new Pais();		
+		logradouro = new Logradouro();		
 		Utilidades.abrirfecharDialogos("dialogoIdentidade",true);
 	}
-	
-	public void configurarPessoa() {
-		pessoaConfig = new PessoaConfig();
+
+	public List<Logradouro> getLogradouros() {
+		return logradouros;
 	}
 
-	public Pais getPais() {
-		return pais;
-	}
-
-	public void setPais(Pais pais) {
-		this.pais = pais;
-	}
-
-	public List<Pais> getPaises() {
-		listar();
-		return paises;
-	}
-
-	public void setPaises(List<Pais> paises) {
-		this.paises = paises;
+	public void setLogradouros(List<Logradouro> logradouros) {
+		this.logradouros = logradouros;
 	}
 
 	public PessoaConfig getPessoaConfig() {
@@ -96,7 +83,13 @@ public class PaisjsfController  extends GenericController implements Serializabl
 		this.autenticacao = autenticacao;
 	}
 
-	
+	public Logradouro getLogradouro() {
+		return logradouro;
+	}
+
+	public void setLogradouro(Logradouro logradouro) {
+		this.logradouro = logradouro;
+	}
 	
 	
 }

@@ -10,18 +10,19 @@ import javax.faces.bean.ViewScoped;
 import javax.faces.event.ActionEvent;
 
 import br.com.lealbrasil.controller.entitiesconfig.PessoaConfig;
-import br.com.lealbrasil.model.business.PaisBusiness;
-import br.com.lealbrasil.model.entities.Pais;
+import br.com.lealbrasil.model.business.EstadoBusiness;
+import br.com.lealbrasil.model.entities.Estado;
+import br.com.lealbrasil.model.entities.GenericDomain;
 import br.com.lealbrasil.model.entities.PerfilLogado;
 import br.com.lealbrasil.util.Utilidades;
 
 @SuppressWarnings("serial")
 @ManagedBean
 @ViewScoped
-public class PaisjsfController  extends GenericController implements Serializable {
+public class EstadojsfController extends GenericDomain implements Serializable {
 	
-	private Pais pais;
-	private List<Pais> paises;
+	private Estado estado;
+	private List<Estado> estados;
 	private PessoaConfig pessoaConfig;
 	
 	@ManagedProperty(value = "#{autenticacaojsfController.perfilLogado}")
@@ -34,34 +35,21 @@ public class PaisjsfController  extends GenericController implements Serializabl
 	@PostConstruct
 	public void listar() {
 		if(perfilLogado!=null && perfilLogado.getPerfilUsLogado()!=null)
-		paises = PaisBusiness.listar(perfilLogado);
+		estados = EstadoBusiness.listar(perfilLogado);
 	}
 	
 	public void novo(ActionEvent event) {
 		perfilLogadoTemp = perfilLogado;
-		pais = new Pais();		
+		estado = new Estado();		
 		Utilidades.abrirfecharDialogos("dialogoIdentidade",true);
 	}
 	
-	public void configurarPessoa() {
-		pessoaConfig = new PessoaConfig();
+	public List<Estado> getEstados() {
+		return estados;
 	}
 
-	public Pais getPais() {
-		return pais;
-	}
-
-	public void setPais(Pais pais) {
-		this.pais = pais;
-	}
-
-	public List<Pais> getPaises() {
-		listar();
-		return paises;
-	}
-
-	public void setPaises(List<Pais> paises) {
-		this.paises = paises;
+	public void setEstados(List<Estado> estados) {
+		this.estados = estados;
 	}
 
 	public PessoaConfig getPessoaConfig() {
@@ -96,7 +84,13 @@ public class PaisjsfController  extends GenericController implements Serializabl
 		this.autenticacao = autenticacao;
 	}
 
-	
+	public Estado getEstado() {
+		return estado;
+	}
+
+	public void setEstado(Estado estado) {
+		this.estado = estado;
+	}
 	
 	
 }
