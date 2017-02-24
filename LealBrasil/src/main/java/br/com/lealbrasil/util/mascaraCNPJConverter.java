@@ -24,7 +24,7 @@ public class mascaraCNPJConverter implements Converter {
          * Ex.: 35524519887 torna-se 355.245.198-87.
          */
          String resultado= (String)  value;
-         if (resultado != null && resultado.length() == 11)
+         if (resultado != null && resultado.length() == 14)
               resultado = resultado.substring(0, 2) + "." + resultado.substring(2, 5) + "." + resultado.substring(5, 8) + "/" 
          + resultado.substring(8, 12)+"-"+resultado.substring(12, 14);
 
