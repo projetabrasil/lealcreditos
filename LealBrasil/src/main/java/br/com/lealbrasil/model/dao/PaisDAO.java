@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.hibernate.Criteria;
 import org.hibernate.Session;
+import org.hibernate.criterion.Restrictions;
 
 import br.com.lealbrasil.model.entities.Pais;
 import br.com.lealbrasil.model.entities.PerfilLogado;
@@ -24,6 +25,20 @@ public class PaisDAO extends GenericDAO<Pais> {
 			throw erro;
 		}
 		finally{
+			sessao.close();
+		}
+	}
+
+	public Pais buscaPaisPeloNome(String descricao) {
+		Session sessao = HibernateUtil.getFabricaDeSessoes().openSession();
+		try {
+			Criteria consulta = sessao.createCriteria(Pais.class);
+			consulta.add(Restrictions.like("descricao", descricao));
+			return (Pais) consulta.uniqueResult();
+		} catch (RuntimeException error) {
+			error.printStackTrace();
+			throw error;
+		} finally {
 			sessao.close();
 		}
 	}

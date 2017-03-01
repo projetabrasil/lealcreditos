@@ -12,6 +12,7 @@ import br.com.lealbrasil.model.entities.PerfilLogado;
 
 @SuppressWarnings("serial")
 public class PaisBusiness implements Serializable {
+	
 	public static void mensagensDisparar(String mensagem) {
 		Messages.addGlobalInfo(mensagem);
 	}
@@ -27,6 +28,17 @@ public class PaisBusiness implements Serializable {
 		}
 		return paises;
 		
+	}
+
+	public static Pais buscaPaisPeloNome(String descricao) {
+		PaisDAO pDAO = new PaisDAO();
+		Pais pais = pDAO.buscaPaisPeloNome(descricao);
+		return pais;
+	}
+
+	public static void merge(Pais pais) {
+		PaisDAO pDAO = new PaisDAO();
+		pDAO.merge(pais);
 	}
 	
 	

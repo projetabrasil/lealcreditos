@@ -508,6 +508,21 @@ public class Utilidades implements Serializable {
 		}
 
 	}
+	
+	public static String FormataNomeDoPais(String nome){
+		String[] nomeSplit = nome.split(" ");
+		nome = "";
+		for(int i = 0; i < nomeSplit.length; i++){
+			nomeSplit[i] = nomeSplit[i].toUpperCase();
+			if(!nomeSplit[i].equals("DA") && !nomeSplit[i].equals("DO") && !nomeSplit[i].equals("DE")){
+				nomeSplit[i] = removerAcentos(nomeSplit[i].substring(0, 1).toUpperCase() + nomeSplit[i].substring(1, nomeSplit[i].length()).toLowerCase());
+			}else{
+				nomeSplit[i] = removerAcentos(nomeSplit[i].toLowerCase());
+			}
+			nome = nome + nomeSplit[i] + " ";
+		}
+		return nome;
+	}
 
 	public static Pessoa criapessoa(String mensagem) {
 		Pessoa pessoa = new Pessoa();

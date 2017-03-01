@@ -18,7 +18,7 @@ import br.com.lealbrasil.util.Utilidades;
 @SuppressWarnings("serial")
 @ManagedBean
 @ViewScoped
-public class PaisjsfController  extends GenericController implements Serializable {
+public class PaisjsfController extends GenericController implements Serializable {
 	
 	private Pais pais;
 	private List<Pais> paises;
@@ -41,6 +41,25 @@ public class PaisjsfController  extends GenericController implements Serializabl
 		perfilLogadoTemp = perfilLogado;
 		pais = new Pais();		
 		Utilidades.abrirfecharDialogos("dialogoIdentidade",true);
+	}
+	
+	public void merge() {
+		this.pais.setDescricao(Utilidades.FormataNomeDoPais(pais.getDescricao()));
+		Pais pais = PaisBusiness.buscaPaisPeloNome(this.pais.getDescricao());
+		if(pais.getId() != null){
+			mensagensDisparar("Este pais já está cadastrado: " + pais.getDescricao());
+			this.pais.setId(pais.getId());
+		}
+		this.pais.setUltimaAtualizacao(Utilidades.retornaCalendario());
+		if(perfilLogado.getUsLogado().getPessoa() != null){
+			this.pais.setId_Pessoa_Registro(perfilLogado.getUsLogado().getPessoa());
+		}else{
+			this.pais.setId_Pessoa_Registro(perfilLogado.getAssLogado());
+		}
+		
+		PaisBusiness.merge(this.pais);
+		listar();
+
 	}
 	
 	public void configurarPessoa() {
