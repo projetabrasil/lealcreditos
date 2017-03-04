@@ -50,7 +50,7 @@ public class HibernateUtilTest {
 	@Test
 	public void cadastraUsuario() throws ParseException {
 		p = new Pessoa();
-		p.setCpf_Cnpj("892.309061-   15");
+		p.setCpf_Cnpj("08096819941");
 		p.setCpf_Cnpj(Utilidades.retiraCaracteres(p.getCpf_Cnpj()));
 
 		boolean vf = false;
@@ -67,20 +67,20 @@ public class HibernateUtilTest {
 
 			if (p == null) {
 				p = new Pessoa();
-				p.setCpf_Cnpj("89230906115");
+				p.setCpf_Cnpj("08096819941");
 				p.setIdentificador(p.getCpf_Cnpj());
-				p.setRg_Insc("3739787");
+				p.setRg_Insc("2642222");
 				p.setSexo(Enum_Aux_Sexo.MASCULINO);
-				p.setFone_1("48996453129");
+				p.setFone_1("4896094421");
 				p.setFone_2("");
 				p.setFone_3("");
-				p.setEmail("paulo.logicabrasil@gmail.com");
+				p.setEmail("lucas.dmm@hotmail.com");
 				p.setId_Pessoa_Registro(null);
 				p.setAutoPontuacao(Enum_Aux_Sim_ou_Nao.NAO);
 				p.setEnum_Aux_Tipo_Identificador(Enum_Aux_Tipo_Identificador.CPF);
-				p.setDescricao("Paulo Marcos Rodrigues Pereira");
+				p.setDescricao("Lucas De Martino");
 				p.setFantasia_Apelido("");
-				p.setDataNascimento(Utilidades.retornaData("23/09/1978"));
+				p.setDataNascimento(Utilidades.retornaData("30/11/1989"));
 			}
 			p = pDAO.merge(p);
 			us = new Usuario();
@@ -88,13 +88,18 @@ public class HibernateUtilTest {
 			UsuarioDAO usDAO = new UsuarioDAO();
 			us = usDAO.retornaUsuarioPelaPessoa(p);
 			if (us == null) {
+				us = new Usuario();
+				us.setPessoa(p);
 				us.setAtivo(true);
-				us.setConfSenha("");
+				us.setConfSenha("12345678");
 				us.setId(null);
 				us.setId_Empresa(1);
 				us.setId_Pessoa_Registro(p);
 				us.setPessoa(p);
-				us.setSenhaSemCript(null);
+				us.setSenhaSemCript("12345678");
+				if(!us.getConfSenha().equals(us.getSenhaSemCript())){
+					System.out.println("Senhas incorreta.");
+				}
 			}
 			us = usDAO.merge(us);
 
@@ -102,13 +107,14 @@ public class HibernateUtilTest {
 			Pessoa_Enum_Aux_Perfil_PessoasDAO ppDAO = new Pessoa_Enum_Aux_Perfil_PessoasDAO();
 
 			pp.setId_pessoa(p);
-			pp.setEnum_Aux_Perfil_Pessoa(Enum_Aux_Perfil_Pessoa.ADMINISTRADORES);
+			pp.setEnum_Aux_Perfil_Pessoa(Enum_Aux_Perfil_Pessoa.CLIENTES);
 
 			pp = ppDAO.retornaPerfildaPessoaPelaPessoa(pp);
 
 			if (pp == null) {
+				pp = new Pessoa_Enum_Aux_Perfil_Pessoa();
 				pp.setId_pessoa(p);
-				pp.setEnum_Aux_Perfil_Pessoa(Enum_Aux_Perfil_Pessoa.ADMINISTRADORES);
+				pp.setEnum_Aux_Perfil_Pessoa(Enum_Aux_Perfil_Pessoa.CLIENTES);
 				pp.setId_Empresa(1);
 
 				pp.setId_Pessoa_Registro(p);
