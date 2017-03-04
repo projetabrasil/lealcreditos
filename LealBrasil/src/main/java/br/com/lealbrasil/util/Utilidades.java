@@ -509,7 +509,7 @@ public class Utilidades implements Serializable {
 
 	}
 	
-	public static String FormataNomeDoPais(String nome){
+	public static String formataNomeDoPais(String nome){
 		String[] nomeSplit = nome.split(" ");
 		nome = "";
 		for(int i = 0; i < nomeSplit.length; i++){

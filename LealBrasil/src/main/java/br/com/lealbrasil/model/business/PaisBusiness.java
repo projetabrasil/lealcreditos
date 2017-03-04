@@ -22,7 +22,7 @@ public class PaisBusiness implements Serializable {
 		
 		try {
 			PaisDAO paisDAO = new PaisDAO();			
-			paises = paisDAO.listar(perfilLogado);
+			paises = paisDAO.listar();
 		} catch (RuntimeException erro) {
 			erro.printStackTrace();
 		}

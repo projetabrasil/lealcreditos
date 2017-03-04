@@ -9,22 +9,21 @@ import br.com.lealbrasil.model.entities.Pessoa;
 
 public class PaisBusinessTest {
 	
-	@Test
 	public void testaBuscaDePais(){
 		Pais pais = new Pais();
-		pais = PaisBusiness.buscaPaisPeloNome("Brasil");
+		pais = PaisBusiness.buscaPaisPeloNome("bRaSil");
 		System.out.println(pais.toString());
 	}
 	
 	@Test
 	public void testaInsertDePais() {
 		Pais pais = new Pais();
-		pais.setDescricao("Estados Unidos");
+		pais.setDescricao("Brasil");
 		pais.setId(null);
 		pais.setId_Empresa(0);
-		pais.setMaskTel("Teste");
+		pais.setMaskTel("Teste2");
 		pais.setMaskZip("Teste");
-		pais.setSigla("EUA");
+		pais.setSigla("BR");
 		Pessoa p = new PessoaDAO().retornaPelaIdentificacao("10554498928");
 		pais.setId_Pessoa_Registro(p);
 		PaisBusiness.merge(pais);

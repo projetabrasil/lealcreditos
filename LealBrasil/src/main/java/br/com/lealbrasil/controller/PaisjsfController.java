@@ -32,7 +32,7 @@ public class PaisjsfController extends GenericController implements Serializable
 	private AutenticacaojsfController autenticacao;
 	
 	@PostConstruct
-	public void listar() {
+	public void listar() {	
 		if(perfilLogado!=null && perfilLogado.getPerfilUsLogado()!=null)
 		paises = PaisBusiness.listar(perfilLogado);
 	}
@@ -44,13 +44,16 @@ public class PaisjsfController extends GenericController implements Serializable
 	}
 	
 	public void merge() {
-		this.pais.setDescricao(Utilidades.FormataNomeDoPais(pais.getDescricao()));
-		Pais pais = PaisBusiness.buscaPaisPeloNome(this.pais.getDescricao());
+		this.pais.setDescricao(Utilidades.formataNomeDoPais(this.pais.getDescricao()));
+		Pais pais = PaisBusiness.buscaPaisPeloNome(this.pais.getDescricao());  //this.pais é diferente de pais
 		if(pais.getId() != null){
 			mensagensDisparar("Este pais já está cadastrado: " + pais.getDescricao());
 			this.pais.setId(pais.getId());
 		}
+		
 		this.pais.setUltimaAtualizacao(Utilidades.retornaCalendario());
+		
+		//Inseri no banco o usuário que registrou o país, SE usuário NÃO existir, o id_registro é feito com o associado
 		if(perfilLogado.getUsLogado().getPessoa() != null){
 			this.pais.setId_Pessoa_Registro(perfilLogado.getUsLogado().getPessoa());
 		}else{
@@ -58,7 +61,7 @@ public class PaisjsfController extends GenericController implements Serializable
 		}
 		
 		PaisBusiness.merge(this.pais);
-		listar();
+		listar(); //ATENÇÃO, REVER LINHA NO MOMENTO DA IMPLANTAÇÃO DO FRONT!!!! - 02/03/2017
 
 	}
 	
