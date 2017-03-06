@@ -11,6 +11,7 @@ import javax.faces.event.ActionEvent;
 
 import br.com.lealbrasil.controller.entitiesconfig.PessoaConfig;
 import br.com.lealbrasil.model.business.PaisBusiness;
+import br.com.lealbrasil.model.entities.Enum_Aux_Perfil_Pessoa;
 import br.com.lealbrasil.model.entities.Pais;
 import br.com.lealbrasil.model.entities.PerfilLogado;
 import br.com.lealbrasil.util.Utilidades;
@@ -64,6 +65,19 @@ public class PaisjsfController extends GenericController implements Serializable
 		listar(); //ATENÇÃO, REVER LINHA NO MOMENTO DA IMPLANTAÇÃO DO FRONT!!!! - 02/03/2017
 
 	}
+	
+	
+	public void cancela() {		
+		Utilidades.abrirfecharDialogos("dialogoCadastro",false);
+
+		if (perfilLogado.getPerfilUsLogado().equals(Enum_Aux_Perfil_Pessoa.OUTROS)) {
+			perfilLogado = new PerfilLogado();
+			autenticacao.redirecionaPaginas("alfapage.xhtml", "Erro ao tentar chamar a pagina alfapage",true);			
+		    
+			
+		}
+	}
+	
 	
 	public void configurarPessoa() {
 		pessoaConfig = new PessoaConfig();

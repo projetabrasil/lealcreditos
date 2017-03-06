@@ -26,7 +26,8 @@
 					    
 						<p:commandButton value="Novo"						    
 							actionListener="#{paisjsfController.novo}"
-							update=":formTemplate:formCadastro :formTemplate:formCadastro" style="width:5%">
+							process="@form"
+							update=":formTemplate:formCadastro" style="width:5%">
 						</p:commandButton>
 					</f:facet>
 					<p:column headerText="Nome do País" sortBy="descricao"
@@ -39,9 +40,21 @@
 						<h:outputText value="#{registro.sigla}" />
 					</p:column>
 					
+					<p:column headerText="Padrão de Telefone" sortBy="masktel"
+						filterBy="masktel">
+						<h:outputText value="#{registro.maskTel}" />
+					</p:column>
+					
+					<p:column headerText="Padrão Código de Área" sortBy="maskzip"
+						filterBy="maskzip">
+						<h:outputText value="#{registro.maskZip}" />
+					</p:column>
+					
 					<p:column headerText="Editar" style="width:5%;">
+					
+					
 						<p:commandButton icon="ui-icon-pencil"
-							actionListener="#{paisjsfController.editar}"
+							
 							rendered="#{autenticacaojsfController.perfilLogado.renderizapessoaeditar}"
 							
 							update=":formTemplate:formCadastro :formTemplate:formCadastro
@@ -75,7 +88,7 @@
 		</h:form>
 
 		<p:dialog
-			header="Formulário de Cadastro - #{autenticacaojsfController.perfilLogado.paginaAtual.perfilPessoa.descricao}"
+			header="Formulário de Cadastro de Países"
 			widgetVar="dialogoCadastro" resizable="false" modal="true"
 			closable="false" appendTo="@(body)" dynamic="true"
 			responsive="true" 
@@ -89,167 +102,58 @@
 				<h:panelGrid id="painelCadastro_1">
 					<h:panelGrid id="painelCadastro_11">
 						<p:outputLabel
-							value="#{pessoajsfController.pessoaConfig.labelNome}"
-							rendered="#{pessoajsfController.pessoaConfig.labelNomeRenderiza}" />
-							
-						<p:inputText size="67" maxlength="90"
+							value="Nome do País"
+							 />
+						<p:inputText size="30" maxlength="30"
 							value="#{paisjsfController.pais.descricao}"
-							required="#{pessoajsfController.pessoaConfig.labelNomeObrigatorio}"
-							requiredMessage="#{pessoajsfController.pessoaConfig.labelNomeRequiredMessage}"
-							rendered="#{pessoajsfController.pessoaConfig.labelNomeRenderiza}"
-							validatorMessage="O minimo de caracteres para nome são  '5'"
-							placeholder="Mínimo 5 Letras">
-							<f:validateLength minimum="5" />
+							required="true"
+							requiredMessage="Descrição do país é obrigatória"
+							
+							validatorMessage="O minimo de caracteres para nome são  '3'"
+							placeholder="Mínimo 3 Letras">
+							<f:validateLength minimum="3" />
 						</p:inputText>
 					</h:panelGrid>
 					<h:panelGrid id="painelCadastro_12">
 						<p:outputLabel
-							value="#{pessoajsfController.pessoaConfig.labelFantasia}"
-							rendered="#{pessoajsfController.pessoaConfig.labelFantasiaRenderiza}" />
-						<p:inputText size="67" maxlength="90"
-							value="#{pessoajsfController.pessoa.fantasia_Apelido}"
-							required="#{pessoajsfController.pessoaConfig.labelFantasiaObrigatorio}"
-							requiredMessage="#{pessoajsfController.pessoaConfig.labelFantasiaRequiredMessage}"
-							rendered="#{pessoajsfController.pessoaConfig.labelFantasiaRenderiza}"
-							validatorMessage="O minimo de caracteres para nome são  '5'"
-							placeholder="Mínimo 5 Letras">
-							<f:validateLength minimum="5" />
+							value="Sigla"
+							 />
+						<p:inputText size="30" maxlength="30"
+							value="#{paisjsfController.pais.sigla}"
+							required="true"
+							requiredMessage="Campo obrigatório"
+							validatorMessage="O minimo de caracteres para sigla são  '3'"
+							placeholder="Mínimo 3 Letras">
+							<f:validateLength minimum="3" />
 						</p:inputText>
 					</h:panelGrid>
-
 					<h:panelGrid id="painelCadastro_13">
 						<p:outputLabel
-							value="#{pessoajsfController.pessoaConfig.labelSexo}"
-							rendered="#{pessoajsfController.pessoaConfig.labelSexoRenderiza}" />
-						<p:selectOneRadio id="perfil"
-							value="#{pessoajsfController.pessoa.sexo}"
-							 columns="5"
-							converter="omnifaces.SelectItemsConverter" rendered="#{pessoajsfController.pessoaConfig.labelSexoRenderiza}">
-							<f:selectItems
-								value="#{pessoajsfController.pessoaConfig.listaSexo}"
-								var="c" itemLabel="#{c.abrev}" itemValue="#{c}" />
-							<p:ajax event="change" process="@this"
-								oncomplete="$(function(){PrimeFaces.focus('formTemplate:formCadastro:calendar');});" />
-						</p:selectOneRadio>
+							value="Padrão de Telefone"
+							 />
+						<p:inputText size="30" maxlength="30"
+							value="#{paisjsfController.pais.maskTel}"
+							required="true"
+							requiredMessage="Campo obrigatório"
+							validatorMessage="O minimo de caracteres para telefone são  '8'"
+							placeholder="(00) 00000-0000">
+							<f:validateLength minimum="8" />
+						</p:inputText>
 					</h:panelGrid>
-				</h:panelGrid>
-				<h:panelGrid columns="2" id="painelCadastro_2">
-					<h:panelGrid id="painelCadastro_21">
-						<p:outputLabel value="Data de nascimento"
-							rendered="#{pessoajsfController.pessoaConfig.labelDataNascimentoRenderiza}" />
-						<p:calendar id="calendar" size="30" maxlength="15" mask="99/99/9999" 
-							value="#{pessoajsfController.pessoa.dataNascimento}"
-							required="#{pessoajsfController.pessoaConfig.labelDataNascimentoObrigatorio}"
-							requiredMessage="#{pessoajsfController.pessoaConfig.labelDataNascimentoRequiredMessage}"
-							rendered="#{pessoajsfController.pessoaConfig.labelDataNascimentoRenderiza}">							
-							<f:convertDateTime pattern="dd/MM/yyyy" dateStyle="full" type="both"  timezone="GMT+3"/>
-						</p:calendar>
-					</h:panelGrid>
-					<h:panelGrid id="painelCadastro_22">
+					<h:panelGrid id="painelCadastro_14">
 						<p:outputLabel
-							value="#{pessoajsfController.pessoaConfig.labelcpf_Cnpj}"
-							rendered="#{pessoajsfController.pessoaConfig.labelcpf_CnpjRenderiza}" />
-						<p:outputLabel id="identificador" size="30" maxlength="15"
-							mask="#{pessoajsfController.pessoa.enum_Aux_Tipo_Identificador.mask}"
-							value="#{pessoajsfController.pessoa.cpf_Cnpj}"
-							converter="mascaraCPFConverter"
-							required="#{pessoajsfController.pessoaConfig.labelcpf_CnpjObrigatorio}"
-							requiredMessage="#{pessoajsfController.pessoaConfig.labelcpf_CnpjRequiredMessage}"
-							rendered="#{pessoajsfController.pessoaConfig.labelcpf_CnpjRenderiza}">
-						</p:outputLabel>
-					</h:panelGrid>
-
-				</h:panelGrid>
-
-
-				<h:panelGrid columns="2" id="painelCadastro_3">
-					<h:panelGrid id="painelCadastro_31">
-						<p:outputLabel
-							value="#{pessoajsfController.pessoaConfig.labelrg_Insc}"
-							rendered="#{pessoajsfController.pessoaConfig.labelrg_InscRenderiza}" />
-						<p:inputText size="30" maxlength="15"
-							value="#{pessoajsfController.pessoa.rg_Insc}"
-							required="#{pessoajsfController.pessoaConfig.labelrg_InscObrigatorio}"
-							requiredMessage="#{pessoajsfController.pessoaConfig.labelrg_InscRequiredMessage}"
-							rendered="#{pessoajsfController.pessoaConfig.labelrg_InscRenderiza}">
+							value="Padrão Código de Área"
+							 />
+						<p:inputText size="30" maxlength="30"
+							value="#{paisjsfController.pais.maskZip}"
+							required="true"
+							requiredMessage="Campo obrigatório"
+							validatorMessage="O minimo de caracteres para código são  '4'"
+							placeholder="00000-000">
+							<f:validateLength minimum="4" />
 						</p:inputText>
 					</h:panelGrid>
 
-					<h:panelGrid id="painelCadastro_32">
-						<p:outputLabel for="fone_1"
-							value="#{pessoajsfController.pessoaConfig.labelfone_1}"
-							rendered="#{pessoajsfController.pessoaConfig.labelfone_1Renderiza}" />
-						<p:inputMask mask="#{pessoajsfController.pessoaConfig.maskTel}"
-							id="fone_1" size="30" maxlength="15"
-							value="#{pessoajsfController.pessoa.fone_1}"
-							required="#{pessoajsfController.pessoaConfig.labelfone_1Obrigatorio}"
-							requiredMessage="#{pessoajsfController.pessoaConfig.labelfone_1RequiredMessage}"
-							rendered="#{pessoajsfController.pessoaConfig.labelfone_1Renderiza}">
-						</p:inputMask>
-					</h:panelGrid>
-				</h:panelGrid>
-				<h:panelGrid columns="2" id="painelCadastro_4">
-					<h:panelGrid id="painelCadastro_41">
-						<p:outputLabel
-							value="#{pessoajsfController.pessoaConfig.labelfone_2}"
-							rendered="#{pessoajsfController.pessoaConfig.labelfone_2Renderiza}" />
-						<p:inputMask mask="#{pessoajsfController.pessoaConfig.maskTel}"
-							size="30" maxlength="15"
-							value="#{pessoajsfController.pessoa.fone_2}"
-							required="#{pessoajsfController.pessoaConfig.labelfone_2Obrigatorio}"
-							requiredMessage="#{pessoajsfController.pessoaConfig.labelfone_2RequiredMessage}"
-							rendered="#{pessoajsfController.pessoaConfig.labelfone_2Renderiza}">
-						</p:inputMask>
-					</h:panelGrid>
-					<h:panelGrid id="painelCadastro_42">
-						<p:outputLabel
-							value="#{pessoajsfController.pessoaConfig.labelfone_3}" />
-						<p:inputMask mask="#{pessoajsfController.pessoaConfig.maskTel}"
-							size="30" maxlength="15"
-							value="#{pessoajsfController.pessoa.fone_3}"
-							required="#{pessoajsfController.pessoaConfig.labelfone_3Obrigatorio}"
-							requiredMessage="#{pessoajsfController.pessoaConfig.labelfone_3RequiredMessage}"
-							rendered="#{pessoajsfController.pessoaConfig.labelfone_3Renderiza}">
-						</p:inputMask>
-					</h:panelGrid>
-
-				</h:panelGrid>
-				<h:panelGrid columns="2" id="painelCadastro_5">
-					<h:panelGrid id="painelCadastro_51">
-						<p:outputLabel
-							value="#{pessoajsfController.pessoaConfig.labelemail}"
-							rendered="#{pessoajsfController.pessoaConfig.labelemailRenderiza}" />
-						<p:inputText size="67" maxlength="90"
-							value="#{pessoajsfController.pessoa.email}"
-							required="#{pessoajsfController.pessoaConfig.labelemailObrigatorio}"
-							requiredMessage="#{pessoajsfController.pessoaConfig.labelemailRequiredMessage}"
-							rendered="#{pessoajsfController.pessoaConfig.labelemailRenderiza}">
-						</p:inputText>
-					</h:panelGrid>
-				</h:panelGrid>
-
-				<h:panelGrid columns="2" id="painelCadastro_6"
-					rendered="#{autenticacaojsfController.perfilLogado.paginaAtual.renderizaCadastrodeUsuarios}">
-					<h:panelGrid id="painelCadastro_61">
-						<p:outputLabel value="Informe a Senha" />
-						<p:password size="30" maxlength="8"
-							value="#{pessoajsfController.usuario.senhaSemCript}"
-							required="true" requiredMessage="Informe a senha!!!"
-							validatorMessage="O minimo de digitos para senha: '8'"
-							placeholder="8 letras e/ou digitos">
-							<f:validateLength minimum="8" />
-						</p:password>
-					</h:panelGrid>
-					<h:panelGrid id="painelCadastro_62">
-						<p:outputLabel value="Confirme a Senha" />
-						<p:password size="30" maxlength="8"
-							value="#{pessoajsfController.usuario.confSenha}" required="true"
-							requiredMessage="Informe a confirmação de senha!!!"
-							validatorMessage="O minimo de digitos para confirmação senha: '8'"
-							placeholder="8 letras e/ou digitos">
-							<f:validateLength minimum="8" />
-						</p:password>
-					</h:panelGrid>
 				</h:panelGrid>
 
 				<h:panelGrid columns="2" id="painelCadastro_7">
@@ -260,7 +164,8 @@
 					</p:panelGrid>
 					<p:panelGrid>
 						<p:commandButton value="Cancelar" process="@this"
-						actionListener="#{pessoajsfController.cancela}" />
+						actionListener="#{paisjsfController.cancela}"
+						 />
 					</p:panelGrid>
 				</h:panelGrid>
 			</h:form>
