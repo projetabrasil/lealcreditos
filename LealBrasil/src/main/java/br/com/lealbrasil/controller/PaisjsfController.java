@@ -41,15 +41,15 @@ public class PaisjsfController extends GenericController implements Serializable
 	public void novo(ActionEvent event) {
 		perfilLogadoTemp = perfilLogado;
 		pais = new Pais();		
-		Utilidades.abrirfecharDialogos("dialogoIdentidade",true);
+		Utilidades.abrirfecharDialogos("dialogoCadastro",true);
 	}
 	
 	public void merge() {
 		this.pais.setDescricao(Utilidades.formataNomeDoPais(this.pais.getDescricao()));
-		Pais pais = PaisBusiness.buscaPaisPeloNome(this.pais.getDescricao());  //this.pais é diferente de pais
-		if(pais.getId() != null){
-			mensagensDisparar("Este pais já está cadastrado: " + pais.getDescricao());
-			this.pais.setId(pais.getId());
+		Pais pais2 = PaisBusiness.buscaPaisPeloNome(this.pais.getDescricao());  //this.pais é diferente de pais
+		if(pais2 != null){
+			mensagensDisparar("Este pais já está cadastrado: " + pais2.getDescricao());
+			this.pais.setId(pais2.getId());
 		}
 		
 		this.pais.setUltimaAtualizacao(Utilidades.retornaCalendario());
@@ -63,6 +63,7 @@ public class PaisjsfController extends GenericController implements Serializable
 		
 		PaisBusiness.merge(this.pais);
 		listar(); //ATENÇÃO, REVER LINHA NO MOMENTO DA IMPLANTAÇÃO DO FRONT!!!! - 02/03/2017
+		Utilidades.abrirfecharDialogos("dialogoCadastro",false);
 
 	}
 	
@@ -92,7 +93,6 @@ public class PaisjsfController extends GenericController implements Serializable
 	}
 
 	public List<Pais> getPaises() {
-		listar();
 		return paises;
 	}
 
