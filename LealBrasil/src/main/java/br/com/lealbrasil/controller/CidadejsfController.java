@@ -48,7 +48,7 @@ public class CidadejsfController extends GenericController implements Serializab
 		this.cidade.setDescricao(Utilidades.formataNomeDaRegiao(this.cidade.getDescricao()));
 		Cidade cidade2 = CidadeBusiness.buscaCidadePeloNome(this.cidade.getDescricao());  //this.pais é diferente de pais
 		if(cidade2 != null){
-			mensagensDisparar("Este pais já está cadastrado: " + cidade2.getDescricao());
+			mensagensDisparar("Esta cidade já está cadastrado: " + cidade2.getDescricao());
 			this.cidade.setId(cidade2.getId());
 		}
 		

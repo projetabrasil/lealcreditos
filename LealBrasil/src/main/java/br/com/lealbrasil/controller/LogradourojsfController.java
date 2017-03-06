@@ -48,7 +48,7 @@ public class LogradourojsfController extends GenericController implements Serial
 		this.logradouro.setDescricao(Utilidades.formataNomeDaRegiao(this.logradouro.getDescricao()));
 		Logradouro logradouro2 = LogradouroBusiness.buscaLogradouroPeloNome(this.logradouro.getDescricao());  //this.pais é diferente de pais
 		if(logradouro2 != null){
-			mensagensDisparar("Este pais já está cadastrado: " + logradouro2.getDescricao());
+			mensagensDisparar("Este logradouro já está cadastrado: " + logradouro2.getDescricao());
 			this.logradouro.setId(logradouro2.getId());
 		}
 		

@@ -30,15 +30,12 @@
 							update=":formTemplate:formCadastro" style="width:5%">
 						</p:commandButton>
 					</f:facet>
-					<p:column headerText="Nome do Cidade" sortBy="descricao"
+					<p:column headerText="Nome do Logradouro" sortBy="descricao"
 						filterBy="descricao">
 						<h:outputText value="#{registro.descricao}" />
 					</p:column>
 					
-					<p:column headerText="Sigla" sortBy="sigla"
-						filterBy="sigla">
-						<h:outputText value="#{registro.sigla}" />
-					</p:column>
+					<!--BOX DE TIPO DE LOGRADOURO -->
 					
 					<p:column headerText="Editar" style="width:5%;">
 					
@@ -78,7 +75,7 @@
 		</h:form>
 
 		<p:dialog
-			header="Formulário de Cadastro de Cidades"
+			header="Formulário de Cadastro de Logradouros"
 			widgetVar="dialogoCadastro" resizable="false" modal="true"
 			closable="false" appendTo="@(body)" dynamic="true"
 			responsive="true" 
@@ -92,7 +89,7 @@
 				<h:panelGrid id="painelCadastro_1">
 					<h:panelGrid id="painelCadastro_11">
 						<p:outputLabel
-							value="Nome do Cidade"
+							value="Nome do Logradouro"
 							 />
 							 
 							 

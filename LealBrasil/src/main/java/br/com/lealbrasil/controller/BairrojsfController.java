@@ -48,7 +48,7 @@ public class BairrojsfController extends GenericController implements Serializab
 		this.bairro.setDescricao(Utilidades.formataNomeDaRegiao(this.bairro.getDescricao()));
 		Bairro bairro2 = BairroBusiness.buscaBairroPeloNome(this.bairro.getDescricao());  //this.pais é diferente de pais
 		if(bairro2 != null){
-			mensagensDisparar("Este pais já está cadastrado: " + bairro2.getDescricao());
+			mensagensDisparar("Este bairro já está cadastrado: " + bairro2.getDescricao());
 			this.bairro.setId(bairro2.getId());
 		}
 		
