@@ -21,11 +21,23 @@ public class EstadoBusiness implements Serializable {
 		
 		try {
 			EstadoDAO estadoDAO = new EstadoDAO();			
-			estados = estadoDAO.listar(perfilLogado);
+			estados = estadoDAO.listar();
 		} catch (RuntimeException erro) {
 			erro.printStackTrace();
 		}
 		return estados;
+		
+	}
+
+	public static Estado buscaEstadoPeloNome(String descricao) {
+		EstadoDAO eDAO = new EstadoDAO();
+		Estado estado = eDAO.buscaEstadoPeloNome(descricao);
+		return estado;
+	}
+
+	public static void merge(Estado estado) {
+		EstadoDAO eDAO = new EstadoDAO();
+		eDAO.merge(estado);
 		
 	}
 }

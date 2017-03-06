@@ -21,11 +21,22 @@ public class BairroBusiness implements Serializable {
 		
 		try {
 			BairroDAO bairroDAO = new BairroDAO();			
-			bairro = bairroDAO.listar(perfilLogado);
+			bairro = bairroDAO.listar();
 		} catch (RuntimeException erro) {
 			erro.printStackTrace();
 		}
 		return bairro;
 		
+	}
+
+	public static Bairro buscaBairroPeloNome(String descricao) {
+		BairroDAO bDAO = new BairroDAO();
+		Bairro bairro = bDAO.buscaBairroPeloNome(descricao);
+		return bairro;
+	}
+
+	public static void merge(Bairro bairro) {
+		BairroDAO bDAO = new BairroDAO();
+		bDAO.merge(bairro);
 	}
 }

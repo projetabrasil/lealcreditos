@@ -45,7 +45,7 @@ public class PaisjsfController extends GenericController implements Serializable
 	}
 	
 	public void merge() {
-		this.pais.setDescricao(Utilidades.formataNomeDoPais(this.pais.getDescricao()));
+		this.pais.setDescricao(Utilidades.formataNomeDaRegiao(this.pais.getDescricao()));
 		Pais pais2 = PaisBusiness.buscaPaisPeloNome(this.pais.getDescricao());  //this.pais é diferente de pais
 		if(pais2 != null){
 			mensagensDisparar("Este pais já está cadastrado: " + pais2.getDescricao());
@@ -73,9 +73,7 @@ public class PaisjsfController extends GenericController implements Serializable
 
 		if (perfilLogado.getPerfilUsLogado().equals(Enum_Aux_Perfil_Pessoa.OUTROS)) {
 			perfilLogado = new PerfilLogado();
-			autenticacao.redirecionaPaginas("alfapage.xhtml", "Erro ao tentar chamar a pagina alfapage",true);			
-		    
-			
+			autenticacao.redirecionaPaginas("alfapage.xhtml", "Erro ao tentar chamar a pagina alfapage",true);				    			
 		}
 	}
 	

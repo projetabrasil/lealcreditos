@@ -20,11 +20,22 @@ public class CidadeBusiness implements Serializable {
 		
 		try {
 			CidadeDAO cidadeDAO = new CidadeDAO();			
-			cidade = cidadeDAO.listar(perfilLogado);
+			cidade = cidadeDAO.listar();
 		} catch (RuntimeException erro) {
 			erro.printStackTrace();
 		}
 		return cidade;
 		
+	}
+
+	public static Cidade buscaCidadePeloNome(String descricao) {
+		CidadeDAO cDAO = new CidadeDAO();
+		Cidade cidade = cDAO.buscaCidadePeloNome(descricao);
+		return cidade;
+	}
+
+	public static void merge(Cidade cidade) {
+		CidadeDAO cDAO = new CidadeDAO();
+		cDAO.merge(cidade);
 	}
 }

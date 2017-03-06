@@ -21,11 +21,22 @@ public class LogradouroBusiness implements Serializable {
 		
 		try {
 			LogradouroDAO logradouroDAO = new LogradouroDAO();			
-			logradouro = logradouroDAO.listar(perfilLogado);
+			logradouro = logradouroDAO.listar();
 		} catch (RuntimeException erro) {
 			erro.printStackTrace();
 		}
 		return logradouro;
 		
+	}
+
+	public static Logradouro buscaLogradouroPeloNome(String descricao) {
+		LogradouroDAO lDAO = new LogradouroDAO();
+		Logradouro logradouro = lDAO.buscaLogradouroPeloNome(descricao);
+		return logradouro;
+	}
+
+	public static void merge(Logradouro logradouro) {
+		LogradouroDAO lDAO = new LogradouroDAO();
+		lDAO.merge(logradouro);
 	}
 }
