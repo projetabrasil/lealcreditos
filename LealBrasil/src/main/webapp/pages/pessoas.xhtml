@@ -197,7 +197,7 @@
 					<h:panelGrid id="painelCadastro_21">
 						<p:outputLabel value="Data de nascimento"
 							rendered="#{pessoajsfController.pessoaConfig.labelDataNascimentoRenderiza}" />
-						<p:calendar id="calendar" size="30" maxlength="15" mask="99/99/9999" 
+						<p:calendar id="calendar" size="30" maxlength="15" mask="**/**/****" pattern="dd/MM/yyyy"
 							value="#{pessoajsfController.pessoa.dataNascimento}"
 							required="#{pessoajsfController.pessoaConfig.labelDataNascimentoObrigatorio}"
 							requiredMessage="#{pessoajsfController.pessoaConfig.labelDataNascimentoRequiredMessage}"
@@ -210,7 +210,7 @@
 							value="#{pessoajsfController.pessoaConfig.labelcpf_Cnpj}"
 							rendered="#{pessoajsfController.pessoaConfig.labelcpf_CnpjRenderiza}" />
 						<p:outputLabel id="identificador" size="30" maxlength="15"
-							mask="#{pessoajsfController.pessoa.enum_Aux_Tipo_Identificador.mask}"
+							mask="#{pessoajsfController.pessoa.enum_Aux_Tipo_Identificador.label}"
 							value="#{pessoajsfController.pessoa.cpf_Cnpj}"
 							converter="mascaraCPFConverter"
 							required="#{pessoajsfController.pessoaConfig.labelcpf_CnpjObrigatorio}"
