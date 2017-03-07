@@ -18,7 +18,7 @@ import javax.persistence.Transient;
 @SuppressWarnings("serial")
 @Entity
 @Table(name="Pais")
-public class Pais extends GenericDomain implements Serializable {
+public class Pais extends GenericDomain implements Serializable, BaseEntity {
 	
 	@Id
 	@SequenceGenerator(name="pk_pais",sequenceName="messsounds_pais", allocationSize=1)
@@ -166,6 +166,8 @@ public class Pais extends GenericDomain implements Serializable {
 		return "Pais [id=" + id + ", descricao=" + descricao + ", sigla=" + sigla + ", maskZip=" + maskZip
 				+ ", maskTel=" + maskTel + ", id_Pessoa_Registro=" + id_Pessoa_Registro + ", estados=" + estados + "]";
 	}
+
+	
 
 	
 	

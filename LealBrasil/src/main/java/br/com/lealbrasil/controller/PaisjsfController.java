@@ -91,6 +91,7 @@ public class PaisjsfController extends GenericController implements Serializable
 	}
 
 	public List<Pais> getPaises() {
+		listar();
 		return paises;
 	}
 
