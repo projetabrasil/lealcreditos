@@ -120,6 +120,9 @@ public class Pais extends GenericDomain implements Serializable, BaseEntity {
 			return true;
 		if (!super.equals(obj))
 			return false;
+		if (obj instanceof Pais){
+            return ((Pais)obj).equals(obj); //equals ao lado é utilizado pelo dropdown no estado, é necessário avaliar a igualdade pra não dar problema
+        }
 		if (getClass() != obj.getClass())
 			return false;
 		Pais other = (Pais) obj;

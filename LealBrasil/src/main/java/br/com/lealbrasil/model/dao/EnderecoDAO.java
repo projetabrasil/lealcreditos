@@ -10,7 +10,7 @@ import br.com.lealbrasil.model.entities.PerfilLogado;
 import br.com.lealbrasil.util.HibernateUtil;
 
 public class EnderecoDAO {
-
+	@SuppressWarnings("unchecked")
 	public List<Endereco> listar(PerfilLogado perfilLogado) {
 		Session sessao = HibernateUtil.getFabricaDeSessoes().openSession();		
 		try{	

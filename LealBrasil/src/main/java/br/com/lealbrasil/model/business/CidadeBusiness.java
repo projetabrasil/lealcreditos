@@ -7,6 +7,7 @@ import org.omnifaces.util.Messages;
 
 import br.com.lealbrasil.model.dao.CidadeDAO;
 import br.com.lealbrasil.model.entities.Cidade;
+import br.com.lealbrasil.model.entities.Estado;
 import br.com.lealbrasil.model.entities.PerfilLogado;
 
 @SuppressWarnings("serial")
@@ -37,5 +38,11 @@ public class CidadeBusiness implements Serializable {
 	public static void merge(Cidade cidade) {
 		CidadeDAO cDAO = new CidadeDAO();
 		cDAO.merge(cidade);
+	}
+	
+	public static List<Estado> associaEstadosAoPais(Long id) {
+		CidadeDAO cDAO = new CidadeDAO();
+		List<Estado> estados = cDAO.associaEstadosAoPais(id);
+		return estados;
 	}
 }
