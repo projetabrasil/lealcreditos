@@ -2,7 +2,6 @@ package br.com.lealbrasil.controller;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -16,7 +15,6 @@ import br.com.lealbrasil.model.business.LogradouroBusiness;
 import br.com.lealbrasil.model.entities.Cidade;
 import br.com.lealbrasil.model.entities.Enum_Aux_Perfil_Pessoa;
 import br.com.lealbrasil.model.entities.Enum_Aux_Tipo_Logradouro;
-import br.com.lealbrasil.model.entities.Enum_Aux_Tipo_Pais;
 import br.com.lealbrasil.model.entities.Logradouro;
 import br.com.lealbrasil.model.entities.PerfilLogado;
 import br.com.lealbrasil.util.Utilidades;
@@ -30,7 +28,7 @@ public class LogradourojsfController extends GenericController implements Serial
 	private List<Logradouro> logradouros;
 	private PessoaConfig pessoaConfig;
 	
-	private Cidade aQualPertence;
+	//private Cidade aQualPertence;
 	
 	@ManagedProperty(value = "#{autenticacaojsfController.perfilLogado}")
 	private PerfilLogado perfilLogado;
@@ -54,10 +52,9 @@ public class LogradourojsfController extends GenericController implements Serial
 		Utilidades.abrirfecharDialogos("dialogoCadastro",true);
 	}
 	
-	public void merge(Cidade cidadeDoLog) {
+	public void merge() {
 		this.logradouro.setDescricao(Utilidades.formataNomeDaRegiao(this.logradouro.getDescricao()));
-		this.logradouro.setCidade(cidadeDoLog);
-		System.out.println(cidadeDoLog.getDescricao());
+		//this.logradouro.setCidade(cidadeDoLog);
 		Logradouro logradouro2 = LogradouroBusiness.buscaLogradouroPeloNome(this.logradouro.getDescricao());  //this.pais é diferente de pais
 		if(logradouro2 != null){
 			mensagensDisparar("Este logradouro já está cadastrado: " + logradouro2.getDescricao());
