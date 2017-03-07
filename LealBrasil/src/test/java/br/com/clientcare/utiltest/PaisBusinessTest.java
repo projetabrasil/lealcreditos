@@ -9,13 +9,13 @@ import br.com.lealbrasil.model.entities.Pessoa;
 
 public class PaisBusinessTest {
 	
+	@Test
 	public void testaBuscaDePais(){
 		Pais pais = new Pais();
 		pais = PaisBusiness.buscaPaisPeloNome("bRaSil");
 		System.out.println(pais.toString());
 	}
 	
-	@Test
 	public void testaInsertDePais() {
 		Pais pais = new Pais();
 		pais.setDescricao("Brasil");

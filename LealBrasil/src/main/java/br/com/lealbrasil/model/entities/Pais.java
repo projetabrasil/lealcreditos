@@ -18,7 +18,7 @@ import javax.persistence.Transient;
 @SuppressWarnings("serial")
 @Entity
 @Table(name="Pais")
-public class Pais extends GenericDomain implements Serializable {
+public class Pais extends GenericDomain implements Serializable, BaseEntity {
 	
 	@Id
 	@SequenceGenerator(name="pk_pais",sequenceName="messsounds_pais", allocationSize=1)
@@ -120,6 +120,9 @@ public class Pais extends GenericDomain implements Serializable {
 			return true;
 		if (!super.equals(obj))
 			return false;
+		if (obj instanceof Pais){
+            return ((Pais)obj).equals(obj); //equals ao lado é utilizado pelo dropdown no estado, é necessário avaliar a igualdade pra não dar problema
+        }
 		if (getClass() != obj.getClass())
 			return false;
 		Pais other = (Pais) obj;
@@ -166,6 +169,8 @@ public class Pais extends GenericDomain implements Serializable {
 		return "Pais [id=" + id + ", descricao=" + descricao + ", sigla=" + sigla + ", maskZip=" + maskZip
 				+ ", maskTel=" + maskTel + ", id_Pessoa_Registro=" + id_Pessoa_Registro + ", estados=" + estados + "]";
 	}
+
+	
 
 	
 	

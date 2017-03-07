@@ -17,7 +17,7 @@ import javax.persistence.Transient;
 @SuppressWarnings("serial")
 @Entity
 @Table(name="Estado")
-public class Estado extends GenericDomain implements Serializable {
+public class Estado extends GenericDomain implements Serializable, BaseEntity {
 	
 	@Id
 	@SequenceGenerator(name="pk_estado",sequenceName="messsounds_estado", allocationSize=1)
@@ -40,7 +40,7 @@ public class Estado extends GenericDomain implements Serializable {
 	
 	@Transient
 	private List<Cidade> cidades;
-
+	
 	public Long getId() {
 		return id;
 	}
@@ -73,20 +73,20 @@ public class Estado extends GenericDomain implements Serializable {
 		this.pais = pais;
 	}
 
-	public List<Cidade> getCidades() {
-		return cidades;
-	}
-
-	public void setCidades(List<Cidade> cidades) {
-		this.cidades = cidades;
-	}
-
 	public Pessoa getId_Pessoa_Registro() {
 		return id_Pessoa_Registro;
 	}
 
 	public void setId_Pessoa_Registro(Pessoa id_Pessoa_Registro) {
 		this.id_Pessoa_Registro = id_Pessoa_Registro;
+	}
+
+	public List<Cidade> getCidades() {
+		return cidades;
+	}
+
+	public void setCidades(List<Cidade> cidades) {
+		this.cidades = cidades;
 	}
 
 	@Override
@@ -149,6 +149,8 @@ public class Estado extends GenericDomain implements Serializable {
 		return "Estado [id=" + id + ", descricao=" + descricao + ", sigla=" + sigla + ", pais=" + pais
 				+ ", id_Pessoa_Registro=" + id_Pessoa_Registro + ", cidades=" + cidades + "]";
 	}
+
+	
 
 	
 

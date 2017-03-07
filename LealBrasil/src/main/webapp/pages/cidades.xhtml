@@ -20,7 +20,7 @@
 
 			<p:panel header="Listagem de #{autenticacaojsfController.perfilLogado.paginaAtual.descricao2}">
 				<p:dataTable id="tabela" emptyMessage="" reflow="true"
-					value="#{cidadejsfController.cidade}" paginator="true" rows="5"
+					value="#{cidadejsfController.cidades}" paginator="true" rows="5"
 					var="registro" style="font-size:15px;">
 					<f:facet name="header">
 					    
@@ -92,7 +92,7 @@
 				<h:panelGrid id="painelCadastro_1">
 					<h:panelGrid id="painelCadastro_11">
 						<p:outputLabel
-							value="Nome do Cidade"
+							value="Nome da Cidade"
 							 />
 						<p:inputText size="30" maxlength="30"
 							value="#{cidadejsfController.cidade.descricao}"
@@ -117,12 +117,28 @@
 							<f:validateLength minimum="8" />
 						</p:inputText>
 					</h:panelGrid>
+					<h:panelGrid columns="2" cellpadding="5">
+            			<p:outputLabel for="pais" value="País: "/>
+            			<p:selectOneMenu id="pais" value="#{cidadejsfController.cidade.estado.pais}" converter="simpleEntityConverter" style="width:150px">
+                			<p:ajax listener="#{cidadejsfController.associaEstadosAoPais}" update="estado" />
+                			<f:selectItem itemLabel="Selecione o país" itemValue="" noSelectionOption="true" />
+                			<f:selectItems value="#{paisjsfController.paises}" var="o" itemLabel="#{o.descricao}" itemValue="#{o}" />
+            			</p:selectOneMenu>
+ 
+            			<p:outputLabel for="estado" value="Estado: " />
+            			<p:selectOneMenu id="estado" value="#{cidadejsfController.cidade.estado}" style="width:150px">
+                			<f:selectItem itemLabel="Selecione o estado" itemValue="" noSelectionOption="true" />
+                			<f:selectItems value="#{cidadejsfController.cidade.estado.pais.estados}" var="o" itemLabel="#{o.descricao}" itemValue="#{o}"/>
+            			</p:selectOneMenu>
+        			</h:panelGrid>
+ 
 
 				</h:panelGrid>
 
 				<h:panelGrid columns="2" id="painelCadastro_7">
 					<p:panelGrid>
 						<p:commandButton value="Salvar" process="@form"
+							converter="simpleEntityConverter"
 							actionListener="#{cidadejsfController.merge}"
 							update=":mensagens :formTemplate:formLista:tabela" />
 					</p:panelGrid>

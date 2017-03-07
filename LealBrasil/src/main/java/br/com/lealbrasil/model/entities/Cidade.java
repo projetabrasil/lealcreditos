@@ -17,7 +17,7 @@ import javax.persistence.Transient;
 @SuppressWarnings("serial")
 @Entity
 @Table(name="Cidade")
-public class Cidade extends GenericDomain implements Serializable {
+public class Cidade extends GenericDomain implements Serializable, BaseEntity {
 	
 	@Id
 	@SequenceGenerator(name="pk_cidade",sequenceName="messsounds_cidade", allocationSize=1)
@@ -42,7 +42,18 @@ public class Cidade extends GenericDomain implements Serializable {
 	private List<Bairro> bairros;
 	
 	@Transient
-	private List<Logradouro> logradouros;
+	private List<Logradouro> logradouros;	
+	
+	
+	public Cidade(){
+		super();
+	}
+	
+	public Cidade(Estado estado) {
+		super();
+		estado.setDescricao("");	
+		this.estado = estado;
+	}
 
 	public Long getId() {
 		return id;
@@ -76,6 +87,14 @@ public class Cidade extends GenericDomain implements Serializable {
 		this.estado = estado;
 	}
 
+	public Pessoa getId_Pessoa_Registro() {
+		return id_Pessoa_Registro;
+	}
+
+	public void setId_Pessoa_Registro(Pessoa id_Pessoa_Registro) {
+		this.id_Pessoa_Registro = id_Pessoa_Registro;
+	}
+
 	public List<Bairro> getBairros() {
 		return bairros;
 	}
@@ -91,14 +110,8 @@ public class Cidade extends GenericDomain implements Serializable {
 	public void setLogradouros(List<Logradouro> logradouros) {
 		this.logradouros = logradouros;
 	}
-
-	public Pessoa getId_Pessoa_Registro() {
-		return id_Pessoa_Registro;
-	}
-
-	public void setId_Pessoa_Registro(Pessoa id_Pessoa_Registro) {
-		this.id_Pessoa_Registro = id_Pessoa_Registro;
-	}
+	
+	
 
 	@Override
 	public int hashCode() {
@@ -167,6 +180,8 @@ public class Cidade extends GenericDomain implements Serializable {
 				+ ", id_Pessoa_Registro=" + id_Pessoa_Registro + ", bairros=" + bairros + ", logradouros=" + logradouros
 				+ "]";
 	}
+
+	
 
 	
 

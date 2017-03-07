@@ -13,6 +13,7 @@ import br.com.lealbrasil.controller.entitiesconfig.PessoaConfig;
 import br.com.lealbrasil.model.business.CidadeBusiness;
 import br.com.lealbrasil.model.entities.Cidade;
 import br.com.lealbrasil.model.entities.Enum_Aux_Perfil_Pessoa;
+import br.com.lealbrasil.model.entities.Estado;
 import br.com.lealbrasil.model.entities.PerfilLogado;
 import br.com.lealbrasil.util.Utilidades;
 
@@ -40,7 +41,7 @@ public class CidadejsfController extends GenericController implements Serializab
 	
 	public void novo(ActionEvent event) {
 		perfilLogadoTemp = perfilLogado;
-		cidade = new Cidade();		
+		cidade = new Cidade(new Estado());		
 		Utilidades.abrirfecharDialogos("dialogoCadastro",true);
 	}
 	
@@ -75,6 +76,10 @@ public class CidadejsfController extends GenericController implements Serializab
 			perfilLogado = new PerfilLogado();
 			autenticacao.redirecionaPaginas("alfapage.xhtml", "Erro ao tentar chamar a pagina alfapage",true);				    			
 		}
+	}
+	
+	public void associaEstadosAoPais(){
+		this.cidade.getEstado().getPais().setEstados(CidadeBusiness.associaEstadosAoPais(cidade.getEstado().getPais().getId()));
 	}
 	
 	

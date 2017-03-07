@@ -129,6 +129,7 @@ public class EstadojsfController extends GenericController implements Serializab
 	public void setEstado(Estado estado) {
 		this.estado = estado;
 	}
+
 	
 	
 }
