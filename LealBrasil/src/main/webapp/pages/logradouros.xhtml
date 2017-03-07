@@ -36,6 +36,10 @@
 					</p:column>
 					
 					<!--BOX DE TIPO DE LOGRADOURO -->
+					<p:column headerText="Tipo do Logradouro" sortBy="enum_Aux_Tipo_Logradouro"
+						filterBy="enum_Aux_Tipo_Logradouro">
+						<h:outputText value="#{registro.enum_Aux_Tipo_Logradouro}" />
+					</p:column>
 					
 					<p:column headerText="Editar" style="width:5%;">
 					
@@ -87,13 +91,45 @@
     text-align: left;overflow:auto;">
 			<h:form id="formCadastro">
 				<h:panelGrid id="painelCadastro_1">
+
+					
 					<h:panelGrid id="painelCadastro_11">
+						<p:outputLabel value="País" />
+						<p:selectOneMenu>
+						
+						<f:selectItem itemLabel="Selecione País" itemValue="" noSelectionOption="true" />
+						<f:selectItems value="#{paisjsfController.paises}" var="pDoLog"
+										itemLabel="#{pDoLog.descricao}"	itemValue="#{tt}" 
+							 />
+						</p:selectOneMenu>
+					</h:panelGrid>
+					
+					<h:panelGrid id="painelCadastro_12">
+						<p:outputLabel value="Estado" />
+						<p:selectOneMenu>
+						
+						<f:selectItem itemLabel="Selecione Estado" itemValue="" noSelectionOption="true" />
+						<f:selectItems value="#{estadojsfController.estados}" var="tt"
+										itemLabel="#{tt.descricao}"	itemValue="#{tt}" 
+							 />
+						</p:selectOneMenu>
+					</h:panelGrid>
+					
+					<h:panelGrid id="painelCadastro_13">
+						<p:outputLabel value="Cidade" />
+						<p:selectOneMenu>
+						
+						<f:selectItem itemLabel="Selecione Cidade" itemValue="" noSelectionOption="true" />
+						<f:selectItems value="#{cidadejsfController.cidades}" var="cidadeDoLog"
+										itemLabel="#{cidadeDoLog.descricao}"	itemValue="#{cidadeDoLog}" 
+							 />
+						</p:selectOneMenu>
+					</h:panelGrid>
+					
+					<h:panelGrid id="painelCadastro_14">
 						<p:outputLabel
 							value="Nome do Logradouro"
 							 />
-							 
-							 
-							 
 						<p:inputText size="30" maxlength="30"
 							value="#{logradourojsfController.logradouro.descricao}"
 							required="true"
@@ -104,6 +140,14 @@
 							<f:validateLength minimum="3" />
 						</p:inputText>
 					</h:panelGrid>
+					<h:panelGrid id="painelCadastro_15">
+						<p:outputLabel	value="Tipo do Logradouro" />
+						<p:selectOneMenu>
+							<f:selectItem itemLabel="Selecione o Logradouro" itemValue="" noSelectionOption="true" />
+							<f:selectItems value="#{logradourojsfController.listarTiposLogradouros()}" var="tt"
+										itemLabel="#{tt.descricao}"	itemValue="#{tt}"  />
+						</p:selectOneMenu>
+					</h:panelGrid>
 
 
 				</h:panelGrid>
@@ -111,7 +155,7 @@
 				<h:panelGrid columns="2" id="painelCadastro_7">
 					<p:panelGrid>
 						<p:commandButton value="Salvar" process="@form"
-							actionListener="#{logradourojsfController.merge}"
+							actionListener="#{logradourojsfController.merge(cidadeDoLog)}"
 							update=":mensagens :formTemplate:formLista:tabela" />
 					</p:panelGrid>
 					<p:panelGrid>

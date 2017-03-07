@@ -1,6 +1,8 @@
 package br.com.lealbrasil.controller;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -11,7 +13,10 @@ import javax.faces.event.ActionEvent;
 
 import br.com.lealbrasil.controller.entitiesconfig.PessoaConfig;
 import br.com.lealbrasil.model.business.LogradouroBusiness;
+import br.com.lealbrasil.model.entities.Cidade;
 import br.com.lealbrasil.model.entities.Enum_Aux_Perfil_Pessoa;
+import br.com.lealbrasil.model.entities.Enum_Aux_Tipo_Logradouro;
+import br.com.lealbrasil.model.entities.Enum_Aux_Tipo_Pais;
 import br.com.lealbrasil.model.entities.Logradouro;
 import br.com.lealbrasil.model.entities.PerfilLogado;
 import br.com.lealbrasil.util.Utilidades;
@@ -25,12 +30,17 @@ public class LogradourojsfController extends GenericController implements Serial
 	private List<Logradouro> logradouros;
 	private PessoaConfig pessoaConfig;
 	
+	private Cidade aQualPertence;
+	
 	@ManagedProperty(value = "#{autenticacaojsfController.perfilLogado}")
 	private PerfilLogado perfilLogado;
 	private PerfilLogado perfilLogadoTemp;
 	
 	@ManagedProperty(value = "#{autenticacaojsfController}")
 	private AutenticacaojsfController autenticacao;
+	
+	
+	private List<Enum_Aux_Tipo_Logradouro> lista;
 	
 	@PostConstruct
 	public void listar() {
@@ -44,8 +54,10 @@ public class LogradourojsfController extends GenericController implements Serial
 		Utilidades.abrirfecharDialogos("dialogoCadastro",true);
 	}
 	
-	public void merge() {
+	public void merge(Cidade cidadeDoLog) {
 		this.logradouro.setDescricao(Utilidades.formataNomeDaRegiao(this.logradouro.getDescricao()));
+		this.logradouro.setCidade(cidadeDoLog);
+		System.out.println(cidadeDoLog.getDescricao());
 		Logradouro logradouro2 = LogradouroBusiness.buscaLogradouroPeloNome(this.logradouro.getDescricao());  //this.pais é diferente de pais
 		if(logradouro2 != null){
 			mensagensDisparar("Este logradouro já está cadastrado: " + logradouro2.getDescricao());
@@ -129,6 +141,21 @@ public class LogradourojsfController extends GenericController implements Serial
 	public void setLogradouro(Logradouro logradouro) {
 		this.logradouro = logradouro;
 	}
+	
+	
+	public List<Enum_Aux_Tipo_Logradouro> listarTiposLogradouros(){
+		Enum_Aux_Tipo_Logradouro[] enums =  Enum_Aux_Tipo_Logradouro.values();
+		
+		lista = new ArrayList<Enum_Aux_Tipo_Logradouro>();
+		
+		for(int i=0; i < enums.length ; i++){
+			lista.add(enums[i]);
+		}
+		
+		return lista;
+	}
+	
+	
 	
 	
 }

@@ -1,9 +1,11 @@
 package br.com.lealbrasil.model.entities;
 
 public enum Enum_Aux_Tipo_Logradouro {
-	AVENIDA("AVENIDA",1,true),
-	RUA("RUA",2,true),
-	OUTROS("OUTROS",3,false);
+	RUA("RUA",1,true),
+	AVENIDA("AVENIDA",2,true),
+	RODOVIA("RODOVIA",3,true),
+	SERVIDAO("SERVIDÃO",4,true),
+	OUTROS("OUTROS",5,false);
 	
 	private String descricao;
 	private int id;
