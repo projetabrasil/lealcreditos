@@ -1,16 +1,15 @@
 package br.com.lealbrasil.controller.entitiesconfig;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 import br.com.lealbrasil.model.entities.Enum_Aux_Tipo_Pais;
 import br.com.lealbrasil.model.entities.Pais;
 
 
 public class PaisConfig implements Serializable{
+		
+	private static final long serialVersionUID = -3948238679420937168L;
+
 			private Pais pais;
 
 			private String descPais;
@@ -50,14 +49,10 @@ public class PaisConfig implements Serializable{
 		}
 		
 		public Enum_Aux_Tipo_Pais setZoneCodeNum() {
-//			if(this.getZoneCodeNum()==null)
-//				this.setDescPais();
 			return this.zoneCodeNum;
 		}
 			
 		public String getZoneCodeMask() {
-//			if(this.getZoneCodeMask)==null)
-//					this.setZoneCodeMask();
 		return this.zoneCodeMask;
 		}
 		

@@ -12,7 +12,6 @@ import javax.faces.event.ActionEvent;
 
 import br.com.lealbrasil.controller.entitiesconfig.PessoaConfig;
 import br.com.lealbrasil.model.business.LogradouroBusiness;
-import br.com.lealbrasil.model.entities.Cidade;
 import br.com.lealbrasil.model.entities.Enum_Aux_Perfil_Pessoa;
 import br.com.lealbrasil.model.entities.Enum_Aux_Tipo_Logradouro;
 import br.com.lealbrasil.model.entities.Logradouro;

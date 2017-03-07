@@ -29,4 +29,5 @@ public enum Enum_Aux_Tipo_Logradouro {
 	public boolean isSelecionar() {
 		return selecionar;
 	}
+	
 }
