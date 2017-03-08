@@ -25,6 +25,7 @@ public class CidadejsfController extends GenericController implements Serializab
 	private Cidade cidade;
 	private List<Cidade> cidades;
 	private PessoaConfig pessoaConfig;
+	private Estado estado;
 	
 	@ManagedProperty(value = "#{autenticacaojsfController.perfilLogado}")
 	private PerfilLogado perfilLogado;
@@ -53,6 +54,7 @@ public class CidadejsfController extends GenericController implements Serializab
 			this.cidade.setId(cidade2.getId());
 		}
 		
+		this.cidade.setEstado(this.estado);
 		this.cidade.setUltimaAtualizacao(Utilidades.retornaCalendario());
 		
 		//Inseri no banco o usuário que registrou o país, SE usuário NÃO existir, o id_registro é feito com o associado
@@ -134,6 +136,14 @@ public class CidadejsfController extends GenericController implements Serializab
 	public void setCidade(Cidade cidade) {
 		this.cidade = cidade;
 	}
+
+	public Estado getEstado() {
+		return estado;
+	}
+
+	public void setEstado(Estado estado) {
+		this.estado = estado;
+	}	
 	
 	
 }

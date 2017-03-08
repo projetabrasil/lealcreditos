@@ -119,14 +119,14 @@
 					</h:panelGrid>
 					<h:panelGrid columns="2" cellpadding="5">
             			<p:outputLabel for="pais" value="País: "/>
-            			<p:selectOneMenu id="pais" value="#{cidadejsfController.cidade.estado.pais}" converter="simpleEntityConverter" style="width:150px">
+            			<p:selectOneMenu id="pais" value="#{cidadejsfController.cidade.estado.pais}" converter="omnifaces.SelectItemsConverter" style="width:150px">
                 			<p:ajax listener="#{cidadejsfController.associaEstadosAoPais}" update="estado" />
                 			<f:selectItem itemLabel="Selecione o país" itemValue="" noSelectionOption="true" />
                 			<f:selectItems value="#{paisjsfController.paises}" var="o" itemLabel="#{o.descricao}" itemValue="#{o}" />
             			</p:selectOneMenu>
  
             			<p:outputLabel for="estado" value="Estado: " />
-            			<p:selectOneMenu id="estado" value="#{cidadejsfController.cidade.estado}" style="width:150px">
+            			<p:selectOneMenu id="estado" value="#{cidadejsfController.estado}" converter="omnifaces.SelectItemsConverter" style="width:150px">
                 			<f:selectItem itemLabel="Selecione o estado" itemValue="" noSelectionOption="true" />
                 			<f:selectItems value="#{cidadejsfController.cidade.estado.pais.estados}" var="o" itemLabel="#{o.descricao}" itemValue="#{o}"/>
             			</p:selectOneMenu>

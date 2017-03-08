@@ -17,7 +17,7 @@ import javax.persistence.Transient;
 @SuppressWarnings("serial")
 @Entity
 @Table(name="Estado")
-public class Estado extends GenericDomain implements Serializable, BaseEntity {
+public class Estado extends GenericDomain implements Serializable {
 	
 	@Id
 	@SequenceGenerator(name="pk_estado",sequenceName="messsounds_estado", allocationSize=1)

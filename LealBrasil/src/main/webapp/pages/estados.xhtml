@@ -120,7 +120,7 @@
 					</h:panelGrid>
        				<h:panelGrid  id="painelCadastro_13">
            				 	<p:outputLabel for="pais" value="Países: " />
-           					<p:selectOneMenu id="pais" value="#{estadojsfController.estado.pais}" converter="simpleEntityConverter" style="width:50px">
+           					<p:selectOneMenu id="pais" value="#{estadojsfController.estado.pais}" converter="omnifaces.SelectItemsConverter" style="width:50px">
                 				<f:selectItem itemLabel="Selecione o País" itemValue="" noSelectionOption="true" />
                 				<f:selectItems value="#{paisjsfController.paises}" var="o" itemLabel="#{o.descricao}" itemValue="#{o}"/>
             				</p:selectOneMenu>    				

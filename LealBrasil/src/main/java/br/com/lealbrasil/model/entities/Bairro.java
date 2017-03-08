@@ -15,7 +15,7 @@ import javax.persistence.Table;
 @SuppressWarnings("serial")
 @Entity
 @Table(name="Bairro")
-public class Bairro extends GenericDomain implements Serializable, BaseEntity {	
+public class Bairro extends GenericDomain implements Serializable {	
 
 	@Id
 	@SequenceGenerator(name="pk_bairro",sequenceName="messsounds_bairro", allocationSize=1)
