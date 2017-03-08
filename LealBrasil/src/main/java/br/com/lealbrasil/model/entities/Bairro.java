@@ -37,10 +37,12 @@ public class Bairro extends GenericDomain implements Serializable {
 		super();
 	}
 	
-	public Bairro(Cidade cidade) {
+	public Bairro(Cidade cidade, Estado estado) {
 		super();
 		cidade.setDescricao("");	
 		this.cidade = cidade;
+		estado.setDescricao("");
+		this.cidade.setEstado(estado);
 	}
 	
 	public Long getId() {

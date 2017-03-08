@@ -45,7 +45,7 @@ public class BairrojsfController extends GenericController implements Serializab
 	
 	public void novo(ActionEvent event) {
 		perfilLogadoTemp = perfilLogado;
-		bairro = new Bairro();		
+		bairro = new Bairro(new Cidade(), new Estado());		
 		Utilidades.abrirfecharDialogos("dialogoCadastro",true);
 	}
 	
@@ -89,11 +89,11 @@ public class BairrojsfController extends GenericController implements Serializab
 	}
 	
 	public void associaEstadosAoPais(){
-		this.bairro.getCidade().getEstado().getPais().setEstados(BairroBusiness.associaEstadosAoPais(cidade.getEstado().getPais().getId()));
+		this.bairro.getCidade().getEstado().getPais().setEstados(BairroBusiness.associaEstadosAoPais(this.bairro.getCidade().getEstado().getPais().getId()));
 	}
 	
 	public void associaCidadesAoEstado(){
-		this.estado.setCidades(BairroBusiness.associaCidadesAoEstado(this.cidade.getEstado().getId()));
+		this.estado.setCidades(BairroBusiness.associaCidadesAoEstado(this.estado.getId()));
 	}
 	
 	public void configurarPessoa() {
