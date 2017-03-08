@@ -138,7 +138,6 @@
 				<h:panelGrid columns="2" id="painelCadastro_7">
 					<p:panelGrid>
 						<p:commandButton value="Salvar" process="@form"
-							converter="simpleEntityConverter"
 							actionListener="#{cidadejsfController.merge}"
 							update=":mensagens :formTemplate:formLista:tabela" />
 					</p:panelGrid>

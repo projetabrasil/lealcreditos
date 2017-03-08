@@ -66,6 +66,8 @@ public class CidadejsfController extends GenericController implements Serializab
 		
 		CidadeBusiness.merge(this.cidade);
 		listar(); //ATENÇÃO, REVER LINHA NO MOMENTO DA IMPLANTAÇÃO DO FRONT!!!! - 02/03/2017
+		this.estado = null;
+		this.cidade.setEstado(new Estado());
 		Utilidades.abrirfecharDialogos("dialogoCadastro",false);
 
 	}

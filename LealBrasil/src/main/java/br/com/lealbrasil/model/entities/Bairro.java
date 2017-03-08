@@ -32,7 +32,17 @@ public class Bairro extends GenericDomain implements Serializable {
 	@ManyToOne
 	@JoinColumn ( name ="id_Pessoa_Registro", nullable=false)	
 	private Pessoa id_Pessoa_Registro;
-
+	
+	public Bairro(){
+		super();
+	}
+	
+	public Bairro(Cidade cidade) {
+		super();
+		cidade.setDescricao("");	
+		this.cidade = cidade;
+	}
+	
 	public Long getId() {
 		return id;
 	}

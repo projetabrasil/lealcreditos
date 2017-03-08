@@ -11,8 +11,11 @@ import javax.faces.event.ActionEvent;
 
 import br.com.lealbrasil.controller.entitiesconfig.PessoaConfig;
 import br.com.lealbrasil.model.business.BairroBusiness;
+import br.com.lealbrasil.model.business.BairroBusiness;
 import br.com.lealbrasil.model.entities.Bairro;
+import br.com.lealbrasil.model.entities.Cidade;
 import br.com.lealbrasil.model.entities.Enum_Aux_Perfil_Pessoa;
+import br.com.lealbrasil.model.entities.Estado;
 import br.com.lealbrasil.model.entities.PerfilLogado;
 import br.com.lealbrasil.util.Utilidades;
 
@@ -24,6 +27,8 @@ public class BairrojsfController extends GenericController implements Serializab
 	private Bairro bairro;
 	private List<Bairro> bairros;
 	private PessoaConfig pessoaConfig;
+	private Estado estado;
+	private Cidade cidade;
 	
 	@ManagedProperty(value = "#{autenticacaojsfController.perfilLogado}")
 	private PerfilLogado perfilLogado;
@@ -52,6 +57,8 @@ public class BairrojsfController extends GenericController implements Serializab
 			this.bairro.setId(bairro2.getId());
 		}
 		
+		this.bairro.setCidade(cidade);
+		this.bairro.getCidade().setEstado(estado);
 		this.bairro.setUltimaAtualizacao(Utilidades.retornaCalendario());
 		
 		//Inseri no banco o usuário que registrou o país, SE usuário NÃO existir, o id_registro é feito com o associado
@@ -62,7 +69,11 @@ public class BairrojsfController extends GenericController implements Serializab
 		}
 		
 		BairroBusiness.merge(this.bairro);
-		listar(); //ATENÇÃO, REVER LINHA NO MOMENTO DA IMPLANTAÇÃO DO FRONT!!!! - 02/03/2017
+		listar(); 
+		this.estado = null;
+		this.cidade = null;
+		this.bairro.setCidade(new Cidade());
+		this.bairro.getCidade().setEstado(new Estado());
 		Utilidades.abrirfecharDialogos("dialogoCadastro",false);
 
 	}
@@ -77,6 +88,13 @@ public class BairrojsfController extends GenericController implements Serializab
 		}
 	}
 	
+	public void associaEstadosAoPais(){
+		this.bairro.getCidade().getEstado().getPais().setEstados(BairroBusiness.associaEstadosAoPais(cidade.getEstado().getPais().getId()));
+	}
+	
+	public void associaCidadesAoEstado(){
+		this.estado.setCidades(BairroBusiness.associaCidadesAoEstado(this.cidade.getEstado().getId()));
+	}
 	
 	public void configurarPessoa() {
 		pessoaConfig = new PessoaConfig();
@@ -129,6 +147,24 @@ public class BairrojsfController extends GenericController implements Serializab
 	public void setBairro(Bairro bairro) {
 		this.bairro = bairro;
 	}
+
+	public Estado getEstado() {
+		return estado;
+	}
+
+	public void setEstado(Estado estado) {
+		this.estado = estado;
+	}
+
+	public Cidade getCidade() {
+		return cidade;
+	}
+
+	public void setCidade(Cidade cidade) {
+		this.cidade = cidade;
+	}
+	
+	
 	
 	
 }

@@ -7,6 +7,8 @@ import org.omnifaces.util.Messages;
 
 import br.com.lealbrasil.model.dao.BairroDAO;
 import br.com.lealbrasil.model.entities.Bairro;
+import br.com.lealbrasil.model.entities.Cidade;
+import br.com.lealbrasil.model.entities.Estado;
 import br.com.lealbrasil.model.entities.PerfilLogado;
 
 @SuppressWarnings("serial")
@@ -38,5 +40,17 @@ public class BairroBusiness implements Serializable {
 	public static void merge(Bairro bairro) {
 		BairroDAO bDAO = new BairroDAO();
 		bDAO.merge(bairro);
+	}
+
+	public static List<Estado> associaEstadosAoPais(Long id) {
+		BairroDAO bDAO = new BairroDAO();
+		List<Estado> estados = bDAO.associaEstadosAoPais(id);
+		return estados;
+	}
+
+	public static List<Cidade> associaCidadesAoEstado(Long id) {
+		BairroDAO bDAO = new BairroDAO();
+		List<Cidade> cidades = bDAO.associaCidadesAoPais(id);
+		return cidades;
 	}
 }
