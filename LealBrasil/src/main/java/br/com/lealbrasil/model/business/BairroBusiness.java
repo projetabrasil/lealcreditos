@@ -50,7 +50,7 @@ public class BairroBusiness implements Serializable {
 
 	public static List<Cidade> associaCidadesAoEstado(Long id) {
 		BairroDAO bDAO = new BairroDAO();
-		List<Cidade> cidades = bDAO.associaCidadesAoPais(id);
+		List<Cidade> cidades = bDAO.associaCidadesAoEstado(id);
 		return cidades;
 	}
 }

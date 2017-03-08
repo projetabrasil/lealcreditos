@@ -38,6 +38,18 @@ public class Logradouro extends GenericDomain implements Serializable {
 	@ManyToOne
 	@JoinColumn ( name ="id_Pessoa_Registro", nullable=false)	
 	private Pessoa id_Pessoa_Registro;
+	
+	public Logradouro(){
+		super();
+	}
+	
+	public Logradouro(Cidade cidade, Estado estado){
+		super();
+		cidade.setDescricao("");	
+		this.cidade = cidade;
+		estado.setDescricao("");
+		this.cidade.setEstado(estado);
+	}
 
 	public Long getId() {
 		return id;

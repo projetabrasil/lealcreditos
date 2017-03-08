@@ -11,7 +11,6 @@ import javax.faces.event.ActionEvent;
 
 import br.com.lealbrasil.controller.entitiesconfig.PessoaConfig;
 import br.com.lealbrasil.model.business.BairroBusiness;
-import br.com.lealbrasil.model.business.BairroBusiness;
 import br.com.lealbrasil.model.entities.Bairro;
 import br.com.lealbrasil.model.entities.Cidade;
 import br.com.lealbrasil.model.entities.Enum_Aux_Perfil_Pessoa;

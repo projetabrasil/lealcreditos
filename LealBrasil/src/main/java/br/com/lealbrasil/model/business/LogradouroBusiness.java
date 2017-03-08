@@ -6,6 +6,10 @@ import java.util.List;
 import org.omnifaces.util.Messages;
 
 import br.com.lealbrasil.model.dao.LogradouroDAO;
+import br.com.lealbrasil.model.dao.LogradouroDAO;
+import br.com.lealbrasil.model.dao.LogradouroDAO;
+import br.com.lealbrasil.model.entities.Cidade;
+import br.com.lealbrasil.model.entities.Estado;
 import br.com.lealbrasil.model.entities.Logradouro;
 import br.com.lealbrasil.model.entities.PerfilLogado;
 
@@ -38,5 +42,17 @@ public class LogradouroBusiness implements Serializable {
 	public static void merge(Logradouro logradouro) {
 		LogradouroDAO lDAO = new LogradouroDAO();
 		lDAO.merge(logradouro);
+	}
+
+	public static List<Estado> associaEstadosAoPais(Long id) {
+		LogradouroDAO lDAO = new LogradouroDAO();
+		List<Estado> estados = lDAO.associaEstadosAoPais(id);
+		return estados;
+	}
+
+	public static List<Cidade> associaCidadesAoEstado(Long id) {
+		LogradouroDAO lDAO = new LogradouroDAO();
+		List<Cidade> cidades = lDAO.associaCidadesAoEstado(id);
+		return cidades;
 	}
 }

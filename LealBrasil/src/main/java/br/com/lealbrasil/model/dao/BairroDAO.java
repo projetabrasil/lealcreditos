@@ -46,7 +46,7 @@ public class BairroDAO extends GenericDAO<Bairro> {
 	}
 	
 	@SuppressWarnings("unchecked")
-	public List<Cidade> associaCidadesAoPais(Long id) {
+	public List<Cidade> associaCidadesAoEstado(Long id) {
 		Session sessao = HibernateUtil.getFabricaDeSessoes().openSession();		
 		try{	
 			Criteria consulta = sessao.createCriteria(Cidade.class).createAlias("estado", "a");

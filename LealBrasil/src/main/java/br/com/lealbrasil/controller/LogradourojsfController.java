@@ -12,8 +12,10 @@ import javax.faces.event.ActionEvent;
 
 import br.com.lealbrasil.controller.entitiesconfig.PessoaConfig;
 import br.com.lealbrasil.model.business.LogradouroBusiness;
+import br.com.lealbrasil.model.entities.Cidade;
 import br.com.lealbrasil.model.entities.Enum_Aux_Perfil_Pessoa;
 import br.com.lealbrasil.model.entities.Enum_Aux_Tipo_Logradouro;
+import br.com.lealbrasil.model.entities.Estado;
 import br.com.lealbrasil.model.entities.Logradouro;
 import br.com.lealbrasil.model.entities.PerfilLogado;
 import br.com.lealbrasil.util.Utilidades;
@@ -26,6 +28,8 @@ public class LogradourojsfController extends GenericController implements Serial
 	private Logradouro logradouro;
 	private List<Logradouro> logradouros;
 	private PessoaConfig pessoaConfig;
+	private Estado estado;
+	private Cidade cidade;
 	
 	//private Cidade aQualPertence;
 	
@@ -47,7 +51,7 @@ public class LogradourojsfController extends GenericController implements Serial
 	
 	public void novo(ActionEvent event) {
 		perfilLogadoTemp = perfilLogado;
-		logradouro = new Logradouro();		
+		logradouro = new Logradouro(new Cidade(), new Estado());		
 		Utilidades.abrirfecharDialogos("dialogoCadastro",true);
 	}
 	
@@ -60,6 +64,8 @@ public class LogradourojsfController extends GenericController implements Serial
 			this.logradouro.setId(logradouro2.getId());
 		}
 		
+		this.logradouro.setCidade(cidade);
+		this.logradouro.getCidade().setEstado(estado);
 		this.logradouro.setUltimaAtualizacao(Utilidades.retornaCalendario());
 		
 		//Inseri no banco o usuário que registrou o país, SE usuário NÃO existir, o id_registro é feito com o associado
@@ -70,7 +76,11 @@ public class LogradourojsfController extends GenericController implements Serial
 		}
 		
 		LogradouroBusiness.merge(this.logradouro);
-		listar(); //ATENÇÃO, REVER LINHA NO MOMENTO DA IMPLANTAÇÃO DO FRONT!!!! - 02/03/2017
+		listar(); 
+		this.estado = null;
+		this.cidade = null;
+		this.logradouro.setCidade(new Cidade());
+		this.logradouro.getCidade().setEstado(new Estado());
 		Utilidades.abrirfecharDialogos("dialogoCadastro",false);
 
 	}
@@ -83,6 +93,14 @@ public class LogradourojsfController extends GenericController implements Serial
 			perfilLogado = new PerfilLogado();
 			autenticacao.redirecionaPaginas("alfapage.xhtml", "Erro ao tentar chamar a pagina alfapage",true);				    			
 		}
+	}
+	
+	public void associaEstadosAoPais(){
+		this.logradouro.getCidade().getEstado().getPais().setEstados(LogradouroBusiness.associaEstadosAoPais(this.logradouro.getCidade().getEstado().getPais().getId()));
+	}
+	
+	public void associaCidadesAoEstado(){
+		this.estado.setCidades(LogradouroBusiness.associaCidadesAoEstado(this.estado.getId()));
 	}
 	
 	
@@ -138,7 +156,30 @@ public class LogradourojsfController extends GenericController implements Serial
 		this.logradouro = logradouro;
 	}
 	
-	
+	public Estado getEstado() {
+		return estado;
+	}
+
+	public void setEstado(Estado estado) {
+		this.estado = estado;
+	}
+
+	public Cidade getCidade() {
+		return cidade;
+	}
+
+	public void setCidade(Cidade cidade) {
+		this.cidade = cidade;
+	}
+
+	public List<Enum_Aux_Tipo_Logradouro> getLista() {
+		return lista;
+	}
+
+	public void setLista(List<Enum_Aux_Tipo_Logradouro> lista) {
+		this.lista = lista;
+	}
+
 	public List<Enum_Aux_Tipo_Logradouro> listarTiposLogradouros(){
 		Enum_Aux_Tipo_Logradouro[] enums =  Enum_Aux_Tipo_Logradouro.values();
 		

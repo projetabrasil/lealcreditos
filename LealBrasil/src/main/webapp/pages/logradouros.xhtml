@@ -91,43 +91,39 @@
     text-align: left;overflow:auto;">
 			<h:form id="formCadastro">
 				<h:panelGrid id="painelCadastro_1">
-
 					
-					<h:panelGrid id="painelCadastro_11">
-						<p:outputLabel value="País" />
-						<p:selectOneMenu>
-						
-						<f:selectItem itemLabel="Selecione País" itemValue="" noSelectionOption="true" />
-						<f:selectItems value="#{paisjsfController.paises}" var="pDoLog"
-										itemLabel="#{pDoLog.descricao}"	itemValue="#{tt}" 
-							 />
+					<h:panelGrid columns="2" cellpadding="5">
+            			<p:outputLabel for="pais" value="País: "/>
+            			<p:selectOneMenu id="pais" value="#{logradourojsfController.logradouro.cidade.estado.pais}" converter="omnifaces.SelectItemsConverter" style="width:150px">
+                			<p:ajax listener="#{logradourojsfController.associaEstadosAoPais}" update="estado" />
+                			<f:selectItem itemLabel="Selecione o país" itemValue="" noSelectionOption="true" />
+                			<f:selectItems value="#{paisjsfController.paises}" var="o" itemLabel="#{o.descricao}" itemValue="#{o}" />
+            			</p:selectOneMenu>
+ 
+            			<p:outputLabel for="estado" value="Estado: " />
+            			<p:selectOneMenu id="estado" value="#{logradourojsfController.estado}" converter="omnifaces.SelectItemsConverter" style="width:150px">
+            				<p:ajax listener="#{logradourojsfController.associaCidadesAoEstado}" update="cidade" />
+                			<f:selectItem itemLabel="Selecione o estado" itemValue="" noSelectionOption="true" />
+                			<f:selectItems value="#{logradourojsfController.logradouro.cidade.estado.pais.estados}" var="o" itemLabel="#{o.descricao}" itemValue="#{o}"/>
+            			</p:selectOneMenu>
+            			
+            			<p:outputLabel for="cidade" value="Cidade: " />
+            			<p:selectOneMenu id="cidade" value="#{logradourojsfController.cidade}" converter="omnifaces.SelectItemsConverter" style="width:150px">
+                			<f:selectItem itemLabel="Selecione a cidade" itemValue="" noSelectionOption="true" />
+                			<f:selectItems value="#{logradourojsfController.estado.cidades}" var="o" itemLabel="#{o.descricao}" itemValue="#{o}"/>
+            			</p:selectOneMenu>
+        			</h:panelGrid>
+        			
+        			<h:panelGrid id="painelCadastro_15">
+						<p:outputLabel	value="Tipo do Logradouro" />
+						<p:selectOneMenu value="#{logradourojsfController.logradouro.enum_Aux_Tipo_Logradouro}" converter="omnifaces.SelectItemsConverter">
+							<f:selectItem itemLabel="Selecione o Logradouro" itemValue="" noSelectionOption="true" />
+							<f:selectItems value="#{logradourojsfController.listarTiposLogradouros()}" var="tt"
+										itemLabel="#{tt.descricao}"	itemValue="#{tt}"  />
 						</p:selectOneMenu>
 					</h:panelGrid>
-					
-					<h:panelGrid id="painelCadastro_12">
-						<p:outputLabel value="Estado" />
-						<p:selectOneMenu>
-						
-						<f:selectItem itemLabel="Selecione Estado" itemValue="" noSelectionOption="true" />
-						<f:selectItems value="#{estadojsfController.estados}" var="tt"
-										itemLabel="#{tt.descricao}"	itemValue="#{tt}" 
-										
-							 />
-						</p:selectOneMenu>
-					</h:panelGrid>
-					
-					<h:panelGrid id="painelCadastro_13">
-						<p:outputLabel value="Cidade" />
-						<p:selectOneMenu>
-						
-						<f:selectItem itemLabel="Selecione Cidade" itemValue="" noSelectionOption="true" />
-						<f:selectItems value="#{cidadejsfController.cidades}" var="cidadeDoLog"
-										itemLabel="#{cidadeDoLog.descricao}"	itemValue="#{cidadeDoLog}" 
-							 />
-						</p:selectOneMenu>
-					</h:panelGrid>
-					
-					<h:panelGrid id="painelCadastro_14">
+        			
+        			<h:panelGrid id="painelCadastro_14">
 						<p:outputLabel
 							value="Nome do Logradouro"
 							 />
@@ -140,14 +136,6 @@
 							placeholder="Mínimo 3 Letras">
 							<f:validateLength minimum="3" />
 						</p:inputText>
-					</h:panelGrid>
-					<h:panelGrid id="painelCadastro_15">
-						<p:outputLabel	value="Tipo do Logradouro" />
-						<p:selectOneMenu>
-							<f:selectItem itemLabel="Selecione o Logradouro" itemValue="" noSelectionOption="true" />
-							<f:selectItems value="#{logradourojsfController.listarTiposLogradouros()}" var="tt"
-										itemLabel="#{tt.descricao}"	itemValue="#{tt}"  />
-						</p:selectOneMenu>
 					</h:panelGrid>
 
 
