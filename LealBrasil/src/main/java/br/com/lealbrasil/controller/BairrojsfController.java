@@ -8,7 +8,6 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import javax.faces.event.ActionEvent;
-
 import br.com.lealbrasil.controller.entitiesconfig.PessoaConfig;
 import br.com.lealbrasil.model.business.BairroBusiness;
 import br.com.lealbrasil.model.entities.Bairro;
@@ -45,6 +44,15 @@ public class BairrojsfController extends GenericController implements Serializab
 	public void novo(ActionEvent event) {
 		perfilLogadoTemp = perfilLogado;
 		bairro = new Bairro(new Cidade(), new Estado());		
+		Utilidades.abrirfecharDialogos("dialogoCadastro",true);
+	}
+	
+	public void editar(ActionEvent event) {
+
+		Bairro b = (Bairro) event.getComponent().getAttributes().get("registroAtual");
+		bairro = new Bairro();
+		bairro = b;
+		
 		Utilidades.abrirfecharDialogos("dialogoCadastro",true);
 	}
 	
