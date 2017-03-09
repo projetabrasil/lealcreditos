@@ -9,7 +9,6 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import javax.faces.event.ActionEvent;
-
 import br.com.lealbrasil.controller.entitiesconfig.PessoaConfig;
 import br.com.lealbrasil.model.business.LogradouroBusiness;
 import br.com.lealbrasil.model.entities.Cidade;
@@ -52,6 +51,15 @@ public class LogradourojsfController extends GenericController implements Serial
 	public void novo(ActionEvent event) {
 		perfilLogadoTemp = perfilLogado;
 		logradouro = new Logradouro(new Cidade(), new Estado());		
+		Utilidades.abrirfecharDialogos("dialogoCadastro",true);
+	}
+	
+	public void editar(ActionEvent event) {
+
+		Logradouro l = (Logradouro) event.getComponent().getAttributes().get("registroAtual");
+		logradouro = new Logradouro();
+		logradouro = l;
+		
 		Utilidades.abrirfecharDialogos("dialogoCadastro",true);
 	}
 	

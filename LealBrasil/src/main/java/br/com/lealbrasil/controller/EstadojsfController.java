@@ -8,7 +8,6 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import javax.faces.event.ActionEvent;
-
 import br.com.lealbrasil.controller.entitiesconfig.PessoaConfig;
 import br.com.lealbrasil.model.business.EstadoBusiness;
 import br.com.lealbrasil.model.entities.Enum_Aux_Perfil_Pessoa;
@@ -41,6 +40,15 @@ public class EstadojsfController extends GenericController implements Serializab
 	public void novo(ActionEvent event) {
 		perfilLogadoTemp = perfilLogado;
 		estado = new Estado();		
+		Utilidades.abrirfecharDialogos("dialogoCadastro",true);
+	}
+	
+	public void editar(ActionEvent event) {
+
+		Estado e = (Estado) event.getComponent().getAttributes().get("registroAtual");
+		estado = new Estado();
+		estado = e;
+		
 		Utilidades.abrirfecharDialogos("dialogoCadastro",true);
 	}
 	

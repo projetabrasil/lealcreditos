@@ -8,7 +8,6 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import javax.faces.event.ActionEvent;
-
 import br.com.lealbrasil.controller.entitiesconfig.PessoaConfig;
 import br.com.lealbrasil.model.business.CidadeBusiness;
 import br.com.lealbrasil.model.entities.Cidade;
@@ -43,6 +42,15 @@ public class CidadejsfController extends GenericController implements Serializab
 	public void novo(ActionEvent event) {
 		perfilLogadoTemp = perfilLogado;
 		cidade = new Cidade(new Estado());		
+		Utilidades.abrirfecharDialogos("dialogoCadastro",true);
+	}
+	
+	public void editar(ActionEvent event) {
+
+		Cidade c = (Cidade) event.getComponent().getAttributes().get("registroAtual");
+		cidade = new Cidade();
+		cidade = c;
+		
 		Utilidades.abrirfecharDialogos("dialogoCadastro",true);
 	}
 	
