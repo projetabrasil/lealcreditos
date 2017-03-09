@@ -11,190 +11,168 @@
 	xmlns:c="http://java.sun.com/jsp/jstl/core">
 <h:head>
 	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
-	<h:outputStylesheet library="css" name="clubefidelidade.css" />
-	<h:outputStylesheet library="css" name="style.css" />
+	<f:facet name="first">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+    </f:facet>
+	<!--<h:outputStylesheet library="css" name="clubefidelidade.css" />-->
+	<!--<h:outputStylesheet library="css" name="style.css" />-->
 	<h:outputScript library="js" name="pessoas.js" />
+	<h:outputStylesheet library="css" name="bootstrap.min.css" />
+	<h:outputStylesheet library="css" name="home.css" />
+	<h:outputStylesheet name="css/font-awesome.css" library="fa" />
 	<title>Clube Fidelidade</title>
 </h:head>
 
 
-<h:body>
+<h:body styleClass="container-fluid"><!-- Body -->
+	
+	
 	<p:growl id="mensagens" autoUpdate="true" redisplay="true" />
-	<div id="main">
-		<div id="topo">
-			<p:panel styleClass="ui-panel-my-titlebar">
-				<h:form>
-					<p:commandButton styleClass="botaogeral" value="Empresa" />					
-					<p:commandButton styleClass="botaogeraldois" value="Proposta" />
-					<p:outputLabel styleClass="cabecalho">Clube Fidelidade  Leal Brasil</p:outputLabel>
-					<p:commandButton styleClass="botaodois" value="Auto pontuar"
-						oncomplete="PF('dialogoPontuar').show(); PF('dialogoPontuar').content.scrollTop('0')" />
-					<p:commandButton styleClass="botaodois" value="Auto Cadastro"
-						oncomplete="PF('dialogoVerificar').show(); PF('dialogoVerificar').content.scrollTop('0')"
-						update=":formVerificar:painelIdentificacao  :formVerificar:labelsenha 
-						:formVerificar:idsenha" />
+	
+	<!-- Static navbar -->
+      <div class="navbar">
+        
+          <div class="navbar-header">
+          	<a class="navbar-brand-mob visible-xs" href="#"></a>
+            <a class="navbar-brand hidden-xs" href="#"></a>
+          </div>
+          <div class="navbar-collapse">
+			<h:form>
+	            <ul class="navbar-right">
+	              <li class="oque"><a href="#">O que é? &nbsp;-</a></li>
+	              <li class="faq"><a href="#">FAQ &nbsp;&nbsp;&nbsp;|</a></li>
+	              <li><p:commandButton styleClass="log" value="Entrar"
+							actionListener="#{autenticacaojsfController.renderizar(false)}" /></li>
+	              <!-- <li><p:commandButton styleClass="reg" value="Auto pontuar"
+							oncomplete="PF('dialogoPontuar').show(); PF('dialogoPontuar').content.scrollTop('0')" /></li>
+                  <li><p:commandButton styleClass="reg" value="Auto Cadastro"
+							oncomplete="PF('dialogoVerificar').show(); PF('dialogoVerificar').content.scrollTop('0')"
+							update=":formVerificar:painelIdentificacao  :formVerificar:labelsenha 
+							:formVerificar:idsenha" /></li> -->
+	            </ul>
+            </h:form>
+          </div><!--/.nav-collapse -->
 
-					<p:commandButton styleClass="botaoum" value="Entrar"
-						actionListener="#{autenticacaojsfController.renderizar(false)}" />
+          <!-- Sub-navbar -->
+          <div class="sub-navbar">
+          	<ul >
+              <li><a class="p1" href=""><i class="fa fa-pie-chart"></i> Produtos</a></li>
+              <li><a class="p2" href=""><i class="fa fa-pie-chart"></i> Produtos</a></li>
+              <li><a class="p3" href=""><i class="fa fa-pie-chart"></i> Produtos</a></li>
+            </ul>
+           
+          </div><!--/.sub-navbar -->
+      </div>
+      
+      
+	
+	<!-- Slider -->
+    <div class="slider">
+      <div class="fill">       
+      </div>
+    </div>
+	
+	<!-- Page Content -->
+    <div class="conteudo">
 
-				</h:form>
-			</p:panel>
-		</div>
-		<div id="one">
+      <!-- FUNDO / CONTEUDO(TEXTO) -->
+      <div class="fundo">
+    			<div class="sobre">
+    				<h1>Sobre a Projeta Brasil</h1>
+    				<p>Localizados em Florianópolis - SC, somos uma empresa especializada no desenvolvimento de soluções de tecnologia para marketing de relacionamento e fidelização de clientes. Nosso objetivo é contribuir efetivamente para o aumento das vendas e lucratividade das empresas clientes, através da oferta de uma solução simples, eficaz e com baixo custo de investimento que permite: <br/>
+    				1 - Criação de um sistema personalizado de PONTUAÇÃO que valoriza os clientes fiéis de estabelecimentos comerciais ou prestadores de serviços, através de descontos em novas compras e prêmios por consumo; <br/>
+    				2 - Execução de campanhas comerciais com promoção de produtos e serviços para alavancar novas vendas de maneira mais efetiva, direcionando ações e promoções para consumidores leais; <br/>
+    				3 - Entender os hábitos de consumo e comportamento dos clientes para focar ações comerciais, visando melhores resultados; <br/>
+    				4 - Nossa solução é WEB Based - Acesso através da Internet por meio de Login e Senha exclusivos e criptografados;
+    				</p>
+    			</div>
+    			<div class="proposta">
+            <div class="row">
+              <div class="col-md-6 texto">
+                <h2>Proposta</h2>
+                <p>1 - Cadastro de clientes;  <br/>
+                    2 - Classificação de clientes por categorias; <br/> 
+                    3 - Controle de Pontuações do cliente, tal como seus créditos, débitos e saldo atual;<br/>
+                    4 - Cadastro de prêmios;  <br/>
+                    5 - Controle de Prêmios utilizados pelo cliente;  <br/>
+                    6 - Índice de lealdade do cliente;  <br/>
+                    7 - Site personalizado para acompanhamento das pontuações do cliente em diversos estabelecimentos;<br/>
+                    8 - Publicação e promoções na página principal personalizada do cliente.
+                </p>
 
-			<div id="conteudo">
-				<br /> <br /> <br />
-				<p:outputLabel styleClass="titulos">Já pensou sobre isto?</p:outputLabel>
-				<br />
-				<p:outputLabel styleClass="textos">
-				Seu menor custo e seu melhor resultado é promover para clientes que
-				 
-				
-			</p:outputLabel>
-				<br />
-				<p:outputLabel styleClass="textos">
-				já conhecem seus 
-				 
-				
-			</p:outputLabel>
-				<br />
-				<p:outputLabel styleClass="textos">
-				 
-				produtos
-			</p:outputLabel>
-				<br />
-				<p:outputLabel styleClass="textos">
-				 
-				e/ou serviços.
-			</p:outputLabel>
-				<br /> <br />
+              </div>
+              <div class="col-md-6 img hidden-xs">
+                <div class="iphone"></div>
+              </div>
+            </div>
+    			</div>
+          
+    			<div class="produtos">
 
-				<p:outputLabel styleClass="titulos">Compra Coletiva</p:outputLabel>
-				<br />
+    				    <h2>Produtos</h2>
 
-				<p:outputLabel styleClass="textos">Crie sua própria
-			compra coletiva utilizando nossa plataforma.<br /> Reduza seus custos!<br />
-			Promova imediatamente aos seus clientes</p:outputLabel>
-				<br />
-				<p:outputLabel style="font-color:red" styleClass="itemum">Pergunte ao consultor porque o custo é muito menor.</p:outputLabel>
-
-
-
-			</div>
-			<div id="sidebar">
-				<br /> <br />
-				<p:outputLabel styleClass="titulos">A Empresa</p:outputLabel>
-				<br />
-				<p:outputLabel styleClass="textos">
-				Localizados em Florianópolis - SC, 
-				somos uma empresa especializada no desenvolvimento 
-				de soluções de tecnologia para marketing de 
-				relacionamento e fidelização de clientes. 
-				Nosso objetivo é contribuir efetivamente para o 
-				aumento das vendas e  lucratividade das empresas 
-				clientes, através da oferta de uma solução simples, 
-				eficaz e com baixo custo de investimento que permite:
- 			</p:outputLabel>
-				<br />
-				<p:outputLabel styleClass="itemum">1 - Criação de  um sistema personalizado 
-			de  PONTUAÇÃO  que valoriza os clientes fiéis de estabelecimentos comerciais ou 
-			prestadores de serviços,  
-			através de descontos em novas compras e prêmios por consumo;
-			</p:outputLabel>
-
-				<br />
-				<p:outputLabel styleClass="itemdois">2 - Execução de  campanhas 
-			comerciais com  promoção de produtos e serviços  para alavancar 
-			novas vendas de maneira mais efetiva, direcionando ações e 
-			promoções para consumidores leais;
-			</p:outputLabel>
-
-				<br />
-				<p:outputLabel styleClass="itemum">
-			3 - Entender os hábitos de consumo e comportamento dos clientes 
-			para focar ações comerciais, visando melhores resultados;
-			</p:outputLabel>
-				<br />
-
-				<p:outputLabel styleClass="itemdois">
-			4 - Nossa solução é WEB Based - Acesso através da Internet por meio 
-			de Login e Senha exclusivos e criptografados;
-			</p:outputLabel>
-				<p:outputLabel styleClass="itemum">
-				</p:outputLabel>
-			</div>
-
-			<div id="conteudodois">
-				<br /> <br /> <br /> <br /> <br /> <br />
-				<p:outputLabel styleClass="titulos">Recursos do Módulo Lealdade</p:outputLabel>
-				<br />
-				<p:outputLabel styleClass="itemum">
-				1 - Cadastro de clientes;			
-			</p:outputLabel>
-				<br />
-				<p:outputLabel styleClass="itemdois">				
-				2 - Classificação de clientes por categorias;								
-			</p:outputLabel>
-				<br />
-				<p:outputLabel styleClass="itemum">
-				3 - Controle de Pontuações do cliente, tal como seus créditos, débitos e saldo atual;
-			</p:outputLabel>
-				<br />
-				<p:outputLabel styleClass="itemdois">
-				4 - Cadastro de prêmios;				
-			</p:outputLabel>
-				<br />
-				<p:outputLabel styleClass="itemum">
-				5 - Controle de Prêmios utilizados pelo cliente;
-			</p:outputLabel>
-				<br />
-				<p:outputLabel styleClass="itemdois">
-				6 - Índice de lealdade do cliente;
-			</p:outputLabel>
-				<br />
-				<p:outputLabel styleClass="itemum">
-				7 - Site personalizado para acompanhamento das pontuações do cliente em diversos estabelecimentos;
-			</p:outputLabel>
-
-				<br />
-				<p:outputLabel styleClass="itemdois">				
-				8 - Publicação e promoções na página principal personalizada do cliente;
-			</p:outputLabel>
-
-
-			</div>
-			<div id="sidebartitulocentral">
-				<br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br />
-				<br /> <br /> <br />
-				<p:outputLabel styleClass="titulos">Recursos do Módulo de Relacionamento com Cliente Leal</p:outputLabel>
-				<div id="sidebardois">
-					<br />
-
-					<p:outputLabel styleClass="itemdois">A finalidade deste módulo é auxiliar o seu estabelecimento a aumentar os seus resultados por meio de análises e conhecimento aprofundado do cliente leal,
-			utilizando os seguintes relatórios e ações:;
-			</p:outputLabel>
-
-					<br />
-					<p:outputLabel styleClass="itemum">1 - Aniversariantes do mês;
-			</p:outputLabel>
-
-					<br />
-					<p:outputLabel styleClass="itemdois">2 - Faixa Etária;
-			</p:outputLabel>
-					<br />
-					<p:outputLabel styleClass="itemum">3 - Frequência e tempo de retorno;
-			</p:outputLabel>
-					<br />
-					<p:outputLabel styleClass="itemdois">4 - Promoções e ações personalizadas;
-			</p:outputLabel>
-					<br />
-					<p:outputLabel styleClass="itemum">5 - Medir o resultado de ações e promoções;
-			</p:outputLabel>
-
-				</div>
-			</div>
-		</div>
-	</div>
+            <div class="grupo-produtos">
+              <div class="row">
+                <div class="col-md-4 texto">
+                  <h3><i class="fa fa-pie-chart"></i> Produto01</h3>
+                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec vel tristique orci. Donec consectetur scelerisque velit sed sollicitudin. Phasellus molestie feugiat elit, nec faucibus nulla dictum nec. Pellentesque eu interdum tortor. Nunc ac fringilla sapien. Curabitur non nisl porta, pulvinar dui vitae, imperdiet libero. Sed quis risus vitae neque tristique efficitur...</p>
+                </div>
+                <div class="col-md-4 texto">
+                  <h3><i class="fa fa-pie-chart"></i> Produto02</h3>
+                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec vel tristique orci. Donec consectetur scelerisque velit sed sollicitudin. Phasellus molestie feugiat elit, nec faucibus nulla dictum nec. Pellentesque eu interdum tortor. Nunc ac fringilla sapien. Curabitur non nisl porta, pulvinar dui vitae, imperdiet libero. Sed quis risus vitae neque tristique efficitur...</p>
+                </div>
+                <div class="col-md-4 texto">
+                  <h3><i class="fa fa-pie-chart"></i> Produto03</h3>
+                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec vel tristique orci. Donec consectetur scelerisque velit sed sollicitudin. Phasellus molestie feugiat elit, nec faucibus nulla dictum nec. Pellentesque eu interdum tortor. Nunc ac fringilla sapien. Curabitur non nisl porta, pulvinar dui vitae, imperdiet libero. Sed quis risus vitae neque tristique efficitur...</p>
+                </div>
+              </div>
+            </div>
+    			</div>
+      </div><!--/.fundo-->
+    </div><!-- /.conteudo -->
+	
+	
+	<!-- Footer -->
+    <div class="footer">
+      <div class="row">
+          <div class="col-sm-4 sobre-footer">
+            <ul>
+              <li><h4>Sobre a Projeta Brasil</h4></li>
+              <li><a href="#">O que é a Projeta Brasil</a></li>
+              <li><a href="#">FAQ</a></li>
+              <li><a href="#">Proposta</a></li>
+              <li><a href="#">Fale conosco</a></li>
+            </ul>
+          </div>
+          <div class="col-sm-4 produtos-footer">
+            <ul>
+              <li><h4>Produtos Projeta Brasil</h4></li>
+              <li><a href="#">Produto01</a></li>
+              <li><a href="#">Produto02</a></li>
+              <li><a href="#">Produto03</a></li>
+            </ul>
+          </div>
+          <div class="col-sm-4 social-footer">
+            <h5>Nos siga nas redes sociais</h5>
+            <div>
+              <ul>
+                <li><i class="fa fa-instagram"></i></li>
+                <li><i class="fa fa-facebook"></i></li>
+                <li><i class="fa fa-linkedin"></i></li>
+              </ul>
+            </div>
+          </div>
+        <div class="col-xs-12 ass-footer">
+          <p>Projeta Brasil® • Todos os direitos reservados.</p>
+        </div> 
+      </div><!--/.row-->
+    </div>
+	
+	
+	<!-- FIM HOME -->
 	<div>
 
 		<p:dialog widgetVar="dialogoVerificar" closable="false"
@@ -654,6 +632,5 @@
 
 
 </h:body>
-
 
 </html>
