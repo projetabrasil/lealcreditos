@@ -12,98 +12,115 @@
 	xmlns:c="http://java.sun.com/jsp/jstl/core">
 
 	<h:head>
-		<h:outputStylesheet library="css" name="clubefidelidade.css" />
+		<!-- <h:outputStylesheet library="css" name="clubefidelidade.css" /> -->
 	</h:head>
 
 	<ui:define name="conteudo">
-		<h:form id="formlista" style="width:100%;"
+	
+	
+	<div class="ui-g">
+            <div class="ui-g-12">
+                <div class="card card-pessoas">
+                    <h1><p:outputLabel value="Listagem de #{autenticacaojsfController.perfilLogado.paginaAtual.descricao2}"/></h1>
+                    
+	
+	
+		<h:form id="formlista"
 			update="buttonpontuar :formTemplate:formPontuar:painelPontuar">
-			<p:panel
-				header="Listagem de #{autenticacaojsfController.perfilLogado.paginaAtual.descricao2}"
-				style="width:100%;">
-				<p:dataTable id="tabela" emptyMessage="" reflow="true"
-					value="#{ponto_mov.pontos_Mov}" paginator="true" rows="5"
-					var="registro" style="font-size:12px;">
-
-
-					<f:facet name="header">
-
-						<p:commandButton id="buttonpontuar"
+			
+			<p:commandButton id="buttonpontuar"
 							value="#{ponto_mov.tipoMovimentacao.acao}" process="@this"
 							actionListener="#{ponto_mov.novo()}"
-							update=":formTemplate:formPontuar:painelPontuar" style="width:5%">
+							update=":formTemplate:formPontuar:painelPontuar"
+							styleClass="btao-pessoas"/>
+
+			
+				<p:dataTable id="tabela" emptyMessage="Sem Registros" resizableColumns="true"
+					value="#{ponto_mov.pontos_Mov}" paginator="true" rows="15"
+					var="registro" styleClass="tabela-pessoas">
 
 
-
-						</p:commandButton>
-					</f:facet>
-
-					<p:column headerText="Cliente" style="width:22%">
+					<p:column headerText="Cliente" styleClass="geral-col-pessoas">
 						<c:set var="descr" value="#{registro.id_pessoa_cliente.descricao}" />
 						<p:commandLink id="descricao" outcome="#"
 							actionListener="#{ponto_mov.listarHistorico(registro.id_pessoa_cliente)}"
 							update=":formTemplate:formHistorico"
-							value="#{fn:substring(descr,0,20)}" style="width:25%">
+							value="#{fn:substring(descr,0,20)}">
 							<f:param name="historico" value="registro" />
 						</p:commandLink>
 
 					</p:column>
 
-					<p:column headerText="Tipo" style="width:15%">
+					<p:column headerText="Tipo" styleClass="geral-col-pessoas">
 						<c:set var="descrPont" value="#{registro.id_ponto.descricao}" />
 						<h:outputText id="descrPontOut"
 							update=":formTemplate:formHistorico"
-							value="#{fn:substring(descrPont,0,20)}" style="width:5%">
+							value="#{fn:substring(descrPont,0,20)}">
 						</h:outputText>
 					</p:column>
-					<p:column headerText="Valor">
-						<h:outputText value="#{registro.valoraPontuar}" style="width:3%" />
+					
+					<p:column headerText="Valor" styleClass="geral-col-pessoas">
+						<h:outputText value="#{registro.valoraPontuar}" />
 					</p:column>
+					
 					<p:column headerText="Pontos">
-						<h:outputText value="#{registro.pontosAtingidos}" style="width:2%" />
+						<h:outputText value="#{registro.pontosAtingidos}" />
 					</p:column>
-					<p:column id="colAtualizacao" headerText="Data" style="width:18%">
+					
+					<p:column id="colAtualizacao" headerText="Data" styleClass="geral-col-pessoas">
 						<h:outputText id="atualizacao"
 							value="#{registro.ultimaAtualizacao.time}">
 							<f:convertDateTime locale="pt_BR" dateStyle="long" type="both"
 								pattern="dd/MM/yyyy HH:mm:ss" />
 						</h:outputText>
 					</p:column>
-					<p:column headerText="Validade" style="width:10%">
+					
+					<p:column headerText="Validade" styleClass="geral-col-pessoas">
 						<h:outputText value="#{registro.validade}">
 							<f:convertDateTime locale="pt_BR" dateStyle="long" type="both"
 								pattern="dd/MM/yyyy" />
 						</h:outputText>
 					</p:column>
 
-					<p:column headerText="Movimento">
+					<p:column headerText="Movimento" styleClass="geral-col-pessoas">
 						<h:outputText value="#{registro.creditaDebita.descricao}"
 							style="width:5%">
 
 						</h:outputText>
 					</p:column>
 
-					<p:column headerText="Responsavel">
+					<p:column headerText="Responsavel" styleClass="geral-col-pessoas">
 						<c:set var="resp" value="#{registro.id_Pessoa_Registro.descricao}" />
-						<h:outputText value="#{fn:substringBefore(resp,' ')}"
-							style="width:5%">
+						<h:outputText value="#{fn:substringBefore(resp,' ')}">
 
 						</h:outputText>
 					</p:column>
 				</p:dataTable>
-			</p:panel>
+			
 		</h:form>
-		<p:dialog widgetVar="dialogoHistorico" closable="false"
-			resizable="false" modal="true" appendTo="@(body)" width="80%"
-			height="80%" position="60,10">
-			<h:form id="formHistorico" style="width:100%;">
+		        </div>
+            </div>
+        </div>
+		
+	
+		
+		<!-- Historico -->
+		<p:dialog widgetVar="dialogoHistorico" closable="true"
+			resizable="false" modal="true" appendTo="@(body)" styleClass="dialog-ponto-mov"
+			header="Histórico" dynamic="true" responsive="true">
+			
+			
+		<div class="div-dialog-tab-ponto-mov">
+
+			<h:form id="formHistorico">
 
 				<h:panelGrid id="painelHistorico">
 
-					<p:panel header="Histórico">
-						<p:dataTable id="tabelaHistorico" emptyMessage="" reflow="true"
-							value="#{ponto_mov.historico}" paginator="true" rows="5"
-							var="registro2" style="font-size:15px;">
+					<!-- <p:panel header="Histórico"> -->
+						<p:dataTable id="tabelaHistorico" emptyMessage="" resizableColumns="true"
+							value="#{ponto_mov.historico}" paginator="true" rows="7"
+							var="registro2" styleClass="tabela-dialog-ponto-mov">
+							
 							<f:facet name="header">
 								<p:outputLabel
 									value="Cliente: #{ponto_mov.clienteHistorico.descricao} - Pontos:  " />
@@ -116,7 +133,7 @@
 								</p:outputLabel>
 							</f:facet>
 
-							<p:column headerText="Tipo" style="width:15%">
+							<p:column headerText="Tipo" >
 								<c:set var="descrPont" value="#{registro2.id_ponto.descricao}" />
 								<h:outputText id="descrPontOut"
 									update=":formTemplate:formHistorico"
@@ -125,21 +142,21 @@
 							</p:column>
 
 
-							<p:column headerText="Valor pontuado">
+							<p:column headerText="Valor pontuado" >
 								<h:outputText value="#{registro2.valorUnidadeDevolucao}"
 									style="width:5%" />
 							</p:column>
-							<p:column headerText="Pontos Atingidos">
+							<p:column headerText="Pontos Atingidos" >
 								<h:outputText value="#{registro2.pontosAtingidos}"
 									style="width:10%" />
 							</p:column>
-							<p:column headerText="Data" style="width:20%">
+							<p:column headerText="Data" >
 								<h:outputText value="#{registro2.ultimaAtualizacao.time}">
 									<f:convertDateTime locale="pt_BR" type="both" timeOnlye="true"
 										pattern="dd/MM/yyyy HH:mm:ss" />
 								</h:outputText>
 							</p:column>
-							<p:column headerText="Validade" style="width:10%">
+							<p:column headerText="Validade" >
 								<h:outputText value="#{registro2.validade.time}">
 									<f:convertDateTime locale="pt_BR" type="both" dateStyle="long"
 										pattern="dd/MM/yyyy" />
@@ -162,15 +179,22 @@
 								</h:outputText>
 							</p:column>
 						</p:dataTable>
-					</p:panel>
+					<!-- </p:panel> -->
 
 				</h:panelGrid>
-				<h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5">
+				<h:panelGrid columns="2" cellpadding="5">
 					<p:commandButton value="Sair" process="@form"
 						oncomplete="PF('dialogoHistorico').hide();">
 					</p:commandButton>
 				</h:panelGrid>
 			</h:form>
+			
+		</div>
+       
+			<!-- FIM Historico -->
+			
+			
+			
 		</p:dialog>
 		<p:dialog header="Movimento de pontuações" widgetVar="dialogoCadastro"
 			resizable="false" modal="true" closable="false" appendTo="@(body)"

@@ -8,52 +8,79 @@
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
 
 <h:head>
-	<h:outputStylesheet library="css" name="clubefidelidade.css" />
-	
+	<!--<h:outputStylesheet library="css" name="clubefidelidade.css" />-->	 
+        <f:facet name="first">
+            <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+            <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+            <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
+            <meta name="apple-mobile-web-app-capable" content="yes" />
+        </f:facet>
+        <title>Login</title>
 </h:head>
 
 
-<h:body >
+<h:body>
     <p:growl id="mensagens" autoUpdate="true" redisplay="true" />
-	<h:form>
+	<!-- <h:form>
 		<p:panel header="Clube Fidelidade" styleClass="ui-panel-my-titlebar" />
-	</h:form>
-
-	<p:dialog widgetVar="dialogoAutenticacao" closable="false"
-		resizable="false" modal="true" appendTo="@(body)" visible="true"
-		header="Autenticação"   >
-		<h:form id="formAutenticacao"  >
-			<p:focus for="#{autenticacaojsfController.perfilLogado.foco}" />
-			<p:panelGrid columns="1">
-
-				<p:outputLabel value="Usuario" for="usuario" />
-				<p:inputText id="usuario" placeholder="Usuário aqui" size="20"
+	</h:form> -->
+	
+	<div id="login-wrapper">
+            
+      <p:dialog styleClass="dilog-login" widgetVar="dialogoAutenticacao" closable="false"
+		resizable="false"  appendTo="@(body)" visible="true" header="Login">  	
+            <div id="login-container">
+       
+               <h:form id="formAutenticacao">
+               <p:focus for="#{autenticacaojsfController.perfilLogado.foco}" />
+                <div class="ui-g ui-fluid">
+                <div class="grupo-log">
+                    <div class="ui-g-12 user-log">
+                        <p:inputText id="usuario" placeholder="Usuário/CPF/CNPJ" size="20"
 					requiredMessage="Informe o usuario"
 					value="#{autenticacaojsfController.perfilLogado.identificadorUsuario}" />
-				<p:outputLabel value="Senha" for="senha" size="20" />
-				<p:password id="senha" maxlength="8" required="true"
-					placeholder="Senha aqui" requiredMessage="Informe a Senha"
+                    </div>
+                    <div class="ui-g-12 pas-log">
+                       <p:password id="senha" maxlength="8" required="true"
+					placeholder="Senha" requiredMessage="Informe a Senha"
 					value="#{autenticacaojsfController.perfilLogado.senhaUsuario}" />
-			</p:panelGrid>
-			<p:panelGrid>
-				<p:commandButton
-					actionListener="#{autenticacaojsfController.autenticar(false)}"
-					value="Entrar" update=":mensagens formAutenticacao :formPerfil"
-					process="@form">
-				</p:commandButton>
-				<p:commandButton value="Cancelar"
-					actionListener="#{autenticacaojsfController.cancelaAutenticacao}"
-					update=":mensagens formAutenticacao" process="@this"
-					oncomplete="PF('dialogoAutenticacao').hide();" />
-			</p:panelGrid>
-		</h:form>
-	</p:dialog>
+                    </div>
+                 </div>   
+	                    <div class="ui-g-12 ui-md-6">
+	                        <span class="remember-me">Lembrar-me </span>
+	                        <p:selectBooleanCheckbox />
+	                    </div>
+	                    <div class="ui-g-12 ui-md-6">
+	                        <p:link>Esqueci minha senha.</p:link>
+	                    </div>
+	                    <div class="ui-g-6">
+		                	<p:commandButton
+							actionListener="#{autenticacaojsfController.autenticar(false)}"
+							value="Entrar" update=":mensagens formAutenticacao :formPerfil"
+							process="@form"/>
+	                    </div>
+	                 	<div class="ui-g-6">
+							<p:commandButton value="Cancelar"
+							actionListener="#{autenticacaojsfController.cancelaAutenticacao}"
+							update=":mensagens formAutenticacao" process="@this"
+							oncomplete="PF('dialogoAutenticacao').hide();" />
+						</div>
+
+                </div>
+               </h:form>
+                 
+            </div>
+    
+          </p:dialog>   
+        </div>
+
+        
+
 	
-	<p:dialog widgetVar="dialogoPerfil" closable="false" resizable="false"
-		modal="true" appendTo="@(body)">
+	<p:dialog styleClass="dilog-login2" widgetVar="dialogoPerfil" closable="false" resizable="false"
+		 appendTo="@(body)" header="Escolha o Perfil do Usuário">
 		<h:form id="formPerfil">
-			<h:panelGrid columns="1" style="margin-bottom:10px" cellpadding="5">
-				<p:outputLabel value="Escolha o Perfil do Usuário" for="perfil" />
+			<h:panelGrid columns="1" cellpadding="5">
 				<p:selectOneRadio id="perfil" required="true"
 					requiredMessage="É preciso escolher o Perfil antes!!!"
 					value="#{autenticacaojsfController.perfilLogado.perfilUsLogado}"
@@ -68,5 +95,9 @@
 			</h:panelGrid>
 		</h:form>
 	</p:dialog>
+	
+	<h:outputStylesheet name="css/layout.css" library="omega-layout" />
+	<h:outputStylesheet name="css/login-omega.css" library="omega-layout" />
+	<h:outputStylesheet name="css/font-awesome.css" library="fa" />
 </h:body>
 </html>

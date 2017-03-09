@@ -1,223 +1,66 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:h="http://xmlns.jcp.org/jsf/html"
-	xmlns:p="http://primefaces.org/ui"
-	xmlns:f="http://xmlns.jcp.org/jsf/core"
-	xmlns:composite="http://java.sun.com/jsf/composite"
-	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-	xmlns:fn="http://java.sun.com/jstl/functions">
-<h:head>
-	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
-	<h:outputStylesheet library="css" name="clubefidelidade.css" />
-	<h:outputScript library="js" name="geral.js" />
-	<h:outputScript library="primefaces" name="jquery/jquery.js" />
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:composite="http://java.sun.com/jsf/composite"
+      xmlns:fn="http://java.sun.com/jstl/functions">
+      
+      
 
-	<title>Club Fidelidade</title>
-</h:head>
+    <h:head>
+        <f:facet name="first">
+            <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+            <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+            <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
+            <meta name="apple-mobile-web-app-capable" content="yes" />
+        </f:facet>
+        <title>Projeta Brasil</title>
+ 
 
+        <ui:insert name="head"/>
+    </h:head>
 
-<h:body style="overflow:scroll!important;">
-	<div class="ui-grid ui-grid-responsive">
-		<p:growl id="mensagens" autoUpdate="true" redisplay="true" />
-
-		<h:form style="background:#33CC00;">
-			<p:panel header="Clube Fidelidade" styleClass="ui-panel-my-titlebar">
-				<p:outputLabel
-					value="Login: #{autenticacaojsfController.perfilLogado.usLogado.pessoa.descricao}"
-					style="color:blue;font-size:15px;font-weight:600;" />
-				<p:outputLabel
-					value=" - #{autenticacaojsfController.perfilLogado.assLogado.fantasia_Apelido}"
-					rendered="#{autenticacaojsfController.perfilLogado.renderizaAssociado}"
-					style="color:blue;font-size:15px;font-weight:900;" />
-
-
-			</p:panel>
-		</h:form>
-		<div id="geral">
-			<div id="topo">
-				<h:form id="formMenu" style="width:100%">
-				   
-					<p:selectOneRadio id="perf1" label="perfil: "
-						style="font-size:15px;"
-						value="#{autenticacaojsfController.perfilLogado.perfilUsLogado}"
-						columns="10" converter="omnifaces.SelectItemsConverter">
-						<f:selectItems
-							value="#{autenticacaojsfController.perfilLogado.listaPerfisdousLogado}"
-							var="c" itemLabel="#{c.descricao}" itemValue="#{c}" />
-						<p:ajax
-							listener="#{autenticacaojsfController.redirecionapaginaIndex(false)}" />
-					</p:selectOneRadio>
-
-					<p:menubar style="font-size:15px;">
-						<p:submenu label="Cadastros">
-							<p:submenu label="Pessoas">
-								<p:menuitem value="Administradores"
-									actionListener="#{paginas.mudaPaginaAtual}"
-									rendered="#{autenticacaojsfController.perfilLogado.temPermissoes(['ADMINISTRADORES'])}">
-									<f:attribute name="paginaAtual" value="PAGINAADMINISTRADORES" />
-									<p:ajax
-										listener="#{autenticacaojsfController.redirecionapaginaIndex()}" />
-								</p:menuitem>
-								<p:menuitem value="Supervisores"
-									actionListener="#{paginas.mudaPaginaAtual}"
-									rendered="#{autenticacaojsfController.perfilLogado.temPermissoes(['ADMINISTRADORES'])}">
-									<f:attribute name="paginaAtual" value="PAGINASUPERVISORES" />
-								</p:menuitem>
-								<p:menuitem value="Representantes"
-									actionListener="#{paginas.mudaPaginaAtual}"
-									rendered="#{autenticacaojsfController.perfilLogado.temPermissoes(['ADMINISTRADORES','SUPERVISORES'])}">
-									<f:attribute name="paginaAtual" value="PAGINAREPRESENTANTES" />
-								</p:menuitem>
-
-								<p:menuitem value="Assinantes"
-									actionListener="#{paginas.mudaPaginaAtual}"
-									rendered="#{autenticacaojsfController.perfilLogado.temPermissoes(['ADMINISTRADORES','SUPERVISORES','REPRESENTANTES'])}">
-									<f:attribute name="paginaAtual" value="PAGINAASSINANTES" />
-								</p:menuitem>
-
-								<p:menuitem value="Atendentes"
-									actionListener="#{paginas.mudaPaginaAtual}"
-									rendered="#{autenticacaojsfController.perfilLogado.temPermissoes(['ADMINISTRADORES','ASSINANTES'])}">
-									<f:attribute name="paginaAtual" value="PAGINAATENDENTES" />
-								</p:menuitem>
-
-								<p:menuitem value="Clientes"
-									actionListener="#{paginas.mudaPaginaAtual}"
-									rendered="#{autenticacaojsfController.perfilLogado.temPermissoes(['ADMINISTRADORES','ASSINANTES','ATENDENTES'])}">
-									<f:attribute name="paginaAtual" value="PAGINACLIENTES" />
-								</p:menuitem>
-								<p:menuitem value="Outros"
-									actionListener="#{paginas.mudaPaginaAtual}"
-									rendered="#{autenticacaojsfController.perfilLogado.temPermissoes(['ADMINISTRADORES'])}">
-									<f:attribute name="paginaAtual" value="PAGINAOUTROS" />
-								</p:menuitem>
-								<p:menuitem value="Vendas"
-									actionListener="#{paginas.mudaPaginaAtual}"
-									rendered="#{autenticacaojsfController.perfilLogado.temPermissoes(['ADMINISTRADORES'])}">
-									<f:attribute name="paginaAtual" value="PAGINAVENDAS" />
-								</p:menuitem>
-							</p:submenu>
-							<p:submenu label="Regiões">			
-								<p:menuitem value="Paises"
-									actionListener="#{paginas.mudaPaginaAtual}"
-									rendered="#{autenticacaojsfController.perfilLogado.temPermissoes(['ADMINISTRADORES'])}">
-									<f:attribute name="paginaAtual" value="PAGINAPAISES" />
-								</p:menuitem>
-								<p:menuitem value="Estados"
-									actionListener="#{paginas.mudaPaginaAtual}"
-									rendered="#{autenticacaojsfController.perfilLogado.temPermissoes(['ADMINISTRADORES'])}">
-									<f:attribute name="paginaAtual" value="PAGINAESTADOS" />
-								</p:menuitem>
-								<p:menuitem value="Cidades"
-									actionListener="#{paginas.mudaPaginaAtual}"
-									rendered="#{autenticacaojsfController.perfilLogado.temPermissoes(['ADMINISTRADORES'])}">
-									<f:attribute name="paginaAtual" value="PAGINACIDADES" />
-								</p:menuitem>
-								<p:menuitem value="Bairros"
-									actionListener="#{paginas.mudaPaginaAtual}"
-									rendered="#{autenticacaojsfController.perfilLogado.temPermissoes(['ADMINISTRADORES'])}">
-									<f:attribute name="paginaAtual" value="PAGINABAIRROS" />
-								</p:menuitem>
-								<p:menuitem value="Logradouros"
-									actionListener="#{paginas.mudaPaginaAtual}"
-									rendered="#{autenticacaojsfController.perfilLogado.temPermissoes(['ADMINISTRADORES'])}">
-									<f:attribute name="paginaAtual" value="PAGINALOGRADOUROS" />
-								</p:menuitem>
-							</p:submenu>
-						</p:submenu>
-						<p:submenu label="Pontos">
-							<p:menuitem value="Pontuar"
-								actionListener="#{paginas.mudaPaginaAtual}"
-								rendered="#{autenticacaojsfController.perfilLogado.temPermissoes2(['ADMINISTRADORES','ASSINANTES','ATENDENTES'])}">
-								<f:attribute name="paginaAtual" value="PAGINAPONTUACAOC" />
-								<f:attribute name="tipoMovimento" value="C" />
-							</p:menuitem>
-							<p:menuitem value="Utilizar Pontos"
-								actionListener="#{paginas.mudaPaginaAtual}"
-								rendered="#{autenticacaojsfController.perfilLogado.temPermissoes2(['ADMINISTRADORES','ASSINANTES','ATENDENTES'])}">
-								<f:attribute name="paginaAtual" value="PAGINAPONTUACAOD" />
-								<f:attribute name="tipoMovimento" value="D" />
-							</p:menuitem>
-							<p:menuitem value="Estornar"
-								actionListener="#{paginas.mudaPaginaAtual}"
-								rendered="#{autenticacaojsfController.perfilLogado.temPermissoes2(['ADMINISTRADORES','ASSINANTES','ATENDENTES'])}">
-								<f:attribute name="paginaAtual" value="PAGINAPONTUACAOE" />
-								<f:attribute name="tipoMovimento" value="E" />
-							</p:menuitem>
-							<p:menuitem value="Configuração de pontuação"
-								actionListener="#{paginas.mudaPaginaAtual}"
-								rendered="#{autenticacaojsfController.perfilLogado.temPermissoes(['ASSINANTES'])}">
-								<f:attribute name="paginaAtual" value="PAGINAPONTO" />
-							</p:menuitem>
-							<p:menuitem value="Configuração de brindes"
-								actionListener="#{paginas.mudaPaginaAtual}"
-								rendered="#{autenticacaojsfController.perfilLogado.temPermissoes(['ASSINANTES'])}">
-								<f:attribute name="paginaAtual" value="PAGINABRINDE" />
-							</p:menuitem>
-						</p:submenu>
-						<p:submenu label="Movimento">
-							<p:menuitem value="Agendamentos"
-								actionListener="#{paginas.mudaPaginaAtual}"
-								rendered="#{autenticacaojsfController.perfilLogado.temPermissoes(['ASSINANTES'])}">
-								<f:attribute name="paginaAtual" value="PAGINAAGENDAMENTO" />
-							</p:menuitem>
-							<p:menuitem value="Itens de Serviço"
-								actionListener="#{paginas.mudaPaginaAtual}"
-								rendered="#{autenticacaojsfController.perfilLogado.temPermissoes(['VENDAS'])}">
-								<f:attribute name="paginaAtual" value="PAGINAITEMDESERVICO" />
-							</p:menuitem>
-							<p:menuitem value="Itens de Promoção"
-								actionListener="#{paginas.mudaPaginaAtual}"
-								rendered="#{autenticacaojsfController.perfilLogado.temPermissoes(['VENDAS'])}">
-								<f:attribute name="paginaAtual" value="PAGINAITEMDEPROMOCAO" />
-							</p:menuitem>
-							
-							<p:menuitem value="Combo"
-								actionListener="#{paginas.mudaPaginaAtual}"
-								rendered="#{autenticacaojsfController.perfilLogado.temPermissoes(['VENDAS'])}">
-								<f:attribute name="paginaAtual" value="PAGINACOMBO" />
-							</p:menuitem>
-							<p:menuitem value="Vouchers"
-								actionListener="#{paginas.mudaPaginaAtual}"
-								rendered="#{autenticacaojsfController.perfilLogado.temPermissoes(['ASSINANTES'])}">
-								<f:attribute name="paginaAtual" value="PAGINAVOUCHER" />
-							</p:menuitem>
-
-
-						</p:submenu>
-						<p:submenu label="Contratos">
-							<p:menuitem value="Contrato"
-								actionListener="#{paginas.mudaPaginaAtual}"
-								rendered="#{autenticacaojsfController.perfilLogado.temPermissoes(['ADMINISTRADORES','SUPERVISORES','REPRESENTANTES'])}">
-								<f:attribute name="paginaAtual" value="PAGINAMOVIMENTO" />
-							</p:menuitem>
-						</p:submenu>
-
-
-
-						<p:submenu label="Sair"
-							actionListener="#{autenticacaojsfController.logout()}">
-							<p:menuitem value="Sair"
-								actionListener="#{autenticacaojsfController.logout()}">
-							</p:menuitem>
-						</p:submenu>
-					</p:menubar>
-				</h:form>
-			</div>
-
-
-
-			<div id="corpo" >
-				<h:form id="formTemplate" >
+    <h:body styleClass="main-body">
+        
+        <div class="wrapper">
+            <ui:include src="topbar.xhtml" />
+            
+            <ui:include src="sidebar.xhtml" />
+            
+            <div class="main">
+            <p:growl id="mensagens" autoUpdate="true" redisplay="true" />
+            <div class="cont">
+                <h:form id="formTemplate" >
 					<ui:insert name="conteudo">
 					</ui:insert>
-
 				</h:form>
 			</div>
-		</div>
-	</div>
-</h:body>
+            </div>
+            
+            <!--  <ui:include src="footer.xhtml" />-->
+        </div>
+        
+        <p:ajaxStatus style="width:32px;height:32px;position:fixed;right:7px;bottom:7px">
+            <f:facet name="start">
+                <p:graphicImage name="images/preloader.gif" library="omega-layout" style="width: 32px;"/>
+            </f:facet>
 
+            <f:facet name="complete">
+                <h:outputText value="" />
+            </f:facet>
+        </p:ajaxStatus>
+        
+        <h:outputStylesheet name="css/animate.css" library="omega-layout" />
+        <h:outputStylesheet name="css/nanoscroller.css" library="omega-layout" />
+        <h:outputStylesheet name="css/layout.css" library="omega-layout" />
+        <h:outputStylesheet name="css/custom-omega.css" library="omega-layout" />
+        <h:outputStylesheet name="css/font-awesome.css" library="fa" />
+        <!-- JS -->
+        <!-- <h:outputScript name="js/nanoscroller.js" library="omega-layout" />-->
+        <!-- <h:outputScript name="js/layout.js" library="omega-layout" /> -->
+        <h:outputScript name="js/custom-omega.js" library="omega-layout" />
+    </h:body>
 
 </html>
