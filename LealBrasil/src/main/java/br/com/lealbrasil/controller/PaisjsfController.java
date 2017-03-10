@@ -47,9 +47,22 @@ public class PaisjsfController extends GenericController implements Serializable
 	public void merge() {
 		this.pais.setDescricao(Utilidades.formataNomeDaRegiao(this.pais.getDescricao()));
 		Pais pais2 = PaisBusiness.buscaPaisPeloNome(this.pais.getDescricao());  //this.pais é diferente de pais
-		if(pais2 != null){
-			mensagensDisparar("Este pais já está cadastrado: " + pais2.getDescricao());
-			this.pais.setId(pais2.getId());
+		if(this.pais.getId() != null){ // Se this.pais.getId() for igual à nulo isso significa que o usuário clicou em novo, caso contrário ele está realizando uma edição
+			if(pais2 != null){
+				if(!this.pais.getId().equals(pais2.getId())){
+					mensagensDisparar("Tente novamente, pais já cadastrado: " + pais2.getDescricao());
+					return;
+				}
+			}else{
+				mensagensDisparar("Pais alterado com sucesso!!!");
+			}
+		}else{
+			if(pais2 != null){
+				this.pais.setId(pais2.getId());
+				mensagensDisparar("Pais alterado com sucesso!!!");
+			}else{
+				mensagensDisparar("Pais cadastrado com sucesso!!!");
+			}
 		}
 		
 		this.pais.setUltimaAtualizacao(Utilidades.retornaCalendario());
@@ -62,9 +75,19 @@ public class PaisjsfController extends GenericController implements Serializable
 		}
 		
 		PaisBusiness.merge(this.pais);
-		listar(); //ATENÇÃO, REVER LINHA NO MOMENTO DA IMPLANTAÇÃO DO FRONT!!!! - 02/03/2017
+		listar(); 
 		Utilidades.abrirfecharDialogos("dialogoCadastro",false);
 
+	}
+	
+	
+	public void editar(ActionEvent event) {
+
+		Pais p = (Pais) event.getComponent().getAttributes().get("registroAtual");
+		pais = new Pais();
+		pais = p;		
+		
+		Utilidades.abrirfecharDialogos("dialogoCadastro",true);
 	}
 	
 	
@@ -130,7 +153,7 @@ public class PaisjsfController extends GenericController implements Serializable
 	public void setAutenticacao(AutenticacaojsfController autenticacao) {
 		this.autenticacao = autenticacao;
 	}
-
+	
 	
 	
 	
