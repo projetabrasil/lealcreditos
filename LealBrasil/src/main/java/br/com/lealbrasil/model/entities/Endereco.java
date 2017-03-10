@@ -2,6 +2,7 @@ package br.com.lealbrasil.model.entities;
 
 import java.io.Serializable;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -32,6 +33,13 @@ public class Endereco extends GenericDomain implements Serializable {
 	@ManyToOne
 	@JoinColumn(name = "id_pessoa")
 	private Pessoa pessoa;
+	
+	@Column(name="numero", nullable=true) 
+	private Integer numero;
+	
+	
+	@Column(name="complemento", length=50, nullable=true) 
+	private String complemento;
 
 	public Long getId() {
 		return id;
@@ -63,6 +71,22 @@ public class Endereco extends GenericDomain implements Serializable {
 
 	public void setPessoa(Pessoa pessoa) {
 		this.pessoa = pessoa;
+	}
+	
+	public Integer getNumero() {
+		return numero;
+	}
+
+	public void setNumero(Integer numero) {
+		this.numero = numero;
+	}
+
+	public String getComplemento() {
+		return complemento;
+	}
+
+	public void setComplemento(String complemento) {
+		this.complemento = complemento;
 	}
 
 	@Override
