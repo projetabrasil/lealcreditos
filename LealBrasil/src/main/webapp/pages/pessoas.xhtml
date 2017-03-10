@@ -213,7 +213,7 @@
 						<div class="ui-g-12 div-dtnsc-info-pessoas">
 							<p:outputLabel value="Data de nascimento"
 								rendered="#{pessoajsfController.pessoaConfig.labelDataNascimentoRenderiza}" />
-							<p:calendar id="calendar" size="15" maxlength="15" mask="99/99/9999" 
+							<p:calendar id="calendar" size="15" maxlength="15" mask="**/**/****" pattern="dd/MM/yyyy" 
 								value="#{pessoajsfController.pessoa.dataNascimento}"
 								required="#{pessoajsfController.pessoaConfig.labelDataNascimentoObrigatorio}"
 								requiredMessage="#{pessoajsfController.pessoaConfig.labelDataNascimentoRequiredMessage}"
