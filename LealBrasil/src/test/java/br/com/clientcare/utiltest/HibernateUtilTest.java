@@ -36,13 +36,13 @@ public class HibernateUtilTest {
 	@Test
 	public void calendario() {
 		Session sessao = HibernateUtil.getFabricaDeSessoes().openSession();
-		Criteria crit = null;
-		DetachedCriteria subQuery1 = null;
+		//Criteria crit = null;
+		//DetachedCriteria subQuery1 = null;
 
-		subQuery1 = DetachedCriteria.forClass(Pessoa_Vinculo.class).setProjection(Property.forName("id_pessoa_d"));
+		DetachedCriteria subQuery1 = DetachedCriteria.forClass(Pessoa_Vinculo.class).setProjection(Property.forName("id_pessoa_d"));
 		subQuery1.add(Restrictions.eq("id_pessoa_m", 1l));
 
-		crit = sessao.createCriteria(Pessoa.class).setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
+		Criteria crit = sessao.createCriteria(Pessoa.class).setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
 				.add(Restrictions.and(Subqueries.propertyIn("id", subQuery1)));
 
 	}
@@ -77,7 +77,7 @@ public class HibernateUtilTest {
 				p.setFone_2("");
 				p.setFone_3("");
 				p.setEmail("paulo.logicabrasil@gmail.com");
-				p.setId_Pessoa_Registro(null);
+				p.setId_Pessoa_Registro(p);
 				p.setAutoPontuacao(Enum_Aux_Sim_ou_Nao.NAO);
 				p.setEnum_Aux_Tipo_Identificador(Enum_Aux_Tipo_Identificador.CPF);
 				p.setDescricao("Paulo Marcos Rodrigues Pereira");
@@ -96,18 +96,19 @@ public class HibernateUtilTest {
 					us = new Usuario();
 					us.setPessoa(p);
 					us.setAtivo(true);
-					us.setConfSenha("P2a3u0l9");
-					us.setId(null);
+					us.setSenhaSemCript("12345678");
+					us.setConfSenha("12345678");
+					//us.setId(null);
 					us.setId_Empresa(1);
 					us.setId_Pessoa_Registro(p);
 					us.setPessoa(p);
-					us.setSenhaSemCript(null);
+					
 				} catch (RuntimeException error) {
 					error.printStackTrace();
 					throw error;
 				}
 			}
-			us.setSenhaSemCript("P2a3u0l9");
+			
 			us = usDAO.merge(us);
 
 			pp = new Pessoa_Enum_Aux_Perfil_Pessoa();

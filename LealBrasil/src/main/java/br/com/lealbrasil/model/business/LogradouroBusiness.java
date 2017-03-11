@@ -6,8 +6,6 @@ import java.util.List;
 import org.omnifaces.util.Messages;
 
 import br.com.lealbrasil.model.dao.LogradouroDAO;
-import br.com.lealbrasil.model.dao.LogradouroDAO;
-import br.com.lealbrasil.model.dao.LogradouroDAO;
 import br.com.lealbrasil.model.entities.Cidade;
 import br.com.lealbrasil.model.entities.Estado;
 import br.com.lealbrasil.model.entities.Logradouro;
