@@ -40,6 +40,18 @@ public class Endereco extends GenericDomain implements Serializable {
 	
 	@Column(name="complemento", length=50, nullable=true) 
 	private String complemento;
+	
+	public Endereco(){
+		super();
+	}
+	
+	public Endereco(Bairro bairro, Cidade cidade, Estado estado) {
+		super();
+		this.bairro = bairro;
+		this.bairro.setCidade(cidade);
+		this.bairro.getCidade().setEstado(estado);
+
+	}
 
 	public Long getId() {
 		return id;

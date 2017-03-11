@@ -16,10 +16,15 @@ import br.com.lealbrasil.model.business.PessoaGenericBusiness;
 import br.com.lealbrasil.model.business.UsuarioBusiness;
 import br.com.lealbrasil.model.dao.Pessoa_VinculoDAO;
 import br.com.lealbrasil.model.dao.UsuarioDAO;
+import br.com.lealbrasil.model.entities.Bairro;
+import br.com.lealbrasil.model.entities.Cidade;
+import br.com.lealbrasil.model.entities.Endereco;
 import br.com.lealbrasil.model.entities.Enum_Aux_Perfil_Pagina_Atual;
 import br.com.lealbrasil.model.entities.Enum_Aux_Perfil_Pessoa;
 import br.com.lealbrasil.model.entities.Enum_Aux_Tipo_Identificador;
 import br.com.lealbrasil.model.entities.Enum_Aux_Tipo_Pessoa;
+import br.com.lealbrasil.model.entities.Estado;
+import br.com.lealbrasil.model.entities.Logradouro;
 import br.com.lealbrasil.model.entities.PerfilLogado;
 import br.com.lealbrasil.model.entities.Pessoa;
 import br.com.lealbrasil.model.entities.Pessoa_Vinculo;
@@ -35,6 +40,11 @@ public class PessoajsfController extends GenericController implements Serializab
 	private PessoaConfig pessoaConfig;
 	private Enum_Aux_Tipo_Pessoa enum_Aux_Tipo_Pessoa;
 	private Usuario usuario;
+	private Endereco endereco;
+	private Estado estado;
+	private Cidade cidade;
+	private Bairro bairro;
+	private Logradouro logradouro;
 
 	@ManagedProperty(value = "#{autenticacaojsfController.perfilLogado}")
 	private PerfilLogado perfilLogado;
@@ -56,6 +66,7 @@ public class PessoajsfController extends GenericController implements Serializab
 	public void novo(ActionEvent event) {
 		perfilLogadoTemp = perfilLogado;
 		pessoa = new Pessoa();
+		endereco = new Endereco(new Bairro(), new Cidade(), new Estado());
 		configurarPessoa();
 		if (perfilLogado.getPaginaAtual().equals(Enum_Aux_Perfil_Pagina_Atual.PAGINAASSINANTES))
 			pessoa = pessoaConfig.ConfiguraPessoa(Enum_Aux_Tipo_Identificador.CNPJ, perfilLogado.getUsLogado(), pessoa,
@@ -141,6 +152,20 @@ public class PessoajsfController extends GenericController implements Serializab
 		    
 			
 		}
+	}
+	
+	public void associaEstadosAoPais(){
+		this.endereco.getBairro().getCidade().getEstado().getPais().setEstados(PessoaBusiness.associaEstadosAoPais(this.endereco.
+				getBairro().getCidade().getEstado().getPais().getId()));
+	}
+	
+	public void associaCidadesAoEstado(){
+		this.estado.setCidades(PessoaBusiness.associaCidadesAoEstado(this.estado.getId()));
+	}
+	
+	public void associaBLACidade(){
+		this.cidade.setBairros(PessoaBusiness.associaBairrosACidade(this.cidade.getId()));
+		this.cidade.setLogradouros(PessoaBusiness.associaLogradourosACidade(this.cidade.getId()));
 	}
 
 	public void mudaLabel() {
@@ -263,6 +288,46 @@ public class PessoajsfController extends GenericController implements Serializab
 
 	public void setAutenticacao(AutenticacaojsfController autenticacao) {
 		this.autenticacao = autenticacao;
+	}
+
+	public Endereco getEndereco() {
+		return endereco;
+	}
+
+	public void setEndereco(Endereco endereco) {
+		this.endereco = endereco;
+	}
+
+	public Estado getEstado() {
+		return estado;
+	}
+
+	public void setEstado(Estado estado) {
+		this.estado = estado;
+	}
+
+	public Cidade getCidade() {
+		return cidade;
+	}
+
+	public void setCidade(Cidade cidade) {
+		this.cidade = cidade;
+	}
+
+	public Bairro getBairro() {
+		return bairro;
+	}
+
+	public void setBairro(Bairro bairro) {
+		this.bairro = bairro;
+	}
+
+	public Logradouro getLogradouro() {
+		return logradouro;
+	}
+
+	public void setLogradouro(Logradouro logradouro) {
+		this.logradouro = logradouro;
 	}
 
 }
