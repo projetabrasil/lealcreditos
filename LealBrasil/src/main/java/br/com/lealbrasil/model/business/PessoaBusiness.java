@@ -11,8 +11,12 @@ import org.hibernate.criterion.Restrictions;
 import org.omnifaces.util.Messages;
 
 import br.com.lealbrasil.model.dao.PessoaDAO;
+import br.com.lealbrasil.model.entities.Bairro;
+import br.com.lealbrasil.model.entities.Cidade;
 import br.com.lealbrasil.model.entities.Enum_Aux_Tipo_Identificador;
 import br.com.lealbrasil.model.entities.Enum_Aux_Tipo_Mensagem;
+import br.com.lealbrasil.model.entities.Estado;
+import br.com.lealbrasil.model.entities.Logradouro;
 import br.com.lealbrasil.model.entities.PerfilLogado;
 import br.com.lealbrasil.model.entities.Pessoa;
 import br.com.lealbrasil.util.HibernateUtil;
@@ -99,6 +103,26 @@ public class PessoaBusiness implements Serializable {
 		if (pessoa.getEnum_Aux_Tipo_Identificador() == null)
 			pessoa.setEnum_Aux_Tipo_Identificador(Enum_Aux_Tipo_Identificador.CPF);
 		return pessoa;
+	}
+	public static List<Estado> associaEstadosAoPais(Long id) {
+		PessoaDAO pDAO = new PessoaDAO();
+		List<Estado> estados = pDAO.associaEstadosAoPais(id);
+		return estados;
+	}
+	public static List<Cidade> associaCidadesAoEstado(Long id) {
+		PessoaDAO pDAO = new PessoaDAO();
+		List<Cidade> cidades = pDAO.associaCidadesAoEstado(id);
+		return cidades;
+	}
+	public static List<Bairro> associaBairrosACidade(Long id) {
+		PessoaDAO pDAO = new PessoaDAO();
+		List<Bairro> bairros = pDAO.associaBairrosACidade(id);
+		return bairros;
+	}
+	public static List<Logradouro> associaLogradourosACidade(Long id) {
+		PessoaDAO pDAO = new PessoaDAO();
+		List<Logradouro> logradouros = pDAO.associaLogradourosACidade(id);
+		return logradouros;
 	}
 	
 	

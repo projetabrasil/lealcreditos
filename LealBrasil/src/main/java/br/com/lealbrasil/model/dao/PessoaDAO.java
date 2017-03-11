@@ -10,8 +10,12 @@ import org.hibernate.criterion.Property;
 import org.hibernate.criterion.Restrictions;
 import org.hibernate.criterion.Subqueries;
 
+import br.com.lealbrasil.model.entities.Bairro;
+import br.com.lealbrasil.model.entities.Cidade;
 import br.com.lealbrasil.model.entities.Enum_Aux_Perfil_Pagina_Atual;
 import br.com.lealbrasil.model.entities.Enum_Aux_Perfil_Pessoa;
+import br.com.lealbrasil.model.entities.Estado;
+import br.com.lealbrasil.model.entities.Logradouro;
 import br.com.lealbrasil.model.entities.PerfilLogado;
 import br.com.lealbrasil.model.entities.Pessoa;
 import br.com.lealbrasil.model.entities.Pessoa_Enum_Aux_Perfil_Pessoa;
@@ -133,6 +137,74 @@ public class PessoaDAO extends GenericDAO<Pessoa> {
 		} finally {
 			sessao.close();
 		}
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<Estado> associaEstadosAoPais(Long id) {
+		Session sessao = HibernateUtil.getFabricaDeSessoes().openSession();		
+		try{	
+			Criteria consulta = sessao.createCriteria(Estado.class).createAlias("pais", "a");
+			consulta.add(Restrictions.eq("a.id", id));
+			List<Estado> resultado = consulta.list();
+			return resultado;
+		}catch(RuntimeException erro){		
+			erro.printStackTrace();
+			throw erro;
+		}
+		finally{
+			sessao.close();
+		}	
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<Cidade> associaCidadesAoEstado(Long id) {
+		Session sessao = HibernateUtil.getFabricaDeSessoes().openSession();		
+		try{	
+			Criteria consulta = sessao.createCriteria(Cidade.class).createAlias("estado", "a");
+			consulta.add(Restrictions.eq("a.id", id));
+			List<Cidade> resultado = consulta.list();
+			return resultado;
+		}catch(RuntimeException erro){		
+			erro.printStackTrace();
+			throw erro;
+		}
+		finally{
+			sessao.close();
+		}	
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<Bairro> associaBairrosACidade(Long id) {
+		Session sessao = HibernateUtil.getFabricaDeSessoes().openSession();		
+		try{	
+			Criteria consulta = sessao.createCriteria(Bairro.class).createAlias("cidade", "a");
+			consulta.add(Restrictions.eq("a.id", id));
+			List<Bairro> resultado = consulta.list();
+			return resultado;
+		}catch(RuntimeException erro){		
+			erro.printStackTrace();
+			throw erro;
+		}
+		finally{
+			sessao.close();
+		}	
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<Logradouro> associaLogradourosACidade(Long id) {
+		Session sessao = HibernateUtil.getFabricaDeSessoes().openSession();		
+		try{	
+			Criteria consulta = sessao.createCriteria(Logradouro.class).createAlias("cidade", "a");
+			consulta.add(Restrictions.eq("a.id", id));
+			List<Logradouro> resultado = consulta.list();
+			return resultado;
+		}catch(RuntimeException erro){		
+			erro.printStackTrace();
+			throw erro;
+		}
+		finally{
+			sessao.close();
+		}	
 	}
 
 }
