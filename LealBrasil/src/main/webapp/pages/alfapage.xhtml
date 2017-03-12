@@ -42,8 +42,8 @@
           <div class="navbar-collapse">
 			<h:form>
 	            <ul class="navbar-right">
-	              <li class="oque"><a href="#">O que é? &nbsp;-</a></li>
-	              <li class="faq"><a href="#">FAQ &nbsp;&nbsp;&nbsp;|</a></li>
+	              <!-- <li class="oque"><a href="#">O que é? &nbsp;-</a></li>
+	              <li class="faq"><a href="#">FAQ &nbsp;&nbsp;&nbsp;|</a></li> -->
 	              <li><p:commandButton styleClass="log" value="Entrar"
 							actionListener="#{autenticacaojsfController.renderizar(false)}" /></li>
 	              <!-- <li><p:commandButton styleClass="reg" value="Auto pontuar"
@@ -59,9 +59,12 @@
           <!-- Sub-navbar -->
           <div class="sub-navbar">
           	<ul >
-              <li><a class="p1" href=""><i class="fa fa-pie-chart"></i> Produtos</a></li>
-              <li><a class="p2" href=""><i class="fa fa-pie-chart"></i> Produtos</a></li>
-              <li><a class="p3" href=""><i class="fa fa-pie-chart"></i> Produtos</a></li>
+          	  <li><a class="p2" href=""><i class="fa fa-pie-chart"></i> FidelidadeBrasil</a></li>
+              <li><a class="p1" href=""><i class="fa fa-pie-chart"></i> GoTaxi</a></li>
+              <li><a class="p3" href=""><i class="fa fa-pie-chart"></i> Estoque de barras</a></li>
+              <li><a class="p4" href=""><i class="fa fa-pie-chart"></i> Achei-Pet</a></li>
+              <li><a class="p4" href=""><i class="fa fa-pie-chart"></i> Achei-Car</a></li>
+              <li><a class="p4" href=""><i class="fa fa-pie-chart"></i> Achei-Phone</a></li>
             </ul>
            
           </div><!--/.sub-navbar -->
@@ -79,66 +82,108 @@
     <div class="conteudo">
 
       <!-- FUNDO / CONTEUDO(TEXTO) -->
-      <div class="fundo">
+      
     			<div class="sobre">
     				<h1>Sobre a Projeta Brasil</h1>
-    				<p>Localizados em Florianópolis - SC, somos uma empresa especializada no desenvolvimento de soluções de tecnologia para marketing de relacionamento e fidelização de clientes. Nosso objetivo é contribuir efetivamente para o aumento das vendas e lucratividade das empresas clientes, através da oferta de uma solução simples, eficaz e com baixo custo de investimento que permite: <br/>
-    				1 - Criação de um sistema personalizado de PONTUAÇÃO que valoriza os clientes fiéis de estabelecimentos comerciais ou prestadores de serviços, através de descontos em novas compras e prêmios por consumo; <br/>
-    				2 - Execução de campanhas comerciais com promoção de produtos e serviços para alavancar novas vendas de maneira mais efetiva, direcionando ações e promoções para consumidores leais; <br/>
-    				3 - Entender os hábitos de consumo e comportamento dos clientes para focar ações comerciais, visando melhores resultados; <br/>
-    				4 - Nossa solução é WEB Based - Acesso através da Internet por meio de Login e Senha exclusivos e criptografados;
+    				<p>Somos uma STARTUP localizados em Florianópolis, cuja finalidade é a especialização no desenvolvimento de diversas soluções 
+						tecnologicamente inteligentes. Nosso trabalho visa abarcar e transformar ideias (próprias ou de “terceiros investidores”) em produtos. 
+						Temos um time multidisciplinar antenado com as tendências mercadológicas e tecnológicas mais atuais e com uma visão aberta a novos desafios. 
+						O objetivo da Projeta Brasil é colocar produtos de qualidade e inteligentes no mercado de forma que possa facilitar 
+						o dia a dia dos quem os utiliza e agregar valor para a sociedade a onde estamos inseridos.
     				</p>
     			</div>
-    			<div class="proposta">
-            <div class="row">
-              <div class="col-md-6 texto">
-                <h2>Proposta</h2>
-                <p>1 - Cadastro de clientes;  <br/>
-                    2 - Classificação de clientes por categorias; <br/> 
-                    3 - Controle de Pontuações do cliente, tal como seus créditos, débitos e saldo atual;<br/>
-                    4 - Cadastro de prêmios;  <br/>
-                    5 - Controle de Prêmios utilizados pelo cliente;  <br/>
-                    6 - Índice de lealdade do cliente;  <br/>
-                    7 - Site personalizado para acompanhamento das pontuações do cliente em diversos estabelecimentos;<br/>
-                    8 - Publicação e promoções na página principal personalizada do cliente.
-                </p>
+    			
+    	<div class="produtos">
 
-              </div>
-              <div class="col-md-6 img hidden-xs">
-                <div class="iphone"></div>
-              </div>
-            </div>
-    			</div>
-          
-    			<div class="produtos">
-
-    				    <h2>Produtos</h2>
+    		<h2>Produtos</h2>
 
             <div class="grupo-produtos">
               <div class="row">
-                <div class="col-md-4 texto">
-                  <h3><i class="fa fa-pie-chart"></i> Produto01</h3>
-                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec vel tristique orci. Donec consectetur scelerisque velit sed sollicitudin. Phasellus molestie feugiat elit, nec faucibus nulla dictum nec. Pellentesque eu interdum tortor. Nunc ac fringilla sapien. Curabitur non nisl porta, pulvinar dui vitae, imperdiet libero. Sed quis risus vitae neque tristique efficitur...</p>
+                <div class="col-md-6 col-lg-2 texto">
+                  <div class="logo-gotaxi"></div>
+                  <h3>GOTAXI</h3>
+                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec vel tristique orci. Donec consectetur scelerisque velit sed sollicitudin. Phasellus molestie.</p>
+                  <div class="div-h4-produtos">
+                  	<h4>SAIBA MAIS</h4>
+                  </div>
                 </div>
-                <div class="col-md-4 texto">
-                  <h3><i class="fa fa-pie-chart"></i> Produto02</h3>
-                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec vel tristique orci. Donec consectetur scelerisque velit sed sollicitudin. Phasellus molestie feugiat elit, nec faucibus nulla dictum nec. Pellentesque eu interdum tortor. Nunc ac fringilla sapien. Curabitur non nisl porta, pulvinar dui vitae, imperdiet libero. Sed quis risus vitae neque tristique efficitur...</p>
+                <div class="col-md-6 col-lg-2 texto">
+                  <div class="logo-fidelidade"></div>
+                  <h3>FIDELIDADE BRASIL</h3>
+                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec vel tristique orci. Donec consectetur scelerisque velit sed sollicitudin. Phasellus molestie.</p>
+                  <div class="div-h4-produtos">
+                  	<h4>SAIBA MAIS</h4>
+                  </div>
                 </div>
-                <div class="col-md-4 texto">
-                  <h3><i class="fa fa-pie-chart"></i> Produto03</h3>
-                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec vel tristique orci. Donec consectetur scelerisque velit sed sollicitudin. Phasellus molestie feugiat elit, nec faucibus nulla dictum nec. Pellentesque eu interdum tortor. Nunc ac fringilla sapien. Curabitur non nisl porta, pulvinar dui vitae, imperdiet libero. Sed quis risus vitae neque tristique efficitur...</p>
+                <div class="col-md-6 col-lg-2 texto">
+                  <div class="logo-barra"></div>
+                  <h3>CODIGO DE BARRAS</h3>
+                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec vel tristique orci. Donec consectetur scelerisque velit sed sollicitudin. Phasellus molestie.</p>
+                  <div class="div-h4-produtos">
+                  	<h4>SAIBA MAIS</h4>
+                  </div>
                 </div>
+                <div class="col-md-6 col-lg-2 texto">
+                  <div class="logo-pet"></div>
+                  <h3>ACHEI-PET</h3>
+                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec vel tristique orci. Donec consectetur scelerisque velit sed sollicitudin. Phasellus molestie.</p>
+                  <div class="div-h4-produtos">
+                  	<h4>SAIBA MAIS</h4>
+                  </div>
+                </div>
+                <div class="col-md-6 col-lg-2 texto">
+                  <div class="logo-car"></div>
+                  <h3>ACHEI-CAR</h3>
+                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec vel tristique orci. Donec consectetur scelerisque velit sed sollicitudin. Phasellus molestie.</p>
+                  <div class="div-h4-produtos">
+                  	<h4>SAIBA MAIS</h4>
+                  </div>
+                </div>
+                <div class="col-md-6 col-lg-2 texto">
+                  <div class="logo-phone"></div>
+                  <h3>ACHEI-PHONE</h3>
+                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec vel tristique orci. Donec consectetur scelerisque velit sed sollicitudin. Phasellus molestie.</p>
+                  <div class="div-h4-produtos">
+                  	<h4>SAIBA MAIS</h4>
+                  </div>
+                </div>
+              </div><!-- /.row -->
+            </div>
+    	</div>
+    			
+    	<div class="proposta">
+    			<h2>Multiplataforma</h2>
+    		
+    			<div class="col-lg-12 visible-sm visible-xs div-iphone-mob">
+                <div class="iphone-mob"></div>
+              </div>
+         
+            <div class="row">
+              <div class="col-md-12 texto">
+                <p>
+				A Projeta Brasil tem como meta proporcionar a melhor experiencia possível com o uso de nossos produtos,
+				para isso desenvolvemos nossas soluções inteligentes de forma que possa ser acessada de múltiplos tamanhos de telas, equipamentos,
+				e sistemas operacionais. Para smartphones temos o foco para os sistemas IOS(IPhone) e Android, com o propósito de atender
+				todos os nossos clientes. Para notebooks e desktops optamos pelo desenvolvimento WEB, pois dessa forma conseguimos atender
+				usuários de diferentes sistemas operacionais, como, Windows, MAC, e Linux.
+                </p>
+
+              </div>
+              <div class="col-lg-6 img visible-md visible-lg">
+                <div class="iphone"></div>
               </div>
             </div>
-    			</div>
-      </div><!--/.fundo-->
+    	</div>
+          
+ 
+
     </div><!-- /.conteudo -->
 	
 	
 	<!-- Footer -->
     <div class="footer">
       <div class="row">
-          <div class="col-sm-4 sobre-footer">
+          <div class="col-md-6 col-sm-12 footer-geral sobre-footer">
             <ul>
               <li><h4>Sobre a Projeta Brasil</h4></li>
               <li><a href="#">O que é a Projeta Brasil</a></li>
@@ -147,15 +192,18 @@
               <li><a href="#">Fale conosco</a></li>
             </ul>
           </div>
-          <div class="col-sm-4 produtos-footer">
+          <div class="col-md-6 col-sm-12 footer-geral produtos-footer">
             <ul>
               <li><h4>Produtos Projeta Brasil</h4></li>
-              <li><a href="#">Produto01</a></li>
-              <li><a href="#">Produto02</a></li>
-              <li><a href="#">Produto03</a></li>
+              <li><a href="#">GoTaxi</a></li>
+              <li><a href="#">FidelidadeBrasil</a></li>
+              <li><a href="#">Estoque em Barras</a></li>
+               <li><a href="#">Achei-Pet</a></li>
+                <li><a href="#">Achei-Car</a></li>
+                 <li><a href="#">Achei-Phone</a></li>
             </ul>
           </div>
-          <div class="col-sm-4 social-footer">
+          <!-- <div class="col-md-4 col-sm-12 social-footer">
             <h5>Nos siga nas redes sociais</h5>
             <div>
               <ul>
@@ -164,7 +212,7 @@
                 <li><i class="fa fa-linkedin"></i></li>
               </ul>
             </div>
-          </div>
+          </div> -->
         <div class="col-xs-12 ass-footer">
           <p>Projeta Brasil® • Todos os direitos reservados.</p>
         </div> 

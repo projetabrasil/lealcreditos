@@ -9,8 +9,8 @@
 	</context-param>
 
 
-	<!-- OMEGA icones
-    <context-param>
+	<!-- OMEGA icones -->
+    <!--<context-param>
         <param-name>primefaces.FONT_AWESOME</param-name>
         <param-value>true</param-value>
     </context-param>
