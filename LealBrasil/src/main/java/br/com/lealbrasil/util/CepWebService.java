@@ -110,4 +110,12 @@ public class CepWebService {
 			this.resultado = resultado;
 		}
 
+		@Override
+		public String toString() {
+			return "CepWebService [estado=" + estado + ", cidade=" + cidade + ", bairro=" + bairro + ", tipoLogradouro="
+					+ tipoLogradouro + ", logradouro=" + logradouro + ", resultado=" + resultado + "]";
+		}
+		
+		
+
 }
