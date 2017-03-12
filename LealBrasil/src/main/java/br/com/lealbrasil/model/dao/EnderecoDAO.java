@@ -4,12 +4,14 @@ import java.util.List;
 
 import org.hibernate.Criteria;
 import org.hibernate.Session;
+import org.hibernate.criterion.Restrictions;
 
 import br.com.lealbrasil.model.entities.Endereco;
 import br.com.lealbrasil.model.entities.PerfilLogado;
+import br.com.lealbrasil.model.entities.Pessoa;
 import br.com.lealbrasil.util.HibernateUtil;
 
-public class EnderecoDAO {
+public class EnderecoDAO extends GenericDAO<Endereco> {
 	@SuppressWarnings("unchecked")
 	public List<Endereco> listar(PerfilLogado perfilLogado) {
 		Session sessao = HibernateUtil.getFabricaDeSessoes().openSession();		
@@ -18,10 +20,24 @@ public class EnderecoDAO {
 			List<Endereco> resultado = consulta.list();
 			return resultado;
 		}catch(RuntimeException erro){		
-		
+			erro.printStackTrace();
 			throw erro;
 		}
 		finally{
+			sessao.close();
+		}
+	}
+
+	public Endereco buscaEnderecoPorPessoa(Pessoa pessoa) {
+		Session sessao = HibernateUtil.getFabricaDeSessoes().openSession();
+		try {
+			Criteria consulta = sessao.createCriteria(Endereco.class);
+			consulta.add(Restrictions.eq("pessoa", pessoa));
+			return (Endereco) consulta.setMaxResults(1).uniqueResult();
+		} catch (RuntimeException error) {
+			error.printStackTrace();
+			throw error;
+		} finally {
 			sessao.close();
 		}
 	}

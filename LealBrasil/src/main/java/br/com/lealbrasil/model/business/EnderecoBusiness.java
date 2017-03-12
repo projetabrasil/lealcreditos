@@ -8,6 +8,7 @@ import org.omnifaces.util.Messages;
 import br.com.lealbrasil.model.dao.EnderecoDAO;
 import br.com.lealbrasil.model.entities.Endereco;
 import br.com.lealbrasil.model.entities.PerfilLogado;
+import br.com.lealbrasil.model.entities.Pessoa;
 
 @SuppressWarnings("serial")
 public class EnderecoBusiness implements Serializable {
@@ -27,5 +28,21 @@ public class EnderecoBusiness implements Serializable {
 		}
 		return endereco;
 		
+	}
+
+	public static void merge(Endereco endereco) {
+		EnderecoDAO eDAO = new EnderecoDAO();
+		try {
+			eDAO.merge(endereco);
+		} catch (RuntimeException erro) {
+			erro.printStackTrace();
+			throw erro;
+		}
+		
+	}
+
+	public static Endereco buscaEnderecoPorPessoa(Pessoa pessoa) {
+		Endereco endereco = new EnderecoDAO().buscaEnderecoPorPessoa(pessoa);
+		return endereco;
 	}
 }

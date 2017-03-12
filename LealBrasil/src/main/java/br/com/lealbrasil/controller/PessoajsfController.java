@@ -10,6 +10,7 @@ import javax.faces.bean.ViewScoped;
 import javax.faces.event.ActionEvent;
 
 import br.com.lealbrasil.controller.entitiesconfig.PessoaConfig;
+import br.com.lealbrasil.model.business.EnderecoBusiness;
 import br.com.lealbrasil.model.business.PessoaBusiness;
 import br.com.lealbrasil.model.business.PessoaBusiness2;
 import br.com.lealbrasil.model.business.PessoaGenericBusiness;
@@ -66,7 +67,13 @@ public class PessoajsfController extends GenericController implements Serializab
 	public void novo(ActionEvent event) {
 		perfilLogadoTemp = perfilLogado;
 		pessoa = new Pessoa();
-		endereco = new Endereco(new Bairro(), new Cidade(), new Estado());
+		
+		this.endereco = new Endereco(new Bairro(), new Cidade(), new Estado());
+		this.endereco = EnderecoBusiness.buscaEnderecoPorPessoa(perfilLogado.getAssLogado());
+		this.endereco.setComplemento("");
+		this.endereco.setNumero(null);
+
+		
 		configurarPessoa();
 		if (perfilLogado.getPaginaAtual().equals(Enum_Aux_Perfil_Pagina_Atual.PAGINAASSINANTES))
 			pessoa = pessoaConfig.ConfiguraPessoa(Enum_Aux_Tipo_Identificador.CNPJ, perfilLogado.getUsLogado(), pessoa,
@@ -83,9 +90,10 @@ public class PessoajsfController extends GenericController implements Serializab
 	public void editar(ActionEvent event) {
 
 		Pessoa p = (Pessoa) event.getComponent().getAttributes().get("registroAtual");
-		pessoa = new Pessoa();
-		pessoa = p;
+		this.pessoa = new Pessoa();
+		this.pessoa = p;
 		
+		this.endereco = new Endereco(new Bairro(), new Cidade(), new Estado());	
 		
 		if (perfilLogado.getPaginaAtual().isRenderizaCadastrodeUsuarios()) {
 			UsuarioDAO usuarioDAO = new UsuarioDAO();
@@ -138,7 +146,25 @@ public class PessoajsfController extends GenericController implements Serializab
 		}
 		
 		pessoa = PessoaGenericBusiness.merge(pessoa, usuario, perfilLogado, true);
+		// Endereço MERGE------------
+		if(pessoa != null){
+			this.endereco.setBairro(this.bairro);
+			this.endereco.setLogradouro(logradouro);
+			this.endereco.setId_Empresa(0);
+			this.endereco.setUltimaAtualizacao(Utilidades.retornaCalendario());	
+			this.endereco.setPessoa(pessoa);
+			EnderecoBusiness.merge(endereco);
+		}
+		
 		listar();
+		this.estado = null;
+		this.cidade = null;
+		this.bairro = null;
+		this.estado = null;
+		this.endereco.setBairro(new Bairro());
+		this.endereco.setLogradouro(new Logradouro());
+		this.endereco.getBairro().setCidade(new Cidade());
+		this.endereco.getBairro().getCidade().setEstado(new Estado());		
 		cancela();
 
 	}
@@ -154,16 +180,24 @@ public class PessoajsfController extends GenericController implements Serializab
 		}
 	}
 	
-	public void associaEstadosAoPais(){
+	public void associaEstadosAoPais(){		
+		this.cidade = null;
+		this.bairro = null;
+		this.logradouro = null;
 		this.endereco.getBairro().getCidade().getEstado().getPais().setEstados(PessoaBusiness.associaEstadosAoPais(this.endereco.
 				getBairro().getCidade().getEstado().getPais().getId()));
 	}
 	
 	public void associaCidadesAoEstado(){
+		this.cidade = null;
+		this.bairro = null;
+		this.logradouro = null;
 		this.estado.setCidades(PessoaBusiness.associaCidadesAoEstado(this.estado.getId()));
 	}
 	
 	public void associaBLACidade(){
+		this.bairro = null;
+		this.logradouro = null;
 		this.cidade.setBairros(PessoaBusiness.associaBairrosACidade(this.cidade.getId()));
 		this.cidade.setLogradouros(PessoaBusiness.associaLogradourosACidade(this.cidade.getId()));
 	}

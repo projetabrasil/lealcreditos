@@ -332,7 +332,7 @@
 								
 								<p:outputLabel for="pais" value="País: "/>
 		            			<p:selectOneMenu id="pais" value="#{pessoajsfController.endereco.bairro.cidade.estado.pais}" converter="omnifaces.SelectItemsConverter" style="width:150px">
-		                			<p:ajax listener="#{pessoajsfController.associaEstadosAoPais}" update="estado" />
+		                			<p:ajax listener="#{pessoajsfController.associaEstadosAoPais}" update="estado,cidade,logradouro,bairro" />
 		                			<f:selectItem itemLabel="Selecione o país" itemValue="" noSelectionOption="true" />
 		                			<f:selectItems value="#{paisjsfController.paises}" var="o" itemLabel="#{o.descricao}" itemValue="#{o}" />
 		            			</p:selectOneMenu>
@@ -340,16 +340,15 @@
 								<p:outputLabel value="CEP:"/>
 								<p:inputText size="30" maxlength="30"
 									value="#{pessoajsfController.endereco.bairro.cidade.cep}"
-									required="true"
+									required="false"
 									requiredMessage="Campo obrigatório"
 									validatorMessage="O minimo de caracteres para sigla são  '2'"
 									placeholder="Mínimo 2 Letras">
-									<f:validateLength minimum="2" />
 								</p:inputText>
 		 
 		            			<p:outputLabel for="estado" value="Estado: " />
 		            			<p:selectOneMenu id="estado" value="#{pessoajsfController.estado}" converter="omnifaces.SelectItemsConverter" style="width:150px">
-		            				<p:ajax listener="#{pessoajsfController.associaCidadesAoEstado}" update="cidade" />
+		            				<p:ajax listener="#{pessoajsfController.associaCidadesAoEstado}" update="cidade,logradouro,bairro" />
 		                			<f:selectItem itemLabel="Selecione o estado" itemValue="" noSelectionOption="true" />
 		                			<f:selectItems value="#{pessoajsfController.endereco.bairro.cidade.estado.pais.estados}" var="o" itemLabel="#{o.descricao}" itemValue="#{o}"/>
 		            			</p:selectOneMenu>
@@ -366,32 +365,12 @@
 		                			<f:selectItem itemLabel="Selecione o bairro" itemValue="" noSelectionOption="true" />
 		                			<f:selectItems value="#{pessoajsfController.cidade.bairros}" var="o" itemLabel="#{o.descricao}" itemValue="#{o}"/>
 		            			</p:selectOneMenu>
-		            			
-								<p:outputLabel value="Bairro:"/>
-								<p:inputText size="30" maxlength="30"
-									value="#{pessoajsfController.bairro}"
-									required="true"
-									requiredMessage="Campo obrigatório"
-									validatorMessage="O minimo de caracteres para sigla são  '2'"
-									placeholder="Mínimo 2 Letras">
-									<f:validateLength minimum="2" />
-								</p:inputText>
 								
 								<p:outputLabel for="logradouro" value="Logradouro: " />
 		            			<p:selectOneMenu id="logradouro" value="#{pessoajsfController.logradouro}" converter="omnifaces.SelectItemsConverter" style="width:150px">
 		                			<f:selectItem itemLabel="Selecione o logradouro" itemValue="" noSelectionOption="true" />
 		                			<f:selectItems value="#{pessoajsfController.cidade.logradouros}" var="o" itemLabel="#{o.descricao}" itemValue="#{o}"/>
 		            			</p:selectOneMenu>
-		            			
-		            			<p:outputLabel value="Logradouro:"/>
-								<p:inputText size="30" maxlength="30"
-									value="#{pessoajsfController.logradouro}"
-									required="true"
-									requiredMessage="Campo obrigatório"
-									validatorMessage="O minimo de caracteres para sigla são  '2'"
-									placeholder="Mínimo 2 Letras">
-									<f:validateLength minimum="2" />
-								</p:inputText>
 								
 								<p:outputLabel value="Complemento:"/>
 								<p:inputText size="30" maxlength="30"
