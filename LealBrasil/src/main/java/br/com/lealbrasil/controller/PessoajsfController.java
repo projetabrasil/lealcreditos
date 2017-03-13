@@ -10,7 +10,11 @@ import javax.faces.bean.ViewScoped;
 import javax.faces.event.ActionEvent;
 
 import br.com.lealbrasil.controller.entitiesconfig.PessoaConfig;
+import br.com.lealbrasil.model.business.BairroBusiness;
+import br.com.lealbrasil.model.business.CidadeBusiness;
 import br.com.lealbrasil.model.business.EnderecoBusiness;
+import br.com.lealbrasil.model.business.EstadoBusiness;
+import br.com.lealbrasil.model.business.LogradouroBusiness;
 import br.com.lealbrasil.model.business.PessoaBusiness;
 import br.com.lealbrasil.model.business.PessoaBusiness2;
 import br.com.lealbrasil.model.business.PessoaGenericBusiness;
@@ -24,6 +28,7 @@ import br.com.lealbrasil.model.entities.Endereco;
 import br.com.lealbrasil.model.entities.Enum_Aux_Perfil_Pagina_Atual;
 import br.com.lealbrasil.model.entities.Enum_Aux_Perfil_Pessoa;
 import br.com.lealbrasil.model.entities.Enum_Aux_Tipo_Identificador;
+import br.com.lealbrasil.model.entities.Enum_Aux_Tipo_Logradouro;
 import br.com.lealbrasil.model.entities.Enum_Aux_Tipo_Pessoa;
 import br.com.lealbrasil.model.entities.Estado;
 import br.com.lealbrasil.model.entities.Logradouro;
@@ -204,6 +209,65 @@ public class PessoajsfController extends GenericController implements Serializab
 	public void setCEP(){
 		CepWebService cep = new CepWebService(this.endereco.getBairro().getCidade().getCep());
 		System.out.println(cep.toString());
+		if(cep != null){
+			Estado e = EstadoBusiness.buscaEstadoPelaSigla(cep.getEstado());
+			if(e == null){
+				e = new Estado();
+				e.setDescricao("");
+				e.setSigla(cep.getEstado());
+				e.setPais(this.pais);
+				e.setUltimaAtualizacao(Utilidades.retornaCalendario());
+				e.setId_Empresa(0);
+				e.setId(null);
+				e.setId_Pessoa_Registro(perfilLogado.getAssLogado());
+				EstadoBusiness.merge(e);
+			}
+			this.estado = e;
+			associaEstadosAoPais();
+			
+			Cidade c = CidadeBusiness.buscaCidadePeloNome(cep.getCidade());
+			if(c == null){
+				c = new Cidade();
+				c.setDescricao(cep.getCidade());
+				c.setCep(endereco.getBairro().getCidade().getCep());
+				c.setId(null);
+				c.setId_Empresa(0);
+				c.setUltimaAtualizacao(Utilidades.retornaCalendario());
+				c.setId_Pessoa_Registro(perfilLogado.getAssLogado());
+				c.setEstado(estado);
+				CidadeBusiness.merge(c);
+			}
+			this.cidade = c;
+			associaCidadesAoEstado();
+			
+			Bairro b = BairroBusiness.buscaBairroPeloNome(cep.getBairro());
+			if(b == null){
+				b = new Bairro();
+				b.setDescricao(cep.getBairro());
+				b.setId(null);
+				b.setId_Empresa(0);
+				b.setUltimaAtualizacao(Utilidades.retornaCalendario());
+				b.setId_Pessoa_Registro(perfilLogado.getAssLogado());
+				b.setCidade(cidade);
+				BairroBusiness.merge(b);
+			}
+			this.bairro = b;
+			
+			Logradouro l = LogradouroBusiness.buscaLogradouroPeloNome(cep.getLogradouro());
+			if(l == null){
+				l = new Logradouro();
+				l.setDescricao(cep.getLogradouro());
+				l.setId(null);
+				l.setId_Empresa(0);
+				l.setUltimaAtualizacao(Utilidades.retornaCalendario());
+				l.setId_Pessoa_Registro(perfilLogado.getAssLogado());
+				l.setCidade(cidade);
+				l.setEnum_Aux_Tipo_Logradouro(Enum_Aux_Tipo_Logradouro.valueOf(cep.getTipoLogradouro().toUpperCase()));
+				LogradouroBusiness.merge(l);
+			}
+			this.logradouro = l;
+		}		
+		
 	}
 
 	public void cancela() {		

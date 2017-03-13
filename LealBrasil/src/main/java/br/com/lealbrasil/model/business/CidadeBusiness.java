@@ -9,6 +9,7 @@ import br.com.lealbrasil.model.dao.CidadeDAO;
 import br.com.lealbrasil.model.entities.Cidade;
 import br.com.lealbrasil.model.entities.Estado;
 import br.com.lealbrasil.model.entities.PerfilLogado;
+import br.com.lealbrasil.util.Utilidades;
 
 @SuppressWarnings("serial")
 public class CidadeBusiness implements Serializable {
@@ -37,12 +38,14 @@ public class CidadeBusiness implements Serializable {
 	
 	public static Cidade buscaCidadePeloNome(String descricao) {
 		CidadeDAO cDAO = new CidadeDAO();
+		descricao = Utilidades.formataNomeDaRegiao(descricao);
 		Cidade c = cDAO.buscaCidadePeloNome(descricao);
 		return c;
 	}
 
 	public static void merge(Cidade cidade) {
 		CidadeDAO cDAO = new CidadeDAO();
+		cidade.setDescricao(Utilidades.formataNomeDaRegiao(cidade.getDescricao()));
 		cDAO.merge(cidade);
 	}
 	

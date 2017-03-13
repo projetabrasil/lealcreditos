@@ -10,6 +10,7 @@ import br.com.lealbrasil.model.entities.Cidade;
 import br.com.lealbrasil.model.entities.Estado;
 import br.com.lealbrasil.model.entities.Logradouro;
 import br.com.lealbrasil.model.entities.PerfilLogado;
+import br.com.lealbrasil.util.Utilidades;
 
 @SuppressWarnings("serial")
 public class LogradouroBusiness implements Serializable {
@@ -33,12 +34,14 @@ public class LogradouroBusiness implements Serializable {
 
 	public static Logradouro buscaLogradouroPeloNome(String descricao) {
 		LogradouroDAO lDAO = new LogradouroDAO();
+		descricao = Utilidades.formataNomeDaRegiao(descricao);
 		Logradouro logradouro = lDAO.buscaLogradouroPeloNome(descricao);
 		return logradouro;
 	}
 
 	public static void merge(Logradouro logradouro) {
 		LogradouroDAO lDAO = new LogradouroDAO();
+		logradouro.setDescricao(Utilidades.formataNomeDaRegiao(logradouro.getDescricao()));
 		lDAO.merge(logradouro);
 	}
 

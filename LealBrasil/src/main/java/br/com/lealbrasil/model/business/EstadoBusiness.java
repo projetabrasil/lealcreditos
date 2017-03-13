@@ -40,9 +40,17 @@ public class EstadoBusiness implements Serializable {
 		Estado estado = eDAO.buscaEstadoPeloNome(descricao);
 		return estado;
 	}
+	
+	public static Estado buscaEstadoPelaSigla(String descricao) {
+		EstadoDAO eDAO = new EstadoDAO();
+		descricao = descricao.toUpperCase();
+		Estado estado = eDAO.buscaEstadoPelaSigla(descricao);
+		return estado;
+	}
 
 	public static void merge(Estado estado) {
 		EstadoDAO eDAO = new EstadoDAO();
+		estado.setSigla(estado.getSigla().toUpperCase());
 		eDAO.merge(estado);
 		
 	}

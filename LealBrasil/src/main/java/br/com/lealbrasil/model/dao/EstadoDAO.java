@@ -39,4 +39,18 @@ public class EstadoDAO extends GenericDAO<Estado> {
 		}
 	}
 
+	public Estado buscaEstadoPelaSigla(String descricao) {
+		Session sessao = HibernateUtil.getFabricaDeSessoes().openSession();
+		try {
+			Criteria consulta = sessao.createCriteria(Estado.class);
+			consulta.add(Restrictions.like("sigla", descricao));
+			return (Estado) consulta.uniqueResult();
+		} catch (RuntimeException error) {
+			error.printStackTrace();
+			throw error;
+		} finally {
+			sessao.close();
+		}
+	}
+
 }
