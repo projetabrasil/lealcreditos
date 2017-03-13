@@ -10,14 +10,12 @@
 
 /*-----Barra do menu (header)----*/
 .navbar {
-	background: rgba(84,84,84,0.22);
-	background: -moz-linear-gradient(45deg, rgba(84,84,84,0.22) 0%, rgba(156,156,156,0.23) 100%);
-	background: -webkit-gradient(left bottom, right top, color-stop(0%, rgba(84,84,84,0.22)), color-stop(100%, rgba(156,156,156,0.23)));
-	background: -webkit-linear-gradient(45deg, rgba(84,84,84,0.22) 0%, rgba(156,156,156,0.23) 100%);
-	background: -o-linear-gradient(45deg, rgba(84,84,84,0.22) 0%, rgba(156,156,156,0.23) 100%);
-	background: -ms-linear-gradient(45deg, rgba(84,84,84,0.22) 0%, rgba(156,156,156,0.23) 100%);
-	background: linear-gradient(45deg, rgba(84,84,84,0.22) 0%, rgba(156,156,156,0.23) 100%);
-	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#545454', endColorstr='#9c9c9c', GradientType=1 );
+	/* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#e0e0e0+0,91a8bc+100&1+0,0.36+100 */
+background: -moz-linear-gradient(45deg,  rgba(224,224,224,1) 0%, rgba(145,168,188,0.36) 100%); /* FF3.6-15 */
+background: -webkit-linear-gradient(45deg,  rgba(224,224,224,1) 0%,rgba(145,168,188,0.36) 100%); /* Chrome10-25,Safari5.1-6 */
+background: linear-gradient(45deg,  rgba(224,224,224,1) 0%,rgba(145,168,188,0.36) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#e0e0e0', endColorstr='#5c91a8bc',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+
 	border: none;
 	border-radius: 0px;
 }
@@ -65,7 +63,7 @@ navbar-right{
 	margin-right: 7px;
 	color: #40953A !important;
 	border: 1px solid#40953A;
-	background: #E2E2E2 !important;
+	background: none !important;
 }
 .navbar-right > li > .reg{
 	border: 1px solid#326D7F;
@@ -233,6 +231,7 @@ navbar-right{
 	-moz-box-shadow: inset 0px 0px 0px 2px rgba(62,129,212,1);
 	box-shadow: inset 0px 0px 0px 2px rgba(62,129,212,1);
 }
+
 .logo-gotaxi, .logo-fidelidade, .logo-barra, 
 .logo-pet, .logo-car, .logo-phone{
 	width: 100%;
@@ -267,17 +266,22 @@ navbar-right{
 .produtos .texto h3{
 	color: #545454;
 	font-size: 1em;
-	border-bottom: 1px dotted #2A6AA7;
-	padding-bottom: 10px;
 	text-align: center;
 	font-weight: 800;
 	margin-top: 10px;
+}
+.produtos .texto .fase{
+	margin-top: -25px;
+	font-size: 0.7em;
+	color: #6f6f6f;
+	text-align: center;
+	border-bottom: 1px dotted #2A6AA7;
+	padding-bottom: 5px;
 }
 .produtos .texto p{
 	text-align: center;
 	font-size: 0.9em;
 	color: #171717;
-	padding-top: 5px;
 	font-weight: 300;
 	letter-spacing:1px;
 }
@@ -304,9 +308,7 @@ navbar-right{
 	margin-bottom: 25px;
 	font-weight: 200;
 	width: 150px; 
-	transition-duration: 0.7s;
-	
-	
+	transition-duration: 0.7s;	
 }
 .produtos .row .texto:hover h4{
 	color: #fff;
@@ -334,8 +336,7 @@ navbar-right{
 }
 .proposta .row{
 	/*background: #ccc;
-	border: 1px solid #999;*/
-		
+	border: 1px solid #999;*/	
 	padding: 0px;
 	margin: 0px;
 	/* habilita o flex nos filhos diretos*/ 
@@ -355,6 +356,7 @@ navbar-right{
 	/*border: 1px solid red;*/
 	padding: 0px;
 }
+
 .proposta .row .texto {
 	width: 100%; 
 }
@@ -486,36 +488,23 @@ navbar-right{
 
 
 /*----MEDIA QUERY----*/
-
+@media (max-width: 1408px) {
+	.logo-fidelidade{
+	background-size: 180px;
+}
+}
+@media (max-width: 1280px) {
+.logo-fidelidade{
+	background-size: 170px;
+}
+	
+}
 @media (max-width: 1199px) {
 /*Produtos*/
 .logo-gotaxi, .logo-fidelidade, .logo-barra, 
 .logo-pet, .logo-car, .logo-phone{
 	height: 70px;
 }
-.logo-gotaxi{
-	
-}
-.logo-fidelidade{
-	
-}
-.logo-barra{
-
-}
-.logo-pet, .logo-car, .logo-phone{
-	
-	
-}
-}
-
-@media (max-width: 1180px) {
-/*imagens do slider*/
-.fill {
-    background: url("#{resource['images/Slider1180.jpg']}") center center no-repeat;
-}
-}
-
-@media (max-width: 1199px) {
 .logo-gotaxi{
 	background-size: 250px;
 }
@@ -527,6 +516,14 @@ navbar-right{
 }
 .logo-pet, .logo-car, .logo-phone{
 	background-size: 220px;
+}
+
+}
+
+@media (max-width: 1180px) {
+/*imagens do slider*/
+.fill {
+    background: url("#{resource['images/Slider1180.jpg']}") center center no-repeat;
 }
 }
 
@@ -581,6 +578,9 @@ navbar-right{
 	font-size: 0.8em;
 	margin-right: 5px;
 }
+.sobre p{
+	font-size: 1.4em;
+}
 }
 @media (max-width: 865px) {
 /*sobre*/
@@ -602,12 +602,12 @@ navbar-right{
 }
 /*sobre*/
 .sobre h1{
-	
+
+	font-size: 4.4em;
 }
 .sobre p{
-	font-size: 1.5em;	
+	font-size: 1.4em;	
 }
-
 
 }
 
@@ -633,10 +633,11 @@ navbar-right{
 	
 }
 .sobre h1{
-	font-size: 3.8em;
+	margin-top: -50px;
+	font-size: 4.6em;
 }
 .sobre p{	
-	
+	font-size: 1.4em;
 }
 /*Footer*/
 .footer .col-sm-12{
@@ -653,9 +654,23 @@ navbar-right{
 /*imagens do slider*/
 .fill {
     background: url("#{resource['images/Slider720.jpg']}") center center no-repeat;
+}
+.sobre p{
+	font-size: 1.4em;
 }	
 }
 
+@media (max-width: 690px) {
+/*sobre*/
+
+.sobre h1{
+	margin-top: -20px;
+	font-size: 4.4em;
+}
+.sobre p{	
+	font-size: 1.3em;
+}	
+}
 @media (max-width: 630px) {
 /*Navbar*/
 .navbar{
@@ -702,6 +717,23 @@ navbar-right{
 .fill {
     background: url("#{resource['images/Slider600.jpg']}") center center no-repeat;
 }	
+/*sobre*/
+.sobre h1{
+	font-size: 3.9em;
+}
+.sobre p{
+	font-size: 1.2em;	
+}
+}
+@media (max-width: 519px) {
+/*sobre*/
+.sobre h1{
+	margin-top:-50px;
+	font-size: 3.9em;
+}
+.sobre p{
+	font-size: 1.2em;	
+}	
 }
 
 @media (max-width: 460px) {
@@ -709,7 +741,8 @@ navbar-right{
 /*sobre*/
 .sobre h1{
 	font-size: 3em;
-	margin-top: -40px;
+	margin-top: -50px;
+	margin-bottom: 10px;
 }
 .sobre p{
 	font-size: 1.2em;
@@ -744,7 +777,7 @@ navbar-right{
 }	
 }
 
-@media (max-width: 380px) {
+@media (max-width: 427px) {
 /*sobre*/
 .sobre p{
 	font-size: 1.1em;	
@@ -752,9 +785,7 @@ navbar-right{
 /*produtos*/
 .produtos h2{
 	font-size: 4em;
-}
-
-	
+}	
 }
 
 @media (max-width: 366px) {
@@ -764,7 +795,6 @@ navbar-right{
 /*sobre*/
 .sobre h1{
 	font-size: 2.5em;
-	
 }
 /*Proposta*/
 .proposta h2{
@@ -790,11 +820,31 @@ navbar-right{
 }
 }
 
-@media (max-width: 348px) {
-		
+@media (max-width: 356px) {
+/*sobre*/
+.sobre h1{
+	font-size: 2.5em;
+}
+.sobre p{
+	font-size: 1em;
+}		
 }
 
-
+@media (min-width: 1199px) {
+.logo-fidelidade{
+	background-size: 165px;
+}
+.produtos .row .texto{
+	height: 370px;
+	width: 190px;	
+}	
+.produtos .row .texto .saiba-mais03{
+	margin-top: 15px;
+}
+.produtos .row .texto .saiba-mais04{
+	margin-top: 33px;
+}
+}
 
 
 
