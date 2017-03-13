@@ -56,13 +56,31 @@ public class CidadejsfController extends GenericController implements Serializab
 	
 	public void merge() {
 		this.cidade.setDescricao(Utilidades.formataNomeDaRegiao(this.cidade.getDescricao()));
-		Cidade cidade2 = CidadeBusiness.buscaCidadePeloNome(this.cidade.getDescricao());  //this.pais é diferente de pais
-		if(cidade2 != null){
-			mensagensDisparar("Esta cidade já está cadastrado: " + cidade2.getDescricao());
-			this.cidade.setId(cidade2.getId());
-		}
 		
 		this.cidade.setEstado(this.estado);
+		
+		Cidade cidade2 = CidadeBusiness.buscaCidade(this.cidade);  //this.pais é diferente de pais
+		if(this.cidade.getId() != null){ // Se this.pais.getId() for igual à nulo isso significa que o usuário clicou em novo, caso contrário ele está realizando uma edição
+			if(cidade2 != null){
+				if(!this.cidade.getId().equals(cidade2.getId())){
+					mensagensDisparar("Tente novamente, cidade já cadastrada: " + cidade.getDescricao());
+					listar();
+					return;
+				}else{
+					mensagensDisparar("Cidade alterada com sucesso!!!");
+				}
+			}else{
+				mensagensDisparar("Cidade alterada com sucesso!!!");
+			}
+		}else{
+			if(cidade2 != null){
+				mensagensDisparar("Cidade já cadastrada!!!");
+				return;
+			}else{
+				mensagensDisparar("Cidade cadastrada com sucesso!!!");
+			}
+		}
+	
 		this.cidade.setUltimaAtualizacao(Utilidades.retornaCalendario());
 		
 		//Inseri no banco o usuário que registrou o país, SE usuário NÃO existir, o id_registro é feito com o associado

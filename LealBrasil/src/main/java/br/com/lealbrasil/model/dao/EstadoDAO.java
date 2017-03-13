@@ -10,6 +10,21 @@ import br.com.lealbrasil.util.HibernateUtil;
 
 public class EstadoDAO extends GenericDAO<Estado> {
 
+	public Estado buscaEstado(Estado estado) {
+		Session sessao = HibernateUtil.getFabricaDeSessoes().openSession();
+		try {
+			Criteria crit = sessao.createCriteria(Estado.class).setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);					
+					crit.add(Restrictions.eq("pais",estado.getPais()));			        
+					crit.add(Restrictions.eq("descricao",estado.getDescricao()));
+			return (Estado) crit.setMaxResults(1).uniqueResult();
+		} catch (RuntimeException error) {
+			error.printStackTrace();
+			throw error;
+		} finally {
+			sessao.close();
+		}
+	}
+
 	public Estado buscaEstadoPeloNome(String descricao) {
 		Session sessao = HibernateUtil.getFabricaDeSessoes().openSession();
 		try {

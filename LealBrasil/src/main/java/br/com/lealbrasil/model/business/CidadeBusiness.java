@@ -29,10 +29,16 @@ public class CidadeBusiness implements Serializable {
 		
 	}
 
+	public static Cidade buscaCidade(Cidade cidade) {
+		CidadeDAO cDAO = new CidadeDAO();
+		Cidade c = cDAO.buscaCidade(cidade);
+		return c;
+	}
+	
 	public static Cidade buscaCidadePeloNome(String descricao) {
 		CidadeDAO cDAO = new CidadeDAO();
-		Cidade cidade = cDAO.buscaCidadePeloNome(descricao);
-		return cidade;
+		Cidade c = cDAO.buscaCidadePeloNome(descricao);
+		return c;
 	}
 
 	public static void merge(Cidade cidade) {

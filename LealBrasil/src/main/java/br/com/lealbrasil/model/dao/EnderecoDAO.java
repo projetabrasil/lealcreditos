@@ -42,4 +42,21 @@ public class EnderecoDAO extends GenericDAO<Endereco> {
 		}
 	}
 
+	public Endereco verificaEndereco(Endereco endereco) {
+		Session sessao = HibernateUtil.getFabricaDeSessoes().openSession();
+		try {
+			Criteria crit = sessao.createCriteria(Endereco.class).setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);					
+					crit.add(Restrictions.eq("bairro", endereco.getBairro()));			        
+					crit.add(Restrictions.eq("logradouro", endereco.getLogradouro()));
+					crit.add(Restrictions.eq("pessoa", endereco.getPessoa()));
+					crit.add(Restrictions.eq("numero", endereco.getNumero()));;
+			return (Endereco) crit.setMaxResults(1).uniqueResult();
+		} catch (RuntimeException error) {
+			error.printStackTrace();
+			throw error;
+		} finally {
+			sessao.close();
+		}
+	}
+
 }

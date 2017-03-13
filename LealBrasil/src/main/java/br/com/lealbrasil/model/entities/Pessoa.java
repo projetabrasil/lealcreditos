@@ -54,6 +54,10 @@ public class Pessoa extends GenericDomain implements Serializable{
 	private String fone_2;
 	@Column(name="fone_3", length=20,nullable=true)
 	private String fone_3;
+	@Column(name="fone_4", length=20,nullable=true)
+	private String fone_4;
+	@Column(name="fone_5", length=20,nullable=true)
+	private String fone_5;
 	@Column(name="email", length=90,nullable=true) 
 	private String email;
 	@OneToOne
@@ -147,6 +151,18 @@ public class Pessoa extends GenericDomain implements Serializable{
 	public void setFone_3(String fone_3) {
 		this.fone_3 = fone_3;
 	}
+	public String getFone_4() {
+		return fone_4;
+	}
+	public void setFone_4(String fone_4) {
+		this.fone_4 = fone_4;
+	}
+	public String getFone_5() {
+		return fone_5;
+	}
+	public void setFone_5(String fone_5) {
+		this.fone_5 = fone_5;
+	}
 	public String getEmail() {
 		return email;
 	}
@@ -175,7 +191,7 @@ public class Pessoa extends GenericDomain implements Serializable{
 		return "Pessoa [id=" + id + ", enum_Aux_Tipo_Identificador=" + enum_Aux_Tipo_Identificador + ", descricao="
 				+ descricao + ", fantasia_Apelido=" + fantasia_Apelido + ", identificador=" + identificador
 				+ ", dataNascimento=" + dataNascimento + ", cpf_Cnpj=" + cpf_Cnpj + ", rg_Insc=" + rg_Insc + ", sexo="
-				+ sexo + ", fone_1=" + fone_1 + ", fone_2=" + fone_2 + ", fone_3=" + fone_3 + ", email=" + email
+				+ sexo + ", fone_1=" + fone_1 + ", fone_2=" + fone_2 + ", fone_3=" + fone_3 + ", fone_4=" + fone_4 + ", fone_5=" + fone_5 + ", email=" + email
 				+ ", autoPontuacao=" + autoPontuacao + ", mensagem=" + mensagem + ", cadastrado=" + cadastrado
 				+ ", cpf_cnpjValido=" + cpf_cnpjValido + ", senha=" + senha + ", pontosAnt=" + pontosAnt
 				+ ", pontosdoMovimento=" + pontosdoMovimento + ", pontosAtuais=" + pontosAtuais + "]";

@@ -29,6 +29,12 @@ public class EstadoBusiness implements Serializable {
 		
 	}
 
+	public static Estado buscaEstado(Estado estado) {
+		EstadoDAO eDAO = new EstadoDAO();
+		Estado e = eDAO.buscaEstado(estado);
+		return e;
+	}
+	
 	public static Estado buscaEstadoPeloNome(String descricao) {
 		EstadoDAO eDAO = new EstadoDAO();
 		Estado estado = eDAO.buscaEstadoPeloNome(descricao);

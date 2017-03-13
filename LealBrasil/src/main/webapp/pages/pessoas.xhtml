@@ -277,6 +277,30 @@
 								rendered="#{pessoajsfController.pessoaConfig.labelfone_3Renderiza}">
 							</p:inputMask>
 						</div>
+						
+						<div class="ui-g-12 div-info-tel04-pessoas">
+							<p:outputLabel
+								value="#{pessoajsfController.pessoaConfig.labelfone_4}" />
+							<p:inputMask mask="#{pessoajsfController.pessoaConfig.maskTel}"
+								size="16" maxlength="15"
+								value="#{pessoajsfController.pessoa.fone_4}"
+								required="#{pessoajsfController.pessoaConfig.labelfone_4Obrigatorio}"
+								requiredMessage="#{pessoajsfController.pessoaConfig.labelfone_4RequiredMessage}"
+								rendered="#{pessoajsfController.pessoaConfig.labelfone_4Renderiza}">
+							</p:inputMask>
+						</div>
+						
+						<div class="ui-g-12 div-info-tel05-pessoas">
+							<p:outputLabel
+								value="#{pessoajsfController.pessoaConfig.labelfone_5}" />
+							<p:inputMask mask="#{pessoajsfController.pessoaConfig.maskTel}"
+								size="16" maxlength="15"
+								value="#{pessoajsfController.pessoa.fone_5}"
+								required="#{pessoajsfController.pessoaConfig.labelfone_5Obrigatorio}"
+								requiredMessage="#{pessoajsfController.pessoaConfig.labelfone_5RequiredMessage}"
+								rendered="#{pessoajsfController.pessoaConfig.labelfone_5Renderiza}">
+							</p:inputMask>
+						</div>
 					</div><!-- g-6 -->
 				
 				
@@ -331,10 +355,10 @@
 							<h:panelGrid columns="2" cellpadding="5">
 								
 								<p:outputLabel for="pais" value="País: "/>
-		            			<p:selectOneMenu id="pais" value="#{pessoajsfController.endereco.bairro.cidade.estado.pais}" converter="omnifaces.SelectItemsConverter" style="width:150px">
+		            			<p:selectOneMenu id="pais" value="#{pessoajsfController.pais}" converter="omnifaces.SelectItemsConverter" style="width:150px">
 		                			<p:ajax listener="#{pessoajsfController.associaEstadosAoPais}" update="estado,cidade,logradouro,bairro" />
 		                			<f:selectItem itemLabel="Selecione o país" itemValue="" noSelectionOption="true" />
-		                			<f:selectItems value="#{paisjsfController.paises}" var="o" itemLabel="#{o.descricao}" itemValue="#{o}" />
+		                			<f:selectItems value="#{pessoajsfController.paises}" var="o" itemLabel="#{o.descricao}" itemValue="#{o}" />
 		            			</p:selectOneMenu>
 								
 								<p:outputLabel value="CEP:"/>
@@ -344,13 +368,15 @@
 									requiredMessage="Campo obrigatório"
 									validatorMessage="O minimo de caracteres para sigla são  '2'"
 									placeholder="Mínimo 2 Letras">
+									 
+									 <p:ajax listener="#{pessoajsfController.setCEP}" update="estado,cidade,logradouro,bairro"/>						
 								</p:inputText>
 		 
 		            			<p:outputLabel for="estado" value="Estado: " />
 		            			<p:selectOneMenu id="estado" value="#{pessoajsfController.estado}" converter="omnifaces.SelectItemsConverter" style="width:150px">
 		            				<p:ajax listener="#{pessoajsfController.associaCidadesAoEstado}" update="cidade,logradouro,bairro" />
 		                			<f:selectItem itemLabel="Selecione o estado" itemValue="" noSelectionOption="true" />
-		                			<f:selectItems value="#{pessoajsfController.endereco.bairro.cidade.estado.pais.estados}" var="o" itemLabel="#{o.descricao}" itemValue="#{o}"/>
+		                			<f:selectItems value="#{pessoajsfController.pais.estados}" var="o" itemLabel="#{o.descricao}" itemValue="#{o}"/>
 		            			</p:selectOneMenu>
 		            			
 		            			<p:outputLabel for="cidade" value="Cidade: " />
@@ -371,6 +397,11 @@
 		                			<f:selectItem itemLabel="Selecione o logradouro" itemValue="" noSelectionOption="true" />
 		                			<f:selectItems value="#{pessoajsfController.cidade.logradouros}" var="o" itemLabel="#{o.descricao}" itemValue="#{o}"/>
 		            			</p:selectOneMenu>
+		            			
+		            			<p:commandButton value="Adicionar Logradouro"						    
+										actionListener="#{pessoajsfController.adicionarLogradouro}"
+										update=":formTemplate:formCadastroL" styleClass="btao-pessoas">
+								</p:commandButton>
 								
 								<p:outputLabel value="Complemento:"/>
 								<p:inputText size="30" maxlength="30"
@@ -392,21 +423,64 @@
 									<f:validateLength minimum="2" />
 								</p:inputText>
 								
-        					</h:panelGrid>
-							
-							<p:commandButton value="Salvar" process="@form"
-								actionListener="#{pessoajsfController.merge}"
-								update=":mensagens :formTemplate:formLista:tabela" />
-						
+        					</h:panelGrid>						
 						
 							<p:commandButton value="Cancelar" process="@this"
 							actionListener="#{pessoajsfController.cancela}" 
 							styleClass="btao-info-pessoas"/>
 						</div>
 					</p:tab>
+					
+					<p:tab  id="tab3" title="Dados importantes">
+						<div class="ui-g-12">
+							<h:panelGrid columns="2" cellpadding="5">						
+								<p:commandButton value="Cancelar" process="@this"
+								actionListener="#{pessoajsfController.cancela}" 
+								styleClass="btao-info-pessoas"/>						
+								
+								<p:commandButton value="Salvar" process="@form"
+								actionListener="#{pessoajsfController.merge}"
+								update=":mensagens :formTemplate:formLista:tabela" />
+							</h:panelGrid>
+						</div>
+					</p:tab>
 				</p:wizard>
 			</h:form>
 		</div><!-- div conteudo scroll -->
+		</p:dialog>
+		
+		<p:dialog
+		header="Adicionar Logradouro - #{autenticacaojsfController.perfilLogado.paginaAtual.perfilPessoa.descricao}"
+			widgetVar="dialogoCadastroL" resizable="false" modal="true"
+			closable="false" appendTo="@(body)" dynamic="true"
+			responsive="true" styleClass="dialog-info-pessoas">
+			<div class="div-conteudo-info-pessoas">
+				<h:form id="formCadastroL">
+					<h:panelGrid id="painelCadastro_15">
+						
+						<p:outputLabel	value="Tipo do Logradouro" />
+						<p:selectOneMenu value="#{logradourojsfController.logradouro.enum_Aux_Tipo_Logradouro}" converter="omnifaces.SelectItemsConverter">
+							<f:selectItem itemLabel="Selecione o Logradouro" itemValue="" noSelectionOption="true" />
+							<f:selectItems value="#{logradourojsfController.listarTiposLogradouros()}" var="tt" itemLabel="#{tt.descricao}"	itemValue="#{tt}"  />
+						</p:selectOneMenu>
+						
+						<h:panelGrid id="painelCadastro_14">
+							<p:outputLabel
+								value="Nome do Logradouro"
+								 />
+							<p:inputText size="30" maxlength="30"
+								value="#{logradourojsfController.logradouro.descricao}"
+								required="true"
+								requiredMessage="Descrição do logradouro é obrigatória"
+								
+								validatorMessage="O minimo de caracteres para nome são  '3'"
+								placeholder="Mínimo 3 Letras">
+								<f:validateLength minimum="3" />
+							</p:inputText>
+						</h:panelGrid>
+					</h:panelGrid>
+				</h:form>
+			</div>
 		</p:dialog>
 		
 		
