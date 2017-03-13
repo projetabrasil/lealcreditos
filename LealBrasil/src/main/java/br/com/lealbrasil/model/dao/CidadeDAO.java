@@ -12,12 +12,13 @@ import br.com.lealbrasil.util.HibernateUtil;
 
 public class CidadeDAO extends GenericDAO<Cidade> {
 	
-	public Cidade buscaCidadePeloNome(String descricao) {
+	public Cidade buscaCidade(Cidade cidade) {
 		Session sessao = HibernateUtil.getFabricaDeSessoes().openSession();
 		try {
-			Criteria consulta = sessao.createCriteria(Cidade.class);
-			consulta.add(Restrictions.like("descricao", descricao));
-			return (Cidade) consulta.uniqueResult();
+			Criteria crit = sessao.createCriteria(Cidade.class).setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);					
+					crit.add(Restrictions.eq("estado",cidade.getEstado()));			        
+					crit.add(Restrictions.eq("descricao",cidade.getDescricao()));
+			return (Cidade) crit.uniqueResult();
 		} catch (RuntimeException error) {
 			error.printStackTrace();
 			throw error;
@@ -41,6 +42,20 @@ public class CidadeDAO extends GenericDAO<Cidade> {
 		finally{
 			sessao.close();
 		}		
+	}
+
+	public Cidade buscaCidadePeloNome(String descricao) {
+		Session sessao = HibernateUtil.getFabricaDeSessoes().openSession();
+		try {
+			Criteria consulta = sessao.createCriteria(Cidade.class);
+			consulta.add(Restrictions.like("descricao", descricao));
+			return (Cidade) consulta.uniqueResult();
+		} catch (RuntimeException error) {
+			error.printStackTrace();
+			throw error;
+		} finally {
+			sessao.close();
+		}
 	}
 
 

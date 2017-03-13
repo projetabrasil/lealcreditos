@@ -54,10 +54,26 @@ public class EstadojsfController extends GenericController implements Serializab
 	
 	public void merge() {
 		this.estado.setDescricao(Utilidades.formataNomeDaRegiao(this.estado.getDescricao()));
-		Estado estado2 = EstadoBusiness.buscaEstadoPeloNome(this.estado.getDescricao());  //this.pais é diferente de pais
-		if(estado2 != null){
-			mensagensDisparar("Este estado já está cadastrado: " + estado2.getDescricao());
-			this.estado.setId(estado2.getId());
+		Estado estado2 = EstadoBusiness.buscaEstado(this.estado);  //this.pais é diferente de pais
+		if(this.estado.getId() != null){ // Se this.pais.getId() for igual à nulo isso significa que o usuário clicou em novo, caso contrário ele está realizando uma edição
+			if(estado2 != null){
+				if(!this.estado.getId().equals(estado2.getId())){
+					mensagensDisparar("Tente novamente, estado já cadastrado: " + estado2.getDescricao());
+					listar();
+					return;
+				}else{
+					mensagensDisparar("Estado alterado com sucesso!!!");
+				}
+			}else{
+				mensagensDisparar("Estado alterado com sucesso!!!");
+			}
+		}else{
+			if(estado2 != null){
+				mensagensDisparar("Estado já cadastrado!!!");
+				return;
+			}else{
+				mensagensDisparar("Estado cadastrado com sucesso!!!");
+			}
 		}
 		
 		this.estado.setUltimaAtualizacao(Utilidades.retornaCalendario());

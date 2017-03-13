@@ -153,4 +153,21 @@ public class Pessoa_VinculoDAO extends GenericDAO<Pessoa_Vinculo> {
 		}
 	}
 
+
+	public Pessoa_Vinculo buscaPorPessoa(Pessoa_Vinculo pessoaV) {
+		Session sessao = HibernateUtil.getFabricaDeSessoes().openSession();
+		try {
+			Criteria crit = sessao.createCriteria(Pessoa_Vinculo.class).setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);					
+					crit.add(Restrictions.eq("id_pessoa_d",pessoaV.getId_pessoa_d()));			        
+					crit.add(Restrictions.eq("id_pessoa_m",pessoaV.getId_pessoa_m()));
+					crit.add(Restrictions.eq("enum_Aux_Perfil_Pessoa", pessoaV.getEnum_Aux_Perfil_Pessoa()));
+			return (Pessoa_Vinculo) crit.setMaxResults(1).uniqueResult();
+		} catch (RuntimeException error) {
+			error.printStackTrace();
+			throw error;
+		} finally {
+			sessao.close();
+		}
+	}
+
 }

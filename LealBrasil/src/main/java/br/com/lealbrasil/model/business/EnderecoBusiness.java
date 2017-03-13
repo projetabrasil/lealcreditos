@@ -33,7 +33,12 @@ public class EnderecoBusiness implements Serializable {
 	public static void merge(Endereco endereco) {
 		EnderecoDAO eDAO = new EnderecoDAO();
 		try {
-			eDAO.merge(endereco);
+			Endereco e = verificaEndereco(endereco);
+			if(e == null){
+				eDAO.merge(endereco);
+			}else{
+				mensagensDisparar("Usuário já possui este endereço");
+			}			
 		} catch (RuntimeException erro) {
 			erro.printStackTrace();
 			throw erro;
@@ -44,5 +49,10 @@ public class EnderecoBusiness implements Serializable {
 	public static Endereco buscaEnderecoPorPessoa(Pessoa pessoa) {
 		Endereco endereco = new EnderecoDAO().buscaEnderecoPorPessoa(pessoa);
 		return endereco;
+	}
+	
+	public static Endereco verificaEndereco(Endereco endereco){
+		Endereco e = new EnderecoDAO().verificaEndereco(endereco);
+		return e;
 	}
 }

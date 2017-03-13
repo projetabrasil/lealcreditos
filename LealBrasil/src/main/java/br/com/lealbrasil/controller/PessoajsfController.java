@@ -15,6 +15,7 @@ import br.com.lealbrasil.model.business.PessoaBusiness;
 import br.com.lealbrasil.model.business.PessoaBusiness2;
 import br.com.lealbrasil.model.business.PessoaGenericBusiness;
 import br.com.lealbrasil.model.business.UsuarioBusiness;
+import br.com.lealbrasil.model.dao.PaisDAO;
 import br.com.lealbrasil.model.dao.Pessoa_VinculoDAO;
 import br.com.lealbrasil.model.dao.UsuarioDAO;
 import br.com.lealbrasil.model.entities.Bairro;
@@ -26,10 +27,12 @@ import br.com.lealbrasil.model.entities.Enum_Aux_Tipo_Identificador;
 import br.com.lealbrasil.model.entities.Enum_Aux_Tipo_Pessoa;
 import br.com.lealbrasil.model.entities.Estado;
 import br.com.lealbrasil.model.entities.Logradouro;
+import br.com.lealbrasil.model.entities.Pais;
 import br.com.lealbrasil.model.entities.PerfilLogado;
 import br.com.lealbrasil.model.entities.Pessoa;
 import br.com.lealbrasil.model.entities.Pessoa_Vinculo;
 import br.com.lealbrasil.model.entities.Usuario;
+import br.com.lealbrasil.util.CepWebService;
 import br.com.lealbrasil.util.Utilidades;
 
 @SuppressWarnings("serial")
@@ -45,7 +48,9 @@ public class PessoajsfController extends GenericController implements Serializab
 	private Estado estado;
 	private Cidade cidade;
 	private Bairro bairro;
+	private Pais pais;
 	private Logradouro logradouro;
+	private List<Pais> paises;
 
 	@ManagedProperty(value = "#{autenticacaojsfController.perfilLogado}")
 	private PerfilLogado perfilLogado;
@@ -68,8 +73,34 @@ public class PessoajsfController extends GenericController implements Serializab
 		perfilLogadoTemp = perfilLogado;
 		pessoa = new Pessoa();
 		
-		this.endereco = new Endereco(new Bairro(), new Cidade(), new Estado());
+		PaisDAO pDAO = new PaisDAO();		
+		this.paises = pDAO.listar();
+		
+		this.pais = new Pais();
+		 		
 		this.endereco = EnderecoBusiness.buscaEnderecoPorPessoa(perfilLogado.getAssLogado());
+		if(this.endereco == null){
+			this.endereco = new Endereco(new Bairro(), new Cidade(), new Estado());
+			this.pais = pDAO.buscaPaisPeloNome("Brasil");
+		}else{
+			this.pais = endereco.getLogradouro().getCidade().getEstado().getPais();
+		}
+		
+		int a = 0;
+		for(int i = 0; i < paises.size(); i++){
+			if(this.paises.get(i).getDescricao().equals(this.pais.getDescricao())){ // GO HORSE PRA MANTER O PAÍS PADRÃO
+				a = i;
+				break;
+			}
+		}
+		
+		Pais p = this.paises.get(this.paises.size() - 1);
+		this.paises.set(a, p);
+		this.paises.set(paises.size() - 1, pais);
+		
+		associaEstadosAoPais();
+		this.estado = endereco.getBairro().getCidade().getEstado();
+		associaCidadesAoEstado();
 		this.endereco.setComplemento("");
 		this.endereco.setNumero(null);
 
@@ -149,10 +180,11 @@ public class PessoajsfController extends GenericController implements Serializab
 		// Endereço MERGE------------
 		if(pessoa != null){
 			this.endereco.setBairro(this.bairro);
-			this.endereco.setLogradouro(logradouro);
+			this.endereco.setLogradouro(this.logradouro);
 			this.endereco.setId_Empresa(0);
 			this.endereco.setUltimaAtualizacao(Utilidades.retornaCalendario());	
 			this.endereco.setPessoa(pessoa);
+			this.endereco.setId(null);
 			EnderecoBusiness.merge(endereco);
 		}
 		
@@ -168,6 +200,11 @@ public class PessoajsfController extends GenericController implements Serializab
 		cancela();
 
 	}
+	
+	public void setCEP(){
+		CepWebService cep = new CepWebService(this.endereco.getBairro().getCidade().getCep());
+		System.out.println(cep.toString());
+	}
 
 	public void cancela() {		
 		Utilidades.abrirfecharDialogos("dialogoCadastro",false);
@@ -180,12 +217,17 @@ public class PessoajsfController extends GenericController implements Serializab
 		}
 	}
 	
+	public void adicionarLogradouro(){
+		this.logradouro = null;
+		Utilidades.abrirfecharDialogos("dialogoCadastro",false);
+		Utilidades.abrirfecharDialogos("dialogoCadastroL",true);
+	}
+	
 	public void associaEstadosAoPais(){		
 		this.cidade = null;
 		this.bairro = null;
 		this.logradouro = null;
-		this.endereco.getBairro().getCidade().getEstado().getPais().setEstados(PessoaBusiness.associaEstadosAoPais(this.endereco.
-				getBairro().getCidade().getEstado().getPais().getId()));
+		this.pais.setEstados(PessoaBusiness.associaEstadosAoPais(this.pais.getId()));
 	}
 	
 	public void associaCidadesAoEstado(){
@@ -363,5 +405,20 @@ public class PessoajsfController extends GenericController implements Serializab
 	public void setLogradouro(Logradouro logradouro) {
 		this.logradouro = logradouro;
 	}
+	
+	public Pais getPais() {
+		return pais;
+	}
 
+	public void setPais(Pais pais) {
+		this.pais = pais;
+	}
+
+	public List<Pais> getPaises() {
+		return paises;
+	}
+
+	public void setPaises(List<Pais> paises) {
+		this.paises = paises;
+	}
 }

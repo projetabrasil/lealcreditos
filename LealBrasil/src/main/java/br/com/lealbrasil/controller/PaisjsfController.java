@@ -41,6 +41,7 @@ public class PaisjsfController extends GenericController implements Serializable
 	public void novo(ActionEvent event) {
 		perfilLogadoTemp = perfilLogado;
 		pais = new Pais();		
+		
 		Utilidades.abrirfecharDialogos("dialogoCadastro",true);
 	}
 	
@@ -114,7 +115,6 @@ public class PaisjsfController extends GenericController implements Serializable
 	}
 
 	public List<Pais> getPaises() {
-		listar();
 		return paises;
 	}
 

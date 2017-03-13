@@ -25,6 +25,8 @@ public class PessoaConfig implements Serializable {
 	private String labelfone_1;
 	private String labelfone_2;
 	private String labelfone_3;
+	private String labelfone_4;
+	private String labelfone_5;
 	private String labelSexo;
 	
 	private String labelNomeRequiredMessage;
@@ -36,6 +38,8 @@ public class PessoaConfig implements Serializable {
 	private String labelfone_1RequiredMessage;
 	private String labelfone_2RequiredMessage;
 	private String labelfone_3RequiredMessage;
+	private String labelfone_4RequiredMessage;
+	private String labelfone_5RequiredMessage;
 	private String labelSexo_RequiredMessage;
 	
 	
@@ -48,6 +52,8 @@ public class PessoaConfig implements Serializable {
 	private boolean labelfone_1Renderiza;
 	private boolean labelfone_2Renderiza;
 	private boolean labelfone_3Renderiza;
+	private boolean labelfone_4Renderiza;
+	private boolean labelfone_5Renderiza;
 	private boolean labelSexoRenderiza;
 	
 	private boolean labelNomeObrigatorio;
@@ -59,6 +65,8 @@ public class PessoaConfig implements Serializable {
 	private boolean labelfone_1Obrigatorio;
 	private boolean labelfone_2Obrigatorio;
 	private boolean labelfone_3Obrigatorio;
+	private boolean labelfone_4Obrigatorio;
+	private boolean labelfone_5Obrigatorio;
 	private boolean labelSexoObrigatorio;
 	private String maskTel;
 	
@@ -102,6 +110,8 @@ public class PessoaConfig implements Serializable {
 			labelfone_1Obrigatorio					= true;
 			labelfone_2Obrigatorio					= false;
 			labelfone_3Obrigatorio					= false;
+			labelfone_4Obrigatorio					= false;
+			labelfone_5Obrigatorio					= false;
 			
 		}else{
 			labelNome 							= "Razão Social" ;
@@ -123,6 +133,8 @@ public class PessoaConfig implements Serializable {
 			labelfone_1Obrigatorio					= true;
 			labelfone_2Obrigatorio					= true;
 			labelfone_3Obrigatorio					= false;
+			labelfone_4Obrigatorio					= false;
+			labelfone_5Obrigatorio					= false;
 			
 		}
 		
@@ -131,12 +143,16 @@ public class PessoaConfig implements Serializable {
 		labelfone_1 							= "Contato - 1";
 		labelfone_2 							= "Contato - 2";
 		labelfone_3 							= "Contato - 3";
+		labelfone_4 							= "Contato - 4";
+		labelfone_5 							= "Contato - 5";
 		
 		
 		labelemailRenderiza  					= true;
 		labelfone_1Renderiza					= true;
 		labelfone_2Renderiza					= true;
 		labelfone_3Renderiza					= true;
+		labelfone_4Renderiza					= true;
+		labelfone_5Renderiza					= true;
 		labelNomeRenderiza						= true;
 		labelcpf_CnpjRenderiza					= true;
 		labelrg_InscRenderiza					= true;
@@ -249,6 +265,12 @@ public class PessoaConfig implements Serializable {
 	public String getLabelfone_3() {
 		return labelfone_3;
 	}
+	public String getLabelfone_4() {
+		return labelfone_4;
+	}
+	public String getLabelfone_5() {
+		return labelfone_5;
+	}
 	public String getLabelFantasia() {
 		return labelFantasia;
 	}
@@ -278,6 +300,12 @@ public class PessoaConfig implements Serializable {
 	}
 	public boolean isLabelfone_3Renderiza() {
 		return labelfone_3Renderiza;
+	}
+	public boolean isLabelfone_4Renderiza() {
+		return labelfone_4Renderiza;
+	}
+	public boolean isLabelfone_5Renderiza() {
+		return labelfone_5Renderiza;
 	}
 
 	public boolean isLabelNomeObrigatorio() {
@@ -310,6 +338,12 @@ public class PessoaConfig implements Serializable {
 	public boolean isLabelfone_3Obrigatorio() {
 		return labelfone_3Obrigatorio;
 	}
+	public boolean isLabelfone_4Obrigatorio() {
+		return labelfone_4Obrigatorio;
+	}
+	public boolean isLabelfone_5Obrigatorio() {
+		return labelfone_5Obrigatorio;
+	}
 
 	public String getLabelNomeRequiredMessage() {
 		return labelNomeRequiredMessage;
@@ -340,6 +374,12 @@ public class PessoaConfig implements Serializable {
 
 	public String getLabelfone_3RequiredMessage() {
 		return labelfone_3RequiredMessage;
+	}
+	public String getLabelfone_4RequiredMessage() {
+		return labelfone_4RequiredMessage;
+	}
+	public String getLabelfone_5RequiredMessage() {
+		return labelfone_5RequiredMessage;
 	}
 
 	public String getMaskTel() {

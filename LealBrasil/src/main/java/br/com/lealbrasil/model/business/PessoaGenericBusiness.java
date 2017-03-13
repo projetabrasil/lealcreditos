@@ -86,6 +86,7 @@ public class PessoaGenericBusiness implements Serializable {
 		pVinc.setId_pessoa_m(perfilLogado.getAssLogado());
 		pVinc.setId_Pessoa_Registro(perfilLogado.getUsLogado().getPessoa());
 		pVinc.setUltimaAtualizacao(Utilidades.retornaCalendario());
+		
 		Pessoa_VinculoBusiness.merge(pVinc);
 	}
 	
