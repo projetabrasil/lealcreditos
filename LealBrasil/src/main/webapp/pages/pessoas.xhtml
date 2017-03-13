@@ -352,7 +352,7 @@
 					
 					<p:tab id="tab2" title="Endereço">
 						<div class="ui-g-12">
-							<h:panelGrid columns="2" cellpadding="5">
+							<h:panelGrid columns="2" cellpadding="5" render="@form">
 								
 								<p:outputLabel for="pais" value="País: "/>
 		            			<p:selectOneMenu id="pais" value="#{pessoajsfController.pais}" converter="omnifaces.SelectItemsConverter" style="width:150px">
@@ -369,7 +369,7 @@
 									validatorMessage="O minimo de caracteres para sigla são  '2'"
 									placeholder="Mínimo 2 Letras">
 									 
-									 <p:ajax listener="#{pessoajsfController.setCEP}" update="estado,cidade,logradouro,bairro"/>						
+									 <p:ajax listener="#{pessoajsfController.setCEP}" render="@form"/>						
 								</p:inputText>
 		 
 		            			<p:outputLabel for="estado" value="Estado: " />
