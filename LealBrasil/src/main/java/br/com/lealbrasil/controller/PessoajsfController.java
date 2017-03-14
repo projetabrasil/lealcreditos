@@ -281,10 +281,14 @@ public class PessoajsfController extends GenericController implements Serializab
 		}
 	}
 	
-	public void adicionarLogradouro(){
-		this.logradouro = null;
-		Utilidades.abrirfecharDialogos("dialogoCadastro",false);
-		Utilidades.abrirfecharDialogos("dialogoCadastroL",true);
+	public void adicionarLogradouro(ActionEvent event){	 
+		this.logradouro.setCidade(this.cidade);
+		this.logradouro.setId_Empresa(0);
+		this.logradouro.setUltimaAtualizacao(Utilidades.retornaCalendario());
+		this.logradouro.setId_Pessoa_Registro(perfilLogado.getUsLogado().getPessoa());
+		this.logradouro.setId(null);
+		System.out.println(this.logradouro.toString());
+		Utilidades.abrirfecharDialogos("dialogoCadastroL",false);
 	}
 	
 	public void associaEstadosAoPais(){		
@@ -485,4 +489,7 @@ public class PessoajsfController extends GenericController implements Serializab
 	public void setPaises(List<Pais> paises) {
 		this.paises = paises;
 	}
+
+	
+	
 }
