@@ -399,8 +399,7 @@
 		            			</p:selectOneMenu>
 		            			
 		            			<p:commandButton value="Adicionar Logradouro"						    
-										actionListener="#{pessoajsfController.adicionarLogradouro}"
-										update=":formTemplate:formCadastroL" styleClass="btao-pessoas">
+										onclick="PF('dialogoCadastroL').show();" styleClass="btao-pessoas">
 								</p:commandButton>
 								
 								<p:outputLabel value="Complemento:"/>
@@ -447,19 +446,17 @@
 				</p:wizard>
 			</h:form>
 		</div><!-- div conteudo scroll -->
+		
 		</p:dialog>
 		
-		<p:dialog
-		header="Adicionar Logradouro - #{autenticacaojsfController.perfilLogado.paginaAtual.perfilPessoa.descricao}"
-			widgetVar="dialogoCadastroL" resizable="false" modal="true"
-			closable="false" appendTo="@(body)" dynamic="true"
-			responsive="true" styleClass="dialog-info-pessoas">
+		<p:dialog header="Adicionar Logradouro" widgetVar="dialogoCadastroL" resizable="false" modal="true" closable="false" appendTo="@(body)" 
+			dynamic="true" responsive="true" >
 			<div class="div-conteudo-info-pessoas">
 				<h:form id="formCadastroL">
 					<h:panelGrid id="painelCadastro_15">
 						
 						<p:outputLabel	value="Tipo do Logradouro" />
-						<p:selectOneMenu value="#{logradourojsfController.logradouro.enum_Aux_Tipo_Logradouro}" converter="omnifaces.SelectItemsConverter">
+						<p:selectOneMenu value="#{pessoajsfController.logradouro.enum_Aux_Tipo_Logradouro}" converter="omnifaces.SelectItemsConverter">
 							<f:selectItem itemLabel="Selecione o Logradouro" itemValue="" noSelectionOption="true" />
 							<f:selectItems value="#{logradourojsfController.listarTiposLogradouros()}" var="tt" itemLabel="#{tt.descricao}"	itemValue="#{tt}"  />
 						</p:selectOneMenu>
@@ -469,7 +466,7 @@
 								value="Nome do Logradouro"
 								 />
 							<p:inputText size="30" maxlength="30"
-								value="#{logradourojsfController.logradouro.descricao}"
+								value="#{pessoajsfController.logradouro.descricao}"
 								required="true"
 								requiredMessage="Descrição do logradouro é obrigatória"
 								
@@ -478,6 +475,14 @@
 								<f:validateLength minimum="3" />
 							</p:inputText>
 						</h:panelGrid>
+						
+						<p:commandButton value="Adicionar"						    
+							actionListener="#{pessoajsfController.adicionarLogradouro}" process="@this" styleClass="btao-pessoas">
+						</p:commandButton>
+						
+						<p:commandButton value="Cancelar"						    
+							actionListener="#{pessoajsfController.cancela}" onclick="PF('dialogoCadastroL').hide();" styleClass="btao-pessoas">
+						</p:commandButton>
 					</h:panelGrid>
 				</h:form>
 			</div>
