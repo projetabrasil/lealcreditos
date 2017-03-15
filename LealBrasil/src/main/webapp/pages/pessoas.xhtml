@@ -401,7 +401,7 @@
 		            			</h:panelGrid>
 		            			
 		            			<p:commandButton value="Adicionar Logradouro"						    
-										onclick="PF('dialogoCadastroL').show();" styleClass="btao-pessoas">
+										actionListener="#{pessoajsfController.novoLogradouro}" process="@this" styleClass="btao-pessoas">
 								</p:commandButton>
 								<h:panelGrid id="g_e_2" columns="2" cellpadding="5" render="@form">
 								<p:outputLabel value="Complemento:"/>
@@ -479,7 +479,7 @@
 						</h:panelGrid>
 						
 						<p:commandButton value="Adicionar"						    
-							actionListener="#{pessoajsfController.adicionarLogradouro}" process="@this" styleClass="btao-pessoas">
+							actionListener="#{pessoajsfController.adicionarLogradouro}" process="@form" styleClass="btao-pessoas">
 						</p:commandButton>
 						
 						<p:commandButton value="Cancelar"						    

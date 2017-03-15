@@ -209,11 +209,11 @@ public class PessoajsfController extends GenericController implements Serializab
 	public void setCEP(){
 		CepWebService cep = new CepWebService(this.endereco.getBairro().getCidade().getCep());
 		System.out.println(cep.toString());
-		if(cep != null){
+		if(cep.getEstado() != null){
 			Estado e = EstadoBusiness.buscaEstadoPelaSigla(cep.getEstado());
 			if(e == null){
 				e = new Estado();
-				e.setDescricao("");
+				e.setDescricao("Invalido");
 				e.setSigla(cep.getEstado());
 				e.setPais(this.pais);
 				e.setUltimaAtualizacao(Utilidades.retornaCalendario());
@@ -222,7 +222,7 @@ public class PessoajsfController extends GenericController implements Serializab
 				e.setId_Pessoa_Registro(perfilLogado.getAssLogado());
 				EstadoBusiness.merge(e);
 			}
-			this.estado = e;
+			this.estado = EstadoBusiness.buscaEstadoPelaSigla(e.getSigla());
 			associaEstadosAoPais();
 			
 			Cidade c = CidadeBusiness.buscaCidadePeloNome(cep.getCidade());
@@ -237,7 +237,7 @@ public class PessoajsfController extends GenericController implements Serializab
 				c.setEstado(estado);
 				CidadeBusiness.merge(c);
 			}
-			this.cidade = c;
+			this.cidade = CidadeBusiness.buscaCidadePeloNome(c.getDescricao());
 			associaCidadesAoEstado();
 			
 			Bairro b = BairroBusiness.buscaBairroPeloNome(cep.getBairro());
@@ -251,7 +251,7 @@ public class PessoajsfController extends GenericController implements Serializab
 				b.setCidade(cidade);
 				BairroBusiness.merge(b);
 			}
-			this.bairro = b;
+			this.bairro = BairroBusiness.buscaBairroPeloNome(b.getDescricao());
 			
 			Logradouro l = LogradouroBusiness.buscaLogradouroPeloNome(cep.getLogradouro());
 			if(l == null){
@@ -265,7 +265,7 @@ public class PessoajsfController extends GenericController implements Serializab
 				l.setEnum_Aux_Tipo_Logradouro(Enum_Aux_Tipo_Logradouro.valueOf(cep.getTipoLogradouro().toUpperCase()));
 				LogradouroBusiness.merge(l);
 			}
-			this.logradouro = l;
+			this.logradouro = LogradouroBusiness.buscaLogradouroPeloNome(l.getDescricao());
 		}		
 		
 	}
@@ -288,7 +288,13 @@ public class PessoajsfController extends GenericController implements Serializab
 		this.logradouro.setId_Pessoa_Registro(perfilLogado.getUsLogado().getPessoa());
 		this.logradouro.setId(null);
 		System.out.println(this.logradouro.toString());
+		LogradouroBusiness.merge(this.logradouro);
 		Utilidades.abrirfecharDialogos("dialogoCadastroL",false);
+	}
+	
+	public void novoLogradouro(ActionEvent event){
+		this.logradouro = new Logradouro();
+		Utilidades.abrirfecharDialogos("dialogoCadastroL",true);
 	}
 	
 	public void associaEstadosAoPais(){		
