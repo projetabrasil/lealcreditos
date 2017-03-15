@@ -145,7 +145,9 @@
 			<h:form id="formCadastro">
 				<p:wizard widgetVar="wiz" width="40%" style="overflow: hidden !important;">
 					<p:tab id="tab1" title="Dados Base">
-					<div class="ui-g-12">
+					<p:panel id="p_d_p" header="Informações Pessoais">
+					<h:panelGrid columns="2" id="painelCadastro_6"
+						rendered="#{autenticacaojsfController.perfilLogado.paginaAtual.renderizaCadastrodeUsuarios}">
 						<p:outputLabel
 							value="#{pessoajsfController.pessoaConfig.labelNome}"
 							rendered="#{pessoajsfController.pessoaConfig.labelNomeRenderiza}"/>
@@ -159,9 +161,9 @@
 							styleClass="input-info-nome-pessoas">
 							<f:validateLength minimum="5" />
 						</p:inputText>
-					</div>
 					
-					<div class="ui-g-12">
+					
+					
 						<p:outputLabel
 							value="#{pessoajsfController.pessoaConfig.labelFantasia}"
 							rendered="#{pessoajsfController.pessoaConfig.labelFantasiaRenderiza}" />
@@ -175,9 +177,9 @@
 							styleClass="input-info-nome-pessoas">
 							<f:validateLength minimum="5" />
 						</p:inputText>
-					</div>
+					
 
-					<div class="ui-g-12 radio-info-sexo-pessoas">
+					
 						<p:outputLabel
 							value="#{pessoajsfController.pessoaConfig.labelSexo}"
 							rendered="#{pessoajsfController.pessoaConfig.labelSexoRenderiza}" />
@@ -192,11 +194,10 @@
 							<p:ajax event="change" process="@this"
 								oncomplete="$(function(){PrimeFaces.focus('formTemplate:formCadastro:calendar');});" />
 						</p:selectOneRadio>
-					</div>
+					
 					
 				
-					<div class="ui-g-6 grupo01-info-pessoas">	
-						<div class="ui-g-12 div-cpf-info-pessoas">
+					
 							<p:outputLabel
 								value="#{pessoajsfController.pessoaConfig.labelcpf_Cnpj}"
 								rendered="#{pessoajsfController.pessoaConfig.labelcpf_CnpjRenderiza}" />
@@ -208,10 +209,10 @@
 								requiredMessage="#{pessoajsfController.pessoaConfig.labelcpf_CnpjRequiredMessage}"
 								rendered="#{pessoajsfController.pessoaConfig.labelcpf_CnpjRenderiza}">
 							</p:outputLabel>
-						</div>
 						
 						
-						<div class="ui-g-12 div-dtnsc-info-pessoas">
+						
+						
 							<p:outputLabel value="Data de nascimento"
 								rendered="#{pessoajsfController.pessoaConfig.labelDataNascimentoRenderiza}" />
 							<p:calendar id="calendar" size="15" maxlength="15" mask="**/**/****" pattern="dd/MM/yyyy" 
@@ -221,11 +222,11 @@
 								rendered="#{pessoajsfController.pessoaConfig.labelDataNascimentoRenderiza}">							
 								<f:convertDateTime pattern="dd/MM/yyyy" dateStyle="full" type="both"  timezone="GMT+3"/>
 							</p:calendar>
-						</div>
+						
 						
 				
 					
-						<div class="ui-g-12">
+						
 							<p:outputLabel
 								value="#{pessoajsfController.pessoaConfig.labelrg_Insc}"
 								rendered="#{pessoajsfController.pessoaConfig.labelrg_InscRenderiza}" />
@@ -235,11 +236,10 @@
 								requiredMessage="#{pessoajsfController.pessoaConfig.labelrg_InscRequiredMessage}"
 								rendered="#{pessoajsfController.pessoaConfig.labelrg_InscRenderiza}">
 							</p:inputText>
-						</div>
-					</div><!-- g-6 -->
+						
+					<!-- g-6 -->
 					
-					<div class="ui-g-6">
-						<div class="ui-g-12 div-info-tel01-pessoas">
+					
 							<p:outputLabel for="fone_1"
 								value="#{pessoajsfController.pessoaConfig.labelfone_1}"
 								rendered="#{pessoajsfController.pessoaConfig.labelfone_1Renderiza}" />
@@ -250,10 +250,10 @@
 								requiredMessage="#{pessoajsfController.pessoaConfig.labelfone_1RequiredMessage}"
 								rendered="#{pessoajsfController.pessoaConfig.labelfone_1Renderiza}">
 							</p:inputMask>
-						</div>
+						
 					
 					
-						<div class="ui-g-12 div-info-tel02-pessoas">
+						
 							<p:outputLabel
 								value="#{pessoajsfController.pessoaConfig.labelfone_2}"
 								rendered="#{pessoajsfController.pessoaConfig.labelfone_2Renderiza}" />
@@ -264,9 +264,9 @@
 								requiredMessage="#{pessoajsfController.pessoaConfig.labelfone_2RequiredMessage}"
 								rendered="#{pessoajsfController.pessoaConfig.labelfone_2Renderiza}">
 							</p:inputMask>
-						</div>
 						
-						<div class="ui-g-12 div-info-tel03-pessoas">
+						
+						
 							<p:outputLabel
 								value="#{pessoajsfController.pessoaConfig.labelfone_3}" />
 							<p:inputMask mask="#{pessoajsfController.pessoaConfig.maskTel}"
@@ -276,9 +276,9 @@
 								requiredMessage="#{pessoajsfController.pessoaConfig.labelfone_3RequiredMessage}"
 								rendered="#{pessoajsfController.pessoaConfig.labelfone_3Renderiza}">
 							</p:inputMask>
-						</div>
 						
-						<div class="ui-g-12 div-info-tel04-pessoas">
+						
+						
 							<p:outputLabel
 								value="#{pessoajsfController.pessoaConfig.labelfone_4}" />
 							<p:inputMask mask="#{pessoajsfController.pessoaConfig.maskTel}"
@@ -288,9 +288,9 @@
 								requiredMessage="#{pessoajsfController.pessoaConfig.labelfone_4RequiredMessage}"
 								rendered="#{pessoajsfController.pessoaConfig.labelfone_4Renderiza}">
 							</p:inputMask>
-						</div>
 						
-						<div class="ui-g-12 div-info-tel05-pessoas">
+						
+						
 							<p:outputLabel
 								value="#{pessoajsfController.pessoaConfig.labelfone_5}" />
 							<p:inputMask mask="#{pessoajsfController.pessoaConfig.maskTel}"
@@ -300,11 +300,11 @@
 								requiredMessage="#{pessoajsfController.pessoaConfig.labelfone_5RequiredMessage}"
 								rendered="#{pessoajsfController.pessoaConfig.labelfone_5Renderiza}">
 							</p:inputMask>
-						</div>
-					</div><!-- g-6 -->
+						
+					<!-- g-6 -->
 				
 				
-					<div class="ui-g-12">
+					
 						<p:outputLabel
 							value="#{pessoajsfController.pessoaConfig.labelemail}"
 							rendered="#{pessoajsfController.pessoaConfig.labelemailRenderiza}" />
@@ -315,11 +315,10 @@
 							rendered="#{pessoajsfController.pessoaConfig.labelemailRenderiza}"
 							styleClass="input-info-nome-pessoas">
 						</p:inputText>
-					</div>
+					
 				
-				<div class="ui-g-12">
-					<h:panelGrid columns="2" id="painelCadastro_6"
-						rendered="#{autenticacaojsfController.perfilLogado.paginaAtual.renderizaCadastrodeUsuarios}">
+				
+					
 						
 							<p:outputLabel value="Informe a Senha" />
 							<p:password size="18" maxlength="8"
@@ -341,18 +340,19 @@
 							</p:password>
 					
 						</h:panelGrid>
-					</div>
-				
-					<div class="ui-g-12">					
+									
 						<p:commandButton value="Cancelar" process="@this"
 						actionListener="#{pessoajsfController.cancela}" 
 						styleClass="btao-info-pessoas"/>
-					</div>
-					</p:tab>
+					
+				</p:panel>
+			</p:tab>
 					
 					<p:tab id="tab2" title="Endereço">
-						<div class="ui-g-12">
-							<h:panelGrid columns="2" cellpadding="5" render="@form">
+					
+						
+						<p:panel id="p_endereco" header="Informações de Endereço">
+							<h:panelGrid id="g_e_1" columns="2" cellpadding="5" render="@form">
 								
 								<p:outputLabel for="pais" value="País: "/>
 		            			<p:selectOneMenu id="pais" value="#{pessoajsfController.pais}" converter="omnifaces.SelectItemsConverter" style="width:150px">
@@ -397,11 +397,11 @@
 		                			<f:selectItem itemLabel="Selecione o logradouro" itemValue="" noSelectionOption="true" />
 		                			<f:selectItems value="#{pessoajsfController.cidade.logradouros}" var="o" itemLabel="#{o.descricao}" itemValue="#{o}"/>
 		            			</p:selectOneMenu>
-		            			
+		            			</h:panelGrid>	
 		            			<p:commandButton value="Adicionar Logradouro"						    
 										actionListener="#{pessoajsfController.novoLogradouro}" process="@this" styleClass="btao-pessoas">
 								</p:commandButton>
-								
+								<h:panelGrid id="g_e_2" columns="2" cellpadding="5" render="@form">
 								<p:outputLabel value="Complemento:"/>
 								<p:inputText size="30" maxlength="30"
 									value="#{pessoajsfController.endereco.complemento}"
@@ -427,7 +427,7 @@
 							<p:commandButton value="Cancelar" process="@this"
 							actionListener="#{pessoajsfController.cancela}" 
 							styleClass="btao-info-pessoas"/>
-						</div>
+						</p:panel>
 					</p:tab>
 					
 					<p:tab  id="tab3" title="Dados importantes">
