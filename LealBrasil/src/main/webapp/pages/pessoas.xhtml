@@ -399,7 +399,7 @@
 		            			</p:selectOneMenu>
 		            			
 		            			<p:commandButton value="Adicionar Logradouro"						    
-										onclick="PF('dialogoCadastroL').show();" styleClass="btao-pessoas">
+										actionListener="#{pessoajsfController.novoLogradouro}" process="@this" styleClass="btao-pessoas">
 								</p:commandButton>
 								
 								<p:outputLabel value="Complemento:"/>
@@ -477,7 +477,7 @@
 						</h:panelGrid>
 						
 						<p:commandButton value="Adicionar"						    
-							actionListener="#{pessoajsfController.adicionarLogradouro}" process="@this" styleClass="btao-pessoas">
+							actionListener="#{pessoajsfController.adicionarLogradouro}" process="@form" styleClass="btao-pessoas">
 						</p:commandButton>
 						
 						<p:commandButton value="Cancelar"						    
