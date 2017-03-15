@@ -27,8 +27,7 @@
               <h:form id="formLista">
 						<p:commandButton value="Novo"						    
 										actionListener="#{pessoajsfController.novo}"
-										update=":formTemplate:formCadastro :formTemplate:formIdentidade" 
-										styleClass="btao-pessoas">
+										update=":formTemplate:formCadastro :formTemplate:formIdentidade" styleClass="btao-pessoas">
 						</p:commandButton>
 			<!-- <p:panel header="Listagem de #{autenticacaojsfController.perfilLogado.paginaAtual.descricao2}"> -->
 				<p:dataTable id="tabela" emptyMessage="Sem Registros" resizableColumns="true"
@@ -145,7 +144,6 @@
 		<div class="div-conteudo-info-pessoas">
 			<h:form id="formCadastro">
 				<p:wizard widgetVar="wiz" width="40%" style="overflow: hidden !important;">
-				
 					<p:tab id="tab1" title="Dados Base">
 					<p:panel id="p_d_p" header="Informações Pessoais">
 					<h:panelGrid columns="2" id="painelCadastro_6"
@@ -199,8 +197,7 @@
 					
 					
 				
-						
-						
+					
 							<p:outputLabel
 								value="#{pessoajsfController.pessoaConfig.labelcpf_Cnpj}"
 								rendered="#{pessoajsfController.pessoaConfig.labelcpf_CnpjRenderiza}" />
@@ -279,7 +276,9 @@
 								requiredMessage="#{pessoajsfController.pessoaConfig.labelfone_3RequiredMessage}"
 								rendered="#{pessoajsfController.pessoaConfig.labelfone_3Renderiza}">
 							</p:inputMask>
-					
+						
+						
+						
 							<p:outputLabel
 								value="#{pessoajsfController.pessoaConfig.labelfone_4}" />
 							<p:inputMask mask="#{pessoajsfController.pessoaConfig.maskTel}"
@@ -341,18 +340,18 @@
 							</p:password>
 					
 						</h:panelGrid>
-					
-				
 									
 						<p:commandButton value="Cancelar" process="@this"
 						actionListener="#{pessoajsfController.cancela}" 
 						styleClass="btao-info-pessoas"/>
-				
-					</p:panel>
-					</p:tab>
+					
+				</p:panel>
+			</p:tab>
 					
 					<p:tab id="tab2" title="Endereço">
-					<p:panel id="p_endereco" header="Informações de Endereço">
+					
+						
+						<p:panel id="p_endereco" header="Informações de Endereço">
 							<h:panelGrid id="g_e_1" columns="2" cellpadding="5" render="@form">
 								
 								<p:outputLabel for="pais" value="País: "/>
@@ -398,10 +397,9 @@
 		                			<f:selectItem itemLabel="Selecione o logradouro" itemValue="" noSelectionOption="true" />
 		                			<f:selectItems value="#{pessoajsfController.cidade.logradouros}" var="o" itemLabel="#{o.descricao}" itemValue="#{o}"/>
 		            			</p:selectOneMenu>
-		            			</h:panelGrid>
-		            			
+		            			</h:panelGrid>	
 		            			<p:commandButton value="Adicionar Logradouro"						    
-										onclick="PF('dialogoCadastroL').show();" styleClass="btao-pessoas">
+										actionListener="#{pessoajsfController.novoLogradouro}" process="@this" styleClass="btao-pessoas">
 								</p:commandButton>
 								<h:panelGrid id="g_e_2" columns="2" cellpadding="5" render="@form">
 								<p:outputLabel value="Complemento:"/>
@@ -423,12 +421,12 @@
 									placeholder="Mínimo 2 Letras">
 									<f:validateLength minimum="2" />
 								</p:inputText>
+								
         					</h:panelGrid>						
-							
+						
 							<p:commandButton value="Cancelar" process="@this"
 							actionListener="#{pessoajsfController.cancela}" 
 							styleClass="btao-info-pessoas"/>
-						
 						</p:panel>
 					</p:tab>
 					
@@ -479,7 +477,7 @@
 						</h:panelGrid>
 						
 						<p:commandButton value="Adicionar"						    
-							actionListener="#{pessoajsfController.adicionarLogradouro}" process="@this" styleClass="btao-pessoas">
+							actionListener="#{pessoajsfController.adicionarLogradouro}" process="@form" styleClass="btao-pessoas">
 						</p:commandButton>
 						
 						<p:commandButton value="Cancelar"						    
