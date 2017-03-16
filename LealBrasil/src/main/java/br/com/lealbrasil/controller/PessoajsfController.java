@@ -83,7 +83,12 @@ public class PessoajsfController extends GenericController implements Serializab
 		
 		this.pais = new Pais();
 		 		
-		this.endereco = EnderecoBusiness.buscaEnderecoPorPessoa(perfilLogado.getAssLogado());
+		if(!perfilLogado.getAssLogado().equals(null)){
+			this.endereco = EnderecoBusiness.buscaEnderecoPorPessoa(perfilLogado.getAssLogado());
+		}else{
+			this.endereco = EnderecoBusiness.buscaEnderecoPorPessoa(perfilLogado.getUsLogado().getPessoa());
+		}
+		
 		if(this.endereco == null){
 			this.endereco = new Endereco(new Bairro(), new Cidade(), new Estado());
 			this.pais = pDAO.buscaPaisPeloNome("Brasil");
