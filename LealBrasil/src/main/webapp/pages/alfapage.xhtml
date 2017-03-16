@@ -80,7 +80,29 @@
 	
 	<!-- Page Content -->
     <div class="conteudo">
+    
+    <!-- sujestoes -->
+	<div class="warp-suject">
+	    <div class="conteiner-sujest">
+	    	
+	    	<div class="div-btao">
+	    	<h5>Sugestões</h5>
+	    	</div>
+	    	<div class="div-texto">
+			  <h:form styleClass="box-texto-suject"> 
+			  
+			     <p:inputTextarea rows="6" cols="33" 
+			          maxlength="500"/>
 
+			      <p:growl id="growl" life="2000" />
+				  <p:commandButton value="Enviar" 
+					    id="ajax" update="growl" 
+					    actionListener="#{buttonView.buttonAction}" 
+					    styleClass="btao-box-suject"/>
+			 </h:form>
+	      </div>
+	    </div>
+	</div>
       <!-- FUNDO / CONTEUDO(TEXTO) -->
       
     			<div class="sobre">
@@ -111,7 +133,7 @@
 						trazer benefícios aos usuários do serviço privado de mobiliade urbana e também
 						a valorização e reconhecimento dos prestadores de serviço.</p>
                   <div class="div-h4-produtos">
-                  	<h4>SAIBA MAIS</h4>
+                  	<h4 class="saiba-mais01" >SAIBA MAIS</h4>
                   </div>
                 </div>
                 <div class="col-md-6 col-lg-2 texto">
@@ -123,7 +145,7 @@
 						pelo valor de seus gastos junto ao comércio, será acumulado créditos para serem utilizados
 						nos estabelecimentos associados.</p>
                   <div class="div-h4-produtos">
-                  	<h4>SAIBA MAIS</h4>
+                  	<h4 class="saiba-mais02">SAIBA MAIS</h4>
                   </div>
                 </div>
                 <div class="col-md-6 col-lg-2 texto">
@@ -158,7 +180,7 @@ de contagem 			diária de estoque. Será feito através do mobile, assim agiliza
 					quanto informações necessárias sobre contatos do proprietário do veículo em casos
 					de acidentes e informações, como tipo sanguineo e alergias.</p>
                   <div class="div-h4-produtos">
-                  	<h4>SAIBA MAIS</h4>
+                  	<h4 class="saiba-mais05">SAIBA MAIS</h4>
                   </div>
                 </div>
                 <div class="col-md-6 col-lg-2 texto">
@@ -170,7 +192,7 @@ de contagem 			diária de estoque. Será feito através do mobile, assim agiliza
 					quanto informações necessárias sobre contatos do proprietário do celular em caso de acidentes.
 					 Informações como o tipo sanguineo e alergias.</p>
                   <div class="div-h4-produtos">
-                  	<h4>SAIBA MAIS</h4>
+                  	<h4 class="saiba-mais06">SAIBA MAIS</h4>
                   </div>
                 </div>
               </div><!-- /.row -->

@@ -150,6 +150,69 @@ navbar-right{
 
 
 /*-----Corpo da home----*/
+/*Sujestoes*/
+.warp-suject{
+	max-width: 1500px;
+	width: 100%;
+	position: fixed;
+	z-index: 50;
+}
+.conteiner-sujest{
+	position: absolute;
+	max-width: 300px;
+	height: 185px;
+	right: 0;
+}
+.div-btao{
+	width: 25px;
+	height: 90px;
+	background: #8c2a6b;
+	float:left;
+	border-top-left-radius: 5px;
+	border-bottom-left-radius: 5px;
+}
+.div-btao h5{
+	transform:rotate(90deg);
+	color: #fff;
+	font-size: 100;
+	font-size: 0.9em;
+	margin-top:20px;
+}
+
+.div-texto{
+	width: 0px;
+	height: 185px;
+	margin-left: 25px;
+	background: #eeeeee;
+	border-bottom-left-radius: 5px;
+	-webkit-transition: width 0.8s; /* Safari */
+    transition: width 0.8s;
+}
+
+.div-texto .box-texto-suject{
+	display: none;
+	position: absolute;
+	margin-left: 5px;
+	margin-top: 5px;
+}
+.btao-box-suject{
+	margin-left: 174px;
+	margin-top: 5px;
+	padding: 2px 6px 2px 6px !important;
+	background: #315995 !important;
+	transition-duration: 0.5s;
+}
+.btao-box-suject:hover{
+	background: #476e9c!important;
+}
+.conteiner-sujest:hover .box-texto-suject {
+	display: inherit;
+}
+.conteiner-sujest:hover .div-texto{
+	width: 270px;
+}
+
+
 /*sobre*/
 .sobre{
 	padding-top: 120px;
@@ -183,15 +246,17 @@ navbar-right{
 .produtos{
 	/*background: #ccc;*/
 	margin-top: -50px;
-	padding-left: 5%;
-	padding-right: 5%;
+	padding-left: 4%;
+	padding-right: 4%;
 	min-height: 540px;
+	
 }
 .produtos h2{
 	/*background: #999;*/
 	font-size: 5.5em;
 	font-weight: 800;
 	color: #2A6AA7;
+	padding-left: 3%;
 }
 .produtos .grupo-produtos{
 	width: 100%;
@@ -223,7 +288,6 @@ navbar-right{
 	min-height: 250px;
 	min-width: 190px;
 	transition-duration: 0.5s;
-	
 }
 .produtos .row .texto:hover{
 	/*border: 1px solid #2A6AA7;*/
@@ -359,6 +423,7 @@ navbar-right{
 
 .proposta .row .texto {
 	width: 100%; 
+	margin-left: -10px;
 }
 
 .proposta h2{
@@ -565,6 +630,9 @@ navbar-right{
 }
 .proposta p{
 	text-align: center;
+}
+.proposta .row .texto { 
+	margin-left: 0px;
 }
 /*imagens do slider*/
 .fill {
@@ -838,11 +906,23 @@ navbar-right{
 	height: 370px;
 	width: 190px;	
 }	
+.produtos .row .texto .saiba-mais01{
+	margin-top: 6px;
+}
+.produtos .row .texto .saiba-mais02{
+	margin-top: 7px;
+}
 .produtos .row .texto .saiba-mais03{
-	margin-top: 15px;
+	margin-top: 7px;
 }
 .produtos .row .texto .saiba-mais04{
-	margin-top: 33px;
+	margin-top: 24px;
+}
+.produtos .row .texto .saiba-mais05{
+	margin-top: 7px;
+}
+.produtos .row .texto .saiba-mais06{
+	margin-top: 7px;
 }
 }
 
