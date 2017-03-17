@@ -387,17 +387,15 @@
 		            			</p:selectOneMenu>
 		            			
 		            			<p:outputLabel for="logradouro" value="Logradouro: " />
-		            			<p:selectOneMenu id="logradouro" value="#{pessoajsfController.logradouro}" converter="omnifaces.SelectItemsConverter" style="width:150px">
-		                			<f:selectItem itemLabel="Selecione o logradouro" itemValue="" noSelectionOption="true" />
-		                			<f:selectItems value="#{pessoajsfController.logradouros}" var="o" itemLabel="#{o.descricao}" itemValue="#{o}"/>
-		            			</p:selectOneMenu>
+		            			<p:autoComplete id="logradouro" minQueryLength="2" value="#{pessoajsfController.logradouro}" converter="omnifaces.ListConverter" style="width:150px"
+ 		            			completeMethod="#{pessoajsfController.cidade.getLogradouros()}" var="o" itemLabel="#{o.descricao}" itemValue="#{o}"	effect="fade"
+		            			/>
 	
 		            			
 		            			<p:outputLabel for="bairro" value="Bairro: " />
-		            			<p:selectOneMenu id="bairro" value="#{pessoajsfController.bairro}" converter="omnifaces.SelectItemsConverter" style="width:150px">
-		                			<f:selectItem itemLabel="Selecione o bairro" itemValue="" noSelectionOption="true" />
-		                			<f:selectItems value="#{pessoajsfController.bairros}" var="o" itemLabel="#{o.descricao}" itemValue="#{o}"/>
-		            			</p:selectOneMenu>
+		            			<p:autoComplete id="bairro" minQueryLength="2" value="#{pessoajsfController.bairro}" converter="omnifaces.ListConverter" style="width:150px"
+ 		            			completeMethod="#{pessoajsfController.cidade.getBairros()}" var="o" itemLabel="#{o.descricao}" itemValue="#{o}"	effect="fade"
+ 		            			/>
 
 		            			</h:panelGrid>	
 		            			<p:commandButton value="Adicionar Logradouro"						    

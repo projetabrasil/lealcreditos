@@ -152,9 +152,11 @@ public class PessoajsfController extends GenericController implements Serializab
 			}
 		}
 
-	associaEstadosAoPais();this.estado=endereco.getBairro().getCidade().getEstado();
-
-	associaCidadesAoEstado();this.endereco.setComplemento("");this.endereco.setNumero(null);
+	associaEstadosAoPais();
+	this.estado = endereco.getBairro().getCidade().getEstado();
+	associaCidadesAoEstado();
+	this.endereco.setComplemento("");
+	this.endereco.setNumero(null);
 
 	Utilidades.abrirfecharDialogos("dialogoIdentidade",true);
 
@@ -338,6 +340,9 @@ public class PessoajsfController extends GenericController implements Serializab
 
 	public void associaEstadosAoPais() {
 		this.setEstados(PessoaBusiness.associaEstadosAoPais(this.pais.getId()));
+		this.estado = new Estado();
+		this.cidade = new Cidade();
+		this.cidades = new ArrayList();
 	}
 
 	public void associaCidadesAoEstado() {
