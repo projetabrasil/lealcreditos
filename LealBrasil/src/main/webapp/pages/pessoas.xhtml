@@ -398,6 +398,9 @@
  		            			/>
 
 		            			</h:panelGrid>	
+		            			<p:commandButton value="Adicionar Bairro"						    
+										actionListener="#{pessoajsfController.novoBairro}" process="@this" styleClass="btao-pessoas">
+								</p:commandButton>
 		            			<p:commandButton value="Adicionar Logradouro"						    
 										actionListener="#{pessoajsfController.novoLogradouro}" process="@this" styleClass="btao-pessoas">
 								</p:commandButton>
@@ -482,6 +485,39 @@
 						
 						<p:commandButton value="Cancelar"						    
 							actionListener="#{pessoajsfController.cancela}" onclick="PF('dialogoCadastroL').hide();" styleClass="btao-pessoas">
+						</p:commandButton>
+					</h:panelGrid>
+				</h:form>
+			</div>
+		</p:dialog>
+		
+		<p:dialog header="Adicionar Bairro" widgetVar="dialogoCadastroB" resizable="false" modal="true" closable="false" appendTo="@(body)" 
+			dynamic="true" responsive="true" >
+			<div class="div-conteudo-info-pessoas">
+				<h:form id="formCadastroB">
+					<h:panelGrid id="painelCadastro_15">
+											
+						<h:panelGrid id="painelCadastro_14">
+							<p:outputLabel
+								value="Nome do Bairro"
+								 />
+							<p:inputText size="30" maxlength="30"
+								value="#{pessoajsfController.bairro.descricao}"
+								required="true"
+								requiredMessage="Descrição do bairro é obrigatória"
+								
+								validatorMessage="O minimo de caracteres para nome são  '3'"
+								placeholder="Mínimo 3 Letras">
+								<f:validateLength minimum="3" />
+							</p:inputText>
+						</h:panelGrid>
+						
+						<p:commandButton value="Adicionar"						    
+							actionListener="#{pessoajsfController.adicionarBairro}" process="@form" styleClass="btao-pessoas">
+						</p:commandButton>
+						
+						<p:commandButton value="Cancelar"						    
+							actionListener="#{pessoajsfController.cancela}" onclick="PF('dialogoCadastroB').hide();" styleClass="btao-pessoas">
 						</p:commandButton>
 					</h:panelGrid>
 				</h:form>

@@ -321,6 +321,22 @@ public class PessoajsfController extends GenericController implements Serializab
 
 		}
 	}
+	
+	public void adicionarBairro(ActionEvent event) {
+		this.bairro.setCidade(this.cidade);
+		this.bairro.setId_Empresa(0);
+		this.bairro.setUltimaAtualizacao(Utilidades.retornaCalendario());
+		this.bairro.setId_Pessoa_Registro(perfilLogado.getUsLogado().getPessoa());
+		this.bairro.setId(null);
+		System.out.println(this.bairro.toString());
+		BairroBusiness.merge(this.bairro);
+		Utilidades.abrirfecharDialogos("dialogoCadastroB", false);
+	}
+	
+	public void novoBairro(ActionEvent event) {
+		this.bairro = new Bairro();
+		Utilidades.abrirfecharDialogos("dialogoCadastroB", true);
+	}
 
 	public void adicionarLogradouro(ActionEvent event) {
 		this.logradouro.setCidade(this.cidade);
@@ -332,7 +348,7 @@ public class PessoajsfController extends GenericController implements Serializab
 		LogradouroBusiness.merge(this.logradouro);
 		Utilidades.abrirfecharDialogos("dialogoCadastroL", false);
 	}
-
+	
 	public void novoLogradouro(ActionEvent event) {
 		this.logradouro = new Logradouro();
 		Utilidades.abrirfecharDialogos("dialogoCadastroL", true);
@@ -342,7 +358,7 @@ public class PessoajsfController extends GenericController implements Serializab
 		this.setEstados(PessoaBusiness.associaEstadosAoPais(this.pais.getId()));
 		this.estado = new Estado();
 		this.cidade = new Cidade();
-		this.cidades = new ArrayList();
+		this.cidades = new ArrayList<Cidade>();
 	}
 
 	public void associaCidadesAoEstado() {
