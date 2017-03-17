@@ -362,7 +362,7 @@
 		            			</p:selectOneMenu>
 								
 								<p:outputLabel value="CEP:"/>
-								<p:inputText size="30" maxlength="30"
+								<p:inputText size="30" maxlength="30" style="width:150px"
 									value="#{pessoajsfController.endereco.bairro.cidade.cep}"
 									required="false"
 									requiredMessage="Campo obrigatório"
@@ -378,7 +378,7 @@
 		                			<f:selectItem itemLabel="Selecione o estado" itemValue="" noSelectionOption="true" />
 		                			<f:selectItems value="#{pessoajsfController.estados}" var="o" itemLabel="#{o.descricao}" itemValue="#{o}"/>
 		            			</p:selectOneMenu>
-		            			
+
 		            			<p:outputLabel for="cidade" value="Cidade: " />
 		            			<p:selectOneMenu id="cidade" value="#{pessoajsfController.cidade}" converter="omnifaces.SelectItemsConverter" style="width:150px">
 		                			<p:ajax listener="#{pessoajsfController.associaBLACidade}" update="logradouro, bairro" />
@@ -388,22 +388,23 @@
 		            			
 		            			<p:outputLabel for="logradouro" value="Logradouro: " />
 		            			<p:autoComplete id="logradouro" minQueryLength="2" value="#{pessoajsfController.logradouro}" converter="omnifaces.ListConverter" style="width:150px"
- 		            			completeMethod="#{pessoajsfController.cidade.getLogradouros()}" var="o" itemLabel="#{o.descricao}" itemValue="#{o}"	effect="fade"
+ 		            			completeMethod="#{pessoajsfController.getLogradouros()}" var="o" itemLabel="#{o.descricao}" itemValue="#{o}"	effect="fade"
 		            			/>
 	
 		            			
 		            			<p:outputLabel for="bairro" value="Bairro: " />
 		            			<p:autoComplete id="bairro" minQueryLength="2" value="#{pessoajsfController.bairro}" converter="omnifaces.ListConverter" style="width:150px"
- 		            			completeMethod="#{pessoajsfController.cidade.getBairros()}" var="o" itemLabel="#{o.descricao}" itemValue="#{o}"	effect="fade"
+ 		            			completeMethod="#{pessoajsfController.getBairros()}" var="o" itemLabel="#{o.descricao}" itemValue="#{o}"	effect="fade"
  		            			/>
 
-		            			</h:panelGrid>	
+		            			
 		            			<p:commandButton value="Adicionar Bairro"						    
 										actionListener="#{pessoajsfController.novoBairro}" process="@this" styleClass="btao-pessoas">
 								</p:commandButton>
 		            			<p:commandButton value="Adicionar Logradouro"						    
 										actionListener="#{pessoajsfController.novoLogradouro}" process="@this" styleClass="btao-pessoas">
 								</p:commandButton>
+								</h:panelGrid>
 								<h:panelGrid id="g_e_2" columns="2" cellpadding="5" render="@form">
 								<p:outputLabel value="Complemento:"/>
 								<p:inputText size="30" maxlength="30"
