@@ -123,7 +123,7 @@
 				<div class="ui-g-5">
 					<p:commandButton value="Validar"
 						actionListener="#{pessoajsfController.buscaPessoa()}"
-						process="@form" update=":mensagens :formTemplate:formCadastro">
+						process="@form" update=":mensagens :formTemplate:formCadastro:pais">
 					</p:commandButton>
 				</div>
 				<div class="ui-g-5">
@@ -356,7 +356,7 @@
 								
 								<p:outputLabel for="pais" value="País: "/>
 		            			<p:selectOneMenu id="pais" value="#{pessoajsfController.pais}" converter="omnifaces.SelectItemsConverter" style="width:150px">
-		                			<p:ajax listener="#{pessoajsfController.associaEstadosAoPais}" update="estado,cidade,logradouro,bairro" />
+		                			<p:ajax listener="#{pessoajsfController.associaEstadosAoPais}" update="estado,cidade" />
 		                			<f:selectItem itemLabel="Selecione o país" itemValue="" noSelectionOption="true" />
 		                			<f:selectItems value="#{pessoajsfController.paises}" var="o" itemLabel="#{o.descricao}" itemValue="#{o}" />
 		            			</p:selectOneMenu>
@@ -376,27 +376,29 @@
 		            			<p:selectOneMenu id="estado" value="#{pessoajsfController.estado}" converter="omnifaces.SelectItemsConverter" style="width:150px">
 		            				<p:ajax listener="#{pessoajsfController.associaCidadesAoEstado}" update="cidade,logradouro,bairro" />
 		                			<f:selectItem itemLabel="Selecione o estado" itemValue="" noSelectionOption="true" />
-		                			<f:selectItems value="#{pessoajsfController.pais.estados}" var="o" itemLabel="#{o.descricao}" itemValue="#{o}"/>
+		                			<f:selectItems value="#{pessoajsfController.estados}" var="o" itemLabel="#{o.descricao}" itemValue="#{o}"/>
 		            			</p:selectOneMenu>
 		            			
 		            			<p:outputLabel for="cidade" value="Cidade: " />
 		            			<p:selectOneMenu id="cidade" value="#{pessoajsfController.cidade}" converter="omnifaces.SelectItemsConverter" style="width:150px">
-		                			<p:ajax listener="#{pessoajsfController.associaBLACidade}" update="bairro,logradouro" />
+		                			<p:ajax listener="#{pessoajsfController.associaBLACidade}" update="logradouro, bairro" />
 		                			<f:selectItem itemLabel="Selecione a cidade" itemValue="" noSelectionOption="true" />
-		                			<f:selectItems value="#{pessoajsfController.estado.cidades}" var="o" itemLabel="#{o.descricao}" itemValue="#{o}"/>
+		                			<f:selectItems value="#{pessoajsfController.cidades}" var="o" itemLabel="#{o.descricao}" itemValue="#{o}"/>
 		            			</p:selectOneMenu>
+		            			
+		            			<p:outputLabel for="logradouro" value="Logradouro: " />
+		            			<p:selectOneMenu id="logradouro" value="#{pessoajsfController.logradouro}" converter="omnifaces.SelectItemsConverter" style="width:150px">
+		                			<f:selectItem itemLabel="Selecione o logradouro" itemValue="" noSelectionOption="true" />
+		                			<f:selectItems value="#{pessoajsfController.logradouros}" var="o" itemLabel="#{o.descricao}" itemValue="#{o}"/>
+		            			</p:selectOneMenu>
+	
 		            			
 		            			<p:outputLabel for="bairro" value="Bairro: " />
 		            			<p:selectOneMenu id="bairro" value="#{pessoajsfController.bairro}" converter="omnifaces.SelectItemsConverter" style="width:150px">
 		                			<f:selectItem itemLabel="Selecione o bairro" itemValue="" noSelectionOption="true" />
-		                			<f:selectItems value="#{pessoajsfController.cidade.bairros}" var="o" itemLabel="#{o.descricao}" itemValue="#{o}"/>
+		                			<f:selectItems value="#{pessoajsfController.bairros}" var="o" itemLabel="#{o.descricao}" itemValue="#{o}"/>
 		            			</p:selectOneMenu>
-								
-								<p:outputLabel for="logradouro" value="Logradouro: " />
-		            			<p:selectOneMenu id="logradouro" value="#{pessoajsfController.logradouro}" converter="omnifaces.SelectItemsConverter" style="width:150px">
-		                			<f:selectItem itemLabel="Selecione o logradouro" itemValue="" noSelectionOption="true" />
-		                			<f:selectItems value="#{pessoajsfController.cidade.logradouros}" var="o" itemLabel="#{o.descricao}" itemValue="#{o}"/>
-		            			</p:selectOneMenu>
+
 		            			</h:panelGrid>	
 		            			<p:commandButton value="Adicionar Logradouro"						    
 										actionListener="#{pessoajsfController.novoLogradouro}" process="@this" styleClass="btao-pessoas">
