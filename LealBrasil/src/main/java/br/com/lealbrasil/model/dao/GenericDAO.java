@@ -6,6 +6,7 @@ import java.util.List;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 
 import br.com.lealbrasil.util.HibernateUtil;
@@ -82,7 +83,7 @@ public class GenericDAO<Entity> {
 		Session sessao = HibernateUtil.getFabricaDeSessoes().openSession();		
 		try{	
 			Criteria consulta = sessao.createCriteria(classe);
-			
+			consulta.addOrder(Order.desc("id"));
 			List<Entity> resultado = consulta.list();
 			return resultado;
 		}catch(RuntimeException erro){		
