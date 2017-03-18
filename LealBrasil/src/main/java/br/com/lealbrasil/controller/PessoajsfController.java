@@ -122,43 +122,49 @@ public class PessoajsfController extends GenericController implements Serializab
 		
 		configurarPessoa();
 		
+		if(perfilLogado.getPerfilUsLogado().equals(Enum_Aux_Perfil_Pessoa.ADMINISTRADORES) && perfilLogado.getPaginaAtual().equals(Enum_Aux_Perfil_Pagina_Atual.PAGINACLIENTES)){    
+			mensagensDisparar("Não é possivel cadastrar " + perfilLogado.getPaginaAtual().getDescricao2() + " como administrador");
+		}else{
+			if (perfilLogado.getPaginaAtual().equals(Enum_Aux_Perfil_Pagina_Atual.PAGINAASSINANTES))
+				pessoa = pessoaConfig.ConfiguraPessoa(Enum_Aux_Tipo_Identificador.CNPJ, perfilLogado.getUsLogado(), pessoa,
+						false);
+			else
+				pessoa = pessoaConfig.ConfiguraPessoa(Enum_Aux_Tipo_Identificador.CPF, perfilLogado.getUsLogado(), pessoa,
+						false);
+			usuario = new Usuario();
+			pessoa.setId_Pessoa_Registro(perfilLogado.getUsLogado().getPessoa());
+			usuario.setPessoa(pessoa);
+
+			if (pessoa.getId() != null && pessoa.getId()>0) {
+				this.endereco = EnderecoBusiness.buscaEnderecoPorPessoa(pessoa);
+				setDados(this.endereco);
+			} else {
+
+				if (!perfilLogado.getAssLogado().equals(null)) {
+					if(perfilLogado.getPerfilUsLogado().equals(Enum_Aux_Perfil_Pessoa.ADMINISTRADORES)){
+						this.endereco = EnderecoBusiness.buscaEnderecoPorPessoa(perfilLogado.getUsLogado().getPessoa());
+					}else{
+						this.endereco = EnderecoBusiness.buscaEnderecoPorPessoa(perfilLogado.getAssLogado());
+					}					
+				} else {
+					this.endereco = EnderecoBusiness.buscaEnderecoPorPessoa(perfilLogado.getUsLogado().getPessoa());
+				}
 		
-		if (perfilLogado.getPaginaAtual().equals(Enum_Aux_Perfil_Pagina_Atual.PAGINAASSINANTES))
-			pessoa = pessoaConfig.ConfiguraPessoa(Enum_Aux_Tipo_Identificador.CNPJ, perfilLogado.getUsLogado(), pessoa,
-					false);
-		else
-			pessoa = pessoaConfig.ConfiguraPessoa(Enum_Aux_Tipo_Identificador.CPF, perfilLogado.getUsLogado(), pessoa,
-					false);
-		usuario = new Usuario();
-		pessoa.setId_Pessoa_Registro(perfilLogado.getUsLogado().getPessoa());
-		usuario.setPessoa(pessoa);
-
-		if (pessoa.getId() != null && pessoa.getId()>0) {
-			this.endereco = EnderecoBusiness.buscaEnderecoPorPessoa(pessoa);
-			setDados(this.endereco);
-		} else {
-
-			if (!perfilLogado.getAssLogado().equals(null)) {
-				this.endereco = EnderecoBusiness.buscaEnderecoPorPessoa(perfilLogado.getAssLogado());
-			} else {
-				this.endereco = EnderecoBusiness.buscaEnderecoPorPessoa(perfilLogado.getUsLogado().getPessoa());
+				if (this.endereco == null) {
+					this.endereco = new Endereco(new Bairro(), new Cidade(), new Estado());
+					this.pais = pDAO.buscaPaisPeloNome("Brasil");
+				} else {
+					this.pais = endereco.getLogradouro().getCidade().getEstado().getPais();
+				}
 			}
-	
-			if (this.endereco == null) {
-				this.endereco = new Endereco(new Bairro(), new Cidade(), new Estado());
-				this.pais = pDAO.buscaPaisPeloNome("Brasil");
-			} else {
-				this.pais = endereco.getLogradouro().getCidade().getEstado().getPais();
-			}
+
+			associaEstadosAoPais();
+			this.estado = endereco.getBairro().getCidade().getEstado();
+			associaCidadesAoEstado();
+			this.endereco.setComplemento("");
+			this.endereco.setNumero(null);
+			Utilidades.abrirfecharDialogos("dialogoIdentidade",true);
 		}
-
-	associaEstadosAoPais();
-	this.estado = endereco.getBairro().getCidade().getEstado();
-	associaCidadesAoEstado();
-	this.endereco.setComplemento("");
-	this.endereco.setNumero(null);
-
-	Utilidades.abrirfecharDialogos("dialogoIdentidade",true);
 
 	}
 	
