@@ -112,8 +112,6 @@ public class PessoajsfController extends GenericController implements Serializab
 	public void novo(ActionEvent event) {
 		perfilLogadoTemp = perfilLogado;
 		pessoa = new Pessoa();
-		
-		PaisDAO pDAO = new PaisDAO();
 
 		this.estado = new Estado();
 		this.cidade = new Cidade();
@@ -122,6 +120,40 @@ public class PessoajsfController extends GenericController implements Serializab
 		
 		configurarPessoa();
 		
+		configurarEndereco();
+
+	}
+	
+	public void setDados(Endereco e){
+		this.setPais(e.getLogradouro().getCidade().getEstado().getPais());
+		this.setEstado(e.getLogradouro().getCidade().getEstado());
+		this.setCidade(e.getLogradouro().getCidade());
+		//bairro 
+		//logradouro	
+	}
+	
+	public void editar(ActionEvent event) {
+
+		Pessoa p = (Pessoa) event.getComponent().getAttributes().get("registroAtual");
+		this.pessoa = new Pessoa();
+		this.pessoa = p;
+		
+		this.endereco = new Endereco(new Bairro(), new Cidade(), new Estado());	
+		
+		if (perfilLogado.getPaginaAtual().isRenderizaCadastrodeUsuarios()) {
+			UsuarioDAO usuarioDAO = new UsuarioDAO();
+			usuario = usuarioDAO.retornaUsuarioPelaPessoa(pessoa);
+			if (usuario == null)
+				usuario = new Usuario();
+		}
+		configurarPessoa();
+		
+		configurarEndereco();
+		
+	}
+	
+	public void configurarEndereco(){
+		PaisDAO pDAO = new PaisDAO();
 		if(perfilLogado.getPerfilUsLogado().equals(Enum_Aux_Perfil_Pessoa.ADMINISTRADORES) && perfilLogado.getPaginaAtual().equals(Enum_Aux_Perfil_Pagina_Atual.PAGINACLIENTES)){    
 			mensagensDisparar("Não é possivel cadastrar " + perfilLogado.getPaginaAtual().getDescricao2() + " como administrador");
 		}else{
@@ -165,81 +197,6 @@ public class PessoajsfController extends GenericController implements Serializab
 			this.endereco.setNumero(null);
 			Utilidades.abrirfecharDialogos("dialogoIdentidade",true);
 		}
-
-	}
-	
-	public void setDados(Endereco e){
-		this.setPais(e.getLogradouro().getCidade().getEstado().getPais());
-		this.setEstado(e.getLogradouro().getCidade().getEstado());
-		this.setCidade(e.getLogradouro().getCidade());
-		//bairro 
-		//logradouro
-		
-		
-	}
-	
-	public void editar(ActionEvent event) {
-
-		Pessoa p = (Pessoa) event.getComponent().getAttributes().get("registroAtual");
-		this.pessoa = new Pessoa();
-		this.pessoa = p;
-		
-		this.endereco = new Endereco(new Bairro(), new Cidade(), new Estado());	
-		
-		if (perfilLogado.getPaginaAtual().isRenderizaCadastrodeUsuarios()) {
-			UsuarioDAO usuarioDAO = new UsuarioDAO();
-			usuario = usuarioDAO.retornaUsuarioPelaPessoa(pessoa);
-			if (usuario == null)
-				usuario = new Usuario();
-		}
-		configurarPessoa();
-		
-		if(perfilLogado.getPerfilUsLogado().equals(Enum_Aux_Perfil_Pessoa.ADMINISTRADORES) && perfilLogado.getPaginaAtual().equals(Enum_Aux_Perfil_Pagina_Atual.PAGINACLIENTES)){    
-			mensagensDisparar("Não é possivel editar " + perfilLogado.getPaginaAtual().getDescricao2() + " como administrador");
-		}else{
-			if (perfilLogado.getPaginaAtual().equals(Enum_Aux_Perfil_Pagina_Atual.PAGINAASSINANTES))
-				pessoa = pessoaConfig.ConfiguraPessoa(Enum_Aux_Tipo_Identificador.CNPJ, perfilLogado.getUsLogado(), pessoa,
-						true);
-			else
-				pessoa = pessoaConfig.ConfiguraPessoa(Enum_Aux_Tipo_Identificador.CPF, perfilLogado.getUsLogado(), pessoa,
-						true);
-			pessoa.setId_Pessoa_Registro(perfilLogado.getUsLogado().getPessoa());
-
-			usuario.setPessoa(pessoa);
-			
-			PaisDAO pDAO = new PaisDAO();
-			if (pessoa.getId() != null && pessoa.getId()>0) {
-				this.endereco = EnderecoBusiness.buscaEnderecoPorPessoa(pessoa);
-				setDados(this.endereco);
-			} else {
-
-				if (!perfilLogado.getAssLogado().equals(null)) {
-					if(perfilLogado.getPerfilUsLogado().equals(Enum_Aux_Perfil_Pessoa.ADMINISTRADORES)){
-						this.endereco = EnderecoBusiness.buscaEnderecoPorPessoa(perfilLogado.getUsLogado().getPessoa());
-					}else{
-						this.endereco = EnderecoBusiness.buscaEnderecoPorPessoa(perfilLogado.getAssLogado());
-					}					
-				} else {
-					this.endereco = EnderecoBusiness.buscaEnderecoPorPessoa(perfilLogado.getUsLogado().getPessoa());
-				}
-		
-				if (this.endereco == null) {
-					this.endereco = new Endereco(new Bairro(), new Cidade(), new Estado());
-					this.pais = pDAO.buscaPaisPeloNome("Brasil");
-				} else {
-					this.pais = endereco.getLogradouro().getCidade().getEstado().getPais();
-				}	
-			}
-			
-			associaEstadosAoPais();
-			this.estado = endereco.getBairro().getCidade().getEstado();
-			associaCidadesAoEstado();
-			this.endereco.setComplemento("");
-			this.endereco.setNumero(null);
-			mudaLabel();
-			Utilidades.abrirfecharDialogos("dialogoCadastro",true);
-		}
-		
 	}
 
 	public void merge() {
@@ -306,7 +263,6 @@ public class PessoajsfController extends GenericController implements Serializab
 				EstadoBusiness.merge(e);
 			}
 			this.estado = EstadoBusiness.buscaEstadoPelaSigla(e.getSigla());
-			associaEstadosAoPais();
 
 			Cidade c = CidadeBusiness.buscaCidadePeloNome(cep.getCidade());
 			if (c == null) {
@@ -321,7 +277,6 @@ public class PessoajsfController extends GenericController implements Serializab
 				CidadeBusiness.merge(c);
 			}
 			this.cidade = CidadeBusiness.buscaCidadePeloNome(c.getDescricao());
-			associaCidadesAoEstado();
 
 			Bairro b = BairroBusiness.buscaBairroPeloNome(cep.getBairro());
 			if (b == null) {
