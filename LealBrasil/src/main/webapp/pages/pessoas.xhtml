@@ -369,7 +369,7 @@
 									validatorMessage="O minimo de caracteres para sigla são  '2'"
 									placeholder="Mínimo 2 Letras">
 									 
-									 <p:ajax listener="#{pessoajsfController.setCEP}" render="@form"/>						
+									 <p:ajax listener="#{pessoajsfController.setCEP}" update="pais,estado,cidade,bairro,logradouro" render="@form"/>						
 								</p:inputText>
 		 
 		            			<p:outputLabel for="estado" value="Estado: " />
