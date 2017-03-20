@@ -334,6 +334,7 @@ public class PessoajsfController extends GenericController implements Serializab
 		this.bairro.setId(null);
 		System.out.println(this.bairro.toString());
 		BairroBusiness.merge(this.bairro);
+		associaBLACidade();
 		Utilidades.abrirfecharDialogos("dialogoCadastroB", false);
 	}
 	
@@ -350,6 +351,7 @@ public class PessoajsfController extends GenericController implements Serializab
 		this.logradouro.setId(null);
 		System.out.println(this.logradouro.toString());
 		LogradouroBusiness.merge(this.logradouro);
+		associaBLACidade();
 		Utilidades.abrirfecharDialogos("dialogoCadastroL", false);
 	}
 	
