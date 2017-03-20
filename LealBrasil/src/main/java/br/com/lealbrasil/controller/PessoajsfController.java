@@ -443,8 +443,10 @@ public class PessoajsfController extends GenericController implements Serializab
 		if (pessoa.getId() != null)
 			usuario = UsuarioBusiness.retornaUsuario(usuario, pessoa);
 		
-		this.endereco = EnderecoBusiness.buscaEnderecoPorPessoa(pessoa);
-		this.setDados(endereco);
+		if(this.pessoa.getId() != null){
+			this.endereco = EnderecoBusiness.buscaEnderecoPorPessoa(pessoa);
+			this.setDados(endereco);
+		}
 		
 		mudaLabel();
 		PessoaGenericBusiness.chamaDialogoCastro();
