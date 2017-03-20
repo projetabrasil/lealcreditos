@@ -120,7 +120,7 @@ public class PessoajsfController extends GenericController implements Serializab
 		
 		configurarPessoa();
 		
-		configurarEndereco();
+		configurarEndereco("novo");
 
 	}
 	
@@ -148,11 +148,11 @@ public class PessoajsfController extends GenericController implements Serializab
 		}
 		configurarPessoa();
 		
-		configurarEndereco();
+		configurarEndereco("editar");
 		
 	}
 	
-	public void configurarEndereco(){
+	public void configurarEndereco(String metodo){
 		PaisDAO pDAO = new PaisDAO();
 		if(perfilLogado.getPerfilUsLogado().equals(Enum_Aux_Perfil_Pessoa.ADMINISTRADORES) && perfilLogado.getPaginaAtual().equals(Enum_Aux_Perfil_Pagina_Atual.PAGINACLIENTES)){    
 			mensagensDisparar("Não é possivel cadastrar " + perfilLogado.getPaginaAtual().getDescricao2() + " como administrador");
@@ -195,7 +195,15 @@ public class PessoajsfController extends GenericController implements Serializab
 			associaCidadesAoEstado();
 			this.endereco.setComplemento("");
 			this.endereco.setNumero(null);
-			Utilidades.abrirfecharDialogos("dialogoIdentidade",true);
+			
+			if(metodo.equals("novo")){
+				Utilidades.abrirfecharDialogos("dialogoIdentidade",true);
+			}else{
+				if(metodo.equals("editar")){
+					Utilidades.abrirfecharDialogos("dialogoCadastro", true);
+				}
+			}
+			
 		}
 	}
 
@@ -364,6 +372,28 @@ public class PessoajsfController extends GenericController implements Serializab
 	public void associaBLACidade() {
 		this.setBairros(PessoaBusiness.associaBairrosACidade(this.cidade.getId()));
 		this.setLogradouros(PessoaBusiness.associaLogradourosACidade(this.cidade.getId()));
+	}
+	
+	public List<Bairro> bairroCompleteView(String digitado){
+		
+        List<Bairro> retorno = new ArrayList<>();
+        for(Bairro b : bairros){
+            if(b.getDescricao().toLowerCase().startsWith(digitado.toLowerCase())){
+            retorno.add(b);
+            }
+        }
+		return retorno;
+	}
+	
+	public List<Logradouro> logradouroCompleteView(String digitado){
+		
+        List<Logradouro> retorno = new ArrayList<>();
+        for(Logradouro l : logradouros){
+            if(l.getDescricao().toLowerCase().startsWith(digitado.toLowerCase())){
+            retorno.add(l);
+            }
+        }
+		return retorno;
 	}
 
 	public void mudaLabel() {

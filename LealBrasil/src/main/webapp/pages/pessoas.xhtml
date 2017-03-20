@@ -388,13 +388,13 @@
 		            			
 		            			<p:outputLabel for="logradouro" value="Logradouro: " />
 		            			<p:autoComplete id="logradouro" minQueryLength="2" value="#{pessoajsfController.logradouro}" converter="omnifaces.ListConverter" style="width:150px"
- 		            			completeMethod="#{pessoajsfController.getLogradouros()}" var="o" itemLabel="#{o.descricao}" itemValue="#{o}"	effect="fade"
+ 		            			completeMethod="#{pessoajsfController.logradouroCompleteView}" var="o" itemLabel="#{o.descricao}" itemValue="#{o}"	effect="fade"
 		            			/>
 	
 		            			
 		            			<p:outputLabel for="bairro" value="Bairro: " />
 		            			<p:autoComplete id="bairro" minQueryLength="2" value="#{pessoajsfController.bairro}" converter="omnifaces.ListConverter" style="width:150px"
- 		            			completeMethod="#{pessoajsfController.getBairros()}" var="o" itemLabel="#{o.descricao}" itemValue="#{o}"	effect="fade"
+ 		            			completeMethod="#{pessoajsfController.bairroCompleteView}" var="o" itemLabel="#{o.descricao}" itemValue="#{o}"	effect="fade"
  		            			/>
 
 		            			
