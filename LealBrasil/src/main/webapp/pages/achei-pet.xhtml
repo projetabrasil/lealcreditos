@@ -25,10 +25,19 @@
 <h:body styleClass="login-body">
     
 	<div id="login-wrapper" class="qr-wrapper">
-            <p:graphicImage name="img-qrcode/achei-pet.svg" library="images" styleClass="logo-achei-pet"/>
+	 
             
-            <div class="qr-container">
-                <p:graphicImage name="img-qrcode/dog.jpg" library="images" styleClass="img-dog" />
+           
+            
+          <p:dialog styleClass="dilog-achei" widgetVar="dialog" closable="false"
+				resizable="false"  visible="true">
+			
+			 <p:graphicImage name="img-qrcode/achei-pet.svg" library="images" styleClass="logo-achei-pet"/>	
+            
+            <div class="qr-container main">
+            
+			
+              <p:graphicImage name="img-qrcode/dog.jpg" library="images" styleClass="img-dog" />
                 
               <div class="container-info-header"> 
                 <div class="row info-header">
@@ -38,7 +47,7 @@
 				 </div>
 				<div class="col-xs-12 col-geral">    
 				    <h:outputText value="Nome: " styleClass="info-header-label"/>
-				    <h:outputText value="Bola de Pelo" styleClass="info-header-infos"/>
+				    <h:outputText value="Bob" styleClass="info-header-infos"/>
 				 </div>
 				 <div class="col-xs-12 col-geral">    
 				    <h:outputText value="Idade: " styleClass="info-header-label"/>
@@ -46,17 +55,18 @@
 				 </div>
 				</div>
 			</div> 
+		 
 			<div class="container-info-corpo">
 			
 				<div class="row info-corpo">
 				<h2 class="titulo-geral"><!-- <i class="fa fa-address-book-o"></i> -->Informações do Dono</h2>
 					<div class="col-xs-12 col-geral">
-					 	<h:outputText value="Dono: " styleClass="info-corpo-label"/>
-				    	<h:outputText value="Eletiburcia da Silva" styleClass="info-corpo-infos"/>
+					 	<h:outputText value="Dono(a): " styleClass="info-corpo-label"/>
+				    	<h:outputText value="Eliza da Silva" styleClass="info-corpo-infos"/>
 					</div>
 					<div class="col-xs-12 col-geral">
 					 	<h:outputText value="Tel: " styleClass="info-corpo-label"/>
-				    	<h:outputText value="48 123213312" styleClass="info-corpo-infos"/>
+				    	<h:outputText value="48 998657786" styleClass="info-corpo-infos"/>
 					</div>
 					<div class="col-xs-12 col-geral">
 					 	<h:outputText value="Tel2: " styleClass="info-corpo-label"/>
@@ -64,16 +74,16 @@
 					</div>
 					<div class="col-xs-12 col-geral">
 					 	<h:outputText value="E-mail: " styleClass="info-corpo-label"/>
-				    	<h:outputText value="eletiburcia@email.com.br" styleClass="info-corpo-infos"/>
+				    	<h:outputText value="eliza@email.com.br" styleClass="info-corpo-infos"/>
 					</div>
 				<h2 class="titulo-geral"><!-- <i class="fa fa-home"></i> -->Endereço</h2>
 					<div class="col-xs-12 col-geral">
 						<h:outputText value="Cidade: " styleClass="info-corpo-label"/>
-						<h:outputText value="Floripa" styleClass="info-corpo-infos"/>
+						<h:outputText value="Florianópolis" styleClass="info-corpo-infos"/>
 					</div>
 					<div class="col-xs-12 col-geral">
 						<h:outputText value="Bairro: " styleClass="info-corpo-label"/>
-				    	<h:outputText value="Cãopeche" styleClass="info-corpo-infos"/>
+				    	<h:outputText value="Campeche" styleClass="info-corpo-infos"/>
 				    </div>
 				    <div class="col-xs-12 col-geral">
 					 	<h:outputText value="Rua: " styleClass="info-corpo-label"/>
@@ -90,7 +100,7 @@
 					</div>
 					<div class="col-xs-12 col-geral">
 					 	<h:outputText value="Raça: " styleClass="info-corpo-label"/>
-				    	<h:outputText value="Vira-Lata" styleClass="info-corpo-infos"/>
+				    	<h:outputText value="Indefinida" styleClass="info-corpo-infos"/>
 					</div>
 					<div class="col-xs-12 col-geral">
 					 	<h:outputText value="Tamanho: " styleClass="info-corpo-label"/>
@@ -117,20 +127,22 @@
 	
                  <div class="ui-g ui-fluid">
                     <div class="ui-g-12">
-                        <p:button value="sair"/>
+                        <p:commandButton value="Sair"/>
                     </div>
                 </div> 
-                
-           </div><!-- /.login-container-->
+           
+           </div><!-- /.qr-container-->
+            <div class="qr-footer">Powered by ProjetaBrasil</div> 
+         </p:dialog> 
             
-             <div class="qr-footer">Powered by ProjetaBrasil</div> 
+             
         </div>
 
-	
+	<h:outputScript name="achei-qrcode.js" library="js" />
 	<h:outputStylesheet name="css/layout.css" library="omega-layout" />
 	<h:outputStylesheet name="bootstrap-grid.mim.css" library="css" />
 	<h:outputStylesheet name="achei-qrcode.css" library="css" />
-	<h:outputStylesheet name="css/font-awesome.css" library="fa" />
-	<h:outputScript name="achei-qrcode.js" library="js" />
+	<!-- <h:outputStylesheet name="css/font-awesome.css" library="fa" /> -->
+	
 </h:body>
 </html>
