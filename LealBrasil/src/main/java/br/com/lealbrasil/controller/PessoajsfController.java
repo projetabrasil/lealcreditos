@@ -199,12 +199,13 @@ public class PessoajsfController extends GenericController implements Serializab
 			this.estado = endereco.getBairro().getCidade().getEstado();
 			associaCidadesAoEstado();
 			this.cidade = endereco.getBairro().getCidade();
-			
-			this.endereco.setComplemento("");
-			this.endereco.setNumero(null);
+			associaBLACidade();
+//			this.endereco.setComplemento("");
+//			this.endereco.setNumero(null);
 			
 			if(metodo.equals("novo")){
 			    Utilidades.abrirfecharDialogos("dialogoIdentidade",true);
+
 			}else{
 			    if(metodo.equals("editar")){
 			    	this.pessoa = p;
