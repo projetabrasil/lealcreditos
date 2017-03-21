@@ -157,7 +157,8 @@ public class PessoajsfController extends GenericController implements Serializab
 	
 	public void configurarEndereco(String metodo){
 		PaisDAO pDAO = new PaisDAO();
-
+		Pessoa p = this.pessoa; //Objeto ao lado só será utilizado caso o metodo seja igual a editar
+		
 		if(perfilLogado.getPerfilUsLogado().equals(Enum_Aux_Perfil_Pessoa.ADMINISTRADORES) && perfilLogado.getPaginaAtual().equals(Enum_Aux_Perfil_Pagina_Atual.PAGINACLIENTES)){    
 			mensagensDisparar("Não é possivel cadastrar " + perfilLogado.getPaginaAtual().getDescricao2() + " como administrador");
 		}else{
@@ -206,6 +207,9 @@ public class PessoajsfController extends GenericController implements Serializab
 			    Utilidades.abrirfecharDialogos("dialogoIdentidade",true);
 			}else{
 			    if(metodo.equals("editar")){
+			    	this.pessoa = p;
+			    	this.logradouro = endereco.getLogradouro();
+			    	this.bairro = endereco.getBairro();
 			    	mudaLabel();
 			    	Utilidades.abrirfecharDialogos("dialogoCadastro", true);
 			    }
