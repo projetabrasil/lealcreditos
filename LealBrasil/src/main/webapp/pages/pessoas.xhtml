@@ -429,23 +429,25 @@
         					</h:panelGrid>						
 						
 							<p:commandButton value="Cancelar" process="@this"
-							actionListener="#{pessoajsfController.cancela}" 
+							actionListener="#{pessoajsfController.cancela}"
+							oncomplete="PF('wiz').loadStep('tab1', true)"
 							styleClass="btao-info-pessoas"/>
 						</p:panel>
 					</p:tab>
 					
 					<p:tab  id="tab3" title="Dados importantes">
-						<div class="ui-g-12">
-							<h:panelGrid columns="2" cellpadding="5">						
+					<p:panel id="p_dados_importantes" header="Informações Clínicas" >
+							<h:panelGrid columns="2" cellpadding="5" render="@form">						
 								<p:commandButton value="Cancelar" process="@this"
-								actionListener="#{pessoajsfController.cancela}" 
-								styleClass="btao-info-pessoas"/>						
+								actionListener="#{pessoajsfController.cancela}"
+								oncomplete="PF('wiz').loadStep('tab1', true)"
+								styleClass="btao-info-pessoas"/>			
 								
 								<p:commandButton value="Salvar" process="@form"
 								actionListener="#{pessoajsfController.merge}"
 								update=":mensagens :formTemplate:formLista:tabela" />
 							</h:panelGrid>
-						</div>
+						</p:panel>
 					</p:tab>
 				</p:wizard>
 			</h:form>
