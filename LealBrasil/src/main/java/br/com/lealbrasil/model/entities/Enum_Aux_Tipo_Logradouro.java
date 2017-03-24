@@ -1,10 +1,11 @@
 package br.com.lealbrasil.model.entities;
 
 public enum Enum_Aux_Tipo_Logradouro {
-	AEROPORTO("RUA",1,true),
+	RUA("RUA",34,true),
+	AVENIDA("AVENIDA",4,true),
+	AEROPORTO("AEROPORTO",1,true),
 	ALAMEDA("ALAMEDA",2,true),
 	ÁREA("ÁREA",3,true),
-	AVENIDA("AVENIDA",4,true),
 	CAMPO("CAMPO",5,true),
 	SERVIDAO("SERVIDÃO",6,true),
 	CHACÁRA("CHACÁRA",7,true),
@@ -33,8 +34,7 @@ public enum Enum_Aux_Tipo_Logradouro {
 	QUADRA("QUADRA",30,true),
 	RECANTO("RECANTO",31,true),
 	RESIDENCIAL("RESIDENCIAL",32,true),
-	RODOVIA("RODOVIA",33,true),
-	RUA("RUA",34,true),
+	RODOVIA("RODOVIA",33,true),	
 	SETOR("SETOR",35,true),
 	SÍTIO("SÍTIO",36,true),
 	TRAVESSA("TRAVESSA",37,true),

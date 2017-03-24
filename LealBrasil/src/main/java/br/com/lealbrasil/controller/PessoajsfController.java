@@ -75,6 +75,7 @@ public class PessoajsfController extends GenericController implements Serializab
 			pessoas = PessoaBusiness.listar(perfilLogado);
 			pessoa = new Pessoa();
 			
+			this.pais = new Pais();
 			this.estado = new Estado();
 			this.cidade = new Cidade();
 			this.bairro = new Bairro();
@@ -114,15 +115,27 @@ public class PessoajsfController extends GenericController implements Serializab
 	public void novo(ActionEvent event) {
 		perfilLogadoTemp = perfilLogado;
 		pessoa = new Pessoa();
-
+		
+		this.pais = new Pais();
 		this.estado = new Estado();
 		this.cidade = new Cidade();
 		this.bairro = new Bairro();
 		this.logradouro = new Logradouro();
 		
 		configurarPessoa();
-
-		configurarEndereco("novo");
+		
+		if(this.pessoa.getDescricao() != null && this.pessoa.getDescricao() != ""){
+			this.endereco = EnderecoBusiness.buscaEnderecoPorPessoa(pessoa);
+			if(endereco != null){
+				setDados(endereco);
+			}else{
+				limpaDados();
+				endereco = new Endereco(bairro, cidade, estado);
+			}
+		}else{
+			configurarEndereco("novo");
+		}
+		
 
 	}
 	
@@ -150,7 +163,23 @@ public class PessoajsfController extends GenericController implements Serializab
 		}
 		configurarPessoa();
 		
-		configurarEndereco("editar");
+		if(this.pessoa.getDescricao() != null && this.pessoa.getDescricao() != ""){
+			this.endereco = EnderecoBusiness.buscaEnderecoPorPessoa(pessoa);
+			if(endereco != null){
+				setDados(endereco);
+			}else{
+				limpaDados();
+				endereco = new Endereco(bairro, cidade, estado);
+			}
+			if(perfilLogado.getPerfilUsLogado().equals(Enum_Aux_Perfil_Pessoa.ADMINISTRADORES) && perfilLogado.getPaginaAtual().equals(Enum_Aux_Perfil_Pagina_Atual.PAGINACLIENTES)){    
+				mensagensDisparar("Não é possivel cadastrar " + perfilLogado.getPaginaAtual().getDescricao2() + " como administrador");
+			}else{
+				mudaLabel();
+				Utilidades.abrirfecharDialogos("dialogoCadastro",true);
+			}			
+		}else{
+			configurarEndereco("editar");
+		};
 		
 		
 	}
@@ -200,12 +229,9 @@ public class PessoajsfController extends GenericController implements Serializab
 			associaCidadesAoEstado();
 			this.cidade = endereco.getBairro().getCidade();
 			associaBLACidade();
-//			this.endereco.setComplemento("");
-//			this.endereco.setNumero(null);
 			
 			if(metodo.equals("novo")){
 			    Utilidades.abrirfecharDialogos("dialogoIdentidade",true);
-
 			}else{
 			    if(metodo.equals("editar")){
 			    	this.pessoa = p;
@@ -257,7 +283,9 @@ public class PessoajsfController extends GenericController implements Serializab
 			this.endereco.setUltimaAtualizacao(Utilidades.retornaCalendario());	
 			this.endereco.setPessoa(pessoa);
 			this.endereco.setId(null);
-			EnderecoBusiness.merge(endereco);
+			if(this.endereco.getBairro() != null && this.endereco.getLogradouro() != null){
+				EnderecoBusiness.merge(endereco);
+			}			
 		}
 		
 		listar();
@@ -269,22 +297,28 @@ public class PessoajsfController extends GenericController implements Serializab
 	public void setCEP() {
 		CepWebService cep = new CepWebService(this.endereco.getBairro().getCidade().getCep());
 		System.out.println(cep.toString());
-		if (cep.getEstado() != null) {
+		Pessoa p = new Pessoa();
+		if(perfilLogado.getPerfilUsLogado().equals(Enum_Aux_Perfil_Pessoa.ADMINISTRADORES)){
+			p = perfilLogado.getUsLogado().getPessoa();
+		}else{
+			p = perfilLogado.getAssLogado();
+		} 
+		if (cep.getResultado() > 0) {
 			Estado e = EstadoBusiness.buscaEstadoPelaSigla(cep.getEstado());
 			if (e == null) {
 				e = new Estado();
-				e.setDescricao("Invalido");
+				e.setDescricao(cep.getEstado());
 				e.setSigla(cep.getEstado());
 				e.setPais(this.pais);
 				e.setUltimaAtualizacao(Utilidades.retornaCalendario());
 				e.setId_Empresa(0);
 				e.setId(null);
-				e.setId_Pessoa_Registro(perfilLogado.getAssLogado());
+				e.setId_Pessoa_Registro(p);
 				EstadoBusiness.merge(e);
 			}
 			this.estado = EstadoBusiness.buscaEstadoPelaSigla(e.getSigla());
-
-			Cidade c = CidadeBusiness.buscaCidadePeloNome(cep.getCidade());
+			
+			Cidade c = CidadeBusiness.buscaCidadePeloNome(cep.getCidade());							
 			if (c == null) {
 				c = new Cidade();
 				c.setDescricao(cep.getCidade());
@@ -292,11 +326,12 @@ public class PessoajsfController extends GenericController implements Serializab
 				c.setId(null);
 				c.setId_Empresa(0);
 				c.setUltimaAtualizacao(Utilidades.retornaCalendario());
-				c.setId_Pessoa_Registro(perfilLogado.getAssLogado());
+				c.setId_Pessoa_Registro(p);
 				c.setEstado(estado);
 				CidadeBusiness.merge(c);
 			}
 			this.cidade = CidadeBusiness.buscaCidadePeloNome(c.getDescricao());
+									
 
 			Bairro b = BairroBusiness.buscaBairroPeloNome(cep.getBairro());
 			if (b == null) {
@@ -305,7 +340,7 @@ public class PessoajsfController extends GenericController implements Serializab
 				b.setId(null);
 				b.setId_Empresa(0);
 				b.setUltimaAtualizacao(Utilidades.retornaCalendario());
-				b.setId_Pessoa_Registro(perfilLogado.getAssLogado());
+				b.setId_Pessoa_Registro(p);
 				b.setCidade(cidade);
 				BairroBusiness.merge(b);
 			}
@@ -318,12 +353,17 @@ public class PessoajsfController extends GenericController implements Serializab
 				l.setId(null);
 				l.setId_Empresa(0);
 				l.setUltimaAtualizacao(Utilidades.retornaCalendario());
-				l.setId_Pessoa_Registro(perfilLogado.getAssLogado());
+				l.setId_Pessoa_Registro(p);
 				l.setCidade(cidade);
 				l.setEnum_Aux_Tipo_Logradouro(Enum_Aux_Tipo_Logradouro.valueOf(cep.getTipoLogradouro().toUpperCase()));
 				LogradouroBusiness.merge(l);
 			}
 			this.logradouro = LogradouroBusiness.buscaLogradouroPeloNome(l.getDescricao());
+		}else{
+			this.estado = new Estado();
+			this.cidade = new Cidade();
+			this.bairro = new Bairro();
+			this.logradouro = new Logradouro();
 		}
 
 	}
@@ -373,7 +413,9 @@ public class PessoajsfController extends GenericController implements Serializab
 	}
 
 	public void associaEstadosAoPais() {
-		this.setEstados(PessoaBusiness.associaEstadosAoPais(this.pais.getId()));
+		if(this.pais != null){
+			this.setEstados(PessoaBusiness.associaEstadosAoPais(this.pais.getId()));
+		}	
 		this.estado = new Estado();
 		this.cidade = new Cidade();
 		this.cidades = new ArrayList<Cidade>();
@@ -393,9 +435,10 @@ public class PessoajsfController extends GenericController implements Serializab
         List<Bairro> retorno = new ArrayList<>();
         for(Bairro b : bairros){
             if(b.getDescricao().toLowerCase().startsWith(digitado.toLowerCase())){
-            retorno.add(b);
+            	retorno.add(b);
             }
         }
+        this.bairros = retorno;
 		return retorno;
 	}
 	
@@ -404,14 +447,23 @@ public class PessoajsfController extends GenericController implements Serializab
         List<Logradouro> retorno = new ArrayList<>();
         for(Logradouro l : logradouros){
             if(l.getDescricao().toLowerCase().startsWith(digitado.toLowerCase())){
-            retorno.add(l);
+            	retorno.add(l);
             }
         }
+        this.logradouros = retorno;
 		return retorno;
 	}
 
 	public void mudaLabel() {
 		pessoaConfig.mudarLabels(pessoa.getEnum_Aux_Tipo_Identificador().getAux_tipo_pessoa());
+	}
+	
+	public void limpaDados(){
+		this.pais = new Pais();
+		this.estado = new Estado();
+		this.cidade = new Cidade();
+		this.logradouro = new Logradouro();
+		this.bairro = new Bairro();
 	}
 
 	public void buscaPessoa() {
@@ -457,7 +509,12 @@ public class PessoajsfController extends GenericController implements Serializab
 		if (pessoa.getId() != null){
 			usuario = UsuarioBusiness.retornaUsuario(usuario, pessoa);
 			this.endereco = EnderecoBusiness.buscaEnderecoPorPessoa(pessoa);
-			this.setDados(endereco);
+			if(endereco != null){
+				setDados(endereco);
+			}else{
+				limpaDados();
+				endereco = new Endereco(bairro, cidade, estado);
+			}
 		}			
 		
 		mudaLabel();

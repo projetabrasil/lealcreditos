@@ -1,6 +1,7 @@
 package br.com.lealbrasil.controller;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -24,9 +25,11 @@ public class BairrojsfController extends GenericController implements Serializab
 	
 	private Bairro bairro;
 	private List<Bairro> bairros;
-	private PessoaConfig pessoaConfig;
 	private Estado estado;
+	private List<Estado> estados;
 	private Cidade cidade;
+	private List<Cidade> cidades;
+	private PessoaConfig pessoaConfig;
 	
 	@ManagedProperty(value = "#{autenticacaojsfController.perfilLogado}")
 	private PerfilLogado perfilLogado;
@@ -37,8 +40,17 @@ public class BairrojsfController extends GenericController implements Serializab
 	
 	@PostConstruct
 	public void listar() {
-		if(perfilLogado!=null && perfilLogado.getPerfilUsLogado()!=null)
-		bairros = BairroBusiness.listar(perfilLogado);
+		if(perfilLogado!=null && perfilLogado.getPerfilUsLogado()!=null){
+			bairros = BairroBusiness.listar(perfilLogado);
+			
+			this.estado = new Estado();
+			this.cidade = new Cidade();
+			this.bairro = new Bairro();
+			
+			estados = new ArrayList<>();
+			cidades = new ArrayList<>();
+		}
+		
 	}
 	
 	public void novo(ActionEvent event) {
@@ -96,11 +108,14 @@ public class BairrojsfController extends GenericController implements Serializab
 	}
 	
 	public void associaEstadosAoPais(){
-		this.bairro.getCidade().getEstado().getPais().setEstados(BairroBusiness.associaEstadosAoPais(this.bairro.getCidade().getEstado().getPais().getId()));
+		this.setEstados(BairroBusiness.associaEstadosAoPais(this.bairro.getCidade().getEstado().getPais().getId()));
+		this.estado = new Estado();
+		this.cidade = new Cidade();
+		this.cidades = new ArrayList<Cidade>();
 	}
 	
 	public void associaCidadesAoEstado(){
-		this.estado.setCidades(BairroBusiness.associaCidadesAoEstado(this.estado.getId()));
+		this.setCidades(BairroBusiness.associaCidadesAoEstado(this.estado.getId()));
 	}
 	
 	public void configurarPessoa() {
@@ -170,8 +185,22 @@ public class BairrojsfController extends GenericController implements Serializab
 	public void setCidade(Cidade cidade) {
 		this.cidade = cidade;
 	}
-	
-	
+
+	public List<Estado> getEstados() {
+		return estados;
+	}
+
+	public void setEstados(List<Estado> estados) {
+		this.estados = estados;
+	}
+
+	public List<Cidade> getCidades() {
+		return cidades;
+	}
+
+	public void setCidades(List<Cidade> cidades) {
+		this.cidades = cidades;
+	}
 	
 	
 }

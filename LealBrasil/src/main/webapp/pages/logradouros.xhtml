@@ -95,7 +95,7 @@
 					<h:panelGrid columns="2" cellpadding="5">
             			<p:outputLabel for="pais" value="País: "/>
             			<p:selectOneMenu id="pais" value="#{logradourojsfController.logradouro.cidade.estado.pais}" converter="omnifaces.SelectItemsConverter" style="width:150px">
-                			<p:ajax listener="#{logradourojsfController.associaEstadosAoPais}" update="estado" />
+                			<p:ajax listener="#{logradourojsfController.associaEstadosAoPais}" update="estado,cidade" />
                 			<f:selectItem itemLabel="Selecione o país" itemValue="" noSelectionOption="true" />
                 			<f:selectItems value="#{paisjsfController.paises}" var="o" itemLabel="#{o.descricao}" itemValue="#{o}" />
             			</p:selectOneMenu>
@@ -104,19 +104,23 @@
             			<p:selectOneMenu id="estado" value="#{logradourojsfController.estado}" converter="omnifaces.SelectItemsConverter" style="width:150px">
             				<p:ajax listener="#{logradourojsfController.associaCidadesAoEstado}" update="cidade" />
                 			<f:selectItem itemLabel="Selecione o estado" itemValue="" noSelectionOption="true" />
-                			<f:selectItems value="#{logradourojsfController.logradouro.cidade.estado.pais.estados}" var="o" itemLabel="#{o.descricao}" itemValue="#{o}"/>
+                			<f:selectItems value="#{logradourojsfController.estados}" var="o" itemLabel="#{o.descricao}" itemValue="#{o}"/>
             			</p:selectOneMenu>
             			
             			<p:outputLabel for="cidade" value="Cidade: " />
-            			<p:selectOneMenu id="cidade" value="#{logradourojsfController.cidade}" converter="omnifaces.SelectItemsConverter" style="width:150px">
+            			<p:selectOneMenu id="cidade" value="#{logradourojsfController.cidade}" converter="omnifaces.SelectItemsConverter" style="width:150px"
+            			required="true"
+						requiredMessage="Campo obrigatório">
                 			<f:selectItem itemLabel="Selecione a cidade" itemValue="" noSelectionOption="true" />
-                			<f:selectItems value="#{logradourojsfController.estado.cidades}" var="o" itemLabel="#{o.descricao}" itemValue="#{o}"/>
+                			<f:selectItems value="#{logradourojsfController.cidades}" var="o" itemLabel="#{o.descricao}" itemValue="#{o}"/>
             			</p:selectOneMenu>
         			</h:panelGrid>
         			
         			<h:panelGrid id="painelCadastro_15">
 						<p:outputLabel	value="Tipo do Logradouro" />
-						<p:selectOneMenu value="#{logradourojsfController.logradouro.enum_Aux_Tipo_Logradouro}" converter="omnifaces.SelectItemsConverter">
+						<p:selectOneMenu value="#{logradourojsfController.logradouro.enum_Aux_Tipo_Logradouro}" converter="omnifaces.SelectItemsConverter"
+						required="true"
+						requiredMessage="Campo obrigatório">
 							<f:selectItem itemLabel="Selecione o Logradouro" itemValue="" noSelectionOption="true" />
 							<f:selectItems value="#{logradourojsfController.listarTiposLogradouros()}" var="tt"
 										itemLabel="#{tt.descricao}"	itemValue="#{tt}"  />

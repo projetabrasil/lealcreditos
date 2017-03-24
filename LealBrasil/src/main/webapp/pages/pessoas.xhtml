@@ -7,6 +7,8 @@
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
 	xmlns:cc="http://java.sun.com/jsf/composite"
+	xmlns:o="http://omnifaces.org/ui"
+	xmlns:of="http://omnifaces.org/functions"
 	template="/templates/template.xhtml">
 	<h:head>
 		<!-- <h:outputStylesheet library="css" name="clubefidelidadee.css" /> -->
@@ -320,21 +322,23 @@
 				
 					
 						
-							<p:outputLabel value="Informe a Senha" />
+							<p:outputLabel value="Informe a Senha" rendered="#{pessoajsfController.perfilLogado.renderizaPelaPagina('PAGINACLIENTES', pessoajsfController.pessoa)}"/>
 							<p:password size="18" maxlength="8"
 								value="#{pessoajsfController.usuario.senhaSemCript}"
 								required="true" requiredMessage="Informe a senha!!!"
 								validatorMessage="O minimo de digitos para senha: '8'"
+								rendered="#{pessoajsfController.perfilLogado.renderizaPelaPagina('PAGINACLIENTES', pessoajsfController.pessoa)}"
 								placeholder="8 letras e/ou digitos">
 								<f:validateLength minimum="8" />
 							</p:password>
 						
 						
-							<p:outputLabel value="Confirme a Senha" />
+							<p:outputLabel value="Confirme a Senha" rendered="#{pessoajsfController.perfilLogado.renderizaPelaPagina('PAGINACLIENTES', pessoajsfController.pessoa)}"/>
 							<p:password size="18" maxlength="8"
 								value="#{pessoajsfController.usuario.confSenha}" required="true"
 								requiredMessage="Informe a confirmação de senha."
 								validatorMessage="O minimo de digitos para confirmação senha: '8'"
+								rendered="#{pessoajsfController.perfilLogado.renderizaPelaPagina('PAGINACLIENTES', pessoajsfController.pessoa)}"
 								placeholder="8 letras e/ou digitos">
 								<f:validateLength minimum="8" />
 							</p:password>
@@ -387,15 +391,17 @@
 		            			</p:selectOneMenu>
 		            			
 		            			<p:outputLabel for="logradouro" value="Logradouro: " />
-		            			<p:autoComplete id="logradouro" minQueryLength="2" value="#{pessoajsfController.logradouro}" converter="omnifaces.ListConverter" style="width:150px"
- 		            			completeMethod="#{pessoajsfController.logradouroCompleteView}" var="o" itemLabel="#{o.descricao}" itemValue="#{o}"	effect="fade"
-		            			/>
+		            			<p:autoComplete id="logradouro" minQueryLength="2" value="#{pessoajsfController.logradouro}" style="width:150px"
+ 		            			completeMethod="#{pessoajsfController.logradouroCompleteView}" var="o" itemLabel="#{o.descricao}" itemValue="#{o}"	effect="fade"> 
+		            				<o:converter converterId="omnifaces.ListConverter" list="#{pessoajsfController.logradouros}" />
+		            			</p:autoComplete>
 	
 		            			
 		            			<p:outputLabel for="bairro" value="Bairro: " />
-		            			<p:autoComplete id="bairro" minQueryLength="2" value="#{pessoajsfController.bairro}" converter="omnifaces.ListConverter" style="width:150px"
- 		            			completeMethod="#{pessoajsfController.bairroCompleteView}" var="o" itemLabel="#{o.descricao}" itemValue="#{o}"	effect="fade"
- 		            			/>
+		            			<p:autoComplete id="bairro" minQueryLength="2" value="#{pessoajsfController.bairro}" style="width:150px"
+ 		            			completeMethod="#{pessoajsfController.bairroCompleteView}" var="o" itemLabel="#{o.descricao}" itemValue="#{o}"	effect="fade">
+ 		            				<o:converter converterId="omnifaces.ListConverter" list="#{pessoajsfController.bairros}" />
+ 		            			</p:autoComplete>
 
 		            			
 		            			<p:commandButton value="Adicionar Bairro"						    
@@ -409,8 +415,6 @@
 								<p:outputLabel value="Complemento:"/>
 								<p:inputText size="30" maxlength="30"
 									value="#{pessoajsfController.endereco.complemento}"
-									required="true"
-									requiredMessage="Campo obrigatório"
 									validatorMessage="O minimo de caracteres para sigla são  '2'"
 									placeholder="Mínimo 2 Letras">
 									<f:validateLength minimum="2" />
@@ -419,8 +423,6 @@
 								<p:outputLabel value="Número:"/>
 								<p:inputText size="30" maxlength="30"
 									value="#{pessoajsfController.endereco.numero}"
-									required="true"
-									requiredMessage="Campo obrigatório"
 									validatorMessage="O minimo de caracteres para sigla são  '2'"
 									placeholder="Mínimo 2 Letras">
 									<f:validateLength minimum="2" />
@@ -432,6 +434,10 @@
 							actionListener="#{pessoajsfController.cancela}"
 							oncomplete="PF('wiz').loadStep('tab1', true)"
 							styleClass="btao-info-pessoas"/>
+							
+							<p:commandButton value="Salvar" process="@form"
+								actionListener="#{pessoajsfController.merge}"
+								update=":mensagens :formTemplate:formLista:tabela" />
 						</p:panel>
 					</p:tab>
 					

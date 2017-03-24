@@ -26,11 +26,11 @@ public class LogradourojsfController extends GenericController implements Serial
 	
 	private Logradouro logradouro;
 	private List<Logradouro> logradouros;
-	private PessoaConfig pessoaConfig;
 	private Estado estado;
+	private List<Estado> estados;
 	private Cidade cidade;
-	
-	//private Cidade aQualPertence;
+	private List<Cidade> cidades;
+	private PessoaConfig pessoaConfig;
 	
 	@ManagedProperty(value = "#{autenticacaojsfController.perfilLogado}")
 	private PerfilLogado perfilLogado;
@@ -104,11 +104,14 @@ public class LogradourojsfController extends GenericController implements Serial
 	}
 	
 	public void associaEstadosAoPais(){
-		this.logradouro.getCidade().getEstado().getPais().setEstados(LogradouroBusiness.associaEstadosAoPais(this.logradouro.getCidade().getEstado().getPais().getId()));
+		this.setEstados(LogradouroBusiness.associaEstadosAoPais(this.logradouro.getCidade().getEstado().getPais().getId()));
+		this.estado = new Estado();
+		this.cidade = new Cidade();
+		this.cidades = new ArrayList<Cidade>();
 	}
 	
 	public void associaCidadesAoEstado(){
-		this.estado.setCidades(LogradouroBusiness.associaCidadesAoEstado(this.estado.getId()));
+		this.setCidades(LogradouroBusiness.associaCidadesAoEstado(this.estado.getId()));
 	}
 	
 	
@@ -199,8 +202,22 @@ public class LogradourojsfController extends GenericController implements Serial
 		
 		return lista;
 	}
-	
-	
+
+	public List<Estado> getEstados() {
+		return estados;
+	}
+
+	public void setEstados(List<Estado> estados) {
+		this.estados = estados;
+	}
+
+	public List<Cidade> getCidades() {
+		return cidades;
+	}
+
+	public void setCidades(List<Cidade> cidades) {
+		this.cidades = cidades;
+	}
 	
 	
 }

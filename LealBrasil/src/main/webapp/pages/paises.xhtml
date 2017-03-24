@@ -107,8 +107,7 @@
 						<p:inputText size="30" maxlength="30"
 							value="#{paisjsfController.pais.descricao}"
 							required="true"
-							requiredMessage="Descrição do país é obrigatória"
-							
+							requiredMessage="Descrição do país é obrigatória"						
 							validatorMessage="O minimo de caracteres para nome são  '3'"
 							placeholder="Mínimo 3 Letras">
 							<f:validateLength minimum="3" />
@@ -122,9 +121,9 @@
 							value="#{paisjsfController.pais.sigla}"
 							required="true"
 							requiredMessage="Campo obrigatório"
-							validatorMessage="O minimo de caracteres para sigla são  '3'"
-							placeholder="Mínimo 3 Letras">
-							<f:validateLength minimum="3" />
+							validatorMessage="O minimo de caracteres para sigla são  '2'"
+							placeholder="Mínimo 2 Letras">
+							<f:validateLength minimum="2" />
 						</p:inputText>
 					</h:panelGrid>
 					<h:panelGrid id="painelCadastro_13">

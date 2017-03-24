@@ -104,6 +104,15 @@ public class PerfilLogado implements Serializable {
 
 		return false;
 	}
+	
+	public boolean renderizaPelaPagina(String permissao, Pessoa pessoa) {
+		String pAtual = this.getPaginaAtual().toString();
+		if (pAtual.equals(permissao) && pessoa.getDescricao() != null) {
+			return false;
+		}else{
+			return true;
+		}
+	}
 
 	public boolean temPermissoes2(List<String> permissoes) {
 		boolean retorno;

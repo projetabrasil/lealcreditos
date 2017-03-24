@@ -1,6 +1,7 @@
 package br.com.lealbrasil.controller;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -25,6 +26,7 @@ public class CidadejsfController extends GenericController implements Serializab
 	private List<Cidade> cidades;
 	private PessoaConfig pessoaConfig;
 	private Estado estado;
+	private List<Estado> estados;
 	
 	@ManagedProperty(value = "#{autenticacaojsfController.perfilLogado}")
 	private PerfilLogado perfilLogado;
@@ -37,6 +39,11 @@ public class CidadejsfController extends GenericController implements Serializab
 	public void listar() {
 		if(perfilLogado!=null && perfilLogado.getPerfilUsLogado()!=null)
 		cidades = CidadeBusiness.listar(perfilLogado);
+		
+		cidade = new Cidade();
+		estado = new Estado();
+
+		estados = new ArrayList<>();
 	}
 	
 	public void novo(ActionEvent event) {
@@ -91,8 +98,8 @@ public class CidadejsfController extends GenericController implements Serializab
 		}
 		
 		CidadeBusiness.merge(this.cidade);
-		listar(); //ATENÇÃO, REVER LINHA NO MOMENTO DA IMPLANTAÇÃO DO FRONT!!!! - 02/03/2017
-		this.estado = null;
+		listar(); 
+		
 		this.cidade.setEstado(new Estado());
 		Utilidades.abrirfecharDialogos("dialogoCadastro",false);
 
@@ -109,7 +116,8 @@ public class CidadejsfController extends GenericController implements Serializab
 	}
 	
 	public void associaEstadosAoPais(){
-		this.cidade.getEstado().getPais().setEstados(CidadeBusiness.associaEstadosAoPais(cidade.getEstado().getPais().getId()));
+		this.setEstados(CidadeBusiness.associaEstadosAoPais(cidade.getEstado().getPais().getId()));
+		estado = new Estado();		
 	}
 	
 	
@@ -171,6 +179,14 @@ public class CidadejsfController extends GenericController implements Serializab
 
 	public void setEstado(Estado estado) {
 		this.estado = estado;
+	}
+
+	public List<Estado> getEstados() {
+		return estados;
+	}
+
+	public void setEstados(List<Estado> estados) {
+		this.estados = estados;
 	}	
 	
 	

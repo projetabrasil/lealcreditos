@@ -46,16 +46,18 @@ public class GenericDomain implements Serializable {
 	public void setId_Empresa(int id_Empresa) {
 		this.id_Empresa = id_Empresa;
 	}
+	
 	@Override
 	public String toString() {
 		return "GenericDomain [ultimaAtualizacao=" + ultimaAtualizacao + ", id_Empresa=" + id_Empresa + "]";
 	}
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + id_Empresa;
-		
+		result = prime * result + ((ultimaAtualizacao == null) ? 0 : ultimaAtualizacao.hashCode());
 		return result;
 	}
 	@Override
@@ -69,9 +71,15 @@ public class GenericDomain implements Serializable {
 		GenericDomain other = (GenericDomain) obj;
 		if (id_Empresa != other.id_Empresa)
 			return false;
-		
+		if (ultimaAtualizacao == null) {
+			if (other.ultimaAtualizacao != null)
+				return false;
+		} else if (!ultimaAtualizacao.equals(other.ultimaAtualizacao))
+			return false;
 		return true;
 	}
+	
+	
 	
 	
 	

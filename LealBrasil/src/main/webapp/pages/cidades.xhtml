@@ -126,9 +126,11 @@
             			</p:selectOneMenu>
  
             			<p:outputLabel for="estado" value="Estado: " />
-            			<p:selectOneMenu id="estado" value="#{cidadejsfController.estado}" converter="omnifaces.SelectItemsConverter" style="width:150px">
+            			<p:selectOneMenu id="estado" value="#{cidadejsfController.estado}" converter="omnifaces.SelectItemsConverter" style="width:150px"
+            			required="true"
+						requiredMessage="Campo obrigatório">
                 			<f:selectItem itemLabel="Selecione o estado" itemValue="" noSelectionOption="true" />
-                			<f:selectItems value="#{cidadejsfController.cidade.estado.pais.estados}" var="o" itemLabel="#{o.descricao}" itemValue="#{o}"/>
+                			<f:selectItems value="#{cidadejsfController.estados}" var="o" itemLabel="#{o.descricao}" itemValue="#{o}"/>
             			</p:selectOneMenu>
         			</h:panelGrid>
  
