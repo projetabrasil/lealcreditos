@@ -519,7 +519,13 @@ public class Utilidades implements Serializable {
 			}else{
 				nomeSplit[i] = removerAcentos(nomeSplit[i].toLowerCase());
 			}
-			nome = nome + nomeSplit[i] + " ";
+			
+			if(nomeSplit.length > 1 && i != nomeSplit.length - 1){
+				nome = nome + nomeSplit[i] + " ";
+			} else{
+				nome = nome + nomeSplit[i];
+			}
+			
 		}
 		return nome;
 	}
